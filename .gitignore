@@ -1,0 +1,23 @@
+# Ignore build directory
+build/
+
+# Ignore logs directory
+logs/
+
+#ignore CLion projects files
+.idea/
+
+# Ignore compiled binaries
+*.exe
+*.out
+*.app
+
+# Ignore object files
+*.o
+*.obj
+
+# Ignore CMake generated files
+CMakeFiles/
+CMakeCache.txt
+CMakeScripts/
+cmake_install.cmake
