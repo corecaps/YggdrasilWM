@@ -354,6 +354,7 @@ void WindowManager::OnMapRequest(const XMapRequestEvent &e) {
 }
 
 void WindowManager::OnConfigureRequest(const XConfigureRequestEvent &e) {
+	std::stringstream debug_stream;
 	XWindowChanges changes;
 	changes.x = e.x;
 	changes.y = e.y;
@@ -365,10 +366,11 @@ void WindowManager::OnConfigureRequest(const XConfigureRequestEvent &e) {
 	if (clients_.count(e.window)) {
 		const Window frame = clients_[e.window];
 		XConfigureWindow(display_, frame, e.value_mask, &changes);
-		std::cout << "Resize [" << frame << "] to " << Size<int>(e.width, e.height);
+		debug_stream << "Resize [" << frame << "] to " << Size<int>(e.width, e.height);
 	}
 	XConfigureWindow(display_, e.window, e.value_mask, &changes);
-	std::cout << "Resize " << e.window << " to " << Size<int>(e.width, e.height);
+	debug_stream << "Resize " << e.window << " to " << Size<int>(e.width, e.height);
+	logger_.Log(debug_stream.str(), L_INFO);
 }
 
 void WindowManager::OnButtonPress(const XButtonEvent &e) {

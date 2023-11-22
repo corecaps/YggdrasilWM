@@ -27,6 +27,7 @@ make
 ```
 
 ## Testing using Xephyr
+*Do not forget to press Ctrl+Shift in Xephyr Window to test Mouse and Keyboard bindings*
 ### Using provided start.sh
 ```
 mkdir -p logs
