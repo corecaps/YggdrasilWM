@@ -19,15 +19,15 @@ bool WindowManager::wm_detected_;
 mutex WindowManager::wm_detected_mutex_;
 
 unique_ptr<WindowManager> WindowManager::Create(const Logger &logger, const string &display_str) {
-	// 1. Open X display.
+	std::stringstream debug_stream;
 	const char *display_c_str =
 			display_str.empty() ? nullptr : display_str.c_str();
 	Display *display = XOpenDisplay(display_c_str);
 	if (display == nullptr) {
-		std::cerr << "Failed to open X display " << XDisplayName(display_c_str);
+		debug_stream << "Failed to open X display " << XDisplayName(display_c_str);
+		logger.Log(debug_stream.str(), L_ERROR);
 		return nullptr;
 	}
-	// 2. Construct WindowManager instance.
 	return unique_ptr<WindowManager>(new WindowManager(display, logger));
 }
 
@@ -43,37 +43,9 @@ WindowManager::WindowManager(Display *display, const Logger &logger)
 WindowManager::~WindowManager() {
 	XCloseDisplay(display_);
 }
-
-void WindowManager::Reparent(Window window, bool map) {
-	std::stringstream debug_stream;
-	// Create a frame window for the top-level window
-	Window frame = XCreateSimpleWindow(display_, root_, 0, 0, 1, 1, 0, 0, 0);
-
-	// Reparent the top-level window under the frame
-	XReparentWindow(display_, window, frame, 0, 0);
-	debug_stream << "Window : " << window << std::endl;
-	logger_.Log(debug_stream.str(), L_INFO);
-	// Set attributes for the frame window
-	XSetWindowBorderWidth(display_, frame, 0);
-	XSelectInput(display_, frame, StructureNotifyMask);
-
-	// Map the frame window if requested
-	if (map) {
-		XMapWindow(display_, frame);
-	}
-
-	// Flush the X server to ensure the changes take effect
-	XFlush(display_);
-}
-
 void WindowManager::Run() {
 	std::stringstream debug_stream;
-	// 1. Initialization.
-	//   a. Select events on root window. Use a special error handler so we can
-	//   exit gracefully if another window manager is already running.
-
 	::std::lock_guard<mutex> lock(wm_detected_mutex_);
-
 	wm_detected_ = false;
 	XSetErrorHandler(&WindowManager::OnWMDetected);
 	int ret_code = XSelectInput(
@@ -97,13 +69,9 @@ void WindowManager::Run() {
 	logger_.Log(debug_stream.str(), L_INFO);
 	debug_stream.str("");
 	debug_stream.clear();
-	//   b. Set error handler.
 	XSync(display_, false);
 	XSetErrorHandler(&WindowManager::OnXError);
-	//   c. Grab X server to prevent windows from changing under us.
 	XGrabServer(display_);
-	//   d. Reparent existing top-level windows.
-	//     i. Query existing top-level windows.
 	Window returned_root, returned_parent;
 	Window *top_level_windows;
 	unsigned int num_top_level_windows;
@@ -114,59 +82,42 @@ void WindowManager::Run() {
 			&returned_parent,
 			&top_level_windows,
 			&num_top_level_windows);
-	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
-		std::cout << "Reparenting window " << top_level_windows[i] << "[" << i << "]" << std::endl;
-		Reparent(top_level_windows[i], true);
+//	debug_stream << "Found " << num_top_level_windows << " top level windows:" << *top_level_windows << std::endl;
+//	debug_stream << "returned root:" << returned_root << "\troot_:" << root_ << std::endl;
+//	debug_stream << "returned parent:" << returned_parent << "\troot_:" << root_ << std::endl;
+//	logger_.Log(debug_stream.str(), L_INFO);
+//	debug_stream.str("");
+//	debug_stream.clear();
+//	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
+//		debug_stream << "Top Level Window : " << top_level_windows[i] << "[" << i << "]" << std::endl;
+//	}
+//	logger_.Log(debug_stream.str(),L_INFO);
+//	debug_stream.str("");
+//	debug_stream.clear();
+	if (returned_root != root_) {
+		debug_stream << "Root window is not the same as the one returned by XQueryTree" << std::endl;
+		logger_.Log(debug_stream.str(), L_ERROR);
+		debug_stream.str("");
+		debug_stream.clear();
 	}
-
-	XQueryTree(
-			display_,
-			root_,
-			&returned_root,
-			&returned_parent,
-			&top_level_windows,
-			&num_top_level_windows);
-	debug_stream << "Found " << num_top_level_windows << " top level windows:" << *top_level_windows << std::endl;
-	debug_stream << "returned root:" << returned_root << "\troot_:" << root_ << std::endl;
-	debug_stream << "returned parent:" << returned_parent << "\troot_:" << root_ << std::endl;
-	logger_.Log(debug_stream.str(), L_INFO);
-	debug_stream.str("");
-	debug_stream.clear();
-
-	// CHECK_EQ(returned_root, root_);*/
-	//     ii. Frame each top-level window.
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
 		Frame(top_level_windows[i], true);
 	}
-	//     iii. Free top-level window array.
 	XFree(top_level_windows);
-	//   e. Ungrab X server.
 	XUngrabServer(display_);
-//	int pid = fork();
-//	if (pid == 0) {
-//		std::cout << "Child process" << std::endl;
-//		//execl("/usr/bin/xterm", "xterm", "-e", "/home/abhishek/Downloads/WindowManager/WindowManager/build/WindowManager", NULL);
-//		execl("/usr/bin/xterm", "xterm", "-e", "/home/abhishek/Downloads/WindowManager/WindowManager/build/WindowManager", NULL);
-//	}
-//	else {
-//		std::cout << "Parent process" << std::endl;
-//	}
-	// 2. Main event loop.
-	for (;;) {
+	while(1) {
 		debug_stream << "Waiting for next event" << std::endl;
 		logger_.Log(debug_stream.str(), L_INFO);
 		debug_stream.str("");
 		debug_stream.clear();
-		// 1. Get next event.
 		XSync(display_, false);
 		XEvent e;
 		XNextEvent(display_, &e);
 		debug_stream << "Received event: " << ToString(e) << std::endl;
+		debug_stream << "Event type: " << e.type << std::endl;
 		logger_.Log(debug_stream.str(), L_INFO);
 		debug_stream.str("");
 		debug_stream.clear();
-		// 2. Dispatch event.
-		std::cout << "Event type: " << e.type << std::endl;
 		switch (e.type) {
 			case CreateNotify:
 				OnCreateNotify(e.xcreatewindow);
@@ -199,7 +150,6 @@ void WindowManager::Run() {
 				OnButtonRelease(e.xbutton);
 				break;
 			case MotionNotify:
-				// Skip any already pending motion events.
 				while (XCheckTypedWindowEvent(
 						display_, e.xmotion.window, MotionNotify, &e)) {}
 				OnMotionNotify(e.xmotion);
@@ -211,61 +161,71 @@ void WindowManager::Run() {
 				OnKeyRelease(e.xkey);
 				break;
 			default:
-				std::cout << "Ignored event";
+				debug_stream << "Ignored event";
+				logger_.Log(debug_stream.str(), L_WARNING);
+				debug_stream.str("");
+				debug_stream.clear();
 		}
 	}
 }
 
 void WindowManager::Frame(Window w, bool was_created_before_window_manager) {
-	// Visual properties of the frame to create.
-	const unsigned int BORDER_WIDTH = 10;
+	std::stringstream debug_stream;
+	const unsigned int BORDER_WIDTH = 3;
 	const unsigned long BORDER_COLOR = 0xff0000;
 	const unsigned long BG_COLOR = 0x0000ff;
 
-	// We shouldn't be framing windows we've already framed.
-	//CHECK(!clients_.count(w));
-
-	// 1. Retrieve attributes of window to frame.
+	// TODO : make a client class
+	if (clients_.count(w)) {
+		debug_stream << "Ignore attempt to re-frame window " << w;
+		logger_.Log(debug_stream.str(), L_WARNING);
+		debug_stream.str("");
+		debug_stream.clear();
+		return;
+	}
 	XWindowAttributes x_window_attrs;
-	//CHECK(XGetWindowAttributes(display_, w, &x_window_attrs));
-
-	// 2. If window was created before window manager started, we should frame
-	// it only if it is visible and doesn't set override_redirect.
+	if (XGetWindowAttributes(display_, w, &x_window_attrs) == 0) {
+		debug_stream << "Failed to retrieve attributes for window " << w;
+		logger_.Log(debug_stream.str(), L_WARNING);
+		debug_stream.str("");
+		debug_stream.clear();
+		return;
+	}
 	if (was_created_before_window_manager) {
 		if (x_window_attrs.override_redirect ||
 			x_window_attrs.map_state != IsViewable) {
 			return;
 		}
 	}
-
-	// 3. Create frame.
 	const Window frame = XCreateSimpleWindow(
 			display_,
 			root_,
 			x_window_attrs.x,
 			x_window_attrs.y,
-			x_window_attrs.width,
-			x_window_attrs.height,
+			x_window_attrs.width + 4,
+			x_window_attrs.height + 4,
 			BORDER_WIDTH,
 			BORDER_COLOR,
 			BG_COLOR);
-	// 4. Select events on frame.
+	debug_stream << w << " [" << frame << "]"
+		<< "x:" << x_window_attrs.x
+		<< " y:" << x_window_attrs.y
+		<< " width:" << x_window_attrs.width
+		<< " height:" << x_window_attrs.height << std::endl;
+	logger_.Log(debug_stream.str(), L_INFO);
+	debug_stream.str("");
+	debug_stream.clear();
 	XSelectInput(
 			display_,
 			frame,
 			SubstructureRedirectMask | SubstructureNotifyMask);
-	// 5. Add client to save set, so that it will be restored and kept alive if we
-	// crash.
 	XAddToSaveSet(display_, w);
-	// 6. Reparent client window.
 	XReparentWindow(
 			display_,
 			w,
 			frame,
-			0, 0);  // Offset of client window within frame.
-	// 7. Map frame.
+			2, 2);
 	XMapWindow(display_, frame);
-	// 8. Save frame handle.
 	clients_[w] = frame;
 	// 9. Grab universal window management actions on client window.
 	//   a. Move windows with alt + left button.
@@ -310,13 +270,22 @@ void WindowManager::Frame(Window w, bool was_created_before_window_manager) {
 			false,
 			GrabModeAsync,
 			GrabModeAsync);
-
-	std::cout << "Framed window " << w << " [" << frame << "]";
+	debug_stream << "Framed window " << w << " [" << frame << "]";
+	logger_.Log(debug_stream.str(), L_INFO);
+	debug_stream.str("");
+	debug_stream.clear();
 }
 
 void WindowManager::Unframe(Window w) {
 	//CHECK(clients_.count(w));
-
+	std::stringstream debug_stream;
+	if (!clients_.count(w)) {
+		debug_stream << "Ignore attempt to unframe non-client window " << w;
+		logger_.Log(debug_stream.str(), L_WARNING);
+		debug_stream.str("");
+		debug_stream.clear();
+		return;
+	}
 	// We reverse the steps taken in Frame().
 	const Window frame = clients_[w];
 	// 1. Unmap frame.
@@ -334,7 +303,10 @@ void WindowManager::Unframe(Window w) {
 	// 5. Drop reference to frame handle.
 	clients_.erase(w);
 
-	std::cout << "Unframed window " << w << " [" << frame << "]";
+	debug_stream << "Unframed window " << w << " [" << frame << "]";
+	logger_.Log(debug_stream.str(), L_INFO);
+	debug_stream.str("");
+	debug_stream.clear();
 }
 
 void WindowManager::OnCreateNotify(const XCreateWindowEvent &e) {}
