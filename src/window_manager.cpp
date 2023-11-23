@@ -1,3 +1,10 @@
+/**
+ * @file window_manager.cpp
+ * @brief WindowManager class implementation.
+ * @date 2021-06-23
+ *
+ */
+
 #include <iostream>
 #include "window_manager.hpp"
 
@@ -17,6 +24,18 @@ using ::std::unique_ptr;
 
 bool WindowManager::wm_detected_;
 mutex WindowManager::wm_detected_mutex_;
+/**
+ * @brief Create a WindowManager object
+ * This function is the only way to instantiate a WindowManager object.
+ * It returns a unique_ptr to the object.
+ * If the display_str is empty, it will use the DISPLAY environment variable.
+ * If the display_str is not empty, it will use the display_str.
+ * If the display_str is invalid, it will return nullptr.
+ *
+ * @param logger
+ * @param display_str
+ * @return unique_ptr<WindowManager>
+ */
 
 unique_ptr<WindowManager> WindowManager::Create(const Logger &logger, const string &display_str) {
 	std::stringstream debug_stream;
@@ -31,6 +50,12 @@ unique_ptr<WindowManager> WindowManager::Create(const Logger &logger, const stri
 	return unique_ptr<WindowManager>(new WindowManager(display, logger));
 }
 
+/**
+ * @brief Construct a new Window Manager:: Window Manager object
+ * @param display
+ * @param logger
+ */
+
 WindowManager::WindowManager(Display *display, const Logger &logger)
 		: display_(display),
 		  logger_(logger),
@@ -40,9 +65,20 @@ WindowManager::WindowManager(Display *display, const Logger &logger)
 	logger_.Log("Window Manager Created !\n", L_INFO);
 }
 
+/**
+ * @brief Destroy the Window Manager:: Window Manager object
+ * Close the display.
+ */
+
 WindowManager::~WindowManager() {
 	XCloseDisplay(display_);
 }
+/**
+ * @brief Run the window manager
+ * This method is the main loop of the window manager.
+ * It will handle the events and call the appropriate methods.
+ *
+ */
 void WindowManager::Run() {
 	std::stringstream debug_stream;
 	::std::lock_guard<mutex> lock(wm_detected_mutex_);

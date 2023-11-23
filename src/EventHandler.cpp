@@ -1,7 +1,19 @@
-//
-// Created by corecaps on 11/22/23.
-//
+/**
+ * @file EventHandler.cpp
+ * @brief EventHandler class implementation.
+ * @date 2021-06-23
+ *
+ */
 #include "EventHandler.hpp"
+
+/**
+ * @brief Construct a new Event Handler:: Event Handler object
+ *
+ * @param wm Constant reference to the WindowManager object.
+ * @param logger Constant reference to the Logger object.
+ * @return EventHandler object.
+ *
+ */
 
 EventHandler::EventHandler(const WindowManager &wm, const Logger &logger)
 	:	wm_(wm),
@@ -30,6 +42,15 @@ EventHandler::EventHandler(const WindowManager &wm, const Logger &logger)
 	eventHandlerArray[MotionNotify] = &EventHandler::handleMotionNotify;
 }
 EventHandler::~EventHandler() {}
+/**
+ * @brief Dispatches the event to the appropriate handler function.
+ * the eventHandlerArray is an array of pointers to member functions of the EventHandler class.
+ * The array is initialized with the handleUnknown function.
+ * The array is then populated with the appropriate handler functions.
+ *
+ * @param event The XEvent to be dispatched.
+ *
+ */
 void EventHandler::dispatchEvent(const XEvent &event) {
 
 	if (event.type > 0 && event.type < LASTEvent && eventHandlerArray[event.type] != nullptr)

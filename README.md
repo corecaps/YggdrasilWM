@@ -40,3 +40,11 @@ Xephyr -ac -br -noreset -screen 800x600 :1 &
 export DISPLAY=:1
 xinit ./build/YggdrasilWM
 ```
+
+## Documentation
+The documentation is generated using Doxygen. Run 
+```
+doxygen doxygen.cfg
+```
+in the root directory to generate the documentation in the doc/ subdirectory.
+Feel free to alterate the doxygen.cfg file to your needs.

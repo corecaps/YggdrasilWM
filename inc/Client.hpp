@@ -1,14 +1,16 @@
-//
-// Created by corecaps on 11/22/23.
-//
-
+/**
+ * @file Client.hpp
+ * @brief Client class header.
+ * @date 2021-06-23
+ * This class is responsible for managing the client windows.
+ */
 #ifndef YGGDRASILWM_CLIENT_HPP
 #define YGGDRASILWM_CLIENT_HPP
 #include "window_manager.hpp"
 
 class Client {
 public:
-	Client(WindowManager *window_manager, Window window);
+	Client(const WindowManager &wm,const Logger &logger, Window window);
 	~Client();
 	void focus();
 	void unfocus();
@@ -16,11 +18,12 @@ public:
 	void resize(int width, int height);
 	void set_border_color(unsigned long color);
 	void set_border_width(unsigned int width);
-	void set_border_width(unsigned int width);
-	void set_border_color(unsigned long color);
+
 private:
-	WindowManager *window_manager;
+	const WindowManager& wm_;
+	const Logger& logger_;
 	Window window;
+	Window frame;
 	unsigned int border_width;
 	unsigned long border_color;
 	int x, y;

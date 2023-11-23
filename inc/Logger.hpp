@@ -1,6 +1,11 @@
-//
-// Created by corecaps on 11/21/23.
-//
+/**
+ * @file Logger.hpp
+ * @brief Logger class header.
+ * @date 2021-06-23
+ * This class is responsible for logging.
+ * It can be created with a file name or an ostream.
+ * The log level can be set to filter the messages.
+ */
 
 #ifndef WINDOWMANAGER_LOGGER_H
 #define WINDOWMANAGER_LOGGER_H

@@ -1,3 +1,20 @@
+/**
+ * @file window_manager.hpp
+ * @brief WindowManager class header.
+ * @date 2021-06-23
+ * This class is responsible for managing the windows.in an X11 session.
+ * It is the main class of the project.
+ * It should be instantiated only via the static Create function.
+ * The Run function is the main loop of the program.
+ * @see Create
+ * @see Run
+ * @see Client
+ * @see Logger
+ * @see EventHandler
+ * @see ConfigHandler
+ * @see LayoutManager
+ */
+
 #ifndef WINDOW_MANAGER_HPP
 #define WINDOW_MANAGER_HPP
 extern "C" {

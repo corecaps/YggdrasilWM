@@ -1,7 +1,14 @@
-//
-// Created by corecaps on 11/22/23.
-//
-
+/**
+ * @file EventHandler.hpp
+ * @brief EventHandler class header.
+ * @date 2021-06-23
+ * This class is responsible for handling the XEvents.
+ * It is a part of the WindowManager class
+ * The event handlers functions are private and are called by the dispatchEvent function.
+ * @see WindowManager
+ * @see Client
+ * @see Logger
+ */
 #ifndef YGGDRASILWM_EVENTHANDLER_HPP
 #define YGGDRASILWM_EVENTHANDLER_HPP
 extern "C" {

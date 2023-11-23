@@ -7,6 +7,9 @@ logs/
 #ignore CLion projects files
 .idea/
 
+#ignore Doxygen generated output 
+doc/
+
 # Ignore compiled binaries
 *.exe
 *.out

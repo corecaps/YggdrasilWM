@@ -1,9 +1,23 @@
+/**
+ * @file main.cpp
+ * @brief Main file.
+ * @date 2021-06-23
+ * YggdrasilWM is a tiny window manager for X11.
+ */
+
 #include <cstdlib>
 #include "window_manager.hpp"
 #include "Logger.hpp"
 #include <cxxopts.hpp>
 
 using ::std::unique_ptr;
+/**
+ * @brief YggdrasilWM
+ * Options are :
+ * --version
+ * --log /path/to/log/file
+ * --loglevel 0-2.
+ */
 
 int main(int argc, char** argv) {
 	cxxopts::Options options(PROGRAM_NAME, "A tiny Window Manager.");
