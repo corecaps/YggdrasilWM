@@ -2,7 +2,7 @@
 // Created by corecaps on 11/21/23.
 //
 
-#include "Logger.h"
+#include "Logger.hpp"
 #include <utility>
 
 Logger::Logger(const std::string& logFile, LogLevel logLevel)

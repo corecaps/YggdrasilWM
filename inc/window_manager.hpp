@@ -8,7 +8,7 @@ extern "C" {
 #include <string>
 #include <unordered_map>
 #include "util.hpp"
-#include "Logger.h"
+#include "Logger.hpp"
 
 class WindowManager {
 public:

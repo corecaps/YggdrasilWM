@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include "window_manager.hpp"
-#include "Logger.h"
+#include "Logger.hpp"
 #include <cxxopts.hpp>
 
 using ::std::unique_ptr;
