@@ -32,6 +32,14 @@ set(SOURCES
   ${SOURCE_DIR}/util.cpp
   ${SOURCE_DIR}/main.cpp
   ${SOURCE_DIR}/Logger.cpp
+  ${SOURCE_DIR}/Client.cpp
+  ${INCLUDE_DIR}/Client.hpp
+  ${SOURCE_DIR}/EventHandler.cpp
+  ${INCLUDE_DIR}/EventHandler.hpp
+  ${SOURCE_DIR}/LayoutManager.cpp
+  ${INCLUDE_DIR}/LayoutManager.hpp
+  ${SOURCE_DIR}/ConfigHandler.cpp
+  ${INCLUDE_DIR}/ConfigHandler.hpp
 )
 
 # Create the executable
