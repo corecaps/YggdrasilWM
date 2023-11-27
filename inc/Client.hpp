@@ -1,34 +1,49 @@
 /**
  * @file Client.hpp
- * @brief Client class header.
+ * @brief  This class is responsible for managing the client windows.
  * @date 2021-06-23
- * This class is responsible for managing the client windows.
+ *
  */
 #ifndef YGGDRASILWM_CLIENT_HPP
 #define YGGDRASILWM_CLIENT_HPP
-#include "window_manager.hpp"
+extern "C" {
+#include <X11/Xlib.h>
+}
 
+enum Client_Err {
+	YGG_CLI_NO_ERROR,
+	YGG_CLI_LOG,
+	YGG_CLI_LOG_ALREADY_FRAMED,
+	YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT,
+	YGG_CLI_LOG_IGNORE_NOT_FRAMED,
+	YGG_CLI_WARNING,
+	YGG_CLI_ERROR,
+	YGG_CLI_ERR_RETRIEVE_ATTR,
+
+};
 class Client {
 public:
-	Client(const WindowManager &wm,const Logger &logger, Window window);
+	Client(Display * display, Window root, Window window);
 	~Client();
-	void focus();
-	void unfocus();
-	void move(int x, int y);
-	void resize(int width, int height);
-	void set_border_color(unsigned long color);
-	void set_border_width(unsigned int width);
+	Client_Err	frame();
+	Client_Err	unframe();
+	Window		getWindow();
+	void		focus();
+	void		unfocus();
+	void		move(int x, int y);
+	void		resize(int width, int height);
+	void		set_border_color(unsigned long color);
+	void		set_border_width(unsigned int width);
 
 private:
-	const WindowManager& wm_;
-	const Logger& logger_;
-	Window window;
-	Window frame;
-	unsigned int border_width;
-	unsigned long border_color;
-	int x, y;
-	int width, height;
-	bool focused;
+	Display*				display_;
+	Window					root_;
+	Window					window_;
+	Window					frame_;
+	unsigned int			border_width;
+	unsigned long			border_color;
+	bool					focused;
+	bool					framed;
 };
 
 #endif //YGGDRASILWM_CLIENT_HPP

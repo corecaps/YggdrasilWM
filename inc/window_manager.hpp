@@ -26,6 +26,7 @@ extern "C" {
 #include <unordered_map>
 #include "util.hpp"
 #include "Logger.hpp"
+#include "Client.hpp"
 
 class WindowManager {
 public:
@@ -34,12 +35,13 @@ public:
 			const std::string &display_str = std::string());
 	~WindowManager();
 	void Run();
-
+	const Window							root_;
+	const Logger&							logger_;
+	Display									*display_;
 private:
 	WindowManager(Display *display, const Logger &logger);
 	void Frame(Window w, bool was_created_before_window_manager);
 	void Unframe(Window w);
-	void Reparent(Window window, bool map);
 	void OnCreateNotify(const XCreateWindowEvent &e);
 	void OnDestroyNotify(const XDestroyWindowEvent &e);
 	void OnReparentNotify(const XReparentEvent &e);
@@ -56,17 +58,16 @@ private:
 	static int OnXError(Display *display, XErrorEvent *e);
 	static int OnWMDetected(Display *display, XErrorEvent *e);
 
-	const Logger							&logger_;
+
 	static bool								wm_detected_;
 	static ::std::mutex						wm_detected_mutex_;
-	Display									*display_;
-	const Window							root_;
-	::std::unordered_map<Window, Window>	clients_;
 	Position<int>							drag_start_pos_;
 	Position<int>							drag_start_frame_pos_;
 	Size<int>								drag_start_frame_size_;
 	const Atom								WM_PROTOCOLS;
 	const Atom								WM_DELETE_WINDOW;
+	std::unordered_map<Window, Client*>		clients_;
+//	std::vector<Client *>					clients_;
 };
 
 #endif
