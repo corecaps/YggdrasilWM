@@ -8,6 +8,7 @@
 #include <X11/keysym.h>
 #include "Client.hpp"
 
+
 Client::Client(Display *display, Window root, Window window)
 		: display_(display),
 		  root_(root),
@@ -17,7 +18,9 @@ Client::Client(Display *display, Window root, Window window)
 		  border_color(0),
 		  focused(false),
 		  framed(false)
-{}
+{
+
+}
 Client::~Client() = default;
 
 /**
@@ -102,6 +105,7 @@ Client_Err Client::frame() {
 			GrabModeAsync,
 			GrabModeAsync);
 	this->framed = true;
+	return YGG_CLI_NO_ERROR;
 }
 
 /**
@@ -119,10 +123,24 @@ Client_Err Client::unframe() {
 			0,0);
 	XRemoveFromSaveSet(display_,window_);
 	XDestroyWindow(display_,frame_);
+	return YGG_CLI_NO_ERROR;
 }
 
 Window Client::getWindow() {
 	return this->window_;
 }
 
-
+std::string Client::getError(Client_Err error) {
+	switch (error) {
+		case YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT:
+			return "Client::Frame ignoring window with override redirect attribute.";
+		case YGG_CLI_LOG_ALREADY_FRAMED :
+			return "Client::Frame Client has already been framed";
+		case YGG_CLI_ERR_RETRIEVE_ATTR:
+			return "Client could not retrieve Window Attributes";
+		case YGG_CLI_LOG_IGNORE_NOT_FRAMED:
+			return"Client::unFrame Client has no frame";
+		default:
+			return "Unknown error from Client Class";
+	}
+}

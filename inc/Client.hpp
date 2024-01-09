@@ -9,6 +9,7 @@
 extern "C" {
 #include <X11/Xlib.h>
 }
+#include <string>
 
 enum Client_Err {
 	YGG_CLI_NO_ERROR,
@@ -28,6 +29,7 @@ public:
 	Client_Err	frame();
 	Client_Err	unframe();
 	Window		getWindow();
+	static std::string	getError(Client_Err error);
 	void		focus();
 	void		unfocus();
 	void		move(int x, int y);

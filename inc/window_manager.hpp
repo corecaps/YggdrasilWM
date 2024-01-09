@@ -35,31 +35,19 @@ public:
 			const std::string &display_str = std::string());
 	~WindowManager();
 	void Run();
+	const Logger &getLogger() const;
+	Display *getDisplay() const;
+	const std::unordered_map<Window, Client *> &getClients() const;
+	const Window getRoot() const;
+
+private:
+	WindowManager(Display *display, const Logger &logger);
+	static int OnXError(Display *display, XErrorEvent *e);
+	static int OnWMDetected(Display *display, XErrorEvent *e);
+	static bool								wm_detected_;
 	const Window							root_;
 	const Logger&							logger_;
 	Display									*display_;
-private:
-	WindowManager(Display *display, const Logger &logger);
-	void Frame(Window w, bool was_created_before_window_manager);
-	void Unframe(Window w);
-	void OnCreateNotify(const XCreateWindowEvent &e);
-	void OnDestroyNotify(const XDestroyWindowEvent &e);
-	void OnReparentNotify(const XReparentEvent &e);
-	void OnMapNotify(const XMapEvent &e);
-	void OnUnmapNotify(const XUnmapEvent &e);
-	void OnConfigureNotify(const XConfigureEvent &e);
-	void OnMapRequest(const XMapRequestEvent &e);
-	void OnConfigureRequest(const XConfigureRequestEvent &e);
-	void OnButtonPress(const XButtonEvent &e);
-	void OnButtonRelease(const XButtonEvent &e);
-	void OnMotionNotify(const XMotionEvent &e);
-	void OnKeyPress(const XKeyEvent &e);
-	void OnKeyRelease(const XKeyEvent &e);
-	static int OnXError(Display *display, XErrorEvent *e);
-	static int OnWMDetected(Display *display, XErrorEvent *e);
-
-
-	static bool								wm_detected_;
 	static ::std::mutex						wm_detected_mutex_;
 	Position<int>							drag_start_pos_;
 	Position<int>							drag_start_frame_pos_;
@@ -67,7 +55,6 @@ private:
 	const Atom								WM_PROTOCOLS;
 	const Atom								WM_DELETE_WINDOW;
 	std::unordered_map<Window, Client*>		clients_;
-//	std::vector<Client *>					clients_;
 };
 
 #endif

@@ -8,9 +8,7 @@
 #include <iostream>
 #include "window_manager.hpp"
 #include "EventHandler.hpp"
-#include <cstring>
 #include <algorithm>
-#include <unistd.h>
 #include "util.hpp"
 extern "C" {
 #include <X11/Xutil.h>
@@ -46,6 +44,8 @@ unique_ptr<WindowManager> WindowManager::Create(const Logger &logger, const stri
 		logger.Log(debug_stream.str(), L_ERROR);
 		return nullptr;
 	}
+	debug_stream << "Opened X display " << XDisplayName(display_c_str);
+	logger.Log(debug_stream.str(), L_INFO);
 	return unique_ptr<WindowManager>(new WindowManager(display, logger));
 }
 
@@ -58,7 +58,7 @@ unique_ptr<WindowManager> WindowManager::Create(const Logger &logger, const stri
 WindowManager::WindowManager(Display *display, const Logger &logger)
 		: display_(display),
 		  logger_(logger),
-		  root_(DefaultRootWindow(display_)),
+		  root_(DefaultRootWindow(display)),
 		  WM_PROTOCOLS(XInternAtom(display_, "WM_PROTOCOLS", false)),
 		  WM_DELETE_WINDOW(XInternAtom(display_, "WM_DELETE_WINDOW", false)) {
 	logger_.Log("Window Manager Created !\n", L_INFO);
@@ -70,6 +70,7 @@ WindowManager::WindowManager(Display *display, const Logger &logger)
  */
 
 WindowManager::~WindowManager() {
+	logger_.Log("Window Manager Destroyed !\n", L_INFO);
 	XCloseDisplay(display_);
 }
 /**
@@ -86,10 +87,6 @@ void WindowManager::Run() {
 			display_,
 			root_,
 			SubstructureRedirectMask | SubstructureNotifyMask);
-	debug_stream << "XSelectInput returned " << ret_code << std::endl;
-	logger_.Log(debug_stream.str(), L_INFO);
-	debug_stream.str("");
-	debug_stream.clear();
 	XSync(display_, false);
 	if (wm_detected_) {
 		debug_stream << "Detected another window manager on display "
@@ -99,10 +96,6 @@ void WindowManager::Run() {
 		debug_stream.clear();
 		return;
 	}
-	debug_stream << "Starting window manager on display " << XDisplayString(display_) << wm_detected_ << std::endl;
-	logger_.Log(debug_stream.str(), L_INFO);
-	debug_stream.str("");
-	debug_stream.clear();
 	XSync(display_, false);
 	XSetErrorHandler(&WindowManager::OnXError);
 	XGrabServer(display_);
@@ -122,15 +115,28 @@ void WindowManager::Run() {
 		debug_stream.str("");
 		debug_stream.clear();
 	}
+	debug_stream << "Found " << num_top_level_windows << " top level windows." << "root:" << root_ << std::endl;
+	logger_.Log(debug_stream.str(), L_INFO);
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
 		Client* newClient = new Client(display_,root_,top_level_windows[i]);
-		newClient->frame();
+		debug_stream << "New Client Created !" << display_ << " " << root_ << " " << top_level_windows[i] << std::endl;
+		logger_.Log(debug_stream.str(), L_INFO);
+		Client_Err err = newClient->frame();
+		if (err != YGG_CLI_NO_ERROR)
+		{
+			if (err > YGG_CLI_ERROR)
+				logger_.Log(Client::getError(err),L_ERROR);
+			else if (err > YGG_CLI_WARNING)
+				logger_.Log(Client::getError(err), L_ERROR);
+			else if (err > YGG_CLI_LOG)
+				logger_.Log(Client::getError(err),L_INFO);
+		}
 		clients_[newClient->getWindow()] = newClient;
 	}
 	XFree(top_level_windows);
 	XUngrabServer(display_);
 	EventHandler eventHandler(*this,logger_);
-	while(1) {
+	while(true) {
 		XSync(display_, false);
 		XEvent e;
 		XNextEvent(display_, &e);
@@ -324,7 +330,8 @@ int WindowManager::OnXError(Display *display, XErrorEvent *e) {
 			  << " - " << XRequestCodeToString(e->request_code) << "\n"
 			  << "    Error code: " << int(e->error_code)
 			  << " - " << error_text << "\n"
-			  << "    Resource ID: " << e->resourceid;
+			  << "    Resource ID: " << e->resourceid
+			  << std::endl;
 	// The return value is ignored.
 	return 0;
 }
@@ -337,4 +344,20 @@ int WindowManager::OnWMDetected(Display *display, XErrorEvent *e) {
 		wm_detected_ = true;
 	// The return value is ignored.
 	return 0;
+}
+
+const Logger &WindowManager::getLogger() const {
+	return logger_;
+}
+
+Display *WindowManager::getDisplay() const {
+	return display_;
+}
+
+const std::unordered_map<Window, Client *> &WindowManager::getClients() const {
+	return clients_;
+}
+
+const Window WindowManager::getRoot() const {
+	return root_;
 }

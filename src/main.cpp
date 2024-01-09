@@ -46,12 +46,15 @@ int main(int argc, char** argv) {
 			return EXIT_FAILURE;
 		}
 	}
-	Logger logger(LogFilePath, static_cast<LogLevel>(logLevel));
+//	Logger logger(LogFilePath, static_cast<LogLevel>(logLevel));
+	Logger logger(std::cout, static_cast<LogLevel>(logLevel));
+	logger.Log("Starting " + std::string(PROGRAM_NAME) + " " + std::string(PROGRAM_VERSION), L_INFO);
 	unique_ptr<WindowManager> window_manager(WindowManager::Create(logger));
 	if (!window_manager) {
 		logger.Log("Failed to initialize WindowManager.", L_ERROR);
 		return EXIT_FAILURE;
 	}
+	logger.Log("Starting WindowManager.", L_INFO);
 	window_manager->Run();
 	return (EXIT_SUCCESS);
 }

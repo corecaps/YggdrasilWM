@@ -47,6 +47,8 @@ private:
 	void handleMapRequest(const XEvent& event);
 	void handleMotionNotify(const XEvent& event);
 	void handleUnknown(const XEvent& event);
+
+	void handleCreateNotify(const XEvent &event);
 };
 
 #endif //YGGDRASILWM_EVENTHANDLER_HPP
