@@ -60,8 +60,8 @@ public:
 	virtual ~LayoutManager() = default;
 
 	virtual void	updateGeometry();
-	virtual Space	*findSpace(Client *client);
-	virtual Space	*findSpace(int index);
+	virtual Space	&findSpace(Client *client);
+	virtual Space	&findSpace(int index);
 	virtual void	addClient(Client* client);
 
 protected:

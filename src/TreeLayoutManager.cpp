@@ -16,11 +16,11 @@ void TreeLayoutManager::updateGeometry() {
 	LayoutManager::updateGeometry();
 }
 
-LayoutManager::Space *TreeLayoutManager::findSpace(Client *client) {
+LayoutManager::Space & TreeLayoutManager::findSpace(Client *client) {
 	return LayoutManager::findSpace(client);
 }
 
-LayoutManager::Space *TreeLayoutManager::findSpace(int index) {
+LayoutManager::Space & TreeLayoutManager::findSpace(int index) {
 	return LayoutManager::findSpace(index);
 }
 

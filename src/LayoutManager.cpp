@@ -18,10 +18,10 @@ void LayoutManager::updateGeometry() {
 
 }
 
-LayoutManager::Space *LayoutManager::findSpace(Client *client) {
+LayoutManager::Space & LayoutManager::findSpace(Client *client) {
 	return nullptr;
 }
-LayoutManager::Space *LayoutManager::findSpace(int index) {
+LayoutManager::Space & LayoutManager::findSpace(int index) {
 	return nullptr;
 }
 
