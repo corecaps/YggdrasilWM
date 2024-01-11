@@ -9,6 +9,7 @@
 extern "C" {
 #include <X11/Xlib.h>
 }
+
 #include <string>
 
 enum Client_Err {
@@ -20,32 +21,43 @@ enum Client_Err {
 	YGG_CLI_WARNING,
 	YGG_CLI_ERROR,
 	YGG_CLI_ERR_RETRIEVE_ATTR,
-
 };
+
 class Client {
 public:
-	Client(Display * display, Window root, Window window);
+	Client(Display *display, Window root, Window window);
 	~Client();
-	Client_Err	frame();
-	Client_Err	unframe();
-	Window		getWindow();
-	static std::string	getError(Client_Err error);
-	void		focus();
-	void		unfocus();
-	void		move(int x, int y);
-	void		resize(int width, int height);
-	void		set_border_color(unsigned long color);
-	void		set_border_width(unsigned int width);
+	Client_Err frame();
+	Client_Err unframe();
+	Window getWindow() const;
+	static std::string getError(Client_Err error);
+	void focus();
+	void unfocus();
+	void move(int x, int y);
+	void resize(int width, int height);
+	void set_border_color(unsigned long color);
+	void set_border_width(unsigned int width);
+	bool isFramed() const;
+	void setMapped(bool mapped);
+	bool isMapped() const;
+	const std::string &getTitle() const;
+	const std::string &getClass() const;
+	Window getFrame() const;
+	bool isFocused() const;
+	void setFocused(bool focused);
 
 private:
-	Display*				display_;
-	Window					root_;
-	Window					window_;
-	Window					frame_;
-	unsigned int			border_width;
-	unsigned long			border_color;
-	bool					focused;
-	bool					framed;
+	Display *display_;
+	Window root_;
+	Window window_;
+	Window frame_;
+	unsigned int border_width;
+	unsigned long border_color;
+	bool focused;
+	bool framed;
+	bool mapped{};
+	std::string title_;
+	std::string class_;
 };
 
 #endif //YGGDRASILWM_CLIENT_HPP

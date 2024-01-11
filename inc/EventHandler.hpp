@@ -19,14 +19,17 @@ extern "C" {
 
 class EventHandler {
 public:
-	EventHandler(const WindowManager &wm, const Logger &logger);
+	EventHandler(WindowManager &wm, const Logger &logger);
 	~EventHandler();
 	void dispatchEvent(const XEvent& event);
 private:
-	const WindowManager &wm_;
+	Position<int> drag_start_pos_;
+	Position<int> drag_start_frame_pos_;
+	Size<int> drag_start_frame_size_;
+	WindowManager wm_;
 	const Logger &logger_;
 	using Handler = void (EventHandler::*)(const XEvent&);
-	Handler eventHandlerArray[LASTEvent];
+	Handler eventHandlerArray[LASTEvent]{};
 	void handleMapNotify(const XEvent& event);
 	void handleUnmapNotify(const XEvent& event);
 	void handleConfigureRequest(const XEvent& event);
@@ -47,7 +50,6 @@ private:
 	void handleMapRequest(const XEvent& event);
 	void handleMotionNotify(const XEvent& event);
 	void handleUnknown(const XEvent& event);
-
 	void handleCreateNotify(const XEvent &event);
 };
 

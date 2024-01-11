@@ -55,6 +55,7 @@ int main(int argc, char** argv) {
 		return EXIT_FAILURE;
 	}
 	logger.Log("Starting WindowManager.", L_INFO);
+	window_manager->Init();
 	window_manager->Run();
 	return (EXIT_SUCCESS);
 }

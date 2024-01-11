@@ -31,19 +31,20 @@ extern "C" {
 class WindowManager {
 public:
 	static ::std::unique_ptr<WindowManager> Create(
-			const Logger &logger,
-			const std::string &display_str = std::string());
+	const Logger &logger,
+	const std::string &display_str = std::string());
 	~WindowManager();
+	void Init();
 	void Run();
 	const Logger &getLogger() const;
 	Display *getDisplay() const;
-	const std::unordered_map<Window, Client *> &getClients() const;
+	std::unordered_map<Window, Client *> &getClients();
 	const Window getRoot() const;
+	void insertClient(Window window);
+	Client &getClient(Window window);
+	bool isFrame(Window window);
 
 private:
-	WindowManager(Display *display, const Logger &logger);
-	static int OnXError(Display *display, XErrorEvent *e);
-	static int OnWMDetected(Display *display, XErrorEvent *e);
 	static bool								wm_detected_;
 	const Window							root_;
 	const Logger&							logger_;
@@ -55,6 +56,14 @@ private:
 	const Atom								WM_PROTOCOLS;
 	const Atom								WM_DELETE_WINDOW;
 	std::unordered_map<Window, Client*>		clients_;
+	bool									running;
+
+	void selectEventOnRoot() const;
+	WindowManager(Display *display, const Logger &logger);
+	static int OnXError(Display *display, XErrorEvent *e);
+	static int OnWMDetected(Display *display, XErrorEvent *e);
+	void getTopLevelWindows(std::stringstream &debug_stream);
+
 };
 
 #endif

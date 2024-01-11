@@ -22,4 +22,5 @@ cd build
 echo "Running make"
 make
 cd ..
-xinit ./xinitrc -- /usr/bin/Xephyr :100 -ac -screen 800x600 -host-cursor 
+xinit ./xinitrc -- /usr/bin/Xephyr :1 -ac -screen 800x600 -host-cursor
+cat logs/std-logs.txt
