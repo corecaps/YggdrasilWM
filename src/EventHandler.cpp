@@ -148,7 +148,7 @@ void EventHandler::handleUnmapNotify(const XEvent &event) {
 		Client &client = wm_.getClient(e.window);
 		logger_.Log("Unmapping window: " + client.getTitle(), L_INFO);
 		client.unframe();
-		XUnmapWindow(wm_.getDisplay(), e.window);
+//		XUnmapWindow(wm_.getDisplay(), e.window);
 		client.setMapped(false);
 	}
 	catch (std::out_of_range &err) {

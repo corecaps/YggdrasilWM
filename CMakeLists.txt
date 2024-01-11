@@ -60,6 +60,8 @@ set(SOURCES
         ${INCLUDE_DIR}/LayoutManager.hpp
         ${SOURCE_DIR}/ConfigHandler.cpp
         ${INCLUDE_DIR}/ConfigHandler.hpp
+        src/TreeLayoutManager.cpp
+        inc/TreeLayoutManager.hpp
 )
 
 # Create the executable
