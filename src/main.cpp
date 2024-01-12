@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
 	int logLevel = 0;
 	if (result.count("loglevel")) {
 		logLevel = result["loglevel"].as<int>();
-		if (!(logLevel >= 0 && logLevel <= 2)) {
+		if (logLevel < 0 || logLevel > 2) {
 			std::cerr << "Invalid log level. It should be between 0 and 2." << std::endl;
 			return EXIT_FAILURE;
 		}

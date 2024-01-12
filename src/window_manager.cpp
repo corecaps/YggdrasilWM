@@ -109,14 +109,30 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 		Client *newClient = new Client(display_, root_, top_level_windows[i]);
 		Client_Err err = newClient->frame();
 		XMapWindow(display_, top_level_windows[i]);
-		if (err != YGG_CLI_NO_ERROR) {
-			if (err > YGG_CLI_ERROR)
-				logger_.Log(Client::getError(err), L_ERROR);
-			else if (err > YGG_CLI_WARNING)
-				logger_.Log(Client::getError(err), L_ERROR);
-			else if (err > YGG_CLI_LOG)
-				logger_.Log(Client::getError(err), L_INFO);
+		LogLevel debug_level;
+		switch (err) {
+			case YGG_CLI_NO_ERROR:
+				debug_stream << "Client framed: " << newClient->getTitle() << "\t[" << top_level_windows[i] << "]";
+				debug_level = L_INFO;
+				break;
+			case YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT:
+				debug_stream << Client::getError(err) << "\t[" << top_level_windows[i] << "]";
+				debug_level = L_WARNING;
+				break;
+			case YGG_CLI_LOG_ALREADY_FRAMED:
+				debug_stream << Client::getError(err) << "\t[" << top_level_windows[i] << "]";
+				debug_level = L_WARNING;
+				break;
+			case YGG_CLI_ERR_RETRIEVE_ATTR:
+				debug_stream << Client::getError(err) << "\t[" << top_level_windows[i] << "]";
+				debug_level = L_ERROR;
+				break;
+			case YGG_CLI_LOG_IGNORE_NOT_FRAMED:
+				debug_stream << Client::getError(err) << "\t[" << top_level_windows[i] << "]";
+				debug_level = L_INFO;
+				break;
 		}
+		logger_.Log(debug_stream.str(), debug_level);
 		clients_[newClient->getWindow()] = newClient;
 	}
 	XFree(top_level_windows);
