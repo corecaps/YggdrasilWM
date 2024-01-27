@@ -10,18 +10,15 @@ LayoutManager::LayoutManager(Display *display, Window root) : display_(display),
 
 }
 
-LayoutManager::~LayoutManager() {
-
-}
 
 void LayoutManager::updateGeometry() {
 
 }
 
-LayoutManager::Space & LayoutManager::findSpace(Client *client) {
+LayoutManager::Space * LayoutManager::findSpace(Client *client) {
 	return nullptr;
 }
-LayoutManager::Space & LayoutManager::findSpace(int index) {
+LayoutManager::Space * LayoutManager::findSpace(int index) {
 	return nullptr;
 }
 
@@ -80,16 +77,16 @@ const std::unique_ptr<LayoutManager::Space> &LayoutManager::Space::getRight() co
 	return right_;
 }
 
-void LayoutManager::Space::setRight(const std::unique_ptr<Space> &right) {
-	Space::right_ = right;
+void LayoutManager::Space::setRight(std::unique_ptr<Space> right) {
+	this->right_ = std::move(right);
 }
 
 const std::unique_ptr<LayoutManager::Space> &LayoutManager::Space::getLeft() const {
 	return left_;
 }
 
-void LayoutManager::Space::setLeft(const std::unique_ptr<Space> &left) {
-	Space::left_ = left;
+void LayoutManager::Space::setLeft( std::unique_ptr<Space> left) {
+	this->left_ = std::move(left);
 }
 
 Client *LayoutManager::Space::getClient() const {

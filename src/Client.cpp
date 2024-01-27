@@ -16,8 +16,10 @@
  * @param root
  * @param window
  */
-Client::Client(Display *display, Window root, Window window)
+#include "TreeLayoutManager.hpp"
+Client::Client(Display *display, Window root, Window window, TreeLayoutManager *layout_manager)
 		: display_(display),
+		  layout_manager_(layout_manager),
 		  root_(root),
 		  window_(window),
 		  frame_(0),
@@ -137,6 +139,7 @@ Client_Err Client::frame() {
 			GrabModeAsync,
 			GrabModeAsync);
 	this->framed = true;
+	this->layout_manager_->addClient(this);
 	return YGG_CLI_NO_ERROR;
 }
 
@@ -217,4 +220,20 @@ const std::string &Client::getTitle() const {
 
 const std::string &Client::getClass() const {
 	return class_;
+}
+
+void Client::move(int x, int y) {
+	if (this->framed) {
+		XMoveWindow(display_, frame_, x, y);
+	}
+	XMoveWindow(display_, window_, x, y);
+	XRaiseWindow(display_, window_);
+}
+
+void Client::resize(int width, int height) {
+	if (this->framed) {
+		XResizeWindow(display_, frame_, width, height);
+	}
+	XResizeWindow(display_, window_, width, height);
+	XRaiseWindow(display_, window_);
 }

@@ -27,6 +27,7 @@ extern "C" {
 #include "util.hpp"
 #include "Logger.hpp"
 #include "Client.hpp"
+#include "TreeLayoutManager.hpp"
 
 class WindowManager {
 public:
@@ -48,6 +49,7 @@ private:
 	static bool								wm_detected_;
 	const Window							root_;
 	const Logger&							logger_;
+	TreeLayoutManager					*layout_manager_;
 	Display									*display_;
 	static ::std::mutex						wm_detected_mutex_;
 	Position<int>							drag_start_pos_;

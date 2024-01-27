@@ -12,6 +12,7 @@ extern "C" {
 
 #include <string>
 
+class TreeLayoutManager;
 enum Client_Err {
 	YGG_CLI_NO_ERROR,
 	YGG_CLI_LOG,
@@ -25,7 +26,7 @@ enum Client_Err {
 
 class Client {
 public:
-	Client(Display *display, Window root, Window window);
+	Client(Display *display, Window root, Window window, TreeLayoutManager *layout_manager);
 	~Client();
 	Client_Err frame();
 	Client_Err unframe();
@@ -48,6 +49,7 @@ public:
 
 private:
 	Display *display_;
+	TreeLayoutManager *layout_manager_;
 	Window root_;
 	Window window_;
 	Window frame_;

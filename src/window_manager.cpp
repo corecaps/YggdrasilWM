@@ -64,7 +64,8 @@ WindowManager::WindowManager(Display *display, const Logger &logger)
 		  root_(DefaultRootWindow(display)),
 		  WM_PROTOCOLS(XInternAtom(display_, "WM_PROTOCOLS", false)),
 		  WM_DELETE_WINDOW(XInternAtom(display_, "WM_DELETE_WINDOW", false)),
-		  running(true){
+		  running(true),
+		  layout_manager_(nullptr){
 	logger_.Log("Window Manager Created !\n", L_INFO);
 }
 
@@ -84,6 +85,8 @@ void WindowManager::Init() {
 	XGrabServer(display_);
 	getTopLevelWindows(debug_stream);
 	XUngrabServer(display_);
+	XFlush(display_);
+	this->layout_manager_ = new TreeLayoutManager(this->display_, this->root_);
 }
 
 void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
@@ -106,7 +109,7 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 	debug_stream << "Found " << num_top_level_windows << " top level windows." << "root:" << root_;
 	logger_.Log(debug_stream.str(), L_INFO);
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
-		Client *newClient = new Client(display_, root_, top_level_windows[i]);
+		Client *newClient = new Client(display_, root_, top_level_windows[i],layout_manager_);
 		Client_Err err = newClient->frame();
 		XMapWindow(display_, top_level_windows[i]);
 		LogLevel debug_level;
@@ -207,7 +210,7 @@ Client &WindowManager::getClient(Window window) {
 
 void WindowManager::insertClient(Window window) {
 	std::stringstream debug_stream;
-	Client *client = new Client(display_, root_, window);
+	Client *client = new Client(display_, root_, window, layout_manager_);
 	debug_stream << "Inserting client in map: " << client->getTitle() << "\t[" << window << "]";
 	logger_.Log(debug_stream.str(), L_INFO);
 	clients_.insert({window, client});

@@ -20,6 +20,7 @@ public:
 		int	y;
 
 		Point(int x, int y) : x(x), y(y) {}
+		Point() : x(0), y(0) {}
 	};
 
 	class Space {
@@ -43,9 +44,9 @@ public:
 		Space *getParent() const;
 		void setParent(Space *parent);
 		const std::unique_ptr<Space> &getRight() const;
-		void setRight(const std::unique_ptr<Space> &right);
+		void setRight(std::unique_ptr<Space> right);
 		const std::unique_ptr<Space> &getLeft() const;
-		void setLeft(const std::unique_ptr<Space> &left);
+		void setLeft(std::unique_ptr<Space> left);
 		Client *getClient() const;
 		void setClient(Client *client);
 	};
@@ -60,8 +61,8 @@ public:
 	virtual ~LayoutManager() = default;
 
 	virtual void	updateGeometry();
-	virtual Space	&findSpace(Client *client);
-	virtual Space	&findSpace(int index);
+	virtual Space	*findSpace(Client *client);
+	virtual Space	*findSpace(int index);
 	virtual void	addClient(Client* client);
 
 protected:
