@@ -24,3 +24,5 @@ CMakeFiles/
 CMakeCache.txt
 CMakeScripts/
 cmake_install.cmake
+
+.gdb_history
