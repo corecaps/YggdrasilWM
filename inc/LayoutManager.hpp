@@ -36,6 +36,7 @@ public:
 		Point					pos_;
 		Point					size_;
 		int						index_;
+		int						subspace_count_;
 		Space*					parent_;
 		std::unique_ptr<Space>	right_;
 		std::unique_ptr<Space>	left_;
@@ -47,6 +48,9 @@ public:
 		void setPos(const Point &pos);
 		const Point &getSize() const;
 		void setSize(const Point &size);
+
+		int getSubspaceCount() const;
+
 		int getIndex() const;
 		void setIndex(int index);
 		Space *getParent() const;
@@ -57,6 +61,8 @@ public:
 		void setLeft(std::unique_ptr<Space> left);
 		Client *getClient() const;
 		void setClient(Client *client);
+
+		void incSubSpaceCount();
 	};
 
 	class SpaceNotFoundException : public std::runtime_error {

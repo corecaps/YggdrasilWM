@@ -47,11 +47,18 @@ public:
 	void Run();
 	const Logger &getLogger() const;
 	Display *getDisplay() const;
+
+	TreeLayoutManager *getLayoutManager() const;
+
 	std::unordered_map<Window, Client *> &getClients();
 	const Window getRoot() const;
 	void insertClient(Window window);
-	Client &getClient(Window window);
+	Client * getClient(Window window);
 	bool isFrame(Window window);
+
+	Client &getClientRef(Window window);
+
+	void Stop();
 
 private:
 	static bool								wm_detected_;

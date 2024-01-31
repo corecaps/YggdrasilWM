@@ -61,7 +61,12 @@ Client::Client(Display *display, Window root, Window window, TreeLayoutManager *
 	}
 	XFree(propData);
 }
-Client::~Client() = default;
+Client::~Client() {
+	if (this->framed) {
+		XDestroyWindow(display_, frame_);
+	}
+	std::cerr << "Client destroyed :" << title_ << std::endl;
+}
 
 /**
  * @brief Client::frame create a frame around the client window, Map the frame,
@@ -151,6 +156,13 @@ Client_Err Client::frame() {
 	return YGG_CLI_NO_ERROR;
 }
 
+void Client::restack() {
+	if (this->framed) {
+		XRaiseWindow(display_, frame_);
+	}
+	XRaiseWindow(display_, window_);
+}
+
 /**
  * @brief Client::unframe unframe the client window by removing the frame and reparenting the window to the root window
  */
@@ -158,13 +170,13 @@ Client_Err Client::frame() {
 Client_Err Client::unframe() {
 	if (!this->framed)
 		return(YGG_CLI_LOG_IGNORE_NOT_FRAMED);
-	XUnmapWindow(display_,frame_);
-	XReparentWindow(
-			display_,
-			window_,
-			root_,
-			0,0);
-	XRemoveFromSaveSet(display_,window_);
+//	XUnmapWindow(display_,frame_);
+//	XReparentWindow(
+//			display_,
+//			window_,
+//			root_,
+//			0,0);
+//	XRemoveFromSaveSet(display_,window_);
 	XDestroyWindow(display_,frame_);
 	this->framed = false;
 	this->frame_ = 0;
@@ -234,14 +246,14 @@ void Client::move(int x, int y) {
 	if (this->framed) {
 		XMoveWindow(display_, frame_, x, y);
 	}
-	XMoveWindow(display_, window_, x, y);
-	XRaiseWindow(display_, window_);
+	else {
+		XMoveWindow(display_, window_, x, y);
+	}
 }
 
 void Client::resize(int width, int height) {
 	if (this->framed) {
 		XResizeWindow(display_, frame_, width, height);
 	}
-	XResizeWindow(display_, window_, width, height);
-	XRaiseWindow(display_, window_);
+	XResizeWindow(display_, window_, width , height );
 }

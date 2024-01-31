@@ -14,7 +14,7 @@
  */
 #include "LayoutManager.hpp"
 
-LayoutManager::LayoutManager(Display *display, Window root) : display_(display), rootWindow_(root){
+LayoutManager::LayoutManager(Display *display, Window root) : display_(display), rootWindow_(root),space_count_(0){
 
 }
 
@@ -45,14 +45,16 @@ const char *LayoutManager::SpaceNotFoundException::what() const noexcept {
 
 LayoutManager::Space::Space(LayoutManager::Point pos, LayoutManager::Point size, int index,
 							LayoutManager::Space *parent) :
-		pos_(pos), size_(size), index_(index), parent_(parent){
+		pos_(pos), size_(size), index_(index), subspace_count_(1),parent_(parent),left_(nullptr),right_(nullptr){
 
 }
 
 const LayoutManager::Point &LayoutManager::Space::getPos() const {
 	return pos_;
 }
-
+void LayoutManager::Space::incSubSpaceCount() {
+	subspace_count_ ++;
+}
 void LayoutManager::Space::setPos(const LayoutManager::Point &pos) {
 	Space::pos_ = pos;
 }
@@ -103,4 +105,8 @@ Client *LayoutManager::Space::getClient() const {
 
 void LayoutManager::Space::setClient(Client *client) {
 	Space::client_ = client;
+}
+
+int LayoutManager::Space::getSubspaceCount() const {
+	return subspace_count_;
 }

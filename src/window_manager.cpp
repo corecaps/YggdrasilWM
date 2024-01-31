@@ -124,7 +124,8 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 		debug_stream.str("");
 		debug_stream.clear();
 	}
-	debug_stream << "Found " << num_top_level_windows << " top level windows." << "root:" << root_;
+	debug_stream << "Found " << num_top_level_windows << " top level windows." << "root:" << root_ << std::endl;
+	this->layout_manager_ = new TreeLayoutManager(this->display_, this->root_);
 	logger_.Log(debug_stream.str(), L_INFO);
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
 		Client *newClient = new Client(display_, root_, top_level_windows[i],layout_manager_);
@@ -221,9 +222,24 @@ Display *WindowManager::getDisplay() const {
 std::unordered_map<Window, Client *> &WindowManager::getClients() {
 	return clients_;
 }
-
-Client &WindowManager::getClient(Window window) {
+Client &WindowManager::getClientRef(Window window) {
 	return *clients_.at(window);
+}
+Client* WindowManager::getClient(Window window) {
+	auto clientIter = clients_.find(window);
+	if (clientIter != clients_.end()) {
+		return clientIter->second;
+	}
+
+	// If not found, check frames
+	for (const auto& client : clients_) {
+		if (client.second->getFrame() == window) {
+			return client.second;
+		}
+	}
+
+	// If still not found, return nullptr
+	return nullptr;
 }
 
 void WindowManager::insertClient(Window window) {
@@ -244,4 +260,8 @@ bool WindowManager::isFrame(Window window) {
 			return true;
 	}
 	return false;
+}
+
+TreeLayoutManager *WindowManager::getLayoutManager() const {
+	return layout_manager_;
 }

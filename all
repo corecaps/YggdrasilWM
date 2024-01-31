@@ -1,0 +1,1746 @@
+/**
+ * @file Client.cpp
+ * @brief Client class implementation.
+ * @date 2021-06-23
+ *
+ */
+
+#include <X11/keysym.h>
+#include <iostream>
+#include <cstring>
+#include "Client.hpp"
+
+/**
+ * @brief Client constructor.get window class and title
+ * @param display
+ * @param root
+ * @param window
+ */
+Client::Client(Display *display, Window root, Window window)
+		: display_(display),
+		  root_(root),
+		  window_(window),
+		  frame_(0),
+		  border_width(0),
+		  border_color(0),
+		  focused(false),
+		  framed(false),
+		  mapped(false)
+{
+	Atom wmClassAtom = XInternAtom(display, "WM_CLASS", False);
+	if (wmClassAtom == None) {
+		std::cerr << "Failed to intern WM_CLASS atom." << std::endl;
+	}
+	Atom actualType;
+	int actualFormat;
+	unsigned long nItems, bytesAfter;
+	unsigned char* propData;
+	if (XGetWindowProperty(display, window, wmClassAtom, 0, 1024, False, AnyPropertyType,
+						   &actualType, &actualFormat, &nItems, &bytesAfter, &propData) != Success) {
+		std::cerr << "Failed to get WM_CLASS property." << std::endl;
+	}
+	Atom XA_STRING = XInternAtom(display, "STRING", False);
+	if (actualType == XA_STRING && actualFormat == 8 && nItems > 1) {
+		// The WM_CLASS property contains two null-terminated strings.
+		char* instanceName = reinterpret_cast<char*>(propData);
+		char* className = instanceName + strlen(instanceName) + 1;
+		this->class_ = className;
+		this->title_ = instanceName;
+	} else {
+		std::cerr << "Unexpected format or size of WM_CLASS property." << std::endl;
+	}
+	XFree(propData);
+}
+Client::~Client() = default;
+
+/**
+ * @brief Client::frame create a frame around the client window, Map the frame,
+ * Add the window to the save set Reparent it, grab the buttons
+ */
+
+Client_Err Client::frame() {
+	const unsigned int BORDER_WIDTH = 3;
+	const unsigned long BORDER_COLOR = 0xff0000;
+	const unsigned long BG_COLOR = 0x0000ff;
+
+	if (this->framed)
+		return(YGG_CLI_LOG_ALREADY_FRAMED);
+	XWindowAttributes x_window_attrs;
+	if (XGetWindowAttributes(display_, window_, &x_window_attrs) == 0)
+		return (YGG_CLI_ERR_RETRIEVE_ATTR);
+	if (x_window_attrs.override_redirect)
+		return(YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT);
+	this->frame_ = XCreateSimpleWindow(
+			display_,
+			root_,
+			x_window_attrs.x,
+			x_window_attrs.y,
+			x_window_attrs.width +4,
+			x_window_attrs.height+4,
+			BORDER_WIDTH,
+			BORDER_COLOR,
+			BG_COLOR
+			);
+		XSelectInput(
+			display_,
+			this->frame_,
+			SubstructureRedirectMask | SubstructureNotifyMask);
+	XAddToSaveSet(display_,window_);
+	XReparentWindow(
+			display_,
+			window_,
+			frame_,
+			2,2
+			);
+	XMapWindow(display_,frame_);
+	// 9. Grab universal window management actions on client window.
+	//   a. Move windows with alt + left button.
+	XGrabButton(
+			display_,
+			Button1,
+			Mod1Mask,
+			window_,
+			false,
+			ButtonPressMask | ButtonReleaseMask | ButtonMotionMask,
+			GrabModeAsync,
+			GrabModeAsync,
+			None,
+			None);
+	//   b. Resize windows with alt + right button.
+	XGrabButton(
+			display_,
+			Button3,
+			Mod1Mask,
+			window_,
+			false,
+			ButtonPressMask | ButtonReleaseMask | ButtonMotionMask,
+			GrabModeAsync,
+			GrabModeAsync,
+			None,
+			None);
+	//   c. Kill windows with alt + f4.
+	XGrabKey(
+			display_,
+			XKeysymToKeycode(display_, XK_F4),
+			Mod1Mask,
+			window_,
+			false,
+			GrabModeAsync,
+			GrabModeAsync);
+	//   d. Switch windows with alt + tab.
+	XGrabKey(
+			display_,
+			XKeysymToKeycode(display_, XK_Tab),
+			Mod1Mask,
+			window_,
+			false,
+			GrabModeAsync,
+			GrabModeAsync);
+	this->framed = true;
+	return YGG_CLI_NO_ERROR;
+}
+
+/**
+ * @brief Client::unframe unframe the client window by removing the frame and reparenting the window to the root window
+ */
+
+Client_Err Client::unframe() {
+	if (!this->framed)
+		return(YGG_CLI_LOG_IGNORE_NOT_FRAMED);
+	XUnmapWindow(display_,frame_);
+	XReparentWindow(
+			display_,
+			window_,
+			root_,
+			0,0);
+	XRemoveFromSaveSet(display_,window_);
+	XDestroyWindow(display_,frame_);
+	this->framed = false;
+	this->frame_ = 0;
+	return YGG_CLI_NO_ERROR;
+}
+/**
+ * @brief Client::getWindow return the window attribute of the client
+ * @return Window
+ */
+Window Client::getWindow() const {
+	return this->window_;
+}
+/**
+ * @brief Client::getError Return a string from an error of Client_Err enum
+ * @param error
+ * @return String of error
+ */
+std::string Client::getError(Client_Err error) {
+	switch (error) {
+		case YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT:
+			return "Client::Frame ignoring window with override redirect attribute.";
+		case YGG_CLI_LOG_ALREADY_FRAMED :
+			return "Client::Frame Client has already been framed";
+		case YGG_CLI_ERR_RETRIEVE_ATTR:
+			return "Client could not retrieve Window Attributes";
+		case YGG_CLI_LOG_IGNORE_NOT_FRAMED:
+			return"Client::unFrame Client has no frame";
+		default:
+			return "Unknown error from Client Class";
+	}
+}
+
+/**
+ * @brief Client::getFrame() return the frame Window of the client
+ * @return Window (frame)
+ */
+Window Client::getFrame() const {
+	return frame_;
+}
+bool Client::isFramed() const {
+	return framed;
+}
+bool Client::isFocused() const {
+	return focused;
+}
+
+void Client::setFocused(bool f) {
+	Client::focused = f;
+}
+
+bool Client::isMapped() const {
+	return mapped;
+}
+void Client::setMapped(bool m) {
+	Client::mapped = m;
+}
+
+const std::string &Client::getTitle() const {
+	return title_;
+}
+
+const std::string &Client::getClass() const {
+	return class_;
+}
+/**
+ * @file ConfigHandler.cpp
+ * @brief ConfigHandler class implementation.
+ * @date 2021-06-23
+ *
+ */
+
+#include "ConfigHandler.hpp"
+/**
+ * @file EventHandler.cpp
+ * @brief EventHandler class implementation.
+ * @date 2021-06-23
+ *
+ */
+#include "EventHandler.hpp"
+
+std::string GetEventTypeName(int eventType) {
+	std::string name;
+	switch (eventType) {
+		case CreateNotify:        name = "CreateNotify";         break;
+		case DestroyNotify:       name = "DestroyNotify";        break;
+		case UnmapNotify:         name = "UnmapNotify";          break;
+		case MapNotify:           name = "MapNotify";            break;
+		case MapRequest:          name = "MapRequest";           break;
+		case ReparentNotify:      name = "ReparentNotify";       break;
+		case ConfigureNotify:     name = "ConfigureNotify";      break;
+		case ConfigureRequest:    name = "ConfigureRequest";     break;
+		case GravityNotify:       name = "GravityNotify";        break;
+		case ResizeRequest:       name = "ResizeRequest";        break;
+		case CirculateNotify:     name = "CirculateNotify";      break;
+		case CirculateRequest:    name = "CirculateRequest";     break;
+		case PropertyNotify:      name = "PropertyNotify";       break;
+		case SelectionClear:      name = "SelectionClear";       break;
+		case SelectionRequest:    name = "SelectionRequest";     break;
+		case SelectionNotify:     name = "SelectionNotify";      break;
+		case ColormapNotify:      name = "ColormapNotify";       break;
+		case ClientMessage:       name = "ClientMessage";        break;
+		case MappingNotify:       name = "MappingNotify";        break;
+		case KeyPress:            name = "KeyPress";             break;
+		case KeyRelease:          name = "KeyRelease";           break;
+		case ButtonPress:         name = "ButtonPress";          break;
+		case ButtonRelease:       name = "ButtonRelease";        break;
+		case MotionNotify:        name = "MotionNotify";         break;
+		case EnterNotify:         name = "EnterNotify";          break;
+		case LeaveNotify:         name = "LeaveNotify";          break;
+		case FocusIn:             name = "FocusIn";              break;
+		case FocusOut:            name = "FocusOut";             break;
+		case Expose:              name = "Expose";               break;
+		case GraphicsExpose:      name = "GraphicsExpose";       break;
+		case NoExpose:            name = "NoExpose";             break;
+		case VisibilityNotify:    name = "VisibilityNotify";     break;
+		case GenericEvent:        name = "GenericEvent";         break;
+		case LASTEvent:           name = "LASTEvent";            break;
+		default:                  name = "Unknown";              break;
+	}
+	return name;
+}
+/**
+ * @brief Construct a new Event Handler:: Event Handler object
+ *
+ * @param wm Constant reference to the WindowManager object.
+ * @param logger Constant reference to the Logger object.
+ * @return EventHandler object.
+ *
+ */
+
+EventHandler::EventHandler(WindowManager &wm, const Logger &logger)
+	:	wm_(wm),
+		logger_(logger),
+		drag_start_pos_(0, 0),
+		drag_start_frame_pos_(0, 0),
+		drag_start_frame_size_(0, 0)
+		{
+	for (auto & i : eventHandlerArray) {
+		i = &EventHandler::handleUnknown;
+	}
+	eventHandlerArray[MapNotify] = &EventHandler::handleMapNotify;
+	eventHandlerArray[UnmapNotify] = &EventHandler::handleUnmapNotify;
+	eventHandlerArray[ConfigureNotify] = &EventHandler::handleConfigureNotify;
+	eventHandlerArray[ConfigureRequest] = &EventHandler::handleConfigureRequest;
+	eventHandlerArray[ButtonPress] = &EventHandler::handleButtonPress;
+	eventHandlerArray[ButtonRelease] = &EventHandler::handleButtonRelease;
+	eventHandlerArray[KeyPress] = &EventHandler::handleKeyPress;
+	eventHandlerArray[KeyRelease] = &EventHandler::handleKeyRelease;
+	eventHandlerArray[EnterNotify] = &EventHandler::handleEnterNotify;
+	eventHandlerArray[LeaveNotify] = &EventHandler::handleLeaveNotify;
+	eventHandlerArray[Expose] = &EventHandler::handleExpose;
+	eventHandlerArray[FocusIn] = &EventHandler::handleFocusIn;
+	eventHandlerArray[FocusOut] = &EventHandler::handleFocusOut;
+	eventHandlerArray[PropertyNotify] = &EventHandler::handlePropertyNotify;
+	eventHandlerArray[ClientMessage] = &EventHandler::handleClientMessage;
+	eventHandlerArray[DestroyNotify] = &EventHandler::handleDestroyNotify;
+	eventHandlerArray[ReparentNotify] = &EventHandler::handleReparentNotify;
+	eventHandlerArray[MapRequest] = &EventHandler::handleMapRequest;
+	eventHandlerArray[MotionNotify] = &EventHandler::handleMotionNotify;
+	eventHandlerArray[CreateNotify] = &EventHandler::handleCreateNotify;
+}
+EventHandler::~EventHandler() = default;
+/**
+ * @brief Dispatches the event to the appropriate handler function.
+ * the eventHandlerArray is an array of pointers to member functions of the EventHandler class.
+ * The array is initialized with the handleUnknown function.
+ * The array is then populated with the appropriate handler functions.
+ *
+ * @param event The XEvent to be dispatched.
+ *
+ */
+void EventHandler::dispatchEvent(const XEvent &event) {
+
+	std::string name = GetEventTypeName(event.xany.type);
+//	logger_.Log("Dispatching event: [" + std::to_string(event.type) + "]\t"+ name , L_INFO);
+	if (event.type > 0 && event.type < LASTEvent && eventHandlerArray[event.type] != nullptr)
+		(this->*eventHandlerArray[event.type])(event);
+	else
+		logger_.Log("Unknown event type: ["  + std::to_string(event.type) + "]\t" + name, L_WARNING);
+}
+/**
+ * @brief Handles the MapNotify event.
+ * The MapNotify event is sent to a client when it is mapped.
+ * The event handler retrieves the client from the WindowManager object and sets its mapped attribute to true.
+ * The event handler then logs the event.
+ *
+ * @param event The MapNotify event to be handled.
+ *
+ */
+void EventHandler::handleMapNotify(const XEvent &event) {
+	auto e = event.xmap;
+	try {
+		Client &client = wm_.getClient(e.window);
+		logger_.Log("Window Mapped: " + client.getTitle() , L_INFO);
+		client.setMapped(true);
+	}
+	catch (std::out_of_range &err) {
+		if (wm_.isFrame(e.window))
+			logger_.Log("Mapping Frame", L_INFO);
+		else
+			logger_.Log("Mapping unknown window: " + std::to_string(e.window), L_WARNING);
+	}
+}
+/**
+ * @brief Handles the UnmapNotify event.
+ * The UnmapNotify event is sent to a client when it is unmapped.
+ * The event handler retrieves the client from the WindowManager object and sets its mapped attribute to false.
+ * The event handler then logs the event.
+ *
+ * @param event The UnmapNotify event to be handled.
+ *
+ */
+void EventHandler::handleUnmapNotify(const XEvent &event) {
+	auto e = event.xunmap;
+	if (e.event == wm_.getRoot()) {
+		logger_.Log("Ignoring unmap for root window", L_INFO);
+		return;
+	}
+	try {
+		Client &client = wm_.getClient(e.window);
+		logger_.Log("Unmapping window: " + client.getTitle(), L_INFO);
+		client.unframe();
+		XUnmapWindow(wm_.getDisplay(), e.window);
+		client.setMapped(false);
+	}
+	catch (std::out_of_range &err) {
+		logger_.Log("Unmapping unknown window: " + std::to_string(e.window), L_WARNING);
+		XUnmapWindow(wm_.getDisplay(), e.window);
+	}
+
+}
+void EventHandler::handleConfigureRequest(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+void EventHandler::handleConfigureNotify(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+/**
+ * @brief Handles the ButtonPress event.
+ * The ButtonPress event is sent to a client when a mouse button is pressed.
+ *
+ * @param event The ButtonPress event to be handled.
+ *
+ */
+void EventHandler::handleButtonPress(const XEvent &event) {
+	auto e = event.xbutton;
+	const Window frame = wm_.getClient(event.xbutton.window).getFrame();
+
+	// 1. Save initial cursor position.
+	drag_start_pos_ = Position<int>(e.x_root, e.y_root);
+
+	// 2. Save initial window info.
+	Window returned_root;
+	int x, y;
+	unsigned width, height, border_width, depth;
+	XGetGeometry(
+			wm_.getDisplay(),
+			frame,
+			&returned_root,
+			&x, &y,
+			&width, &height,
+			&border_width,
+			&depth);
+	drag_start_frame_pos_ = Position<int>(x, y);
+	drag_start_frame_size_ = Size<int>(width, height);
+
+	// 3. Raise clicked window to top.
+	XRaiseWindow(wm_.getDisplay(),frame);
+}
+void EventHandler::handleButtonRelease(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+void EventHandler::handleKeyPress(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+void EventHandler::handleKeyRelease(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+void EventHandler::handleEnterNotify(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+void EventHandler::handleLeaveNotify(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+void EventHandler::handleExpose(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+void EventHandler::handleFocusIn(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+void EventHandler::handleFocusOut(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+void EventHandler::handlePropertyNotify(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+void EventHandler::handleClientMessage(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+void EventHandler::handleDestroyNotify(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+void EventHandler::handleReparentNotify(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+/**
+ * @brief Handles the MapRequest event.
+ * The MapRequest event is sent to a client when it is mapped.
+ * The event handler retrieves the client from the WindowManager object and sets its mapped attribute to true.
+ * The event handler then logs the event.
+ *
+ * @param event The MapRequest event to be handled.
+ *
+ */
+void EventHandler::handleMapRequest(const XEvent &event) {
+	XMapRequestEvent e = event.xmaprequest;
+	if (e.parent != wm_.getRoot()) {
+		logger_.Log("Ignoring map request for window: " + std::to_string(e.window), L_INFO);
+		return;
+	}
+	try {
+		if (wm_.getClient(e.window).isMapped()) {
+			logger_.Log("Window already mapped: " + std::to_string(e.window), L_INFO);
+			return;
+		}
+		Client &client = wm_.getClient(e.window);
+		if (client.isFramed()) {
+			logger_.Log("Window already framed: " + std::to_string(e.window), L_INFO);
+			return;
+		}
+		else {
+			logger_.Log("Framing window: " + client.getTitle(), L_INFO);
+			if (client.frame() != YGG_CLI_NO_ERROR)
+				logger_.Log("Failed to frame window: " + std::to_string(e.window), L_ERROR);
+		}
+		logger_.Log("Window already mapped: " + std::to_string(e.window), L_INFO);
+		return;
+	}
+	catch (std::out_of_range &err) {
+		logger_.Log("Creating new client for window: " + std::to_string(e.window), L_INFO);
+		wm_.insertClient(e.window);
+		if (wm_.getClient(e.window).frame() != YGG_CLI_NO_ERROR)
+			logger_.Log("Failed to frame window: " + std::to_string(e.window), L_ERROR);
+	}
+	XMapWindow(wm_.getDisplay(), e.window);
+}
+
+void EventHandler::handleMotionNotify(const XEvent &event) {
+	auto e = event.xmotion;
+	const Window frame = wm_.getClient(event.xmotion.window).getFrame();
+	const Position<int> drag_pos(e.x_root, e.y_root);
+	const Vector2D<int> delta = drag_pos - drag_start_pos_;
+
+	if (e.state & Button1Mask) {
+		// alt + left button: Move window.
+		const Position<int> dest_frame_pos = drag_start_frame_pos_ + delta;
+		XMoveWindow(
+				wm_.getDisplay(),
+				frame,
+				dest_frame_pos.x, dest_frame_pos.y);
+	} else if (e.state & Button3Mask) {
+		// alt + right button: Resize window.
+		// Window dimensions cannot be negative.
+		const Vector2D<int> size_delta(
+				std::max(delta.x, -drag_start_frame_size_.width),
+				std::max(delta.y, -drag_start_frame_size_.height));
+		const Size<int> dest_frame_size = drag_start_frame_size_ + size_delta;
+		// 1. Resize frame.
+		XResizeWindow(
+				wm_.getDisplay(),
+				frame,
+				dest_frame_size.width, dest_frame_size.height);
+		// 2. Resize client window.
+		XResizeWindow(
+				wm_.getDisplay(),
+				e.window,
+				dest_frame_size.width, dest_frame_size.height);
+	}
+}
+void EventHandler::handleCreateNotify(const XEvent &event) {
+	// TODO IMPLEMENT
+}
+
+void EventHandler::handleUnknown(const XEvent &event) {
+	logger_.Log("Unknown event type: " + std::to_string(event.type), L_WARNING);
+}
+
+/**
+ * @file LayoutManager.cpp
+ * @brief LayoutManager class implementation.
+ * @date 2021-06-23
+ *
+ */
+#include "LayoutManager.hpp"
+/**
+ * @file Logger.cpp
+ * @brief Logger class implementation.
+ * @date 2021-06-23
+ *
+ */
+#include "Logger.hpp"
+#include <utility>
+
+/**
+ * @brief Construct a new Logger:: Logger object
+ * This constructor is used when the user wants to log to a file.
+ * @param logFile the file to log to
+ * @param logLevel level of logging 0: info, 1: warning, 2: error
+ */
+
+Logger::Logger(const std::string& logFile, LogLevel logLevel)
+		: logLevel_(logLevel) {
+	logStream_ = std::make_unique<std::ofstream>(logFile, std::ios::out | std::ios::app);
+	if (!logStream_->good()) {
+		std::cerr << "Failed to open log file: " << logFile << std::endl;
+		throw std::runtime_error("Failed to open log file.");
+	}
+}
+/**
+ * @brief Construct a new Logger:: Logger object
+ * This constructor is used when the user wants to log to a stream.
+ * @param output the stream to log to
+ * @param logLevel level of logging 0: info, 1: warning, 2: error
+ */
+
+Logger::Logger(std::ostream& output, LogLevel logLevel)
+		: logStream_(&output), logLevel_(logLevel) {}
+/**
+ * @brief Destroy the Logger:: Logger object
+ * closes the log file if it was opened.
+ */
+
+Logger::~Logger() {
+	*logStream_ << GetTime() << "Closing Session \n"
+		<< " =================================================================================== "
+		<< std::endl;
+	if (dynamic_cast<std::ofstream*>(logStream_.get()) != nullptr) {
+		dynamic_cast<std::ofstream*>(logStream_.get())->close();
+	}
+}
+/**
+ * @brief Log a message
+ * This method logs a message to the log file or stream.
+ * The message is only logged if the log level is high enough.
+ * the time and log level are prepended to the message.
+ * @param message the message to log
+ * @param level the level of the message
+ */
+
+void Logger::Log(const std::string& message, LogLevel level) const {
+	if (level < logLevel_) {
+		return;
+	}
+	*logStream_ << GetTime() << GetLogLevel(level) << message << std::endl;
+}
+
+/**
+ * @brief Get the current time
+ * This method returns the current time in the format: [YYYY-MM-DD-HH:MM:SS]
+ * @return std::string the current time
+ */
+
+std::string Logger::GetTime() {
+	time_t now = time(0);
+	tm* ltm = localtime(&now);
+	std::stringstream ss;
+	ss << std::put_time(ltm, "[%Y-%m-%d-%H:%M:%S]\t");
+	return ss.str();
+}
+/**
+ * @brief Get the log level
+ * This method returns the log level in the format: [LOGLEVEL]
+ * @param level the log level
+ * @return std::string the log level
+ */
+
+std::string Logger::GetLogLevel(LogLevel level) {
+	switch (level) {
+		case L_INFO:
+			return "[INFO]\t";
+		case L_WARNING:
+			return "[WARNING]\t";
+		case L_ERROR:
+			return "[ERROR]\t";
+		default:
+			return "[UNKNOWN]\t";
+	}
+}/**
+ * @file main.cpp
+ * @brief Main file.
+ * @date 2021-06-23
+ * YggdrasilWM is a tiny window manager for X11.
+ */
+
+#include <cstdlib>
+#include "window_manager.hpp"
+#include "Logger.hpp"
+#include <cxxopts.hpp>
+
+using ::std::unique_ptr;
+/**
+ * @brief YggdrasilWM
+ * Options are :
+ * --version
+ * --log /path/to/log/file
+ * --loglevel 0-2.
+ */
+
+int main(int argc, char** argv) {
+	cxxopts::Options options(PROGRAM_NAME, "A tiny Window Manager.");
+	options.add_options()
+			("version", "Display this text and exit", cxxopts::value<bool>())
+			("log", "Specify the log file path", cxxopts::value<std::string>())
+			("loglevel", "Specify the log level (0-2)", cxxopts::value<int>());
+	auto result = options.parse(argc, argv);
+
+	if (result["version"].as<bool>()) {
+		std::cout << PROGRAM_NAME << "\t" << PROGRAM_VERSION << "\n" << std::endl;
+		std::cout << options.help() << std::endl;
+		return EXIT_SUCCESS;
+	}
+	std::string LogFilePath;
+	if (result.count("log")) {
+		LogFilePath = result["log"].as<std::string>();
+	} else {
+		LogFilePath = "wm.log";
+	}
+	int logLevel = 0;
+	if (result.count("loglevel")) {
+		logLevel = result["loglevel"].as<int>();
+		if (!(logLevel >= 0 && logLevel <= 2)) {
+			std::cerr << "Invalid log level. It should be between 0 and 2." << std::endl;
+			return EXIT_FAILURE;
+		}
+	}
+//	Logger logger(LogFilePath, static_cast<LogLevel>(logLevel));
+	Logger logger(std::cout, static_cast<LogLevel>(logLevel));
+	logger.Log("Starting " + std::string(PROGRAM_NAME) + " " + std::string(PROGRAM_VERSION), L_INFO);
+	unique_ptr<WindowManager> window_manager(WindowManager::Create(logger));
+	if (!window_manager) {
+		logger.Log("Failed to initialize WindowManager.", L_ERROR);
+		return EXIT_FAILURE;
+	}
+	logger.Log("Starting WindowManager.", L_INFO);
+	window_manager->Init();
+	window_manager->Run();
+	return (EXIT_SUCCESS);
+}
+
+#include "util.hpp"
+#include <algorithm>
+#include <sstream>
+#include <vector>
+
+using ::std::string;
+using ::std::vector;
+using ::std::pair;
+using ::std::ostringstream;
+
+string ToString(const XEvent& e) {
+  static const char* const X_EVENT_TYPE_NAMES[] = {
+      "",
+      "",
+      "KeyPress",
+      "KeyRelease",
+      "ButtonPress",
+      "ButtonRelease",
+      "MotionNotify",
+      "EnterNotify",
+      "LeaveNotify",
+      "FocusIn",
+      "FocusOut",
+      "KeymapNotify",
+      "Expose",
+      "GraphicsExpose",
+      "NoExpose",
+      "VisibilityNotify",
+      "CreateNotify",
+      "DestroyNotify",
+      "UnmapNotify",
+      "MapNotify",
+      "MapRequest",
+      "ReparentNotify",
+      "ConfigureNotify",
+      "ConfigureRequest",
+      "GravityNotify",
+      "ResizeRequest",
+      "CirculateNotify",
+      "CirculateRequest",
+      "PropertyNotify",
+      "SelectionClear",
+      "SelectionRequest",
+      "SelectionNotify",
+      "ColormapNotify",
+      "ClientMessage",
+      "MappingNotify",
+      "GeneralEvent",
+  };
+
+  if (e.type < 2 || e.type >= LASTEvent) {
+    ostringstream out;
+    out << "Unknown (" << e.type << ")";
+    return out.str();
+  }
+
+  // 1. Compile properties we care about.
+  vector<pair<string, string>> properties;
+  switch (e.type) {
+    case CreateNotify:
+      properties.emplace_back(
+          "window", ToString(e.xcreatewindow.window));
+      properties.emplace_back(
+          "parent", ToString(e.xcreatewindow.parent));
+      properties.emplace_back(
+          "size",
+          Size<int>(e.xcreatewindow.width, e.xcreatewindow.height).ToString());
+      properties.emplace_back(
+          "position",
+          Position<int>(e.xcreatewindow.x, e.xcreatewindow.y).ToString());
+      properties.emplace_back(
+          "border_width",
+          ToString(e.xcreatewindow.border_width));
+      properties.emplace_back(
+          "override_redirect",
+          ToString(static_cast<bool>(e.xcreatewindow.override_redirect)));
+      break;
+    case DestroyNotify:
+      properties.emplace_back(
+          "window", ToString(e.xdestroywindow.window));
+      break;
+    case MapNotify:
+      properties.emplace_back(
+          "window", ToString(e.xmap.window));
+      properties.emplace_back(
+          "event", ToString(e.xmap.event));
+      properties.emplace_back(
+          "override_redirect",
+          ToString(static_cast<bool>(e.xmap.override_redirect)));
+      break;
+    case UnmapNotify:
+      properties.emplace_back(
+          "window", ToString(e.xunmap.window));
+      properties.emplace_back(
+          "event", ToString(e.xunmap.event));
+      properties.emplace_back(
+          "from_configure",
+          ToString(static_cast<bool>(e.xunmap.from_configure)));
+      break;
+    case ConfigureNotify:
+      properties.emplace_back(
+          "window", ToString(e.xconfigure.window));
+      properties.emplace_back(
+          "size",
+          Size<int>(e.xconfigure.width, e.xconfigure.height).ToString());
+      properties.emplace_back(
+          "position",
+          Position<int>(e.xconfigure.x, e.xconfigure.y).ToString());
+      properties.emplace_back(
+          "border_width",
+          ToString(e.xconfigure.border_width));
+      properties.emplace_back(
+          "override_redirect",
+          ToString(static_cast<bool>(e.xconfigure.override_redirect)));
+      break;
+    case ReparentNotify:
+      properties.emplace_back(
+          "window", ToString(e.xreparent.window));
+      properties.emplace_back(
+          "parent", ToString(e.xreparent.parent));
+      properties.emplace_back(
+          "position",
+          Position<int>(e.xreparent.x, e.xreparent.y).ToString());
+      properties.emplace_back(
+          "override_redirect",
+          ToString(static_cast<bool>(e.xreparent.override_redirect)));
+      break;
+    case MapRequest:
+      properties.emplace_back(
+          "window", ToString(e.xmaprequest.window));
+      break;
+    case ConfigureRequest:
+      properties.emplace_back(
+          "window", ToString(e.xconfigurerequest.window));
+      properties.emplace_back(
+          "parent", ToString(e.xconfigurerequest.parent));
+      properties.emplace_back(
+          "value_mask",
+          XConfigureWindowValueMaskToString(e.xconfigurerequest.value_mask));
+      properties.emplace_back(
+          "position",
+          Position<int>(e.xconfigurerequest.x,
+                        e.xconfigurerequest.y).ToString());
+      properties.emplace_back(
+          "size",
+          Size<int>(e.xconfigurerequest.width,
+                    e.xconfigurerequest.height).ToString());
+      properties.emplace_back(
+          "border_width",
+          ToString(e.xconfigurerequest.border_width));
+      break;
+    case ButtonPress:
+    case ButtonRelease:
+      properties.emplace_back(
+          "window", ToString(e.xbutton.window));
+      properties.emplace_back(
+          "button", ToString(e.xbutton.button));
+      properties.emplace_back(
+          "position_root",
+          Position<int>(e.xbutton.x_root, e.xbutton.y_root).ToString());
+      break;
+    case MotionNotify:
+      properties.emplace_back(
+          "window", ToString(e.xmotion.window));
+      properties.emplace_back(
+          "position_root",
+          Position<int>(e.xmotion.x_root, e.xmotion.y_root).ToString());
+      properties.emplace_back(
+          "state", ToString(e.xmotion.state));
+      properties.emplace_back(
+          "time", ToString(e.xmotion.time));
+      break;
+    case KeyPress:
+    case KeyRelease:
+      properties.emplace_back(
+          "window", ToString(e.xkey.window));
+      properties.emplace_back(
+          "state", ToString(e.xkey.state));
+      properties.emplace_back(
+          "keycode", ToString(e.xkey.keycode));
+      break;
+    default:
+      // No properties are printed for unused events.
+      break;
+  }
+
+  // 2. Build final string.
+  const string properties_string = Join(
+      properties, ", ", [] (const pair<string, string> &pair) {
+        return pair.first + ": " + pair.second;
+      });
+  ostringstream out;
+  out << X_EVENT_TYPE_NAMES[e.type] << " { " << properties_string << " }";
+  return out.str();
+}
+
+string XConfigureWindowValueMaskToString(unsigned long value_mask) {
+  vector<string> masks;
+  if (value_mask & CWX) {
+    masks.emplace_back("X");
+  }
+  if (value_mask & CWY) {
+    masks.emplace_back("Y");
+  }
+  if (value_mask & CWWidth) {
+    masks.emplace_back("Width");
+  }
+  if (value_mask & CWHeight) {
+    masks.emplace_back("Height");
+  }
+  if (value_mask & CWBorderWidth) {
+    masks.emplace_back("BorderWidth");
+  }
+  if (value_mask & CWSibling) {
+    masks.emplace_back("Sibling");
+  }
+  if (value_mask & CWStackMode) {
+    masks.emplace_back("StackMode");
+  }
+  return Join(masks, "|");
+}
+
+string XRequestCodeToString(unsigned char request_code) {
+  static const char* const X_REQUEST_CODE_NAMES[] = {
+      "",
+      "CreateWindow",
+      "ChangeWindowAttributes",
+      "GetWindowAttributes",
+      "DestroyWindow",
+      "DestroySubwindows",
+      "ChangeSaveSet",
+      "ReparentWindow",
+      "MapWindow",
+      "MapSubwindows",
+      "UnmapWindow",
+      "UnmapSubwindows",
+      "ConfigureWindow",
+      "CirculateWindow",
+      "GetGeometry",
+      "QueryTree",
+      "InternAtom",
+      "GetAtomName",
+      "ChangeProperty",
+      "DeleteProperty",
+      "GetProperty",
+      "ListProperties",
+      "SetSelectionOwner",
+      "GetSelectionOwner",
+      "ConvertSelection",
+      "SendEvent",
+      "GrabPointer",
+      "UngrabPointer",
+      "GrabButton",
+      "UngrabButton",
+      "ChangeActivePointerGrab",
+      "GrabKeyboard",
+      "UngrabKeyboard",
+      "GrabKey",
+      "UngrabKey",
+      "AllowEvents",
+      "GrabServer",
+      "UngrabServer",
+      "QueryPointer",
+      "GetMotionEvents",
+      "TranslateCoords",
+      "WarpPointer",
+      "SetInputFocus",
+      "GetInputFocus",
+      "QueryKeymap",
+      "OpenFont",
+      "CloseFont",
+      "QueryFont",
+      "QueryTextExtents",
+      "ListFonts",
+      "ListFontsWithInfo",
+      "SetFontPath",
+      "GetFontPath",
+      "CreatePixmap",
+      "FreePixmap",
+      "CreateGC",
+      "ChangeGC",
+      "CopyGC",
+      "SetDashes",
+      "SetClipRectangles",
+      "FreeGC",
+      "ClearArea",
+      "CopyArea",
+      "CopyPlane",
+      "PolyPoint",
+      "PolyLine",
+      "PolySegment",
+      "PolyRectangle",
+      "PolyArc",
+      "FillPoly",
+      "PolyFillRectangle",
+      "PolyFillArc",
+      "PutImage",
+      "GetImage",
+      "PolyText8",
+      "PolyText16",
+      "ImageText8",
+      "ImageText16",
+      "CreateColormap",
+      "FreeColormap",
+      "CopyColormapAndFree",
+      "InstallColormap",
+      "UninstallColormap",
+      "ListInstalledColormaps",
+      "AllocColor",
+      "AllocNamedColor",
+      "AllocColorCells",
+      "AllocColorPlanes",
+      "FreeColors",
+      "StoreColors",
+      "StoreNamedColor",
+      "QueryColors",
+      "LookupColor",
+      "CreateCursor",
+      "CreateGlyphCursor",
+      "FreeCursor",
+      "RecolorCursor",
+      "QueryBestSize",
+      "QueryExtension",
+      "ListExtensions",
+      "ChangeKeyboardMapping",
+      "GetKeyboardMapping",
+      "ChangeKeyboardControl",
+      "GetKeyboardControl",
+      "Bell",
+      "ChangePointerControl",
+      "GetPointerControl",
+      "SetScreenSaver",
+      "GetScreenSaver",
+      "ChangeHosts",
+      "ListHosts",
+      "SetAccessControl",
+      "SetCloseDownMode",
+      "KillClient",
+      "RotateProperties",
+      "ForceScreenSaver",
+      "SetPointerMapping",
+      "GetPointerMapping",
+      "SetModifierMapping",
+      "GetModifierMapping",
+      "NoOperation",
+  };
+  return X_REQUEST_CODE_NAMES[request_code];
+}
+/**
+ * @file window_manager.cpp
+ * @brief WindowManager class implementation.
+ * @date 2021-06-23
+ *
+ */
+
+#include <iostream>
+#include "window_manager.hpp"
+#include "EventHandler.hpp"
+#include <algorithm>
+#include <csignal>
+#include "util.hpp"
+
+extern "C" {
+#include <X11/Xutil.h>
+}
+
+using ::std::max;
+using ::std::mutex;
+using ::std::string;
+using ::std::unique_ptr;
+
+bool WindowManager::wm_detected_;
+mutex WindowManager::wm_detected_mutex_;
+
+/**
+ * @brief Create a WindowManager object
+ * This function is the only way to instantiate a WindowManager object.
+ * It returns a unique_ptr to the object.
+ * If the display_str is empty, it will use the DISPLAY environment variable.
+ * If the display_str is not empty, it will use the display_str.
+ * If the display_str is invalid, it will return nullptr.
+ *
+ * @param logger
+ * @param display_str
+ * @return unique_ptr<WindowManager>
+ */
+
+unique_ptr<WindowManager> WindowManager::Create(const Logger &logger, const string &display_str) {
+	std::stringstream debug_stream;
+	const char *display_c_str =
+			display_str.empty() ? nullptr : display_str.c_str();
+	Display *display = XOpenDisplay(display_c_str);
+	if (display == nullptr) {
+		debug_stream << "Failed to open X display " << XDisplayName(display_c_str);
+		logger.Log(debug_stream.str(), L_ERROR);
+		return nullptr;
+	}
+	debug_stream << "Opened X display " << XDisplayName(display_c_str);
+	logger.Log(debug_stream.str(), L_INFO);
+	return unique_ptr<WindowManager>(new WindowManager(display, logger));
+}
+
+/**
+ * @brief Construct a new Window Manager:: Window Manager object
+ * @param display
+ * @param logger
+ */
+
+WindowManager::WindowManager(Display *display, const Logger &logger)
+		: display_(display),
+		  logger_(logger),
+		  root_(DefaultRootWindow(display)),
+		  WM_PROTOCOLS(XInternAtom(display_, "WM_PROTOCOLS", false)),
+		  WM_DELETE_WINDOW(XInternAtom(display_, "WM_DELETE_WINDOW", false)),
+		  running(true){
+	logger_.Log("Window Manager Created !\n", L_INFO);
+}
+
+/**
+ * @brief Destroy the Window Manager:: Window Manager object
+ * Close the display.
+ */
+
+WindowManager::~WindowManager() {
+	logger_.Log("Window Manager Destroyed !\n", L_INFO);
+	XCloseDisplay(display_);
+}
+
+void WindowManager::Init() {
+	std::stringstream debug_stream;
+	selectEventOnRoot();
+	XGrabServer(display_);
+	getTopLevelWindows(debug_stream);
+	XUngrabServer(display_);
+}
+
+void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
+	Window returned_root, returned_parent;
+	Window *top_level_windows;
+	unsigned int num_top_level_windows;
+	XQueryTree(
+			display_,
+			root_,
+			&returned_root,
+			&returned_parent,
+			&top_level_windows,
+			&num_top_level_windows);
+	if (returned_root != root_) {
+		debug_stream << "Root window is not the same as the one returned by XQueryTree" << std::endl;
+		logger_.Log(debug_stream.str(), L_ERROR);
+		debug_stream.str("");
+		debug_stream.clear();
+	}
+	debug_stream << "Found " << num_top_level_windows << " top level windows." << "root:" << root_;
+	logger_.Log(debug_stream.str(), L_INFO);
+	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
+		Client *newClient = new Client(display_, root_, top_level_windows[i]);
+		Client_Err err = newClient->frame();
+		XMapWindow(display_, top_level_windows[i]);
+		if (err != YGG_CLI_NO_ERROR) {
+			if (err > YGG_CLI_ERROR)
+				logger_.Log(Client::getError(err), L_ERROR);
+			else if (err > YGG_CLI_WARNING)
+				logger_.Log(Client::getError(err), L_ERROR);
+			else if (err > YGG_CLI_LOG)
+				logger_.Log(Client::getError(err), L_INFO);
+		}
+		clients_[newClient->getWindow()] = newClient;
+	}
+	XFree(top_level_windows);
+}
+
+void WindowManager::selectEventOnRoot() const {
+	XSetErrorHandler(&WindowManager::OnWMDetected);
+	XSelectInput(
+			display_,
+			root_,
+			SubstructureRedirectMask | SubstructureNotifyMask);
+	XSync(display_, false);
+	XSetErrorHandler(&WindowManager::OnXError);
+}
+
+/**
+ * @brief Run the window manager
+ * This method is the main loop of the window manager.
+ * It will handle the events and call the appropriate methods.
+ *
+ */
+void WindowManager::Run() {
+	EventHandler eventHandler(*this, logger_);
+	while (running) {
+		XSync(display_, false);
+		XEvent e;
+		XNextEvent(display_, &e);
+		eventHandler.dispatchEvent(e);
+	}
+}
+
+int WindowManager::OnXError(Display *display, XErrorEvent *e) {
+	const int MAX_ERROR_TEXT_LENGTH = 1024;
+	char error_text[MAX_ERROR_TEXT_LENGTH];
+	XGetErrorText(display, e->error_code, error_text, sizeof(error_text));
+	std::cerr << "Received X error:\n"
+			  << "    Request: " << int(e->request_code)
+			  << " - " << XRequestCodeToString(e->request_code) << "\n"
+			  << "    Error code: " << int(e->error_code)
+			  << " - " << error_text << "\n"
+			  << "    Resource ID: " << e->resourceid
+			  << std::endl;
+	// The return value is ignored.
+	return 0;
+}
+
+int WindowManager::OnWMDetected(Display *display, XErrorEvent *e) {
+	// In the case of an already running window manager, the error code from
+	// XSelectInput is BadAccess. We don't expect this handler to receive any
+	// other errors.
+	if (static_cast<int>(e->error_code) == BadAccess)
+		wm_detected_ = true;
+	// The return value is ignored.
+	return 0;
+}
+
+const Logger &WindowManager::getLogger() const {
+	return logger_;
+}
+
+Display *WindowManager::getDisplay() const {
+	return display_;
+}
+
+std::unordered_map<Window, Client *> &WindowManager::getClients() {
+	return clients_;
+}
+
+Client &WindowManager::getClient(Window window) {
+	return *clients_.at(window);
+}
+
+void WindowManager::insertClient(Window window) {
+	std::stringstream debug_stream;
+	Client *client = new Client(display_, root_, window);
+	debug_stream << "Inserting client in map: " << client->getTitle() << "\t[" << window << "]";
+	logger_.Log(debug_stream.str(), L_INFO);
+	clients_.insert({window, client});
+}
+
+const Window WindowManager::getRoot() const {
+	return root_;
+}
+
+bool WindowManager::isFrame(Window window) {
+	for (auto &client: clients_) {
+		if (client.second->getFrame() == window)
+			return true;
+	}
+	return false;
+}
+/**
+ * @file Client.hpp
+ * @brief  This class is responsible for managing the client windows.
+ * @date 2021-06-23
+ *
+ */
+#ifndef YGGDRASILWM_CLIENT_HPP
+#define YGGDRASILWM_CLIENT_HPP
+extern "C" {
+#include <X11/Xlib.h>
+}
+
+#include <string>
+
+enum Client_Err {
+	YGG_CLI_NO_ERROR,
+	YGG_CLI_LOG,
+	YGG_CLI_LOG_ALREADY_FRAMED,
+	YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT,
+	YGG_CLI_LOG_IGNORE_NOT_FRAMED,
+	YGG_CLI_WARNING,
+	YGG_CLI_ERROR,
+	YGG_CLI_ERR_RETRIEVE_ATTR,
+};
+
+class Client {
+public:
+	Client(Display *display, Window root, Window window);
+	~Client();
+	Client_Err frame();
+	Client_Err unframe();
+	Window getWindow() const;
+	static std::string getError(Client_Err error);
+	void focus();
+	void unfocus();
+	void move(int x, int y);
+	void resize(int width, int height);
+	void set_border_color(unsigned long color);
+	void set_border_width(unsigned int width);
+	bool isFramed() const;
+	void setMapped(bool mapped);
+	bool isMapped() const;
+	const std::string &getTitle() const;
+	const std::string &getClass() const;
+	Window getFrame() const;
+	bool isFocused() const;
+	void setFocused(bool focused);
+
+private:
+	Display *display_;
+	Window root_;
+	Window window_;
+	Window frame_;
+	unsigned int border_width;
+	unsigned long border_color;
+	bool focused;
+	bool framed;
+	bool mapped{};
+	std::string title_;
+	std::string class_;
+};
+
+#endif //YGGDRASILWM_CLIENT_HPP
+/**
+ * @file ConfigHandler.hpp
+ * @brief ConfigHandler class header.
+ * @date 2021-06-23
+ *
+ */
+
+#ifndef YGGDRASILWM_CONFIGHANDLER_HPP
+#define YGGDRASILWM_CONFIGHANDLER_HPP
+
+class ConfigHandler {
+
+};
+
+#endif //YGGDRASILWM_CONFIGHANDLER_HPP
+/**
+ * @file EventHandler.hpp
+ * @brief EventHandler class header.
+ * @date 2021-06-23
+ * This class is responsible for handling the XEvents.
+ * It is a part of the WindowManager class
+ * The event handlers functions are private and are called by the dispatchEvent function.
+ * @see WindowManager
+ * @see Client
+ * @see Logger
+ */
+#ifndef YGGDRASILWM_EVENTHANDLER_HPP
+#define YGGDRASILWM_EVENTHANDLER_HPP
+extern "C" {
+#include <X11/Xutil.h>
+}
+#include "window_manager.hpp"
+#include "Logger.hpp"
+
+class EventHandler {
+public:
+	EventHandler(WindowManager &wm, const Logger &logger);
+	~EventHandler();
+	void dispatchEvent(const XEvent& event);
+private:
+	Position<int> drag_start_pos_;
+	Position<int> drag_start_frame_pos_;
+	Size<int> drag_start_frame_size_;
+	WindowManager wm_;
+	const Logger &logger_;
+	using Handler = void (EventHandler::*)(const XEvent&);
+	Handler eventHandlerArray[LASTEvent]{};
+	void handleMapNotify(const XEvent& event);
+	void handleUnmapNotify(const XEvent& event);
+	void handleConfigureRequest(const XEvent& event);
+	void handleConfigureNotify(const XEvent& event);
+	void handleButtonPress(const XEvent& event);
+	void handleButtonRelease(const XEvent& event);
+	void handleKeyPress(const XEvent& event);
+	void handleKeyRelease(const XEvent& event);
+	void handleEnterNotify(const XEvent& event);
+	void handleLeaveNotify(const XEvent& event);
+	void handleExpose(const XEvent& event);
+	void handleFocusIn(const XEvent& event);
+	void handleFocusOut(const XEvent& event);
+	void handlePropertyNotify(const XEvent& event);
+	void handleClientMessage(const XEvent& event);
+	void handleDestroyNotify(const XEvent& event);
+	void handleReparentNotify(const XEvent& event);
+	void handleMapRequest(const XEvent& event);
+	void handleMotionNotify(const XEvent& event);
+	void handleUnknown(const XEvent& event);
+	void handleCreateNotify(const XEvent &event);
+};
+
+#endif //YGGDRASILWM_EVENTHANDLER_HPP
+/**
+ * @file LayoutManager.hpp
+ * @brief LayoutManager class header.
+ * @date 2021-06-23
+ * This class is responsible for managing the layout of the windows.
+ */
+
+#ifndef YGGDRASILWM_LAYOUTMANAGER_HPP
+#define YGGDRASILWM_LAYOUTMANAGER_HPP
+
+class LayoutManager {
+
+};
+
+#endif //YGGDRASILWM_LAYOUTMANAGER_HPP
+/**
+ * @file Logger.hpp
+ * @brief Logger class header.
+ * @date 2021-06-23
+ * This class is responsible for logging.
+ * It can be created with a file name or an ostream.
+ * The log level can be set to filter the messages.
+ */
+
+#ifndef WINDOWMANAGER_LOGGER_H
+#define WINDOWMANAGER_LOGGER_H
+#include <string>
+#include <iostream>
+#include <iomanip>
+#include <ctime>
+#include <sstream>
+#include <fstream>
+#include <memory>
+
+enum LogLevel {
+	L_INFO,
+	L_WARNING,
+	L_ERROR,
+};
+
+class Logger {
+public:
+	Logger(const std::string& logFile, LogLevel logLevel);
+	Logger(std::ostream& output, LogLevel logLevel);
+	~Logger();
+	void Log(const std::string& message, LogLevel level) const;
+
+private:
+	static std::string GetLogLevel(LogLevel level);
+	static std::string GetTime();
+
+	std::unique_ptr<std::ostream> logStream_;
+	LogLevel logLevel_;
+};
+#endif //WINDOWMANAGER_LOGGER_H
+
+#ifndef UTIL_HPP
+#define UTIL_HPP
+
+extern "C" {
+#include <X11/Xlib.h>
+}
+#include <ostream>
+#include <string>
+
+// Represents a 2D size.
+template <typename T>
+struct Size {
+  T width, height;
+
+  Size() = default;
+  Size(T w, T h)
+      : width(w), height(h) {
+  }
+
+  ::std::string ToString() const;
+};
+
+// Outputs a Size<T> as a string to a std::ostream.
+template <typename T>
+::std::ostream& operator << (::std::ostream& out, const Size<T>& size);
+
+
+// Represents a 2D position.
+template <typename T>
+struct Position {
+  T x, y;
+
+  Position() = default;
+  Position(T _x, T _y)
+      : x(_x), y(_y) {
+  }
+
+  ::std::string ToString() const;
+};
+
+// Represents a 2D vector.
+template <typename T>
+struct Vector2D {
+  T x, y;
+
+  Vector2D() = default;
+  Vector2D(T _x, T _y)
+      : x(_x), y(_y) {
+  }
+
+  ::std::string ToString() const;
+};
+
+// Outputs a Size<T> as a string to a std::ostream.
+template <typename T>
+::std::ostream& operator << (::std::ostream& out, const Position<T>& pos);
+
+// Position operators.
+template <typename T>
+Vector2D<T> operator - (const Position<T>& a, const Position<T>& b);
+template <typename T>
+Position<T> operator + (const Position<T>& a, const Vector2D<T> &v);
+template <typename T>
+Position<T> operator + (const Vector2D<T> &v, const Position<T>& a);
+template <typename T>
+Position<T> operator - (const Position<T>& a, const Vector2D<T> &v);
+
+// Size operators.
+template <typename T>
+Vector2D<T> operator - (const Size<T>& a, const Size<T>& b);
+template <typename T>
+Size<T> operator + (const Size<T>& a, const Vector2D<T> &v);
+template <typename T>
+Size<T> operator + (const Vector2D<T> &v, const Size<T>& a);
+template <typename T>
+Size<T> operator - (const Size<T>& a, const Vector2D<T> &v);
+
+// Joins a container of elements into a single string, with elements separated
+// by a delimiter. Any element can be used as long as an operator << on ostream
+// is defined.
+template <typename Container>
+::std::string Join(const Container& container, const ::std::string& delimiter);
+
+// Joins a container of elements into a single string, with elements separated
+// by a delimiter. The elements are converted to string using a converter
+// function.
+template <typename Container, typename Converter>
+::std::string Join(
+    const Container& container,
+    const ::std::string& delimiter,
+    Converter converter);
+
+// Returns a string representation of a built-in type that we already have
+// ostream support for.
+template <typename T>
+::std::string ToString(const T& x);
+
+// Returns a string describing an X event for debugging purposes.
+extern ::std::string ToString(const XEvent& e);
+
+// Returns a string describing an X window configuration value mask.
+extern ::std::string XConfigureWindowValueMaskToString(unsigned long value_mask);
+
+// Returns the name of an X request code.
+extern ::std::string XRequestCodeToString(unsigned char request_code);
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                               IMPLEMENTATION                              *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+#include <algorithm>
+#include <vector>
+#include <sstream>
+
+template <typename T>
+::std::string Size<T>::ToString() const {
+  ::std::ostringstream out;
+  out << width << 'x' << height;
+  return out.str();
+}
+
+template <typename T>
+::std::ostream& operator << (::std::ostream& out, const Size<T>& size) {
+  return out << size.ToString();
+}
+
+template <typename T>
+::std::string Position<T>::ToString() const {
+  ::std::ostringstream out;
+  out << "(" << x << ", " << y << ")";
+  return out.str();
+}
+
+template <typename T>
+::std::ostream& operator << (::std::ostream& out, const Position<T>& size) {
+  return out << size.ToString();
+}
+
+template <typename T>
+::std::string Vector2D<T>::ToString() const {
+  ::std::ostringstream out;
+  out << "(" << x << ", " << y << ")";
+  return out.str();
+}
+
+template <typename T>
+::std::ostream& operator << (::std::ostream& out, const Vector2D<T>& size) {
+  return out << size.ToString();
+}
+
+template <typename T>
+Vector2D<T> operator - (const Position<T>& a, const Position<T>& b) {
+  return Vector2D<T>(a.x - b.x, a.y - b.y);
+}
+
+template <typename T>
+Position<T> operator + (const Position<T>& a, const Vector2D<T> &v) {
+  return Position<T>(a.x + v.x, a.y + v.y);
+}
+
+template <typename T>
+Position<T> operator + (const Vector2D<T> &v, const Position<T>& a) {
+  return Position<T>(a.x + v.x, a.y + v.y);
+}
+
+template <typename T>
+Position<T> operator - (const Position<T>& a, const Vector2D<T> &v) {
+  return Position<T>(a.x - v.x, a.y - v.y);
+}
+
+template <typename T>
+Vector2D<T> operator - (const Size<T>& a, const Size<T>& b) {
+  return Vector2D<T>(a.width - b.width, a.height - b.height);
+}
+
+template <typename T>
+Size<T> operator + (const Size<T>& a, const Vector2D<T> &v) {
+  return Size<T>(a.width + v.x, a.height + v.y);
+}
+
+template <typename T>
+Size<T> operator + (const Vector2D<T> &v, const Size<T>& a) {
+  return Size<T>(a.width + v.x, a.height + v.y);
+}
+
+template <typename T>
+Size<T> operator - (const Size<T>& a, const Vector2D<T> &v) {
+  return Size<T>(a.width - v.x, a.height - v.y);
+}
+
+template <typename Container>
+::std::string Join(const Container& container, const ::std::string& delimiter) {
+  ::std::ostringstream out;
+  for (auto i = container.cbegin(); i != container.cend(); ++i) {
+    if (i != container.cbegin()) {
+      out << delimiter;
+    }
+    out << *i;
+  }
+  return out.str();
+}
+
+template <typename Container, typename Converter>
+::std::string Join(
+    const Container& container,
+    const ::std::string& delimiter,
+    Converter converter) {
+  ::std::vector<::std::string> converted_container(container.size());
+  ::std::transform(
+      container.cbegin(),
+      container.cend(),
+      converted_container.begin(),
+      converter);
+  return Join(converted_container, delimiter);
+}
+
+template <typename T>
+::std::string ToString(const T& x) {
+  ::std::ostringstream out;
+  out << x;
+  return out.str();
+}
+
+#endif
+/**
+ * @file window_manager.hpp
+ * @brief WindowManager class header.
+ * @date 2021-06-23
+ * This class is responsible for managing the windows.in an X11 session.
+ * It is the main class of the project.
+ * It should be instantiated only via the static Create function.
+ * The Run function is the main loop of the program.
+ * @see Create
+ * @see Run
+ * @see Client
+ * @see Logger
+ * @see EventHandler
+ * @see ConfigHandler
+ * @see LayoutManager
+ */
+
+#ifndef WINDOW_MANAGER_HPP
+#define WINDOW_MANAGER_HPP
+extern "C" {
+#include <X11/Xlib.h>
+}
+#include <memory>
+#include <mutex>
+#include <string>
+#include <unordered_map>
+#include "util.hpp"
+#include "Logger.hpp"
+#include "Client.hpp"
+
+class WindowManager {
+public:
+	static ::std::unique_ptr<WindowManager> Create(
+	const Logger &logger,
+	const std::string &display_str = std::string());
+	~WindowManager();
+	void Init();
+	void Run();
+	const Logger &getLogger() const;
+	Display *getDisplay() const;
+	std::unordered_map<Window, Client *> &getClients();
+	const Window getRoot() const;
+	void insertClient(Window window);
+	Client &getClient(Window window);
+	bool isFrame(Window window);
+
+private:
+	static bool								wm_detected_;
+	const Window							root_;
+	const Logger&							logger_;
+	Display									*display_;
+	static ::std::mutex						wm_detected_mutex_;
+	Position<int>							drag_start_pos_;
+	Position<int>							drag_start_frame_pos_;
+	Size<int>								drag_start_frame_size_;
+	const Atom								WM_PROTOCOLS;
+	const Atom								WM_DELETE_WINDOW;
+	std::unordered_map<Window, Client*>		clients_;
+	bool									running;
+
+	void selectEventOnRoot() const;
+	WindowManager(Display *display, const Logger &logger);
+	static int OnXError(Display *display, XErrorEvent *e);
+	static int OnWMDetected(Display *display, XErrorEvent *e);
+	void getTopLevelWindows(std::stringstream &debug_stream);
+
+};
+
+#endif

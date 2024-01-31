@@ -55,6 +55,8 @@ public:
 	bool isFocused() const;
 	void setFocused(bool focused);
 
+	void restack();
+
 private:
 	Display *display_;
 	TreeLayoutManager *layout_manager_;
@@ -68,6 +70,7 @@ private:
 	bool mapped{};
 	std::string title_;
 	std::string class_;
+
 };
 
 #endif //YGGDRASILWM_CLIENT_HPP

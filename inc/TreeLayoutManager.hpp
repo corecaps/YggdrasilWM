@@ -31,9 +31,10 @@ public:
 
 	void splitSpace(Client *client, Space *space, bool splitAlongX);
 
-	void RemoveClient(Client *client);
-	void RemoveClientRecursive(Client *client, Space* space);
+	void removeClient(Client *client);
+	void removeClientRecursive(Client *client, Space* space);
 
-	};
+	void printSpace(Space *space);
+};
 
 #endif //YGGDRASILWM_TREELAYOUTMANAGER_HPP
