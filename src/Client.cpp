@@ -85,8 +85,8 @@ Client_Err Client::frame() {
 			root_,
 			x_window_attrs.x,
 			x_window_attrs.y,
-			x_window_attrs.width +4,
-			x_window_attrs.height+4,
+			x_window_attrs.width,
+			x_window_attrs.height,
 			BORDER_WIDTH,
 			BORDER_COLOR,
 			BG_COLOR
@@ -100,7 +100,7 @@ Client_Err Client::frame() {
 			display_,
 			window_,
 			frame_,
-			2,2
+			0,0
 			);
 	XMapWindow(display_,frame_);
 	// 9. Grab universal window management actions on client window.
