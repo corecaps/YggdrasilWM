@@ -26,3 +26,5 @@ CMakeScripts/
 cmake_install.cmake
 
 .gdb_history
+
+vgcore.19396
