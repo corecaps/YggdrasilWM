@@ -31,6 +31,7 @@ using ::std::unique_ptr;
 
 bool WindowManager::wm_detected_;
 mutex WindowManager::wm_detected_mutex_;
+static WindowManager *windowManagerInstance = nullptr;
 
 /**
  * @brief Create a WindowManager object
@@ -86,7 +87,15 @@ WindowManager::~WindowManager() {
 	logger_.Log("Window Manager Destroyed !\n", L_INFO);
 	XCloseDisplay(display_);
 }
+void handleSIGHUP(int signal) {
+	if (windowManagerInstance != nullptr) {
+		windowManagerInstance->Stop();
+	}
+}
 
+void WindowManager::Stop() {
+	running = false;
+}
 void WindowManager::Init() {
 	std::stringstream debug_stream;
 	selectEventOnRoot();
@@ -94,7 +103,8 @@ void WindowManager::Init() {
 	getTopLevelWindows(debug_stream);
 	XUngrabServer(display_);
 	XFlush(display_);
-	this->layout_manager_ = new TreeLayoutManager(this->display_, this->root_);
+	windowManagerInstance = this;
+	signal(SIGINT, handleSIGHUP);
 }
 
 void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
