@@ -4,11 +4,14 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "window_manager.hpp"
+#include "Logger.hpp"
 
 // Mock Logger class for testing
 class MockLogger : public Logger {
 public:
-	MOCK_METHOD(void, Log, (const std::string&, LogLevel), (const, override));
+	MockLogger(std::ostream& output = std::cout, LogLevel logLevel = L_INFO)
+			: Logger(output, logLevel) {}
+	MOCK_METHOD(void, Log, (const std::string& message, LogLevel logLevel), (const));
 };
 
 class WindowManagerTest : public ::testing::Test {
@@ -31,7 +34,7 @@ EXPECT_CALL(*mockLogger, Log(::testing::_, L_INFO))
 .Times(::testing::AtLeast(1));
 
 // Try to create a WindowManager with a valid display
-auto windowManager = WindowManager::Create(*mockLogger);
+auto windowManager = WindowManager::Create(*mockLogger,":0");
 
 // Check if the WindowManager object is created
 ASSERT_TRUE(windowManager);
