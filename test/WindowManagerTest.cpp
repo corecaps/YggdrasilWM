@@ -4,11 +4,16 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "window_manager.hpp"
+#include "Logger.hpp"
+#include <cstdlib>
+
 
 // Mock Logger class for testing
 class MockLogger : public Logger {
 public:
-	MOCK_METHOD(void, Log, (const std::string&, LogLevel), (const, override));
+	explicit MockLogger(std::ostream& output = std::cout, LogLevel logLevel = L_INFO)
+			: Logger(output, logLevel) {}
+	MOCK_METHOD(void, Log, (const std::string& message, LogLevel logLevel), (const));
 };
 
 class WindowManagerTest : public ::testing::Test {
@@ -31,7 +36,7 @@ EXPECT_CALL(*mockLogger, Log(::testing::_, L_INFO))
 .Times(::testing::AtLeast(1));
 
 // Try to create a WindowManager with a valid display
-auto windowManager = WindowManager::Create(*mockLogger);
+auto windowManager = WindowManager::Create(*mockLogger,":1");
 
 // Check if the WindowManager object is created
 ASSERT_TRUE(windowManager);
@@ -53,8 +58,24 @@ ASSERT_FALSE(windowManager);
 }
 
 TEST_F(WindowManagerTest, GetLogger) {
-auto windowManager = WindowManager::Create(*mockLogger);
+	EXPECT_CALL(*mockLogger, Log(::testing::_, L_INFO))
+			.Times(::testing::AtLeast(1));
+auto windowManager = WindowManager::Create(*mockLogger,":1");
 ASSERT_EQ(&windowManager->getLogger(), mockLogger.get());
+}
+TEST_F(WindowManagerTest, initWM) {
+	EXPECT_CALL(*mockLogger, Log(::testing::_, L_INFO))
+			.Times(::testing::AtLeast(1));
+	auto windowManager = WindowManager::Create(*mockLogger,":1");
+	ASSERT_EQ(&windowManager->getLogger(), mockLogger.get());
+	windowManager->Init();
+	ASSERT_EQ(windowManager->getRunning(), true);
+	ASSERT_GE(windowManager->getClients().size(), 0);
+	std::cout << "Client size : " << windowManager->getClients().size() << std::endl;
+	ASSERT_NE(windowManager->getLayoutManager(), nullptr);
+	ASSERT_NE(windowManager->getDisplay(), nullptr);
+	ASSERT_NE(windowManager->getRoot(), 0);
+	
 }
 
 // Add more tests for other functions and behaviors as needed

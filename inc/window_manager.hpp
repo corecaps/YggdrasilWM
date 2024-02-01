@@ -28,6 +28,9 @@
 extern "C" {
 #include <X11/Xlib.h>
 }
+
+
+
 #include <memory>
 #include <mutex>
 #include <string>
@@ -40,7 +43,7 @@ extern "C" {
 class WindowManager {
 public:
 	static ::std::unique_ptr<WindowManager> Create(
-	const Logger &logger,
+	Logger &logger,
 	const std::string &display_str = std::string());
 	~WindowManager();
 	void Init();
@@ -59,6 +62,8 @@ public:
 	Client &getClientRef(Window window);
 
 	void Stop();
+
+	bool getRunning() const;
 
 private:
 	static bool								wm_detected_;

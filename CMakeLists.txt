@@ -15,23 +15,23 @@ FetchContent_Declare(
 )
 
 FetchContent_GetProperties(cxxopts)
-if(NOT cxxopts_POPULATED)
+if (NOT cxxopts_POPULATED)
     FetchContent_Populate(cxxopts)
     add_subdirectory(${cxxopts_SOURCE_DIR} ${cxxopts_BINARY_DIR})
-endif()
+endif ()
 
 # Download and configure GoogleTest
-#FetchContent_Declare(
-#        googletest
-#        GIT_REPOSITORY https://github.com/google/googletest.git
-#        GIT_TAG release-1.10.0  # Adjust the version tag as needed
-#)
+FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG v1.14.0  # Adjust the version tag as neededhttps://github.com/google/googletest/releases/tag/v1.14.0
+)
 
-#FetchContent_GetProperties(googletest)
-#if(NOT googletest_POPULATED)
-#    FetchContent_Populate(googletest)
-#    add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
-#endif()
+FetchContent_GetProperties(googletest)
+if (NOT googletest_POPULATED)
+    FetchContent_Populate(googletest)
+    add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
+endif ()
 
 # Find required packages
 find_package(X11 REQUIRED)
@@ -44,8 +44,8 @@ set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/inc)
 include_directories(${X11_INCLUDE_DIR})
 include_directories(${INCLUDE_DIR})
 include_directories(${cxxopts_SOURCE_DIR})
-#include_directories(${googletest_SOURCE_DIR}/googletest/include)
-#include_directories(${googletest_SOURCE_DIR}/googlemock/include)
+include_directories(${googletest_SOURCE_DIR}/googletest/include)
+include_directories(${googletest_SOURCE_DIR}/googlemock/include)
 
 # Add your source files
 set(SOURCES
@@ -72,8 +72,8 @@ add_executable(${PROGRAM_NAME} ${SOURCES})
 target_link_libraries(${PROGRAM_NAME}
         ${X11_LIBRARIES}
         cxxopts
-#        gtest
-#        gmock
+        gtest
+        gmock
 )
 
 # Add compile definitions
@@ -86,25 +86,38 @@ target_compile_definitions(${PROGRAM_NAME}
 set_property(TARGET ${PROGRAM_NAME} PROPERTY CXX_STANDARD 14)
 
 # Enable testing
-#enable_testing()
+enable_testing()
 
 # Add the test files
-#set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
-#file(GLOB TEST_SOURCES ${TEST_DIR}/*.cpp)
+set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
+file(GLOB TEST_SOURCES ${TEST_DIR}/*.cpp)
 
 # Create the test executable
-#add_executable(${PROGRAM_NAME}_tests ${TEST_SOURCES})
+add_executable(${PROGRAM_NAME}_tests ${TEST_SOURCES}
+                ${SOURCE_DIR}/window_manager.cpp
+                ${SOURCE_DIR}/util.cpp
+                ${SOURCE_DIR}/Logger.cpp
+                ${SOURCE_DIR}/Client.cpp
+                ${SOURCE_DIR}/EventHandler.cpp
+                ${SOURCE_DIR}/LayoutManager.cpp
+                ${SOURCE_DIR}/ConfigHandler.cpp
+                src/TreeLayoutManager.cpp
+                inc/TreeLayoutManager.hpp
+                inc/Client.hpp
+                inc/EventHandler.hpp
+                inc/LayoutManager.hpp
+                inc/ConfigHandler.hpp)
 
 # Link against X11, cxxopts, GoogleTest, and GoogleMock libraries
-#target_link_libraries(${PROGRAM_NAME}_tests
-#        ${X11_LIBRARIES}
-#        cxxopts
-#        gtest
-#        gmock
-#)
+target_link_libraries(${PROGRAM_NAME}_tests
+        ${X11_LIBRARIES}
+        cxxopts
+        gtest
+        gmock
+)
 
 # Set C++ standard for tests
-#set_property(TARGET ${PROGRAM_NAME}_tests PROPERTY CXX_STANDARD 14)
+set_property(TARGET ${PROGRAM_NAME}_tests PROPERTY CXX_STANDARD 14)
 
 # Add the test as a target for running with 'make test'
 add_test(NAME ${PROGRAM_NAME}_tests COMMAND ${PROGRAM_NAME}_tests)

@@ -46,7 +46,7 @@ static WindowManager *windowManagerInstance = nullptr;
  * @return unique_ptr<WindowManager>
  */
 
-unique_ptr<WindowManager> WindowManager::Create(const Logger &logger, const string &display_str) {
+unique_ptr<WindowManager> WindowManager::Create(Logger &logger, const string &display_str) {
 	std::stringstream debug_stream;
 	const char *display_c_str =
 			display_str.empty() ? nullptr : display_str.c_str();
@@ -77,14 +77,16 @@ WindowManager::WindowManager(Display *display, const Logger &logger)
 		  layout_manager_(nullptr){
 	logger_.Log("Window Manager Created !\n", L_INFO);
 }
-
+bool WindowManager::getRunning() const {
+	return running;
+}
 /**
  * @brief Destroy the Window Manager:: Window Manager object
  * Close the display.
  */
 
 WindowManager::~WindowManager() {
-	logger_.Log("Window Manager Destroyed !\n", L_INFO);
+	delete layout_manager_;
 	XCloseDisplay(display_);
 }
 void handleSIGHUP(int signal) {

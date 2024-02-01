@@ -24,11 +24,14 @@
 
 Logger::Logger(const std::string& logFile, LogLevel logLevel)
 		: logLevel_(logLevel) {
-	logStream_ = std::make_unique<std::ofstream>(logFile, std::ios::out | std::ios::app);
-	if (!logStream_->good()) {
+	std::ofstream* fileStream = new std::ofstream(logFile, std::ios::out | std::ios::app);
+	if (!fileStream->good()) {
 		std::cerr << "Failed to open log file: " << logFile << std::endl;
+		delete fileStream;
 		throw std::runtime_error("Failed to open log file.");
 	}
+	logStream_ = fileStream;
+	streamIsFile_ = true;
 }
 /**
  * @brief Construct a new Logger:: Logger object
@@ -38,7 +41,9 @@ Logger::Logger(const std::string& logFile, LogLevel logLevel)
  */
 
 Logger::Logger(std::ostream& output, LogLevel logLevel)
-		: logStream_(&output), logLevel_(logLevel) {}
+		: logStream_(&output), logLevel_(logLevel) {
+	streamIsFile_ = false;
+}
 /**
  * @brief Destroy the Logger:: Logger object
  * closes the log file if it was opened.
@@ -46,10 +51,13 @@ Logger::Logger(std::ostream& output, LogLevel logLevel)
 
 Logger::~Logger() {
 	*logStream_ << GetTime() << "Closing Session \n"
-		<< " =================================================================================== "
-		<< std::endl;
-	if (dynamic_cast<std::ofstream*>(logStream_.get()) != nullptr) {
-		dynamic_cast<std::ofstream*>(logStream_.get())->close();
+				<< " =================================================================================== "
+				<< std::endl;
+	if (streamIsFile_) {
+		if (dynamic_cast<std::ofstream*>(logStream_) != nullptr) {
+			dynamic_cast<std::ofstream*>(logStream_)->close();
+		}
+		delete logStream_;
 	}
 }
 /**
