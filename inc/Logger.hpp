@@ -35,14 +35,14 @@ class Logger {
 public:
 	Logger(const std::string& logFile, LogLevel logLevel);
 	Logger(std::ostream& output, LogLevel logLevel);
-	~Logger();
-	void Log(const std::string& message, LogLevel level) const;
+	virtual ~Logger();
+	virtual void Log(const std::string& message, LogLevel level) const;
 
 private:
 	static std::string GetLogLevel(LogLevel level);
 	static std::string GetTime();
-
-	std::unique_ptr<std::ostream> logStream_;
+	bool streamIsFile_;
+	std::ostream* logStream_;
 	LogLevel logLevel_;
 };
 #endif //WINDOWMANAGER_LOGGER_H

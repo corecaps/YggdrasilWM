@@ -40,7 +40,7 @@ extern "C" {
 class WindowManager {
 public:
 	static ::std::unique_ptr<WindowManager> Create(
-	const Logger &logger,
+	Logger &logger,
 	const std::string &display_str = std::string());
 	~WindowManager();
 	void Init();
