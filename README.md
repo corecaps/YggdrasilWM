@@ -26,6 +26,18 @@ cd build
 cmake ..
 make
 ```
+## Options
+```
+Usage: YggdrasilWM [options...]
+```
+### Options:
+```
+  -h,--help                   Print this help message and exit
+  -v,--version                Print version information and exit
+  -d,--display <display>      X11 display to connect to
+  -l,--log <log>              Log file
+  -c,--config <config>        Config file
+```
 
 ## Testing using Xephyr
 YggdrasilWM is not yet ready to be used as a daily driver, but you can test it using Xephyr.
