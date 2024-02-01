@@ -32,7 +32,8 @@ int main(int argc, char** argv) {
 	options.add_options()
 			("version", "Display this text and exit", cxxopts::value<bool>())
 			("log", "Specify the log file path", cxxopts::value<std::string>())
-			("loglevel", "Specify the log level (0-2)", cxxopts::value<int>());
+			("loglevel", "Specify the log level (0-2)", cxxopts::value<int>())
+			("d,display", "Specify the display to use", cxxopts::value<std::string>());
 	auto result = options.parse(argc, argv);
 
 	if (result["version"].as<bool>()) {
@@ -57,13 +58,20 @@ int main(int argc, char** argv) {
 	Logger logger(LogFilePath, static_cast<LogLevel>(logLevel));
 //	Logger logger(std::cout, static_cast<LogLevel>(logLevel));
 	logger.Log("Starting " + std::string(PROGRAM_NAME) + " " + std::string(PROGRAM_VERSION), L_INFO);
-	unique_ptr<WindowManager> window_manager(WindowManager::Create(logger));
-	if (!window_manager) {
+	unique_ptr<WindowManager> windowManager;
+	if (result.count("display")) {
+		logger.Log("Using display " + result["display"].as<std::string>(), L_INFO);
+		windowManager = WindowManager::Create(logger, result["display"].as<std::string>());
+	} else {
+		logger.Log("Using default display", L_INFO);
+		windowManager = WindowManager::Create(logger);
+	}
+	if (!windowManager) {
 		logger.Log("Failed to initialize WindowManager.", L_ERROR);
 		return EXIT_FAILURE;
 	}
 	logger.Log("Starting WindowManager.", L_INFO);
-	window_manager->Init();
-	window_manager->Run();
+	windowManager->Init();
+	windowManager->Run();
 	return (EXIT_SUCCESS);
 }
