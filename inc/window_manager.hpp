@@ -28,6 +28,9 @@
 extern "C" {
 #include <X11/Xlib.h>
 }
+
+
+
 #include <memory>
 #include <mutex>
 #include <string>
@@ -59,6 +62,8 @@ public:
 	Client &getClientRef(Window window);
 
 	void Stop();
+
+	bool getRunning() const;
 
 private:
 	static bool								wm_detected_;
