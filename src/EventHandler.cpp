@@ -106,14 +106,13 @@ EventHandler::~EventHandler() = default;
  *
  */
 void EventHandler::dispatchEvent(const XEvent &event) {
-
 	std::string name = GetEventTypeName(event.xany.type);
-//	logger_.Log("Dispatching event: [" + std::to_string(event.type) + "]\t"+ name , L_INFO);
 	if (event.type > 0 && event.type < LASTEvent && eventHandlerArray[event.type] != nullptr)
 		(this->*eventHandlerArray[event.type])(event);
 	else
 		logger_.Log("Unknown event type: ["  + std::to_string(event.type) + "]\t" + name, L_WARNING);
 }
+
 /**
  * @brief Handles the MapNotify event.
  * The MapNotify event is sent to a client when it is mapped.
@@ -201,22 +200,21 @@ void EventHandler::handleButtonPress(const XEvent &event) {
 	// give focus to the window
 	XSetInputFocus(wm_.getDisplay(), frame, RevertToParent, CurrentTime);
 	// 1. Save initial cursor position.
-	drag_start_pos_ = Position<int>(e.x_root, e.y_root);
-
-	// 2. Save initial window info.
-	Window returned_root;
-	int x, y;
-	unsigned width, height, border_width, depth;
-	XGetGeometry(
-			wm_.getDisplay(),
-			frame,
-			&returned_root,
-			&x, &y,
-			&width, &height,
-			&border_width,
-			&depth);
-	drag_start_frame_pos_ = Position<int>(x, y);
-	drag_start_frame_size_ = Size<int>(width, height);
+//	drag_start_pos_ = Position<int>(e.x_root, e.y_root);
+//	// 2. Save initial window info.
+//	Window returned_root;
+//	int x, y;
+//	unsigned width, height, border_width, depth;
+//	XGetGeometry(
+//			wm_.getDisplay(),
+//			frame,
+//			&returned_root,
+//			&x, &y,
+//			&width, &height,
+//			&border_width,
+//			&depth);
+//	drag_start_frame_pos_ = Position<int>(x, y);
+//	drag_start_frame_size_ = Size<int>(width, height);
 
 	// 3. Raise clicked window to top.
 	XRaiseWindow(wm_.getDisplay(),frame);
@@ -243,9 +241,11 @@ void EventHandler::handleExpose(const XEvent &event) {
 }
 void EventHandler::handleFocusIn(const XEvent &event) {
 	auto e = event.xfocus;
+	if (e.window == wm_.getRoot()) {
+		return;
+	}
 	Client * client = wm_.getClient(e.window);
 	if (client == nullptr) {
-		logger_.Log("Ignoring focus in for unknown window: " + std::to_string(e.window), L_INFO);
 		return;
 	}
 	else {
@@ -257,9 +257,11 @@ void EventHandler::handleFocusIn(const XEvent &event) {
 }
 void EventHandler::handleFocusOut(const XEvent &event) {
 	auto e = event.xfocus;
+	if (e.window == wm_.getRoot()) {
+		return;
+	}
 	Client * client = wm_.getClient(e.window);
 	if (client == nullptr) {
-		logger_.Log("Ignoring focus out for unknown window: " + std::to_string(e.window), L_INFO);
 		return;
 	}
 	else {
@@ -310,6 +312,7 @@ void EventHandler::handleMapRequest(const XEvent &event) {
 			logger_.Log("Framing window: " + client.getTitle(), L_INFO);
 			if (client.frame() != YGG_CLI_NO_ERROR)
 				logger_.Log("Failed to frame window: " + std::to_string(e.window), L_ERROR);
+			wm_.setFocus(&client);
 		}
 		logger_.Log("Window already mapped: " + std::to_string(e.window), L_INFO);
 		return;
@@ -328,32 +331,32 @@ void EventHandler::handleMotionNotify(const XEvent &event) {
 	const Window frame = wm_.getClientRef(event.xmotion.window).getFrame();
 	const Position<int> drag_pos(e.x_root, e.y_root);
 	const Vector2D<int> delta = drag_pos - drag_start_pos_;
-
-	if (e.state & Button1Mask) {
-		// alt + left button: Move window.
-		const Position<int> dest_frame_pos = drag_start_frame_pos_ + delta;
-		XMoveWindow(
-				wm_.getDisplay(),
-				frame,
-				dest_frame_pos.x, dest_frame_pos.y);
-	} else if (e.state & Button3Mask) {
-		// alt + right button: Resize window.
-		// Window dimensions cannot be negative.
-		const Vector2D<int> size_delta(
-				std::max(delta.x, -drag_start_frame_size_.width),
-				std::max(delta.y, -drag_start_frame_size_.height));
-		const Size<int> dest_frame_size = drag_start_frame_size_ + size_delta;
-		// 1. Resize frame.
-		XResizeWindow(
-				wm_.getDisplay(),
-				frame,
-				dest_frame_size.width, dest_frame_size.height);
-		// 2. Resize client window.
-		XResizeWindow(
-				wm_.getDisplay(),
-				e.window,
-				dest_frame_size.width, dest_frame_size.height);
-	}
+//
+//	if (e.state & Button1Mask) {
+//		// alt + left button: Move window.
+//		const Position<int> dest_frame_pos = drag_start_frame_pos_ + delta;
+//		XMoveWindow(
+//				wm_.getDisplay(),
+//				frame,
+//				dest_frame_pos.x, dest_frame_pos.y);
+//	} else if (e.state & Button3Mask) {
+//		// alt + right button: Resize window.
+//		// Window dimensions cannot be negative.
+//		const Vector2D<int> size_delta(
+//				std::max(delta.x, -drag_start_frame_size_.width),
+//				std::max(delta.y, -drag_start_frame_size_.height));
+//		const Size<int> dest_frame_size = drag_start_frame_size_ + size_delta;
+//		// 1. Resize frame.
+//		XResizeWindow(
+//				wm_.getDisplay(),
+//				frame,
+//				dest_frame_size.width, dest_frame_size.height);
+//		// 2. Resize client window.
+//		XResizeWindow(
+//				wm_.getDisplay(),
+//				e.window,
+//				dest_frame_size.width, dest_frame_size.height);
+//	}
 }
 void EventHandler::handleCreateNotify(const XEvent &event) {
 	// TODO IMPLEMENT
