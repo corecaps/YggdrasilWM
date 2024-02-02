@@ -33,8 +33,9 @@ public:
 
 	void removeClient(Client *client);
 	void removeClientRecursive(Client *client, Space* space);
-
-	void printSpace(Space *space);
+	void growSpaceX(Client *client);
+	void shrinkSpace(Client *client);
+	Space * findSpaceRecursive(Client *client, LayoutManager::Space * space);
 };
 
 #endif //YGGDRASILWM_TREELAYOUTMANAGER_HPP
