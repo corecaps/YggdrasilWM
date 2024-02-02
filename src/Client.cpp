@@ -76,7 +76,7 @@ Client::~Client() {
 Client_Err Client::frame() {
 	const unsigned int BORDER_WIDTH = 3;
 	const unsigned long BORDER_COLOR = 0xff0000;
-	const unsigned long BG_COLOR = 0x0000ff;
+	const unsigned long BG_COLOR = 0x000000;
 
 	if (this->framed)
 		return(YGG_CLI_LOG_ALREADY_FRAMED);
@@ -122,17 +122,17 @@ Client_Err Client::frame() {
 			None,
 			None);
 	//   b. Resize windows with alt + right button.
-	XGrabButton(
-			display_,
-			Button3,
-			Mod1Mask,
-			window_,
-			false,
-			ButtonPressMask | ButtonReleaseMask | ButtonMotionMask,
-			GrabModeAsync,
-			GrabModeAsync,
-			None,
-			None);
+//	XGrabButton(
+//			display_,
+//			Button3,
+//			Mod1Mask,
+//			window_,
+//			false,
+//			ButtonPressMask | ButtonReleaseMask | ButtonMotionMask,
+//			GrabModeAsync,
+//			GrabModeAsync,
+//			None,
+//			None);
 	//   c. Kill windows with alt + f4.
 	XGrabKey(
 			display_,
