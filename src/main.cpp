@@ -55,8 +55,8 @@ int main(int argc, char** argv) {
 			return EXIT_FAILURE;
 		}
 	}
-	Logger logger(LogFilePath, static_cast<LogLevel>(logLevel));
-//	Logger logger(std::cout, static_cast<LogLevel>(logLevel));
+//	Logger logger(LogFilePath, static_cast<LogLevel>(logLevel));
+	Logger logger(std::cout, static_cast<LogLevel>(logLevel));
 	logger.Log("Starting " + std::string(PROGRAM_NAME) + " " + std::string(PROGRAM_VERSION), L_INFO);
 	unique_ptr<WindowManager> windowManager;
 	if (result.count("display")) {
