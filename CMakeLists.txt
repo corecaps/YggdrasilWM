@@ -50,7 +50,7 @@ include_directories(${googletest_SOURCE_DIR}/googlemock/include)
 # Add your source files
 set(SOURCES
         ${SOURCE_DIR}/window_manager.cpp
-        ${SOURCE_DIR}/util.cpp
+
         ${SOURCE_DIR}/Logger.cpp
         ${SOURCE_DIR}/Client.cpp
         ${INCLUDE_DIR}/Client.hpp
@@ -99,6 +99,7 @@ target_link_libraries(${PROGRAM_NAME}_tests
         cxxopts
         gtest
         gmock
+        gtest_main
 )
 
 # Set C++ standard for tests
