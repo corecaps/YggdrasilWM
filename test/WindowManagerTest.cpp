@@ -1,12 +1,77 @@
-//
-// Created by corecaps on 1/10/24.
-//
+/**
+ * Yb  dP              8                w 8 Yb        dP 8b   d8
+ *  YbdP  .d88 .d88 .d88 8d8b .d88 d88b w 8  Yb  db  dP  8YbmdP8
+ *   YP   8  8 8  8 8  8 8P   8  8 `Yb. 8 8   YbdPYbdP   8  "  8
+ *   88   `Y88 `Y88 `Y88 8    `Y88 Y88P 8 8    YP  YP    8     8
+ *        wwdP wwdP
+ * Yggdrasil Window Manager
+ * by jgarcia <jgarcia@student.42.fr> <corecaps@gmail.com>
+ * https://github.com/corecaps/YggdrasilWM
+ * @file WindowManagerTest.cpp
+ * @brief Unit tests for WindowManager class.
+ * @date 2024-02-02
+ *
+ */
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "window_manager.hpp"
 #include "Logger.hpp"
 #include <cstdlib>
+#include <unistd.h>
 
+void runXephyr () {
+	pid_t pid = fork();
+
+	if (pid == -1) {
+		// Error handling if fork fails
+		perror("Fork failed");
+		exit(EXIT_FAILURE);
+	} else if (pid == 0) {
+		// Child process
+		freopen("/dev/null", "w", stdout);
+		freopen("/dev/null", "w", stderr);
+
+		execlp("/usr/bin/Xephyr", "/usr/bin/Xephyr", "-ac", "-br", "-noreset", "-screen", "800x600", ":1", nullptr);
+
+		// If exec fails
+		perror("Exec failed");
+		exit(EXIT_FAILURE);
+	} else {
+		std::cout << "Xephyr Launched on Display :1" << std::endl;
+	}
+}
+
+void runXeyes() {
+	pid_t pid = fork();
+
+	if (pid == -1) {
+		// Error handling if fork fails
+		perror("Fork failed");
+		exit(EXIT_FAILURE);
+	} else if (pid == 0) {
+		// Child process
+		if (setenv("DISPLAY", ":1", 1) != 0) {
+			perror("setenv failed");
+			exit(EXIT_FAILURE);
+		}
+
+		execlp("/usr/bin/xeyes", "/usr/bin/xeyes", nullptr);
+
+		// If exec fails
+		perror("Exec failed");
+		exit(EXIT_FAILURE);
+	} else {
+		std::cout << "Xeyes Launched on Display :1" << std::endl;
+	}
+}
+
+void killXeyes() {
+	system("pkill xeyes");
+}
+
+void killXephyr() {
+	system("pkill Xephyr");
+}
 
 // Mock Logger class for testing
 class MockLogger : public Logger {
@@ -18,13 +83,27 @@ public:
 
 class WindowManagerTest : public ::testing::Test {
 protected:
-	void SetUp() override {
-		// Create a mock logger
-		mockLogger = std::make_shared<MockLogger>();
+	static void SetUpTestSuite() {
+		// Setup
+		std::cout << " =================================================================================== " << std::endl;
+		std::cout << " ============================== WindowManagerTest SetUpTestSuite ============================== " << std::endl;
+		std::cout << " =================================================================================== " << std::endl;
+		runXephyr();
+		sleep(3);
+		runXeyes();
+		sleep(1);
 	}
 
-	void TearDown() override {
+	void SetUp() override {
+		mockLogger = std::make_shared<MockLogger>();
+	}
+	static void TearDownTestSuite() {
 		// Cleanup
+		killXeyes();
+		killXephyr();
+	}
+	void TearDown() override {
+	mockLogger.reset();
 	}
 
 	std::shared_ptr<MockLogger> mockLogger;
@@ -75,12 +154,4 @@ TEST_F(WindowManagerTest, initWM) {
 	ASSERT_NE(windowManager->getLayoutManager(), nullptr);
 	ASSERT_NE(windowManager->getDisplay(), nullptr);
 	ASSERT_NE(windowManager->getRoot(), 0);
-	
-}
-
-// Add more tests for other functions and behaviors as needed
-
-int main(int argc, char **argv) {
-	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
 }
