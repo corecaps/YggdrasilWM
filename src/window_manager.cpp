@@ -18,7 +18,6 @@
 #include "EventHandler.hpp"
 #include <algorithm>
 #include <csignal>
-#include "util.hpp"
 
 extern "C" {
 #include <X11/Xutil.h>
@@ -72,12 +71,14 @@ WindowManager::WindowManager(Display *display, const Logger &logger)
 		  WM_PROTOCOLS(XInternAtom(display_, "WM_PROTOCOLS", false)),
 		  WM_DELETE_WINDOW(XInternAtom(display_, "WM_DELETE_WINDOW", false)),
 		  running(true),
-		  layout_manager_(nullptr){
+		  layout_manager_(nullptr) {
 	logger_.Log("Window Manager Created !\n", L_INFO);
 }
+
 bool WindowManager::getRunning() const {
 	return running;
 }
+
 /**
  * @brief Destroy the Window Manager:: Window Manager object
  * Close the display.
@@ -87,6 +88,7 @@ WindowManager::~WindowManager() {
 	delete layout_manager_;
 	XCloseDisplay(display_);
 }
+
 void handleSIGHUP(int signal) {
 	if (windowManagerInstance != nullptr) {
 		windowManagerInstance->Stop();
@@ -96,6 +98,7 @@ void handleSIGHUP(int signal) {
 void WindowManager::Stop() {
 	running = false;
 }
+
 void WindowManager::Init() {
 	std::stringstream debug_stream;
 	selectEventOnRoot();
@@ -107,6 +110,7 @@ void WindowManager::Init() {
 	XUngrabServer(display_);
 	XFlush(display_);
 	windowManagerInstance = this;
+	Bar();
 	signal(SIGINT, handleSIGHUP);
 }
 
@@ -131,7 +135,7 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 	this->layout_manager_ = new TreeLayoutManager(this->display_, this->root_);
 	logger_.Log(debug_stream.str(), L_INFO);
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
-		Client *newClient = new Client(display_, root_, top_level_windows[i],layout_manager_);
+		Client *newClient = new Client(display_, root_, top_level_windows[i], layout_manager_);
 		Client_Err err = newClient->frame();
 		setFocus(newClient);
 		XMapWindow(display_, top_level_windows[i]);
@@ -196,7 +200,6 @@ int WindowManager::OnXError(Display *display, XErrorEvent *e) {
 	XGetErrorText(display, e->error_code, error_text, sizeof(error_text));
 	std::cerr << "Received X error:\n"
 			  << "    Request: " << int(e->request_code)
-			  << " - " << XRequestCodeToString(e->request_code) << "\n"
 			  << "    Error code: " << int(e->error_code)
 			  << " - " << error_text << "\n"
 			  << "    Resource ID: " << e->resourceid
@@ -226,23 +229,21 @@ Display *WindowManager::getDisplay() const {
 std::unordered_map<Window, Client *> &WindowManager::getClients() {
 	return clients_;
 }
+
 Client &WindowManager::getClientRef(Window window) {
 	return *clients_.at(window);
 }
-Client* WindowManager::getClient(Window window) {
+
+Client *WindowManager::getClient(Window window) {
 	auto clientIter = clients_.find(window);
 	if (clientIter != clients_.end()) {
 		return clientIter->second;
 	}
-
-	// If not found, check frames
-	for (const auto& client : clients_) {
+	for (const auto &client: clients_) {
 		if (client.second->getFrame() == window) {
 			return client.second;
 		}
 	}
-
-	// If still not found, return nullptr
 	return nullptr;
 }
 

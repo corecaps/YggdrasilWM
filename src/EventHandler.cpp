@@ -338,8 +338,8 @@ void EventHandler::handleMapRequest(const XEvent &event) {
 void EventHandler::handleMotionNotify(const XEvent &event) {
 	auto e = event.xmotion;
 	const Window frame = wm_.getClientRef(event.xmotion.window).getFrame();
-	const Position<int> drag_pos(e.x_root, e.y_root);
-	const Vector2D<int> delta = drag_pos - drag_start_pos_;
+//	const Position<int> drag_pos(e.x_root, e.y_root);
+//	const Vector2D<int> delta = drag_pos - drag_start_pos_;
 //
 //	if (e.state & Button1Mask) {
 //		// alt + left button: Move window.

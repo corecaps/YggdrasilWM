@@ -31,11 +31,32 @@ extern "C" {
 #include <memory>
 #include <string>
 #include <unordered_map>
-#include "util.hpp"
+#include <chrono>
 #include "Logger.hpp"
 #include "Client.hpp"
 #include "TreeLayoutManager.hpp"
 
+template <typename T>
+struct Size {
+	T width, height;
+
+	Size() = default;
+	Size(T w, T h)
+			: width(w), height(h) {
+	}
+};
+template <typename T>
+::std::ostream& operator << (::std::ostream& out, const Size<T>& size);
+template <typename T>
+struct Position {
+	T x, y;
+
+	Position() = default;
+	Position(T _x, T _y)
+			: x(_x), y(_y) {
+	}
+
+};
 class WindowManager {
 public:
 	static ::std::unique_ptr<WindowManager> Create(
@@ -44,6 +65,8 @@ public:
 	~WindowManager();
 	void Init();
 	void Run();
+// For testing
+//	void Run(std::chrono::duration<int64_t> duration);
 // Getters
 	const Logger &getLogger() const;
 	Display *getDisplay() const;
@@ -53,6 +76,8 @@ public:
 	Client * getClient(Window window);
 	bool isFrame(Window window);
 	Client &getClientRef(Window window);
+	Window getBar() const;
+	int getClientCount();
 // Setters
 	void setFocus(Client *client);
 	void insertClient(Window window);
@@ -61,20 +86,22 @@ public:
 	bool getRunning() const;
 
 private:
+	Display									*display_;
 	static bool								wm_detected_;
 	const Window							root_;
+	Window 									bar_;
 	const Logger&							logger_;
 	TreeLayoutManager						*layout_manager_;
-	Display									*display_;
 	const Atom								WM_PROTOCOLS;
 	const Atom								WM_DELETE_WINDOW;
-	std::unordered_map<Window, Client*>		clients_;
 	bool									running;
+	std::unordered_map<Window, Client*>		clients_;
 // Initialisation
 	WindowManager(Display *display, const Logger &logger);
 	void selectEventOnRoot() const;
 	void getTopLevelWindows(std::stringstream &debug_stream);
-// Error Management
+	void Bar();
+	// Error Management
 	static int OnXError(Display *display, XErrorEvent *e);
 	static int OnWMDetected(Display *display, XErrorEvent *e);
 };

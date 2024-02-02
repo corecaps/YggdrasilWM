@@ -55,7 +55,7 @@ The script will start Xephyr, YggdrasilWM and some other programs for testing. T
 ### Manually
 ```
 Xephyr -ac -br -noreset -screen 800x600 :1 &
-DISPLAY=:1 ; ./build/Yggdrasilwm
+./build/Yggdrasilwm -d :1 -l logs/yggdrasilwm.log --log-level 0
 ```
 As there is no .xinitrc file, you will have to start a terminal manually using
 

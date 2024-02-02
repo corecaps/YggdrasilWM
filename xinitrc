@@ -2,7 +2,7 @@ current_datetime=$(date +"%Y-%m-%d-%H-%M")
 log_file="./logs/yggwm-${current_datetime}.log"
 xeyes &
 
-xev &
+#xev &
 #sleep 3 && killall -SIGUSR1 Xephyr
 
 sleep 4 && xclock &

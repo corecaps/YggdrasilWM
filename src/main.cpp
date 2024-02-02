@@ -20,10 +20,6 @@
 
 /**
  * @brief YggdrasilWM
- * Options are :
- * --version
- * --log /path/to/log/file
- * --loglevel 0-2.
  */
 
 int main(int argc, char** argv) {
