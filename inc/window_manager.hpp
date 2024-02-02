@@ -50,6 +50,7 @@ public:
 	void Run();
 	const Logger &getLogger() const;
 	Display *getDisplay() const;
+	void setFocus(Client *client);
 
 	TreeLayoutManager *getLayoutManager() const;
 

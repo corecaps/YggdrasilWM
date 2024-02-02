@@ -93,7 +93,7 @@ EventHandler::EventHandler(WindowManager &wm, const Logger &logger)
 	eventHandlerArray[ReparentNotify] = &EventHandler::handleReparentNotify;
 	eventHandlerArray[MapRequest] = &EventHandler::handleMapRequest;
 	eventHandlerArray[MotionNotify] = &EventHandler::handleMotionNotify;
-	eventHandlerArray[CreateNotify] = &EventHandler::handleCreateNotify;
+
 }
 EventHandler::~EventHandler() = default;
 /**
@@ -198,7 +198,8 @@ void EventHandler::handleConfigureNotify(const XEvent &event) {
 void EventHandler::handleButtonPress(const XEvent &event) {
 	auto e = event.xbutton;
 	const Window frame = wm_.getClient(event.xbutton.window)->getFrame();
-
+	// give focus to the window
+	XSetInputFocus(wm_.getDisplay(), frame, RevertToParent, CurrentTime);
 	// 1. Save initial cursor position.
 	drag_start_pos_ = Position<int>(e.x_root, e.y_root);
 
@@ -241,10 +242,32 @@ void EventHandler::handleExpose(const XEvent &event) {
 	logger_.Log("Expose received for ["+ std::to_string(e.window), L_WARNING);
 }
 void EventHandler::handleFocusIn(const XEvent &event) {
-	// TODO IMPLEMENT
+	auto e = event.xfocus;
+	Client * client = wm_.getClient(e.window);
+	if (client == nullptr) {
+		logger_.Log("Ignoring focus in for unknown window: " + std::to_string(e.window), L_INFO);
+		return;
+	}
+	else {
+		logger_.Log("Window focused: " + client->getTitle() , L_INFO);
+		client->setFocused(true);
+		XSetWindowBorder(wm_.getDisplay(), client->getFrame(), 0x00FF00);
+		XFlush(wm_.getDisplay());
+	}
 }
 void EventHandler::handleFocusOut(const XEvent &event) {
-	// TODO IMPLEMENT
+	auto e = event.xfocus;
+	Client * client = wm_.getClient(e.window);
+	if (client == nullptr) {
+		logger_.Log("Ignoring focus out for unknown window: " + std::to_string(e.window), L_INFO);
+		return;
+	}
+	else {
+		logger_.Log("Window unfocused: " + client->getTitle() , L_INFO);
+		client->setFocused(false);
+		XSetWindowBorder(wm_.getDisplay(), client->getFrame(), 0x0000FF);
+		XFlush(wm_.getDisplay());
+	}
 }
 void EventHandler::handlePropertyNotify(const XEvent &event) {
 	// TODO IMPLEMENT

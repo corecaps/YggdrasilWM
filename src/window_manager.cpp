@@ -167,7 +167,7 @@ void WindowManager::selectEventOnRoot() const {
 	XSelectInput(
 			display_,
 			root_,
-			SubstructureRedirectMask | SubstructureNotifyMask);
+			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask);
 	XSync(display_, false);
 	XSetErrorHandler(&WindowManager::OnXError);
 }
@@ -266,4 +266,10 @@ bool WindowManager::isFrame(Window window) {
 
 TreeLayoutManager *WindowManager::getLayoutManager() const {
 	return layout_manager_;
+}
+
+void WindowManager::setFocus(Client *client) {
+	if (client != nullptr) {
+		XSetInputFocus(display_, client->getWindow(), RevertToParent, CurrentTime);
+	}
 }

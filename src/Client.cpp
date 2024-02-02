@@ -99,7 +99,7 @@ Client_Err Client::frame() {
 		XSelectInput(
 			display_,
 			this->frame_,
-			SubstructureRedirectMask | SubstructureNotifyMask);
+			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask);
 	XAddToSaveSet(display_,window_);
 	XReparentWindow(
 			display_,
