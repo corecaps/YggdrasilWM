@@ -76,11 +76,10 @@ target_link_libraries(${PROGRAM_NAME}
 )
 
 # Add compile definitions
-target_compile_definitions(${PROGRAM_NAME}
-        PRIVATE PROGRAM_NAME="${PROGRAM_NAME}"
-        PROGRAM_VERSION="${PROGRAM_VERSION}"
+add_definitions(
+        -DPROGRAM_NAME="${PROGRAM_NAME}"
+        -DPROGRAM_VERSION="${PROGRAM_VERSION}"
 )
-
 # Set C++ standard
 set_property(TARGET ${PROGRAM_NAME} PROPERTY CXX_STANDARD 14)
 
