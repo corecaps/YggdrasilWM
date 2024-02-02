@@ -26,7 +26,7 @@ cd build
 cmake ..
 make
 ```
-## Options
+## Usage
 ```
 Usage: YggdrasilWM [options...]
 ```
@@ -38,7 +38,8 @@ Usage: YggdrasilWM [options...]
   -l,--log <log>              Log file
   -c,--config <config>        Config file
 ```
-
+## Default Keybindings
+- **Mod1 + Left Mouse Button** - Change Focus to the clicked window
 ## Testing using Xephyr
 YggdrasilWM is not yet ready to be used as a daily driver, but you can test it using Xephyr.
 Xephyr is a nested X server that runs inside your current X server. It is used to test window managers and other X11 programs.
