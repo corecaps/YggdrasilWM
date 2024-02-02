@@ -25,12 +25,10 @@ extern "C" {
 }
 
 using ::std::max;
-using ::std::mutex;
 using ::std::string;
 using ::std::unique_ptr;
 
 bool WindowManager::wm_detected_;
-mutex WindowManager::wm_detected_mutex_;
 static WindowManager *windowManagerInstance = nullptr;
 
 /**
@@ -101,6 +99,9 @@ void WindowManager::Stop() {
 void WindowManager::Init() {
 	std::stringstream debug_stream;
 	selectEventOnRoot();
+	if (wm_detected_) {
+		throw std::runtime_error("Another window manager is already running.");
+	}
 	XGrabServer(display_);
 	getTopLevelWindows(debug_stream);
 	XUngrabServer(display_);
