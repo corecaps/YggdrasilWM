@@ -133,6 +133,7 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
 		Client *newClient = new Client(display_, root_, top_level_windows[i],layout_manager_);
 		Client_Err err = newClient->frame();
+		setFocus(newClient);
 		XMapWindow(display_, top_level_windows[i]);
 		LogLevel debug_level;
 		switch (err) {
