@@ -237,7 +237,16 @@ void EventHandler::handleLeaveNotify(const XEvent &event) {
 void EventHandler::handleExpose(const XEvent &event) {
 	// TODO IMPLEMENT
 	auto e = event.xexpose;
-	logger_.Log("Expose received for ["+ std::to_string(e.window), L_WARNING);
+	auto bar = wm_.getBar();
+	if (e.window == bar) {
+		auto display_ = wm_.getDisplay();
+		auto screen = DefaultScreen(display_);
+		std::stringstream message;
+		message << PROGRAM_NAME << " " << PROGRAM_VERSION << " " << wm_.getClientCount() << " clients" ;
+		XClearWindow(display_, bar);
+		XDrawString(wm_.getDisplay(), wm_.getBar(), DefaultGC(display_, screen), 300, 15, message.str().c_str(), message.str().size());
+		XFlush(display_);
+	}
 }
 void EventHandler::handleFocusIn(const XEvent &event) {
 	auto e = event.xfocus;

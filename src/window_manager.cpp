@@ -275,3 +275,32 @@ void WindowManager::setFocus(Client *client) {
 		XSetInputFocus(display_, client->getWindow(), RevertToParent, CurrentTime);
 	}
 }
+
+void WindowManager::Bar() {
+	int screen = DefaultScreen(display_);
+	bar_ = XCreateSimpleWindow(
+			display_,
+			root_,
+			0,
+			0,
+			DisplayWidth(display_, screen),
+			20,
+			0,
+			BlackPixel(display_, screen),
+			WhitePixel(display_, screen));
+	logger_.Log("Bar created", L_INFO);
+	XSelectInput(display_, bar_, ExposureMask | KeyPressMask);
+	XMapWindow(display_, bar_);
+	XFlush(display_);
+}
+
+Window WindowManager::getBar() const {
+	return bar_;
+}
+
+int WindowManager::getClientCount() {
+
+	return clients_.size();
+}
+
+

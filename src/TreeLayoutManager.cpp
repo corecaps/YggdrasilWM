@@ -17,8 +17,8 @@
 
 TreeLayoutManager::TreeLayoutManager(Display *display, Window root) : LayoutManager(display, root) {
 	Point size = Point(DisplayWidth(display, DefaultScreen(display)),
-					   DisplayHeight(display, DefaultScreen(display)));
-	this->rootSpace_ = new Space(Point(0, 0), size, 0);
+					   DisplayHeight(display, DefaultScreen(display))-30);
+	this->rootSpace_ = new Space(Point(0, 30), size, 0);
 }
 
 TreeLayoutManager::~TreeLayoutManager() {
