@@ -51,7 +51,6 @@ include_directories(${googletest_SOURCE_DIR}/googlemock/include)
 set(SOURCES
         ${SOURCE_DIR}/window_manager.cpp
         ${SOURCE_DIR}/util.cpp
-        ${SOURCE_DIR}/main.cpp
         ${SOURCE_DIR}/Logger.cpp
         ${SOURCE_DIR}/Client.cpp
         ${INCLUDE_DIR}/Client.hpp
@@ -66,7 +65,7 @@ set(SOURCES
 )
 
 # Create the executable
-add_executable(${PROGRAM_NAME} ${SOURCES})
+add_executable(${PROGRAM_NAME} ${SOURCES} ${SOURCE_DIR}/main.cpp)
 
 # Link against X11, cxxopts, GoogleTest, and GoogleMock libraries
 target_link_libraries(${PROGRAM_NAME}
@@ -93,20 +92,7 @@ set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 file(GLOB TEST_SOURCES ${TEST_DIR}/*.cpp)
 
 # Create the test executable
-add_executable(${PROGRAM_NAME}_tests ${TEST_SOURCES}
-                ${SOURCE_DIR}/window_manager.cpp
-                ${SOURCE_DIR}/util.cpp
-                ${SOURCE_DIR}/Logger.cpp
-                ${SOURCE_DIR}/Client.cpp
-                ${SOURCE_DIR}/EventHandler.cpp
-                ${SOURCE_DIR}/LayoutManager.cpp
-                ${SOURCE_DIR}/ConfigHandler.cpp
-                src/TreeLayoutManager.cpp
-                inc/TreeLayoutManager.hpp
-                inc/Client.hpp
-                inc/EventHandler.hpp
-                inc/LayoutManager.hpp
-                inc/ConfigHandler.hpp)
+add_executable(${PROGRAM_NAME}_tests ${SOURCES} ${TEST_SOURCES} )
 
 # Link against X11, cxxopts, GoogleTest, and GoogleMock libraries
 target_link_libraries(${PROGRAM_NAME}_tests
