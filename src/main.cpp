@@ -71,7 +71,12 @@ int main(int argc, char** argv) {
 		return EXIT_FAILURE;
 	}
 	logger.Log("Starting WindowManager.", L_INFO);
-	windowManager->Init();
+	try {
+		windowManager->Init();
+	} catch (const std::exception &e) {
+		logger.Log(e.what(), L_ERROR);
+		return EXIT_FAILURE;
+	}
 	windowManager->Run();
 	return (EXIT_SUCCESS);
 }
