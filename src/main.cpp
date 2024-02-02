@@ -18,7 +18,6 @@
 #include "Logger.hpp"
 #include <cxxopts.hpp>
 
-using ::std::unique_ptr;
 /**
  * @brief YggdrasilWM
  * Options are :
@@ -28,40 +27,55 @@ using ::std::unique_ptr;
  */
 
 int main(int argc, char** argv) {
-	cxxopts::Options options(PROGRAM_NAME, "A tiny Window Manager.");
+	cxxopts::Options options(PROGRAM_NAME, "YggdrasilWM by corecaps. https://github.com/corecaps/YggdrasilWM");
 	options.add_options()
-			("version", "Display this text and exit", cxxopts::value<bool>())
-			("log", "Specify the log file path", cxxopts::value<std::string>())
+			("h,help", "Print help")
+			("v,version", "Display version", cxxopts::value<bool>())
+			("l,log", "Specify the log file path", cxxopts::value<std::string>())
 			("loglevel", "Specify the log level (0-2)", cxxopts::value<int>())
 			("d,display", "Specify the display to use", cxxopts::value<std::string>());
-	auto result = options.parse(argc, argv);
-
-	if (result["version"].as<bool>()) {
-		std::cout << PROGRAM_NAME << "\t" << PROGRAM_VERSION << "\n" << std::endl;
-		std::cout << options.help() << std::endl;
-		return EXIT_SUCCESS;
-	}
 	std::string LogFilePath;
-	if (result.count("log")) {
-		LogFilePath = result["log"].as<std::string>();
-	} else {
-		LogFilePath = "wm.log";
-	}
+	std::string Display;
 	int logLevel = 0;
-	if (result.count("loglevel")) {
-		logLevel = result["loglevel"].as<int>();
-		if (logLevel < 0 || logLevel > 2) {
-			std::cerr << "Invalid log level. It should be between 0 and 2." << std::endl;
-			return EXIT_FAILURE;
+	try {
+		auto result = options.parse(argc, argv);
+		if (result.count("help")) {
+			std::cout << options.help() << std::endl;
+			return EXIT_SUCCESS;
 		}
+		if (result["version"].as<bool>()) {
+			std::cout << PROGRAM_NAME << "\t" << PROGRAM_VERSION << "\n" << std::endl;
+			return EXIT_SUCCESS;
+		}
+		if (result.count("log")) {
+			LogFilePath = result["log"].as<std::string>();
+		} else {
+			LogFilePath = "wm.log";
+		}
+		if (result.count("loglevel")) {
+			logLevel = result["loglevel"].as<int>();
+			if (logLevel < 0 || logLevel > 2) {
+				std::cerr << "Invalid log level. It should be between 0 and 2." << std::endl;
+				return EXIT_FAILURE;
+			}
+		}
+		if (result.count("display")) {
+			Display = result["display"].as<std::string>();
+		} else {
+			Display = "";
+		}
+	} catch (const cxxopts::OptionException &e) {
+		std::cerr << "Error parsing options: " << e.what() << std::endl;
+		std::cout << options.help() << std::endl;
+		return EXIT_FAILURE;
 	}
 //	Logger logger(LogFilePath, static_cast<LogLevel>(logLevel));
 	Logger logger(std::cout, static_cast<LogLevel>(logLevel));
 	logger.Log("Starting " + std::string(PROGRAM_NAME) + " " + std::string(PROGRAM_VERSION), L_INFO);
-	unique_ptr<WindowManager> windowManager;
-	if (result.count("display")) {
-		logger.Log("Using display " + result["display"].as<std::string>(), L_INFO);
-		windowManager = WindowManager::Create(logger, result["display"].as<std::string>());
+	std::unique_ptr<WindowManager> windowManager;
+	if (!Display.empty()) {
+		logger.Log("Using display " + Display, L_INFO);
+		windowManager = WindowManager::Create(logger, Display);
 	} else {
 		logger.Log("Using default display", L_INFO);
 		windowManager = WindowManager::Create(logger);
