@@ -7,4 +7,4 @@ xev &
 
 sleep 4 && xclock &
 sleep 6 && kitty &
-exec ./build/YggdrasilWM --log="${log_file}" --loglevel=0 >> logs/std-logs.txt 2>&1
+exec ./build/YggdrasilWM -d :1 --log="${log_file}" --loglevel=0 >> logs/std-logs.txt 2>&1
