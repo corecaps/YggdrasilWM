@@ -147,15 +147,16 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 	}
 	debug_stream << "Found " << num_top_level_windows << " top level windows." << "root:" << root_ << std::endl;
 	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
-	int size_x = DisplayWidth(display_, DefaultScreen(display_)) - 2*BorderSize;
-	int size_y = DisplayHeight(display_, DefaultScreen(display_)) -30-2*BorderSize;
+	int BarHeight = std::get<int>(configHandler_.getConfig("BarHeight"));
+	int size_x = DisplayWidth(display_, DefaultScreen(display_)) - 2 * BorderSize;
+	int size_y = DisplayHeight(display_, DefaultScreen(display_)) - BarHeight - 2 * BorderSize;
 	int pos_x = 0;
-	int pos_y = 30;
+	int pos_y = BarHeight;
 	this->layout_manager_ = new TreeLayoutManager(this->display_, this->root_, size_x, size_y, pos_x, pos_y);
 	logger_.Log(debug_stream.str(), L_INFO);
-	unsigned long ActiveColor = std::get<unsigned long>(configHandler_.getConfig("ActiveColor"));
+	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
-		Client *newClient = new Client(display_, root_, top_level_windows[i], layout_manager_, ActiveColor, BorderSize);
+		Client *newClient = new Client(display_, root_, top_level_windows[i], layout_manager_, InActiveColor, BorderSize);
 		Client_Err err = newClient->frame();
 		setFocus(newClient);
 		XMapWindow(display_, top_level_windows[i]);
@@ -269,9 +270,9 @@ Client *WindowManager::getClient(Window window) {
 
 void WindowManager::insertClient(Window window) {
 	std::stringstream debug_stream;
-	unsigned long ActiveColor = std::get<unsigned long>(configHandler_.getConfig("ActiveColor"));
+	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
 	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
-	Client *client = new Client(display_, root_, window, layout_manager_, ActiveColor, BorderSize);
+	Client *client = new Client(display_, root_, window, layout_manager_, InActiveColor, BorderSize);
 	debug_stream << "Inserting client in map: " << client->getTitle() << "\t[" << window << "]";
 	logger_.Log(debug_stream.str(), L_INFO);
 	clients_.insert({window, client});

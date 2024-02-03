@@ -39,14 +39,14 @@
  */
 #include "TreeLayoutManager.hpp"
 Client::Client(Display *display, Window root, Window window, TreeLayoutManager *layout_manager,
-			   unsigned long ActiveColor, int BorderSize)
+			   unsigned long InActiveColor, int BorderSize)
 		: display_(display),
 		  layout_manager_(layout_manager),
 		  root_(root),
 		  window_(window),
 		  frame_(0),
 		  border_width(BorderSize),
-		  border_color(ActiveColor),
+		  border_color(InActiveColor),
 		  focused(false),
 		  framed(false),
 		  mapped(false)
@@ -182,13 +182,6 @@ void Client::restack() {
 Client_Err Client::unframe() {
 	if (!this->framed)
 		return(YGG_CLI_LOG_IGNORE_NOT_FRAMED);
-//	XUnmapWindow(display_,frame_);
-//	XReparentWindow(
-//			display_,
-//			window_,
-//			root_,
-//			0,0);
-//	XRemoveFromSaveSet(display_,window_);
 	XDestroyWindow(display_,frame_);
 	this->framed = false;
 	this->frame_ = 0;

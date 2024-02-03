@@ -255,7 +255,10 @@ void EventHandler::handleExpose(const XEvent &event) {
 		auto display_ = wm_.getDisplay();
 		auto screen = DefaultScreen(display_);
 		std::stringstream message;
-		message << PROGRAM_NAME << " " << PROGRAM_VERSION << " " << wm_.getClientCount() << " clients" ;
+		auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+		std::tm localTime;
+		localtime_r(&now, &localTime);
+		message << PROGRAM_NAME << " " << PROGRAM_VERSION << " " << wm_.getClientCount() << " clients" << " " << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S") ;
 		XClearWindow(display_, bar);
 		XDrawString(wm_.getDisplay(), wm_.getBar(), DefaultGC(display_, screen), 300, 15, message.str().c_str(), message.str().size());
 		XFlush(display_);
