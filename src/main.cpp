@@ -30,6 +30,7 @@
 #include "window_manager.hpp"
 #include "Logger.hpp"
 #include <cxxopts.hpp>
+#include "ConfigHandler.hpp"
 
 /**
  * @brief YggdrasilWM
@@ -82,16 +83,26 @@ int main(int argc, char** argv) {
 		std::cout << options.help() << std::endl;
 		return EXIT_FAILURE;
 	}
-//	Logger logger(LogFilePath, static_cast<LogLevel>(logLevel));
+	//	Logger logger(LogFilePath, static_cast<LogLevel>(logLevel));
 	Logger logger(std::cout, static_cast<LogLevel>(logLevel));
+	ConfigHandler configHandler = ConfigHandler();
+	bool validConfig = configHandler.loadConfig();
+	if (validConfig)
+		logger.Log("Loaded config: " + configHandler.getConfigPath(), L_INFO);
+	else {
+		logger.Log("Failed to load config: " + configHandler.getConfigPath(),L_ERROR);
+		return EXIT_FAILURE;
+	}
+	logger.Log(configHandler.printConfig().str(), L_INFO);
+	std::cout << std::endl;
 	logger.Log("Starting " + std::string(PROGRAM_NAME) + " " + std::string(PROGRAM_VERSION), L_INFO);
 	std::unique_ptr<WindowManager> windowManager;
 	if (!Display.empty()) {
 		logger.Log("Using display " + Display, L_INFO);
-		windowManager = WindowManager::Create(logger, Display);
+		windowManager = WindowManager::Create(logger,configHandler, Display);
 	} else {
 		logger.Log("Using default display", L_INFO);
-		windowManager = WindowManager::Create(logger);
+		windowManager = WindowManager::Create(logger, configHandler);
 	}
 	if (!windowManager) {
 		logger.Log("Failed to initialize WindowManager.", L_ERROR);

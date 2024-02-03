@@ -31,6 +31,7 @@
 #include "Logger.hpp"
 #include <cstdlib>
 #include <unistd.h>
+#include "ConfigHandler.hpp"
 
 void runXephyr () {
 	pid_t pid = fork();
@@ -50,7 +51,7 @@ void runXephyr () {
 		perror("Exec failed");
 		exit(EXIT_FAILURE);
 	} else {
-		std::cout << "Xephyr Launched on Display :1" << std::endl;
+		std::cout << "[       OK ] Xephyr Launched on Display :1" << std::endl;
 	}
 }
 
@@ -74,7 +75,7 @@ void runXeyes() {
 		perror("Exec failed");
 		exit(EXIT_FAILURE);
 	} else {
-		std::cout << "Xeyes Launched on Display :1" << std::endl;
+		std::cout << "[       OK ] Xeyes Launched on Display :1" << std::endl;
 	}
 }
 
@@ -99,7 +100,7 @@ protected:
 	static void SetUpTestSuite() {
 		// Setup
 		std::cout << " =================================================================================== " << std::endl;
-		std::cout << " ============================== WindowManagerTest SetUpTestSuite ============================== " << std::endl;
+		std::cout << " ======================== WindowManagerTest SetUpTestSuite ========================= " << std::endl;
 		std::cout << " =================================================================================== " << std::endl;
 		runXephyr();
 		sleep(3);
@@ -109,6 +110,9 @@ protected:
 
 	void SetUp() override {
 		mockLogger = std::make_shared<MockLogger>();
+		configHandler_ = ConfigHandler();
+		configHandler_.loadConfig();
+
 	}
 	static void TearDownTestSuite() {
 		// Cleanup
@@ -118,7 +122,7 @@ protected:
 	void TearDown() override {
 	mockLogger.reset();
 	}
-
+	ConfigHandler configHandler_;
 	std::shared_ptr<MockLogger> mockLogger;
 };
 
@@ -128,7 +132,8 @@ EXPECT_CALL(*mockLogger, Log(::testing::_, L_INFO))
 .Times(::testing::AtLeast(1));
 
 // Try to create a WindowManager with a valid display
-auto windowManager = WindowManager::Create(*mockLogger,":1");
+
+auto windowManager = WindowManager::Create(*mockLogger, configHandler_,":1");
 
 // Check if the WindowManager object is created
 ASSERT_TRUE(windowManager);
@@ -143,7 +148,7 @@ EXPECT_CALL(*mockLogger, Log(::testing::_, L_ERROR))
 .Times(::testing::AtLeast(1));
 
 // Try to create a WindowManager with an invalid display
-auto windowManager = WindowManager::Create(*mockLogger, "invalid_display");
+auto windowManager = WindowManager::Create(*mockLogger, configHandler_,"invalid_display");
 
 // Check if the WindowManager object is not created
 ASSERT_FALSE(windowManager);
@@ -152,13 +157,13 @@ ASSERT_FALSE(windowManager);
 TEST_F(WindowManagerTest, GetLogger) {
 	EXPECT_CALL(*mockLogger, Log(::testing::_, L_INFO))
 			.Times(::testing::AtLeast(1));
-auto windowManager = WindowManager::Create(*mockLogger,":1");
+auto windowManager = WindowManager::Create(*mockLogger, configHandler_,":1");
 ASSERT_EQ(&windowManager->getLogger(), mockLogger.get());
 }
 TEST_F(WindowManagerTest, initWM) {
 	EXPECT_CALL(*mockLogger, Log(::testing::_, L_INFO))
 			.Times(::testing::AtLeast(1));
-	auto windowManager = WindowManager::Create(*mockLogger,":1");
+	auto windowManager = WindowManager::Create(*mockLogger, configHandler_,":1");
 	ASSERT_EQ(&windowManager->getLogger(), mockLogger.get());
 	windowManager->Init();
 	ASSERT_EQ(windowManager->getRunning(), true);

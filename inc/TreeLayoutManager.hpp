@@ -36,7 +36,7 @@ public:
 	Space	*findSpace(Client* client) override;
 	Space	*findSpace(int index) override;
 	void	addClient(Client* client) override;
-	TreeLayoutManager(Display* display, Window root);
+	TreeLayoutManager(Display* display, Window root,int size_x,int size_y,int pos_x,int pos_y);
 
 	void addClientRecursive(Client *client, Space *space);
 

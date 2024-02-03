@@ -54,6 +54,19 @@ if (NOT googletest_POPULATED)
     add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
 endif ()
 
+# Download and configure jsoncpp
+FetchContent_Declare(
+        jsoncpp
+        GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
+        GIT_TAG 1.9.4  # Adjust the version tag as needed
+)
+
+FetchContent_GetProperties(jsoncpp)
+if (NOT jsoncpp_POPULATED)
+    FetchContent_Populate(jsoncpp)
+    add_subdirectory(${jsoncpp_SOURCE_DIR} ${jsoncpp_BINARY_DIR})
+endif()
+
 # Find required packages
 find_package(X11 REQUIRED)
 
@@ -94,6 +107,7 @@ target_link_libraries(${PROGRAM_NAME}
         cxxopts
         gtest
         gmock
+        jsoncpp_lib
 )
 
 # Add compile definitions
@@ -102,7 +116,7 @@ add_definitions(
         -DPROGRAM_VERSION="${PROGRAM_VERSION}"
 )
 # Set C++ standard
-set_property(TARGET ${PROGRAM_NAME} PROPERTY CXX_STANDARD 14)
+set_property(TARGET ${PROGRAM_NAME} PROPERTY CXX_STANDARD 17)
 
 # Enable testing
 enable_testing()
@@ -120,11 +134,12 @@ target_link_libraries(${PROGRAM_NAME}_tests
         cxxopts
         gtest
         gmock
+        jsoncpp_lib
         gtest_main
 )
 
 # Set C++ standard for tests
-set_property(TARGET ${PROGRAM_NAME}_tests PROPERTY CXX_STANDARD 14)
+set_property(TARGET ${PROGRAM_NAME}_tests PROPERTY CXX_STANDARD 17)
 
 # Add the test as a target for running with 'make test'
 add_test(NAME ${PROGRAM_NAME}_tests COMMAND ${PROGRAM_NAME}_tests)

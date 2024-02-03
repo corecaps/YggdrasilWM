@@ -28,9 +28,41 @@
 
 #ifndef YGGDRASILWM_CONFIGHANDLER_HPP
 #define YGGDRASILWM_CONFIGHANDLER_HPP
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <unordered_map>
+#include <json/json.h>
+#include <variant>
+#include <cctype>
 
 class ConfigHandler {
+public:
+	using ConfigValue = std::variant<std::string, int, bool,unsigned long>;
 
+	ConfigHandler();
+	ConfigHandler(const std::string configPath);
+	~ConfigHandler();
+	void setConfig(const std::string &key, const std::string &value);
+	ConfigValue getConfig(const std::string &key);
+	void saveConfig();
+	bool loadConfig();
+
+	const std::string &getConfigPath() const;
+
+	std::stringstream printConfig();
+private:
+	static const std::vector<std::string> defaultPaths;
+	std::string configPath_;
+	std::unordered_map<std::string,ConfigValue> configMap_;
+	std::string findConfigFile() const;
+	bool fileExists(const std::string &path) const;
+	std::string expandEnvironmentVariables(const std::string &path) const;
+	std::unordered_map<std::string, ConfigValue> parseJsonToMap(const Json::Value& jsonValue);
+
+	unsigned long colorCodeToULong(const std::string &colorCode);
 };
+
+
 
 #endif //YGGDRASILWM_CONFIGHANDLER_HPP

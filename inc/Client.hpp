@@ -47,7 +47,8 @@ enum Client_Err {
 
 class Client {
 public:
-	Client(Display *display, Window root, Window window, TreeLayoutManager *layout_manager);
+	Client(Display *display, Window root, Window window, TreeLayoutManager *layout_manager,
+		   unsigned long ActiveColor, int BorderSize);
 	~Client();
 	Client_Err frame();
 	Client_Err unframe();

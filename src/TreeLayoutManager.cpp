@@ -28,10 +28,10 @@
 #include <iostream>
 #include "TreeLayoutManager.hpp"
 
-TreeLayoutManager::TreeLayoutManager(Display *display, Window root) : LayoutManager(display, root) {
-	Point size = Point(DisplayWidth(display, DefaultScreen(display)),
-					   DisplayHeight(display, DefaultScreen(display))-30);
-	this->rootSpace_ = new Space(Point(0, 30), size, 0);
+TreeLayoutManager::TreeLayoutManager(Display *display, Window root, int size_x,int size_y,int pos_x,int pos_y) : LayoutManager(display, root) {
+	Point pos(pos_x, pos_y);
+	Point size(size_x, size_y);
+	this->rootSpace_ = new Space(pos, size, 0);
 }
 
 TreeLayoutManager::~TreeLayoutManager() {

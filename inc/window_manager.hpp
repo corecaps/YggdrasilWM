@@ -48,6 +48,9 @@ extern "C" {
 #include "Logger.hpp"
 #include "Client.hpp"
 #include "TreeLayoutManager.hpp"
+#include "ConfigHandler.hpp"
+
+using ConfigValue = std::variant<std::string, int, bool,unsigned long>;
 
 template <typename T>
 struct Size {
@@ -70,10 +73,12 @@ struct Position {
 	}
 
 };
+
 class WindowManager {
 public:
 	static ::std::unique_ptr<WindowManager> Create(
 		Logger &logger,
+		ConfigHandler &configHandler,
 		const std::string &display_str = std::string());
 	~WindowManager();
 	void Init();
@@ -103,14 +108,19 @@ private:
 	static bool								wm_detected_;
 	const Window							root_;
 	Window 									bar_;
+public:
+	ConfigHandler &getConfigHandler();
+
+private:
 	const Logger&							logger_;
+	ConfigHandler                    configHandler_;
 	TreeLayoutManager						*layout_manager_;
 	const Atom								WM_PROTOCOLS;
 	const Atom								WM_DELETE_WINDOW;
 	bool									running;
 	std::unordered_map<Window, Client*>		clients_;
 // Initialisation
-	WindowManager(Display *display, const Logger &logger);
+	WindowManager(Display *display, const Logger &logger,ConfigHandler &configHandler);
 	void selectEventOnRoot() const;
 	void getTopLevelWindows(std::stringstream &debug_stream);
 	void Bar();

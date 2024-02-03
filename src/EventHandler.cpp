@@ -271,9 +271,10 @@ void EventHandler::handleFocusIn(const XEvent &event) {
 		return;
 	}
 	else {
+		unsigned long ActiveColor = std::get<unsigned long>(wm_.getConfigHandler().getConfig("ActiveColor"));
 		logger_.Log("Window focused: " + client->getTitle() , L_INFO);
 		client->setFocused(true);
-		XSetWindowBorder(wm_.getDisplay(), client->getFrame(), 0x00FF00);
+		XSetWindowBorder(wm_.getDisplay(), client->getFrame(), ActiveColor);
 		XFlush(wm_.getDisplay());
 	}
 }
@@ -287,9 +288,10 @@ void EventHandler::handleFocusOut(const XEvent &event) {
 		return;
 	}
 	else {
+		unsigned long InActiveColor = std::get<unsigned long>(wm_.getConfigHandler().getConfig("InActiveColor"));
 		logger_.Log("Window unfocused: " + client->getTitle() , L_INFO);
 		client->setFocused(false);
-		XSetWindowBorder(wm_.getDisplay(), client->getFrame(), 0x0000FF);
+		XSetWindowBorder(wm_.getDisplay(), client->getFrame(), InActiveColor);
 		XFlush(wm_.getDisplay());
 	}
 }

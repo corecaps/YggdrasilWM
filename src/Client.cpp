@@ -38,14 +38,15 @@
  * @param window
  */
 #include "TreeLayoutManager.hpp"
-Client::Client(Display *display, Window root, Window window, TreeLayoutManager *layout_manager)
+Client::Client(Display *display, Window root, Window window, TreeLayoutManager *layout_manager,
+			   unsigned long ActiveColor, int BorderSize)
 		: display_(display),
 		  layout_manager_(layout_manager),
 		  root_(root),
 		  window_(window),
 		  frame_(0),
-		  border_width(0),
-		  border_color(0),
+		  border_width(BorderSize),
+		  border_color(ActiveColor),
 		  focused(false),
 		  framed(false),
 		  mapped(false)
@@ -87,8 +88,6 @@ Client::~Client() {
  */
 
 Client_Err Client::frame() {
-	const unsigned int BORDER_WIDTH = 3;
-	const unsigned long BORDER_COLOR = 0xff0000;
 	const unsigned long BG_COLOR = 0x000000;
 
 	if (this->framed)
@@ -105,8 +104,8 @@ Client_Err Client::frame() {
 			x_window_attrs.y,
 			x_window_attrs.width,
 			x_window_attrs.height,
-			BORDER_WIDTH,
-			BORDER_COLOR,
+			border_width,
+			border_color,
 			BG_COLOR
 			);
 		XSelectInput(
