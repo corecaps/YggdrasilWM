@@ -5,8 +5,21 @@
  *   88   `Y88 `Y88 `Y88 8    `Y88 Y88P 8 8    YP  YP    8     8
  *        wwdP wwdP
  * Yggdrasil Window Manager
- * by jgarcia <jgarcia@student.42.fr> <corecaps@gmail.com>
  * https://github.com/corecaps/YggdrasilWM
+ * Copyright (C) 2024 jgarcia <jgarcia@student.42.fr> <corecaps@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Logger.cpp
  * @brief Logger class implementation.
  * @date 2021-06-23

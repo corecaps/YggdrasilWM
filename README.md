@@ -1,3 +1,5 @@
+|![gplv3-only](https://www.gnu.org/graphics/gplv3-with-text-136x68.png) |
+|-|
 # YggdrasilWM 
 **Version 0.1.1**
 
@@ -80,3 +82,6 @@ doxygen doxygen.cfg
 ```
 in the root directory to generate the documentation in the doc/ subdirectory.
 Feel free to edit the doxygen.cfg file to your needs.
+
+## License
+YggdrasilWM is licensed under the GNU General Public License v3. The full GPL license is available in the LICENSE file.
