@@ -33,9 +33,17 @@
 #include <stdexcept>
 #include "Client.hpp"
 
-
+/**
+ * @brief LayoutManager class
+ * This a base class for the different layout managers.
+ * You should not use this class directly, but use one of the derived classes.
+ */
 class LayoutManager {
 public:
+/**
+ * @brief Point struct
+ * This struct represents a 2D point
+ */
 	struct Point {
 		int	x;
 		int	y;
@@ -43,7 +51,12 @@ public:
 		Point(int x, int y) : x(x), y(y) {}
 		Point() : x(0), y(0) {}
 	};
-
+/**
+ * @brief Space class
+ * This class represents a space in the layout.
+ * it's designed like a binary tree, with a parent, a right and a left child.
+ * Only leaf spaces have clients.
+ */
 	class Space {
 	private:
 		Point					pos_;
@@ -56,14 +69,19 @@ public:
 		Client*					client_{};
 
 	public:
+/**
+ * @brief Construct a new Space object
+ * @param pos
+ * @param size
+ * @param index
+ * @param parent
+ */
 		Space(Point pos, Point size, int index, Space* parent = nullptr);
 		const Point &getPos() const;
 		void setPos(const Point &pos);
 		const Point &getSize() const;
 		void setSize(const Point &size);
-
 		int getSubspaceCount() const;
-
 		int getIndex() const;
 		void setIndex(int index);
 		Space *getParent() const;
@@ -74,24 +92,46 @@ public:
 		void setLeft(std::unique_ptr<Space> left);
 		Client *getClient() const;
 		void setClient(Client *client);
-
 		void incSubSpaceCount();
 	};
-
+/**
+ * @brief SpaceNotFoundException class
+ * This exception is thrown when a space is not found.
+ */
 	class SpaceNotFoundException : public std::runtime_error {
 	public:
 		explicit SpaceNotFoundException(const std::string& message);
 		const char * what() const noexcept override;
 	};
-
+/**
+ * @brief Construct a new LayoutManager object
+ * @param display
+ * @param root
+ */
 	LayoutManager(Display* display, Window root);
 	virtual ~LayoutManager() = default;
-
+/**
+ * @brief updateGeometry this method is a residual from the old implementation.
+ * it should be removed in the future.
+ */
 	virtual void	updateGeometry();
+/**
+ * @brief find the space that contains the client
+ * @param client
+ * @return
+ */
 	virtual Space	*findSpace(Client *client);
+/**
+ * @brief find the space with the given index
+ * @param index
+ * @return
+ */
 	virtual Space	*findSpace(int index);
+/**
+ * @brief add a client to the layout
+ * @param client
+ */
 	virtual void	addClient(Client* client);
-
 protected:
 	Space*	rootSpace_;
 	int		screen_width_;
@@ -100,5 +140,4 @@ protected:
 	Display	*display_;
 	Window	rootWindow_;
 };
-
 #endif //YGGDRASILWM_LAYOUTMANAGER_HPP

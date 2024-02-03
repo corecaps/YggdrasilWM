@@ -26,35 +26,13 @@
  *
  */
 
-#include <iostream>
 #include "window_manager.hpp"
-#include "EventHandler.hpp"
-#include <algorithm>
-#include <csignal>
-
-extern "C" {
-#include <X11/Xutil.h>
-}
-
 using ::std::max;
 using ::std::string;
 using ::std::unique_ptr;
 
 bool WindowManager::wm_detected_;
 static WindowManager *windowManagerInstance = nullptr;
-
-/**
- * @brief Create a WindowManager object
- * This function is the only way to instantiate a WindowManager object.
- * It returns a unique_ptr to the object.
- * If the display_str is empty, it will use the DISPLAY environment variable.
- * If the display_str is not empty, it will use the display_str.
- * If the display_str is invalid, it will return nullptr.
- *
- * @param logger
- * @param display_str
- * @return unique_ptr<WindowManager>
- */
 
 unique_ptr<WindowManager> WindowManager::Create(Logger &logger,ConfigHandler& configHandler, const string &display_str) {
 	std::stringstream debug_stream;
@@ -70,13 +48,6 @@ unique_ptr<WindowManager> WindowManager::Create(Logger &logger,ConfigHandler& co
 	logger.Log(debug_stream.str(), L_INFO);
 	return unique_ptr<WindowManager>(new WindowManager(display, logger, configHandler));
 }
-
-/**
- * @brief Construct a new Window Manager:: Window Manager object
- * @param display
- * @param logger
- */
-
 WindowManager::WindowManager(Display *display, const Logger &logger, ConfigHandler &configHandler)
 		: display_(display),
 		  logger_(logger),
@@ -88,31 +59,19 @@ WindowManager::WindowManager(Display *display, const Logger &logger, ConfigHandl
 		  layout_manager_(nullptr) {
 	logger_.Log("Window Manager Created !\n", L_INFO);
 }
-
-bool WindowManager::getRunning() const {
-	return running;
-}
-
-/**
- * @brief Destroy the Window Manager:: Window Manager object
- * Close the display.
- */
-
+bool WindowManager::getRunning() const { return running; }
 WindowManager::~WindowManager() {
 	delete layout_manager_;
 	XCloseDisplay(display_);
 }
-
 void handleSIGHUP(int signal) {
 	if (windowManagerInstance != nullptr) {
 		windowManagerInstance->Stop();
 	}
 }
-
 void WindowManager::Stop() {
 	running = false;
 }
-
 void WindowManager::Init() {
 	std::stringstream debug_stream;
 	selectEventOnRoot();
@@ -127,7 +86,6 @@ void WindowManager::Init() {
 	Bar();
 	signal(SIGINT, handleSIGHUP);
 }
-
 void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 	Window returned_root, returned_parent;
 	Window *top_level_windows;
@@ -188,7 +146,6 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 	}
 	XFree(top_level_windows);
 }
-
 void WindowManager::selectEventOnRoot() const {
 	XSetErrorHandler(&WindowManager::OnWMDetected);
 	XSelectInput(
@@ -198,13 +155,6 @@ void WindowManager::selectEventOnRoot() const {
 	XSync(display_, false);
 	XSetErrorHandler(&WindowManager::OnXError);
 }
-
-/**
- * @brief Run the window manager
- * This method is the main loop of the window manager.
- * It will handle the events and call the appropriate methods.
- *
- */
 void WindowManager::Run() {
 	EventHandler eventHandler(*this, logger_);
 	while (running) {
@@ -214,7 +164,6 @@ void WindowManager::Run() {
 		eventHandler.dispatchEvent(e);
 	}
 }
-
 int WindowManager::OnXError(Display *display, XErrorEvent *e) {
 	const int MAX_ERROR_TEXT_LENGTH = 1024;
 	char error_text[MAX_ERROR_TEXT_LENGTH];
@@ -228,33 +177,16 @@ int WindowManager::OnXError(Display *display, XErrorEvent *e) {
 	// The return value is ignored.
 	return 0;
 }
-
 int WindowManager::OnWMDetected(Display *display, XErrorEvent *e) {
-	// In the case of an already running window manager, the error code from
-	// XSelectInput is BadAccess. We don't expect this handler to receive any
-	// other errors.
 	if (static_cast<int>(e->error_code) == BadAccess)
 		wm_detected_ = true;
-	// The return value is ignored.
 	return 0;
 }
-
-const Logger &WindowManager::getLogger() const {
-	return logger_;
-}
-
-Display *WindowManager::getDisplay() const {
-	return display_;
-}
-
-std::unordered_map<Window, Client *> &WindowManager::getClients() {
-	return clients_;
-}
-
-Client &WindowManager::getClientRef(Window window) {
-	return *clients_.at(window);
-}
-
+const Logger &WindowManager::getLogger() const { return logger_; }
+Display *WindowManager::getDisplay() const { return display_; }
+std::unordered_map<Window, Client *> &WindowManager::getClients() { return clients_; }
+Client &WindowManager::getClientRef(Window window) { return *clients_.at(window); }
+const Window WindowManager::getRoot() const { return root_; }
 Client *WindowManager::getClient(Window window) {
 	auto clientIter = clients_.find(window);
 	if (clientIter != clients_.end()) {
@@ -267,7 +199,6 @@ Client *WindowManager::getClient(Window window) {
 	}
 	return nullptr;
 }
-
 void WindowManager::insertClient(Window window) {
 	std::stringstream debug_stream;
 	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
@@ -277,11 +208,6 @@ void WindowManager::insertClient(Window window) {
 	logger_.Log(debug_stream.str(), L_INFO);
 	clients_.insert({window, client});
 }
-
-const Window WindowManager::getRoot() const {
-	return root_;
-}
-
 bool WindowManager::isFrame(Window window) {
 	for (auto &client: clients_) {
 		if (client.second->getFrame() == window)
@@ -289,17 +215,15 @@ bool WindowManager::isFrame(Window window) {
 	}
 	return false;
 }
-
-TreeLayoutManager *WindowManager::getLayoutManager() const {
-	return layout_manager_;
-}
-
+TreeLayoutManager *WindowManager::getLayoutManager() const { return layout_manager_; }
+Window WindowManager::getBar() const { return bar_; }
+int WindowManager::getClientCount() { return clients_.size(); }
+ConfigHandler &WindowManager::getConfigHandler() { return configHandler_; }
 void WindowManager::setFocus(Client *client) {
 	if (client != nullptr) {
 		XSetInputFocus(display_, client->getWindow(), RevertToParent, CurrentTime);
 	}
 }
-
 void WindowManager::Bar() {
 	int screen = DefaultScreen(display_);
 	bar_ = XCreateSimpleWindow(
@@ -317,18 +241,3 @@ void WindowManager::Bar() {
 	XMapWindow(display_, bar_);
 	XFlush(display_);
 }
-
-Window WindowManager::getBar() const {
-	return bar_;
-}
-
-int WindowManager::getClientCount() {
-
-	return clients_.size();
-}
-
-ConfigHandler &WindowManager::getConfigHandler() {
-	return configHandler_;
-}
-
-

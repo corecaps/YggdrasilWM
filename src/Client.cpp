@@ -22,21 +22,13 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Client.cpp
  * @brief Client class implementation.
- * @date 2021-06-23
- *
+ * @date 2024-02-03
  */
 
 #include <X11/keysym.h>
 #include <iostream>
 #include <cstring>
 #include "Client.hpp"
-
-/**
- * @brief Client constructor.get window class and title
- * @param display
- * @param root
- * @param window
- */
 #include "TreeLayoutManager.hpp"
 Client::Client(Display *display, Window root, Window window, TreeLayoutManager *layout_manager,
 			   unsigned long InActiveColor, int BorderSize)
@@ -47,7 +39,6 @@ Client::Client(Display *display, Window root, Window window, TreeLayoutManager *
 		  frame_(0),
 		  border_width(BorderSize),
 		  border_color(InActiveColor),
-		  focused(false),
 		  framed(false),
 		  mapped(false)
 {
@@ -81,15 +72,8 @@ Client::~Client() {
 	}
 	std::cerr << "Client destroyed :" << title_ << std::endl;
 }
-
-/**
- * @brief Client::frame create a frame around the client window, Map the frame,
- * Add the window to the save set Reparent it, grab the buttons
- */
-
 Client_Err Client::frame() {
 	const unsigned long BG_COLOR = 0x000000;
-
 	if (this->framed)
 		return(YGG_CLI_LOG_ALREADY_FRAMED);
 	XWindowAttributes x_window_attrs;
@@ -167,18 +151,12 @@ Client_Err Client::frame() {
 	this->layout_manager_->addClient(this);
 	return YGG_CLI_NO_ERROR;
 }
-
 void Client::restack() {
 	if (this->framed) {
 		XRaiseWindow(display_, frame_);
 	}
 	XRaiseWindow(display_, window_);
 }
-
-/**
- * @brief Client::unframe unframe the client window by removing the frame and reparenting the window to the root window
- */
-
 Client_Err Client::unframe() {
 	if (!this->framed)
 		return(YGG_CLI_LOG_IGNORE_NOT_FRAMED);
@@ -187,18 +165,9 @@ Client_Err Client::unframe() {
 	this->frame_ = 0;
 	return YGG_CLI_NO_ERROR;
 }
-/**
- * @brief Client::getWindow return the window attribute of the client
- * @return Window
- */
 Window Client::getWindow() const {
 	return this->window_;
 }
-/**
- * @brief Client::getError Return a string from an error of Client_Err enum
- * @param error
- * @return String of error
- */
 std::string Client::getError(Client_Err error) {
 	switch (error) {
 		case YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT:
@@ -213,40 +182,12 @@ std::string Client::getError(Client_Err error) {
 			return "Unknown error from Client Class";
 	}
 }
-
-/**
- * @brief Client::getFrame() return the frame Window of the client
- * @return Window (frame)
- */
-Window Client::getFrame() const {
-	return frame_;
-}
-bool Client::isFramed() const {
-	return framed;
-}
-bool Client::isFocused() const {
-	return focused;
-}
-
-void Client::setFocused(bool f) {
-	Client::focused = f;
-}
-
-bool Client::isMapped() const {
-	return mapped;
-}
-void Client::setMapped(bool m) {
-	Client::mapped = m;
-}
-
-const std::string &Client::getTitle() const {
-	return title_;
-}
-
-const std::string &Client::getClass() const {
-	return class_;
-}
-
+Window Client::getFrame() const {return frame_; }
+bool Client::isFramed() const {	return framed; }
+bool Client::isMapped() const { return mapped; }
+void Client::setMapped(bool m) { Client::mapped = m; }
+const std::string &Client::getTitle() const { return title_; }
+const std::string &Client::getClass() const { return class_; }
 void Client::move(int x, int y) {
 	if (this->framed) {
 		XMoveWindow(display_, frame_, x, y);
@@ -255,7 +196,6 @@ void Client::move(int x, int y) {
 		XMoveWindow(display_, window_, x, y);
 	}
 }
-
 void Client::resize(int width, int height) {
 	if (this->framed) {
 		XResizeWindow(display_, frame_, width, height);

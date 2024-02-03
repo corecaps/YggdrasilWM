@@ -24,29 +24,18 @@
  * @brief handle Tree Style Layout.
  * @date 2021-06-23
  */
-
-#include <iostream>
 #include "TreeLayoutManager.hpp"
-
 TreeLayoutManager::TreeLayoutManager(Display *display, Window root, int size_x,int size_y,int pos_x,int pos_y) : LayoutManager(display, root) {
 	Point pos(pos_x, pos_y);
 	Point size(size_x, size_y);
 	this->rootSpace_ = new Space(pos, size, 0);
 }
-
-TreeLayoutManager::~TreeLayoutManager() {
-	delete rootSpace_;
-}
-
-void TreeLayoutManager::updateGeometry() {
-	LayoutManager::updateGeometry();
-}
-
+TreeLayoutManager::~TreeLayoutManager() { delete rootSpace_; }
+void TreeLayoutManager::updateGeometry() { LayoutManager::updateGeometry(); }
 LayoutManager::Space * TreeLayoutManager::findSpaceRecursive(Client *client, LayoutManager::Space * space) {
 	if (space->getClient() == client) {
 		return space;
 	}
-	// Recursively check left and right child spaces
 	if (space->getLeft() != nullptr) {
 		LayoutManager::Space * leftSpace = findSpaceRecursive(client, space->getLeft().get());
 		if (leftSpace != nullptr) {
@@ -63,39 +52,24 @@ LayoutManager::Space * TreeLayoutManager::findSpaceRecursive(Client *client, Lay
 }
 LayoutManager::Space * TreeLayoutManager::findSpace(Client *client) {
 	Space* space = rootSpace_;
-	// Recursively search for the space containing the client
 	return findSpaceRecursive(client, space);
 }
 LayoutManager::Space * TreeLayoutManager::findSpace(int index) {
 	return LayoutManager::findSpace(index);
 }
-
 void TreeLayoutManager::removeClient(Client* client) {
-	// Start the recursion from the root space
 	removeClientRecursive(client, rootSpace_);
 }
 void TreeLayoutManager::removeClientRecursive(Client* client, Space* space) {
 	if (space->getClient() == client) {
 		space->setClient(nullptr);
-
-		// Check if the space is not the root
 		if (space != rootSpace_) {
-			// Determine whether the current space is the left or right child of its parent
 			bool isLeftChild = (space->getParent()->getLeft().get() == space);
-
-
-			// Get the sibling space
 			Space* siblingSpace = isLeftChild ? space->getParent()->getRight().get() : space->getParent()->getLeft().get();
-
-			// Check if the sibling space has a client
 			if (siblingSpace->getClient() != nullptr) {
-				// Move the client from the sibling space to the parent space
 				placeClientInSpace(siblingSpace->getClient(), space->getParent());
-
-				// Set the sibling space's client to nullptr
 				siblingSpace->setClient(nullptr);
 			}
-			// Remove the current space from its parent
 			if (isLeftChild) {
 				space->getParent()->setLeft(nullptr);
 			} else {
@@ -104,8 +78,6 @@ void TreeLayoutManager::removeClientRecursive(Client* client, Space* space) {
 		}
 		return;
 	}
-
-	// Recursively check left and right child spaces
 	if (space->getLeft() != nullptr) {
 		removeClientRecursive(client, space->getLeft().get());
 	}
@@ -116,14 +88,11 @@ void TreeLayoutManager::removeClientRecursive(Client* client, Space* space) {
 void TreeLayoutManager::addClient(Client* client) {
 	addClientRecursive(client, rootSpace_);
 }
-
 void TreeLayoutManager::addClientRecursive(Client* client, Space* space) {
-	// If the space is empty, place the client in this space
 	if (space->getClient() == nullptr && space->getLeft() == nullptr && space->getRight() == nullptr ) {
 		placeClientInSpace(client, space);
 		return;
 	}
-	// look for the space with the least subspaces
 	if (space->getLeft() != nullptr && space->getRight() != nullptr) {
 		if (space->getLeft()->getSubspaceCount() > space->getRight()->getSubspaceCount()) {
 			addClientRecursive(client, space->getRight().get());
@@ -132,23 +101,19 @@ void TreeLayoutManager::addClientRecursive(Client* client, Space* space) {
 		}
 		return;
 	}
-	// Split the space along the longest axis
 	if (space->getSize().x > space->getSize().y) {
 		splitSpace(client, space, true);
 	} else {
 		splitSpace(client, space, false);
 	}
 }
-
 void TreeLayoutManager::placeClientInSpace(Client* client, Space* space) {
 	client->move(space->getPos().x, space->getPos().y);
 	client->resize(space->getSize().x, space->getSize().y);
 	client->restack();
 	space->setClient(client);
 }
-
 void TreeLayoutManager::splitSpace(Client* client, Space* space, bool splitAlongX) {
-	// Create two child spaces
 	Point sizeLeft, sizeRight;
 	Point posRight;
 	if (splitAlongX) {
@@ -160,14 +125,10 @@ void TreeLayoutManager::splitSpace(Client* client, Space* space, bool splitAlong
 		sizeRight = Point(space->getSize().x, space->getSize().y - sizeLeft.y);
 		posRight = Point(space->getPos().x, space->getPos().y + sizeLeft.y);
 	}
-	// Create left and right child spaces
 	auto leftSpace = std::make_unique<Space>(space->getPos(), sizeLeft, space_count_++, space);
 	auto rightSpace = std::make_unique<Space>(posRight, sizeRight, space_count_++, space);
-	// Move the current client to the left child space
 	placeClientInSpace(space->getClient(), leftSpace.get());
-	// Move the new client to the right child space
 	placeClientInSpace(client, rightSpace.get());
-	// Set left and right child spaces
 	space->setLeft(std::move(leftSpace));
 	space->setRight(std::move(rightSpace));
 	space->setClient(nullptr);
@@ -179,9 +140,7 @@ void TreeLayoutManager::splitSpace(Client* client, Space* space, bool splitAlong
 }
 
 void TreeLayoutManager::growSpaceX(Client *client) {
-	// Find the space containing the client
 	Space* space = findSpace(client);
-	// If the space is the root space, do nothing
 	if (space == rootSpace_) {
 		return;
 	}
@@ -199,4 +158,3 @@ void TreeLayoutManager::growSpaceX(Client *client) {
 		space->getParent()->getRight()->setSize(Point(space->getParent()->getRight()->getSize().x - 1, space->getParent()->getRight()->getSize().y));
 	}
 }
-

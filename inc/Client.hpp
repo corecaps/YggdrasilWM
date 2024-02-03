@@ -44,31 +44,96 @@ enum Client_Err {
 	YGG_CLI_ERROR,
 	YGG_CLI_ERR_RETRIEVE_ATTR,
 };
-
+/**
+ * @brief The Client class is responsible for managing the client windows.
+ * It creates a frame around the client window, Map the frame, Add the window to the save set, Reparent it, grab the buttons
+ * It also unframe the client window by removing the frame and reparenting the window to the root window
+ * It also move, resize, restack the client window
+ */
 class Client {
 public:
+/**
+ * @brief Client constructor.get window class and title
+ * @param display X11 display
+ * @param root root window
+ * @param window window to manage
+ * @param layout_manager Reference to the layout manager
+ * @param InActiveColor color of the border
+ * @param BorderSize size of the border
+ */
 	Client(Display *display, Window root, Window window, TreeLayoutManager *layout_manager,
 		   unsigned long InActiveColor, int BorderSize);
+/**
+ * @brief Client destructor Destroy the Client object & the Frame Window it needed
+ */
 	~Client();
+/**
+ * @brief Client::frame create a frame around the client window, Map the frame,
+ * Add the window to the save set Reparent it, grab the buttons
+ */
 	Client_Err frame();
+/**
+ * @brief Client::unframe unframe the client window by removing the frame and reparenting the window to the root window
+ * @return Client_Err error code from the Client_Err enum
+ */
 	Client_Err unframe();
+/**
+ * @brief Client::getWindow return the window attribute of the client
+ * @return Window
+ */
 	Window getWindow() const;
+/**
+ * @brief Client::getError Return a string from an error of Client_Err enum
+ * @param error error code from the Client_Err enum
+ * @return String of error
+ */
 	static std::string getError(Client_Err error);
-	void focus();
-	void unfocus();
+/**
+ * @brief: Client::move move the client window to the given position
+ * @param x
+ * @param y
+ */
 	void move(int x, int y);
+/**
+ * @brief Client::resize resize the client window to the given size
+ * @param width
+ * @param height
+ */
 	void resize(int width, int height);
-	void set_border_color(unsigned long color);
-	void set_border_width(unsigned int width);
+/**
+ * @brief Client::isFramed() check if the client is framed
+ * @return
+ */
 	bool isFramed() const;
+/**
+ * @brief Client::setMapped() set the mapped status of the client
+ * @param mapped
+ * TODO : update Mapped status in EventHandler Class
+ */
 	void setMapped(bool mapped);
+/**
+ * @brief Client::isMapped() check if the client is mapped
+ * @return bool
+ */
 	bool isMapped() const;
+/**
+ * @brief Client::getTitle() return the title of the client, the title is get during the construction of the client
+ * @return std::string
+ */
 	const std::string &getTitle() const;
+/**
+ * @brief Client::getClass() return the class of the client, the class is get during the construction of the client
+ * @return
+ */
 	const std::string &getClass() const;
+/**
+ * @brief Client::getFrame() return the frame Window of the client
+ * @return Window (frame)
+ */
 	Window getFrame() const;
-	bool isFocused() const;
-	void setFocused(bool focused);
-
+/**
+ * @brief Client::restack() restack the client window to avoid the frame to get in front of the client
+ */
 	void restack();
 
 private:
@@ -79,12 +144,10 @@ private:
 	Window frame_;
 	unsigned int border_width;
 	unsigned long border_color;
-	bool focused;
 	bool framed;
 	bool mapped{};
 	std::string title_;
 	std::string class_;
-
 };
 
 #endif //YGGDRASILWM_CLIENT_HPP

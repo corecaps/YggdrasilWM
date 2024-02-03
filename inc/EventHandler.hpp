@@ -37,11 +37,37 @@ extern "C" {
 }
 #include "window_manager.hpp"
 #include "Logger.hpp"
-
+/**
+ * @brief EventHandler class.
+ * This class is responsible for handling the XEvents.
+ * It is a part of the WindowManager class
+ * The event handlers functions are private and are called by the dispatchEvent function.
+ * @see WindowManager
+ * @see Client
+ * @see Logger
+ */
 class EventHandler {
 public:
+/**
+ * @brief Construct a new Event Handler:: Event Handler object
+ * @param wm Constant reference to the WindowManager object.
+ * @param logger Constant reference to the Logger object.
+ * @return EventHandler object.
+ */
 	EventHandler(WindowManager &wm, const Logger &logger);
+/**
+ * @brief Destroy the Event Handler:: Event Handler object
+ */
 	~EventHandler();
+/**
+ * @brief Dispatches the event to the appropriate handler function.
+ * the eventHandlerArray is an array of pointers to member functions of the EventHandler class.
+ * The array is initialized with the handleUnknown function.
+ * The array is then populated with the appropriate handler functions.
+ *
+ * @param event The XEvent to be dispatched.
+ *
+ */
 	void dispatchEvent(const XEvent& event);
 private:
 	Position<int> drag_start_pos_;
@@ -51,28 +77,85 @@ private:
 	const Logger &logger_;
 	using Handler = void (EventHandler::*)(const XEvent&);
 	Handler eventHandlerArray[LASTEvent]{};
+/**
+ * @brief Handles the MapNotify event.
+ * The MapNotify event is sent to a client when it is mapped.
+ * The event handler retrieves the client from the WindowManager object and sets its mapped attribute to true.
+ * The event handler then logs the event.
+ * the client is restacked
+ * @param event The MapNotify event to be handled.
+ *
+ */
 	void handleMapNotify(const XEvent& event);
+/**
+ * @brief Handles the UnmapNotify event.
+ * The UnmapNotify event is sent to a client when it is unmapped.
+ * The event handler retrieves the client from the WindowManager object and sets its mapped attribute to false.
+ * The event handler then logs the event.
+ *
+ * @param event The UnmapNotify event to be handled.
+ *
+ */
 	void handleUnmapNotify(const XEvent& event);
+/**
+ * @brief Handles the ConfigureRequest event.
+ * The ConfigureRequest event is sent to a client when it requests a change in its size, position, or stacking order.
+ * @param event
+ */
 	void handleConfigureRequest(const XEvent& event);
 	void handleConfigureNotify(const XEvent& event);
+/**
+ * @brief Handles the ButtonPress event.
+ * The ButtonPress event is sent to a client when a mouse button is pressed.
+ *
+ * @param event The ButtonPress event to be handled.
+ *
+ */
 	void handleButtonPress(const XEvent& event);
 	void handleButtonRelease(const XEvent& event);
 	void handleKeyPress(const XEvent& event);
 	void handleKeyRelease(const XEvent& event);
 	void handleEnterNotify(const XEvent& event);
 	void handleLeaveNotify(const XEvent& event);
+/**
+ * @brief This where the bar is drawn, other windows are ignored.
+ */
 	void handleExpose(const XEvent& event);
+/**
+ * @brief Handles the FocusIn event. Changes the border color of the client.
+ * @param event
+ */
 	void handleFocusIn(const XEvent& event);
+/**
+ * @brief Handles the FocusOut event. Changes the border color of the client.
+ * @param event
+ */
 	void handleFocusOut(const XEvent& event);
 	void handlePropertyNotify(const XEvent& event);
 	void handleClientMessage(const XEvent& event);
 	void handleDestroyNotify(const XEvent& event);
 	void handleReparentNotify(const XEvent& event);
+/**
+ * @brief Handles the MapRequest event.
+ * The MapRequest event is sent to a client when it is mapped.
+ * The event handler retrieves the client from the WindowManager object and sets its mapped attribute to true.
+ * The event handler then logs the event.
+ *
+ * @param event The MapRequest event to be handled.
+ *
+ */
 	void handleMapRequest(const XEvent& event);
+/**
+ * @brief Handles the MotionNotify event. this was previously used for dragging windows.r
+ * TODO : rework this function to handle dragging windows.
+ * @param event
+ */
 	void handleMotionNotify(const XEvent& event);
+/**
+ * @brief Handles the Unknown event.
+ * @param event
+ */
 	void handleUnknown(const XEvent& event);
 	void handleCreateNotify(const XEvent &event);
-
 };
-
 #endif //YGGDRASILWM_EVENTHANDLER_HPP

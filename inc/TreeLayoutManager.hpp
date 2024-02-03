@@ -29,26 +29,107 @@
 #ifndef YGGDRASILWM_TREELAYOUTMANAGER_HPP
 #define YGGDRASILWM_TREELAYOUTMANAGER_HPP
 #include "LayoutManager.hpp"
+#include <iostream>
+/**
+ * @brief TreeLayoutManager class
+ * this class is a subclass of LayoutManager
+ * it handles the tree style layout
+ * When a client is added, it looks recursively for
+ * the biggest space and splits it in two
+ * placing the new client in the left space
+ * and the old client in the right space
+ */
 class TreeLayoutManager :public LayoutManager {
 public:
-	~TreeLayoutManager() override;
-	void	updateGeometry() override;
-	Space	*findSpace(Client* client) override;
-	Space	*findSpace(int index) override;
-	void	addClient(Client* client) override;
+/**
+ * @brief Construct a new Tree Layout Manager object
+ * the size and position of the root space should take
+ * account of the bar size and position and the border size
+ * @param display
+ * @param root
+ * @param size_x
+ * @param size_y
+ * @param pos_x
+ * @param pos_y
+ */
 	TreeLayoutManager(Display* display, Window root,int size_x,int size_y,int pos_x,int pos_y);
-
-	void addClientRecursive(Client *client, Space *space);
-
-	void placeClientInSpace(Client *client, Space *space);
-
-	void splitSpace(Client *client, Space *space, bool splitAlongX);
-
-	void removeClient(Client *client);
-	void removeClientRecursive(Client *client, Space* space);
-	void growSpaceX(Client *client);
-	void shrinkSpace(Client *client);
+/**
+ * @brief Destroy the Tree Layout Manager object
+ */
+	~TreeLayoutManager() override;
+/**
+ * @brief this method is an old implementation and should be removed
+*/
+	void	updateGeometry() override;
+/**
+ * @brief find the space containing the client
+ * it looks recursively for the space containing the client
+ * @param client
+ * @return
+ */
+	Space	*findSpace(Client* client) override;
+/**
+ * @brief recursive method to find the space containing the client
+ * @param client
+ * @param space
+ * @return
+ */
 	Space * findSpaceRecursive(Client *client, LayoutManager::Space * space);
+	Space	*findSpace(int index) override;
+/**
+ * @brief add a client to the layout
+ * it looks for the biggest space and splits it in two
+ * @param client
+ * @see addClientRecursive
+ * @see placeClientInSpace
+ */
+	void	addClient(Client* client) override;
+/**
+ * @brief recursive method to add a client to the layout
+ * @param client
+ * @param space
+ */
+	void	addClientRecursive(Client *client, Space *space);
+/**
+ * @brief place a client in a space
+ * moves and resizes the client window to fit the space
+ * restack the client window
+ * @param client
+ * @param space
+ */
+	void	placeClientInSpace(Client *client, Space *space);
+/**
+ * @brief split a space in two
+ * Move the client to the left space and the old client to the right space
+ * increase the subspaces counter of all the parent spaces
+ * @param client
+ * @param space
+ * @param splitAlongX
+ */
+	void	splitSpace(Client *client, Space *space, bool splitAlongX);
+/**
+ * @brief remove a client from the layout
+ * use the recursive method to remove the client
+ * @param client
+ */
+	void	removeClient(Client *client);
+/**
+ * @brief recursive method to remove a client from the layout
+ * @param client
+ * @param space
+ */
+	void	removeClientRecursive(Client *client, Space* space);
+/**
+ * @brief grow the space of the client in the x axis
+ * this method is not implemented yet
+ * @param client
+ */
+	void	growSpaceX(Client *client);
+/**
+ * @brief shrink the space of the client in the y axis
+ * this method is not implemented yet
+ * @param client
+ */
+	void	shrinkSpace(Client *client);
 };
-
 #endif //YGGDRASILWM_TREELAYOUTMANAGER_HPP

@@ -68,15 +68,6 @@ std::string GetEventTypeName(int eventType) {
 	}
 	return name;
 }
-/**
- * @brief Construct a new Event Handler:: Event Handler object
- *
- * @param wm Constant reference to the WindowManager object.
- * @param logger Constant reference to the Logger object.
- * @return EventHandler object.
- *
- */
-
 EventHandler::EventHandler(WindowManager &wm, const Logger &logger)
 	:	wm_(wm),
 		logger_(logger),
@@ -106,18 +97,8 @@ EventHandler::EventHandler(WindowManager &wm, const Logger &logger)
 	eventHandlerArray[ReparentNotify] = &EventHandler::handleReparentNotify;
 	eventHandlerArray[MapRequest] = &EventHandler::handleMapRequest;
 	eventHandlerArray[MotionNotify] = &EventHandler::handleMotionNotify;
-
 }
 EventHandler::~EventHandler() = default;
-/**
- * @brief Dispatches the event to the appropriate handler function.
- * the eventHandlerArray is an array of pointers to member functions of the EventHandler class.
- * The array is initialized with the handleUnknown function.
- * The array is then populated with the appropriate handler functions.
- *
- * @param event The XEvent to be dispatched.
- *
- */
 void EventHandler::dispatchEvent(const XEvent &event) {
 	std::string name = GetEventTypeName(event.xany.type);
 	if (event.type > 0 && event.type < LASTEvent && eventHandlerArray[event.type] != nullptr)
@@ -125,16 +106,6 @@ void EventHandler::dispatchEvent(const XEvent &event) {
 	else
 		logger_.Log("Unknown event type: ["  + std::to_string(event.type) + "]\t" + name, L_WARNING);
 }
-
-/**
- * @brief Handles the MapNotify event.
- * The MapNotify event is sent to a client when it is mapped.
- * The event handler retrieves the client from the WindowManager object and sets its mapped attribute to true.
- * The event handler then logs the event.
- *
- * @param event The MapNotify event to be handled.
- *
- */
 void EventHandler::handleMapNotify(const XEvent &event) {
 	auto e = event.xmap;
 	Client * client = wm_.getClient(e.window);
@@ -150,15 +121,6 @@ void EventHandler::handleMapNotify(const XEvent &event) {
 		}
 	}
 }
-/**
- * @brief Handles the UnmapNotify event.
- * The UnmapNotify event is sent to a client when it is unmapped.
- * The event handler retrieves the client from the WindowManager object and sets its mapped attribute to false.
- * The event handler then logs the event.
- *
- * @param event The UnmapNotify event to be handled.
- *
- */
 void EventHandler::handleUnmapNotify(const XEvent &event) {
 	auto e = event.xunmap;
 	if (e.event == wm_.getRoot()) {
@@ -177,7 +139,6 @@ void EventHandler::handleUnmapNotify(const XEvent &event) {
 		logger_.Log("Unmapping unknown window: " + std::to_string(e.window), L_WARNING);
 	}
 }
-
 void EventHandler::handleConfigureRequest(const XEvent &event) {
 	auto e = event.xconfigurerequest;
 	XWindowChanges changes;
@@ -200,13 +161,6 @@ void EventHandler::handleConfigureRequest(const XEvent &event) {
 }
 void EventHandler::handleConfigureNotify(const XEvent &event) {
 }
-/**
- * @brief Handles the ButtonPress event.
- * The ButtonPress event is sent to a client when a mouse button is pressed.
- *
- * @param event The ButtonPress event to be handled.
- *
- */
 void EventHandler::handleButtonPress(const XEvent &event) {
 	auto e = event.xbutton;
 	const Window frame = wm_.getClient(event.xbutton.window)->getFrame();
@@ -228,7 +182,6 @@ void EventHandler::handleButtonPress(const XEvent &event) {
 //			&depth);
 //	drag_start_frame_pos_ = Position<int>(x, y);
 //	drag_start_frame_size_ = Size<int>(width, height);
-
 	// 3. Raise clicked window to top.
 	XRaiseWindow(wm_.getDisplay(),frame);
 }
@@ -248,7 +201,6 @@ void EventHandler::handleLeaveNotify(const XEvent &event) {
 	// TODO IMPLEMENT
 }
 void EventHandler::handleExpose(const XEvent &event) {
-	// TODO IMPLEMENT
 	auto e = event.xexpose;
 	auto bar = wm_.getBar();
 	if (e.window == bar) {
@@ -276,7 +228,6 @@ void EventHandler::handleFocusIn(const XEvent &event) {
 	else {
 		unsigned long ActiveColor = std::get<unsigned long>(wm_.getConfigHandler().getConfig("ActiveColor"));
 		logger_.Log("Window focused: " + client->getTitle() , L_INFO);
-		client->setFocused(true);
 		XSetWindowBorder(wm_.getDisplay(), client->getFrame(), ActiveColor);
 		XFlush(wm_.getDisplay());
 	}
@@ -293,7 +244,6 @@ void EventHandler::handleFocusOut(const XEvent &event) {
 	else {
 		unsigned long InActiveColor = std::get<unsigned long>(wm_.getConfigHandler().getConfig("InActiveColor"));
 		logger_.Log("Window unfocused: " + client->getTitle() , L_INFO);
-		client->setFocused(false);
 		XSetWindowBorder(wm_.getDisplay(), client->getFrame(), InActiveColor);
 		XFlush(wm_.getDisplay());
 	}
@@ -310,15 +260,6 @@ void EventHandler::handleDestroyNotify(const XEvent &event) {
 void EventHandler::handleReparentNotify(const XEvent &event) {
 	// TODO IMPLEMENT
 }
-/**
- * @brief Handles the MapRequest event.
- * The MapRequest event is sent to a client when it is mapped.
- * The event handler retrieves the client from the WindowManager object and sets its mapped attribute to true.
- * The event handler then logs the event.
- *
- * @param event The MapRequest event to be handled.
- *
- */
 void EventHandler::handleMapRequest(const XEvent &event) {
 	XMapRequestEvent e = event.xmaprequest;
 	if (e.parent != wm_.getRoot()) {
@@ -388,7 +329,6 @@ void EventHandler::handleMotionNotify(const XEvent &event) {
 void EventHandler::handleCreateNotify(const XEvent &event) {
 	// TODO IMPLEMENT
 }
-
 void EventHandler::handleUnknown(const XEvent &event) {
 	logger_.Log("Unknown event type: " + std::to_string(event.type), L_WARNING);
 }

@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigHandler.cpp
  * @brief ConfigHandler class implementation.
- * @date 2021-06-23
+ * @date 2024-02-03
  *
  */
 
@@ -41,7 +41,6 @@ ConfigHandler::ConfigHandler() : configPath_(""), configMap_() {
 	}
 	std::cout << "Config file found at: " << this->configPath_ << std::endl;
 }
-
 ConfigHandler::ConfigHandler(const std::string configPath) : configPath_(""), configMap_() {
 	if (fileExists(configPath)) {
 		this->configPath_ = configPath;
@@ -53,13 +52,10 @@ ConfigHandler::ConfigHandler(const std::string configPath) : configPath_(""), co
 	}
 	std::cout << "Config file found at: " << this->configPath_ << std::endl;
 }
-
 ConfigHandler::~ConfigHandler() = default;
-
 void ConfigHandler::setConfig(const std::string &key, const std::string &value) {
 
 }
-
 ConfigValue ConfigHandler::getConfig(const std::string &key) {
 	auto it = configMap_.find(key);
 	if (it != configMap_.end()) {
@@ -67,15 +63,12 @@ ConfigValue ConfigHandler::getConfig(const std::string &key) {
 	}
 	return ConfigValue {};
 }
-
 void ConfigHandler::saveConfig() {
-
 }
 bool ConfigHandler::fileExists(const std::string& path) const {
 	std::ifstream f(path.c_str());
 	return f.good();
 }
-
 std::string ConfigHandler::findConfigFile() const {
 	for (const auto&path : defaultPaths) {
 		if (fileExists(expandEnvironmentVariables(path))) {
@@ -84,7 +77,6 @@ std::string ConfigHandler::findConfigFile() const {
 	}
 	return "";
 }
-
 std::string ConfigHandler::expandEnvironmentVariables(const std::string& path) const {
 	if (path.empty() || path[0] != '$') {
 		return path;
@@ -93,7 +85,6 @@ std::string ConfigHandler::expandEnvironmentVariables(const std::string& path) c
 	const char* value = std::getenv(variable.c_str());
 	return value ? value : "";
 }
-
 bool ConfigHandler::loadConfig() {
 	std::ifstream file(configPath_);
 	if (!file.is_open()) {
@@ -110,12 +101,10 @@ bool ConfigHandler::loadConfig() {
 		return false;
 	}
 }
-
 std::unordered_map<std::string, ConfigValue> ConfigHandler::parseJsonToMap(const Json::Value& jsonValue) {
 	std::unordered_map<std::string, ConfigValue> result;
 	for (const auto& key : jsonValue.getMemberNames()) {
 		const Json::Value& jsonSubValue = jsonValue[key];
-
 		if (jsonSubValue.isString()) {
 			if (jsonSubValue.asString().size() == 7 && jsonSubValue.asString()[0] == '#') {
 				result[key] = colorCodeToULong(jsonSubValue.asString());
@@ -127,13 +116,11 @@ std::unordered_map<std::string, ConfigValue> ConfigHandler::parseJsonToMap(const
 		} else if (jsonSubValue.isBool()) {
 			result[key] = jsonSubValue.asBool();
 		} else {
-			// Handle other types as needed
-			// For unsupported types, you might want to throw an exception or handle it differently
+			std::cerr << "Unsupported value type for key: " << key << std::endl;
 		}
 	}
 	return result;
 }
-
 std::stringstream ConfigHandler::printConfig() {
 	std::stringstream result;
 	result << "\n\tConfig file: " << configPath_ << std::endl;
@@ -145,28 +132,15 @@ std::stringstream ConfigHandler::printConfig() {
 		}, value);
 	}
 	return result;
-
 }
-
-const std::string &ConfigHandler::getConfigPath() const {
-	return configPath_;
-}
+const std::string &ConfigHandler::getConfigPath() const { return configPath_; }
 unsigned long ConfigHandler::colorCodeToULong(const std::string& colorCode) {
-	// Check if the color code has a valid format
 	if (colorCode.size() != 7 || colorCode[0] != '#' || !isxdigit(colorCode[1])) {
-		// Invalid color code format, return a default color (e.g., black)
 		return 0x000000;
 	}
-
-	// Parse the color code
 	std::istringstream iss(colorCode.substr(1));
 	unsigned long colorValue;
 	iss >> std::hex >> colorValue;
-
-	if (iss.fail()) {
-		// Failed to parse the color code, return a default color
-		return 0x000000;
-	}
-
+	if (iss.fail()) { return 0x000000; }
 	return colorValue;
 }
