@@ -1,5 +1,6 @@
-|![gplv3-only](https://www.gnu.org/graphics/gplv3-with-text-136x68.png) |
-|-|
+| ![gplv3-only](https://www.gnu.org/graphics/gplv3-with-text-136x68.png) | ![YggdrasilWM](logo_small.png) |
+|------------------------------------------------------------------------|--------------------------------|
+---
 # YggdrasilWM 
 **Version 0.1.1**
 
@@ -7,6 +8,9 @@
 YggdrasilWM is a tiling window manager for X11. It is written in C++ and uses the Xlib library. It is inspired by dwm and xmonad.
 
 YggdrasilWM is a **learning project** for me, so it is **not intended to be used as a daily driver**.
+
+## License
+YggdrasilWM is licensed under the GNU General Public License v3. The full GPL license is available in the LICENSE file.
 
 ## Dependencies
 - cmake
@@ -64,7 +68,7 @@ As there is no .xinitrc file, you will have to start a terminal manually using
 ```
 DISPLAY=:1 ; xterm & 
 ```
-
+---
 ## TODO:
 ### Tiling Layouts
 For the moments only one layout is implemented, the biggest space occupied is splitted along his longest side. The layout is splitted recursively.
@@ -83,5 +87,3 @@ doxygen doxygen.cfg
 in the root directory to generate the documentation in the doc/ subdirectory.
 Feel free to edit the doxygen.cfg file to your needs.
 
-## License
-YggdrasilWM is licensed under the GNU General Public License v3. The full GPL license is available in the LICENSE file.
