@@ -13,15 +13,20 @@ YggdrasilWM is a **learning project** for me, so it is **not intended to be used
 YggdrasilWM is licensed under the GNU General Public License v3. The full GPL license is available in the LICENSE file.
 
 ## Dependencies
-- cmake
-- Xlib
-- cxxopts
+- C++17 
+- cmake https://cmake.org/
+- Xlib https://www.x.org/releases/current/doc/libX11/libX11/libX11.html
+- cxxopts https://github.com/jarro2783/cxxopts
+- jsoncpp https://github.com/open-source-parsers/jsoncpp
 
 ### Optional
-- Xephyr (for testing)
-- xinit (for testing)
-- xterm (for testing)
-- xev (for testing)
+used for testing :  
+- Xephyr https://www.freedesktop.org/wiki/Software/Xephyr/
+- xinit 
+- xterm https://invisible-island.net/xterm/
+- xev 
+used for documentation :
+- doxygen https://www.doxygen.nl/index.html
 
 ## Build
 ```
@@ -44,7 +49,18 @@ Usage: YggdrasilWM [options...]
   -l,--log <log>              Log file
   -c,--config <config>        Config file
 ```
+## Configuration
+The configuration file is a JSON file.
+The program will look for a file named config.json in this order :
+- The file specified with the -c option
+- The current directory
+- $HOME/.config/yggdrasilwm/config.json
+- /etc/yggdrasilwm/config.json
+A sample configuration file is provided in the root directory.
+
+i am still working on the configuration file, so it is not yet fully implemented, and not all options are used. i will update this section when the configuration file is fully implemented.
 ## Default Keybindings
+** Keybindings are not yet implemented, so the only way to interact with the windows is using the mouse.**
 - **Mod1 + Left Mouse Button** - Change Focus to the clicked window
 ## Testing using Xephyr
 YggdrasilWM is not yet ready to be used as a daily driver, but you can test it using Xephyr.
@@ -73,8 +89,8 @@ DISPLAY=:1 ; xterm &
 ### Tiling Layouts
 For the moments only one layout is implemented, the biggest space occupied is splitted along his longest side. The layout is splitted recursively.
 
-### Keybindings and Configuration
-The configuration class is yet to be implemented.
+### Keybindings 
+Keybindings are yet to be implemented.
 
 ### Groups 
 Groups are yet to be implemented.
