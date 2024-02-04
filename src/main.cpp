@@ -50,9 +50,11 @@ int main(int argc, char** argv) {
 			("v,version", "Display version", cxxopts::value<bool>())
 			("l,log", "Specify the log file path", cxxopts::value<std::string>())
 			("loglevel", "Specify the log level (0-2)", cxxopts::value<int>())
+			("c,config", "Specify the config file path", cxxopts::value<std::string>())
 			("d,display", "Specify the display to use", cxxopts::value<std::string>());
 	std::string LogFilePath;
 	std::string Display;
+	std::string ConfigFilePath;
 	int logLevel = 0;
 	try {
 		auto result = options.parse(argc, argv);
@@ -76,6 +78,11 @@ int main(int argc, char** argv) {
 				return EXIT_FAILURE;
 			}
 		}
+		if (result.count("config")) {
+			ConfigFilePath = result["config"].as<std::string>();
+		} else {
+			ConfigFilePath = "";
+		}
 		if (result.count("display")) {
 			Display = result["display"].as<std::string>();
 		} else {
@@ -88,7 +95,7 @@ int main(int argc, char** argv) {
 	}
 	//	Logger logger(LogFilePath, static_cast<LogLevel>(logLevel));
 	Logger logger(std::cout, static_cast<LogLevel>(logLevel));
-	ConfigHandler configHandler = ConfigHandler();
+	ConfigHandler configHandler = ConfigHandler(ConfigFilePath);
 	bool validConfig = configHandler.loadConfig();
 	if (validConfig)
 		logger.Log("Loaded config: " + configHandler.getConfigPath(), L_INFO);
