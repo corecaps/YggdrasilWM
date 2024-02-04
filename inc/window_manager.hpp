@@ -39,32 +39,11 @@ extern "C" {
 #include "TreeLayoutManager.hpp"
 #include "ConfigHandler.hpp"
 #include <iostream>
-#include "EventHandler.hpp"
+
 #include <algorithm>
 #include <csignal>
 using ConfigValue = std::variant<std::string, int, bool,unsigned long>;
 
-template <typename T>
-struct Size {
-	T width, height;
-
-	Size() = default;
-	Size(T w, T h)
-			: width(w), height(h) {
-	}
-};
-template <typename T>
-::std::ostream& operator << (::std::ostream& out, const Size<T>& size);
-template <typename T>
-struct Position {
-	T x, y;
-
-	Position() = default;
-	Position(T _x, T _y)
-			: x(_x), y(_y) {
-	}
-
-};
 /**
  * @class WindowManager
  * @brief WindowManager class

@@ -69,10 +69,7 @@ std::string GetEventTypeName(int eventType) {
 }
 EventHandler::EventHandler(WindowManager &wm, const Logger &logger)
 	:	wm_(wm),
-		logger_(logger),
-		drag_start_pos_(0, 0),
-		drag_start_frame_pos_(0, 0),
-		drag_start_frame_size_(0, 0)
+		logger_(logger)
 		{
 	for (auto & i : eventHandlerArray) {
 		i = &EventHandler::handleUnknown;

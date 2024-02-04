@@ -26,7 +26,9 @@
  *
  */
 
+
 #include "window_manager.hpp"
+#include "EventHandler.hpp"
 using ::std::max;
 using ::std::string;
 using ::std::unique_ptr;

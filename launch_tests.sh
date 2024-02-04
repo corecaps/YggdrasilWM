@@ -30,7 +30,8 @@ clear
 figlet YggdrasilWM
 figlet :Unit Tests:
 # Launch YggdrasilWM_tests
-valgrind --leak-check=full --track-origins=yes ./YggdrasilWM_tests
+cd ..
+valgrind --leak-check=full --track-origins=yes ./build/bin/YggdrasilWM_tests
 TESTS_RESULT=$?
 
 #return the test result

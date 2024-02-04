@@ -72,9 +72,6 @@ public:
  */
 	void dispatchEvent(const XEvent& event);
 private:
-	Position<int> drag_start_pos_;
-	Position<int> drag_start_frame_pos_;
-	Size<int> drag_start_frame_size_;
 	WindowManager wm_;
 	const Logger &logger_;
 	using Handler = void (EventHandler::*)(const XEvent&);
