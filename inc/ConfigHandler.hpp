@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigHandler.hpp
  * @brief ConfigHandler class header.
- * @date 2024-02-03
+ * @date 2024-02-04
  *
  */
 
@@ -36,6 +36,7 @@
 #include <variant>
 #include <cctype>
 /**
+ * @class ConfigHandler
  * @brief ConfigHandler class
  * This class is responsible for handling the configuration file.
  * It is used to read and write the configuration file. And
@@ -47,40 +48,48 @@ class ConfigHandler {
 public:
 	using ConfigValue = std::variant<std::string, int, bool,unsigned long>;
 /**
+ * @fn ConfigHandler()
  * @brief Construct a new ConfigHandler object without a path
  */
 	ConfigHandler();
 /**
+ * @fn ConfigHandler(const std::string configPath)
  * @brief Construct a new ConfigHandler object with a path, if the path is not valid try to find the file in the default paths
  * @param configPath
  */
 	ConfigHandler(const std::string configPath);
 	~ConfigHandler();
 /**
+ * @fn void ConfigHandler::setConfig(const std::string &key, const std::string &value)
  * @brief Set a configuration value during runtime
  * @param key
  * @param value
  */
 	void setConfig(const std::string &key, const std::string &value);
 /**
+ * @fn ConfigValue ConfigHandler::getConfig(const std::string &key)
  * @brief Get a configuration value
  * @param key
  * @return a variant of string, int, bool or unsigned long
  */
 	ConfigValue getConfig(const std::string &key);
-// TODO: Implement the saveConfig function
+
 	void saveConfig();
 /**
+ * @fn bool ConfigHandler::loadConfig()
  * @brief Load the configuration file and parse it into a map
  * @return true if the file was loaded successfully false otherwise
+ * @todo : Implement the saveConfig function
  */
 	bool loadConfig();
 /**
+ * @fn const std::string &ConfigHandler::getConfigPath() const
  * @brief Get the Config Path object
  * @return a string with the path to the configuration file
  */
 	const std::string &getConfigPath() const;
 /**
+ * @fn std::stringstream ConfigHandler::printConfig()
  * @brief Print the configuration to a string stream, this method is only used for debugging purpose and will be removed
  * @return
  */
@@ -90,29 +99,34 @@ private:
 	std::string configPath_;
 	std::unordered_map<std::string,ConfigValue> configMap_;
 /**
+ * @fn std::string ConfigHandler::findConfigFile() const
  * @brief Find the configuration file in the default paths
  * @return a string with the path to the configuration file
  */
 	std::string findConfigFile() const;
 /**
+ * @fn bool ConfigHandler::fileExists(const std::string &path) const
  * @brief Check if a file exists
  * @param path
  * @return true if the file exists false otherwise
  */
 	bool fileExists(const std::string &path) const;
 /**
+ * @fn std::string ConfigHandler::expandEnvironmentVariables(const std::string &path) const
  * @brief Expand environment variables in a string
  * @param path
  * @return expanded string
  */
 	std::string expandEnvironmentVariables(const std::string &path) const;
 /**
+ * @fn std::unordered_map<std::string, ConfigValue> ConfigHandler::parseJsonToMap(const Json::Value &jsonValue)
  * @brief Parse a json value to a map
  * @param jsonValue
  * @return a map with the json values
  */
 	std::unordered_map<std::string, ConfigValue> parseJsonToMap(const Json::Value& jsonValue);
 /**
+ * @fn unsigned long ConfigHandler::colorCodeToULong(const std::string &colorCode)
  * @brief Convert a string containing a color code to unsigned long
  * @param colorCode
  * @return unsigned long color code

@@ -1,0 +1,9 @@
+<map id="EventHandler::handleExpose" name="EventHandler::handleExpose">
+<area shape="rect" id="Node000001" title="This where the bar is drawn, other windows are ignored." alt="" coords="5,65,214,93"/>
+<area shape="rect" id="Node000002" href="$d9/d0e/classWindowManager.html#a217e0d55d527f74cbc5f71e698a1c17d" title="Get the Bar window." alt="" coords="275,5,457,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,62,288,34,289,40,172,67"/>
+<area shape="rect" id="Node000003" href="$d9/d0e/classWindowManager.html#afee116088855d27873dde04a00607b19" title="Get the number of clients." alt="" coords="267,57,465,102"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="214,77,252,77,252,82,214,82"/>
+<area shape="rect" id="Node000004" href="$d9/d0e/classWindowManager.html#a0dac20db062e34f396388a3feaf7f5e3" title="Get the Display object." alt="" coords="262,125,470,153"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="172,91,289,119,288,124,171,96"/>
+</map>

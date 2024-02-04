@@ -1,0 +1,11 @@
+<map id="EventHandler::handleConfigureRequest" name="EventHandler::handleConfigureRequest">
+<area shape="rect" id="Node000001" title="Handles the ConfigureRequest event. The ConfigureRequest event is sent to a client when it requests a..." alt="" coords="5,24,229,68"/>
+<area shape="rect" id="Node000002" href="$d9/d0e/classWindowManager.html#a0dac20db062e34f396388a3feaf7f5e3" title="Get the Display object." alt="" coords="277,5,485,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="229,32,261,29,261,34,229,37"/>
+<area shape="rect" id="Node000003" href="$db/d07/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="333,57,429,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="229,54,318,62,317,68,229,59"/>
+<area shape="rect" id="Node000004" href="$db/d07/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="533,31,687,58"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="429,63,517,53,518,58,429,68"/>
+<area shape="rect" id="Node000005" href="$db/d07/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="546,83,675,110"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="429,74,530,85,530,90,429,79"/>
+</map>

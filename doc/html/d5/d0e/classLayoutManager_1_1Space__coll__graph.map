@@ -1,0 +1,20 @@
+<map id="LayoutManager::Space" name="LayoutManager::Space">
+<area shape="rect" id="Node000001" title="Space class This class represents a space in the layout. it&#39;s designed like a binary tree,..." alt="" coords="323,115,493,143"/>
+<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="510,120,519,129,511,137,494,141,493,136,509,133,514,129,506,124"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="168,225,402,269"/>
+<area shape="poly" id="edge4_Node000003_Node000001" title=" " alt="" coords="332,152,309,168,294,196,289,225,283,224,289,194,305,165,328,147"/>
+<area shape="rect" id="Node000006" href="$df/d02/classLayoutManager.html" title="LayoutManager class This a base class for the different layout managers. You should not use this clas..." alt="" coords="427,233,549,261"/>
+<area shape="poly" id="edge8_Node000006_Node000001" title=" " alt="" coords="428,154,481,231,477,234,423,157"/>
+<area shape="rect" id="Node000002" href="$dc/d09/structLayoutManager_1_1Point.html" title="Point struct This struct represents a 2D point." alt="" coords="326,5,490,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="411,48,411,115,405,115,405,48"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="317,212,392,141,396,145,321,216"/>
+<area shape="rect" id="Node000004" href="$d1/d07/classClient.html" title="The Client class is responsible for managing the client windows. It creates a frame around the client..." alt="" coords="420,444,479,472"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="493,453,533,442,551,432,566,418,581,394,589,371,591,350,589,328,575,282,559,225,552,193,546,181,534,169,514,155,492,146,494,141,517,151,538,165,550,178,557,191,564,224,580,280,594,327,596,350,594,372,586,396,570,422,554,437,535,447,495,458"/>
+<area shape="rect" id="Node000005" href="$dc/d03/classTreeLayoutManager.html" title="TreeLayoutManager class this class is a subclass of LayoutManager it handles the tree style layout Wh..." alt="" coords="388,334,537,362"/>
+<area shape="poly" id="edge6_Node000004_Node000005" title=" " alt="" coords="455,377,453,386,451,444,446,443,448,386,450,376"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="483,276,468,335,463,334,478,275"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="149,334,235,362"/>
+<area shape="poly" id="edge9_Node000004_Node000007" title=" " alt="" coords="238,366,420,441,418,446,236,371"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="5,225,144,269"/>
+<area shape="poly" id="edge10_Node000007_Node000008" title=" " alt="" coords="113,277,178,332,175,336,110,281"/>
+</map>

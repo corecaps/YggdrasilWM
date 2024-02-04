@@ -1,0 +1,16 @@
+<map id="WindowManager::getClient" name="WindowManager::getClient">
+<area shape="rect" id="Node000001" title="Get the Client by window ptr or frame ptr." alt="" coords="535,101,732,128"/>
+<area shape="rect" id="Node000002" href="$d9/d0a/classEventHandler.html#a4dd2ab5df79921f0cf9dec715fe31933" title="Handles the ButtonPress event. The ButtonPress event is sent to a client when a mouse button is press..." alt="" coords="271,5,475,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="579,97,486,65,449,53,451,48,488,60,580,92"/>
+<area shape="rect" id="Node000004" href="$d9/d0a/classEventHandler.html#aead87b928e6928327b275882ca5ea678" title="Handles the FocusIn event. Changes the border color of the client." alt="" coords="268,74,478,102"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="519,105,478,101,479,96,519,100"/>
+<area shape="rect" id="Node000005" href="$d9/d0a/classEventHandler.html#a86a04de876f37015e33592192a4d408c" title="Handles the FocusOut event. Changes the border color of the client." alt="" coords="262,126,484,154"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="519,128,484,132,484,126,519,123"/>
+<area shape="rect" id="Node000006" href="$d9/d0a/classEventHandler.html#a29a9353de9b6d810a5122d11c2475607" title="Handles the MapNotify event. The MapNotify event is sent to a client when it is mapped...." alt="" coords="259,178,487,206"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="581,136,488,168,441,180,439,175,486,162,579,131"/>
+<area shape="rect" id="Node000003" href="$d9/d0a/classEventHandler.html#ac719b179e81f56479d7525fe4e2484ae" title="Construct a new Event Handler:: Event Handler object." alt="" coords="5,101,211,128"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="282,58,260,65,150,103,148,98,258,60,280,53"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="252,102,211,107,211,101,252,97"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="246,130,211,127,211,122,247,125"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="290,176,258,168,147,131,149,126,259,162,292,171"/>
+</map>

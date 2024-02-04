@@ -1,0 +1,7 @@
+<map id="GetEventTypeName" name="GetEventTypeName">
+<area shape="rect" id="Node000001" title=" " alt="" coords="474,5,624,33"/>
+<area shape="rect" id="Node000002" href="$d9/d0a/classEventHandler.html#ab52574da9049d0314f742d8d12068a51" title="Dispatches the event to the appropriate handler function. the eventHandlerArray is an array of pointe..." alt="" coords="217,5,426,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="458,22,426,22,426,17,458,17"/>
+<area shape="rect" id="Node000003" href="$d9/d0e/classWindowManager.html#a3823b9b86904084abf35758e27a55354" title="Run the window manager." alt="" coords="5,5,169,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="201,22,169,22,169,17,201,17"/>
+</map>

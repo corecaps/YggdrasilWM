@@ -1,0 +1,9 @@
+<map id="ConfigHandler::expandEnvironmentVariables" name="ConfigHandler::expandEnvironmentVariables">
+<area shape="rect" id="Node000001" title="Expand environment variables in a string." alt="" coords="524,24,776,68"/>
+<area shape="rect" id="Node000002" href="$d4/d06/classConfigHandler.html#ac5add4d5d878cbd99d05cbd195b64d0a" title="Find the configuration file in the default paths." alt="" coords="267,32,476,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="508,49,476,49,476,43,508,43"/>
+<area shape="rect" id="Node000003" href="$d4/d06/classConfigHandler.html#a6982ea5727629d7f99f314e2884c5346" title="Construct a new ConfigHandler object without a path." alt="" coords="5,5,219,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="251,36,219,33,219,27,252,31"/>
+<area shape="rect" id="Node000004" href="$d4/d06/classConfigHandler.html#a009d682cc1a8102451fb127f3074f669" title="Construct a new ConfigHandler object with a path, if the path is not valid try to find the file in th..." alt="" coords="5,57,219,85"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="252,60,219,63,219,58,251,55"/>
+</map>

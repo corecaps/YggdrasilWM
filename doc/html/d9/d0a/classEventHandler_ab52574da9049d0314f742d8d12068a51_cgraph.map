@@ -1,0 +1,11 @@
+<map id="EventHandler::dispatchEvent" name="EventHandler::dispatchEvent">
+<area shape="rect" id="Node000001" title="Dispatches the event to the appropriate handler function. the eventHandlerArray is an array of pointe..." alt="" coords="5,32,215,60"/>
+<area shape="rect" id="Node000002" href="$d8/d0e/EventHandler_8cpp.html#a83dc41898982825a68e80829412d10a1" title=" " alt="" coords="263,5,413,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,31,246,27,247,32,215,36"/>
+<area shape="rect" id="Node000003" href="$db/d07/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="290,57,386,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="215,55,275,62,274,67,214,60"/>
+<area shape="rect" id="Node000004" href="$db/d07/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="461,31,615,58"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="386,62,445,54,446,59,387,67"/>
+<area shape="rect" id="Node000005" href="$db/d07/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="474,83,603,110"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="387,75,458,84,458,89,386,80"/>
+</map>

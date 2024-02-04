@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Logger.cpp
  * @brief Logger class implementation.
- * @date 2021-06-23
+ * @date 2024-02-04
  *
  */
 #include "Logger.hpp"

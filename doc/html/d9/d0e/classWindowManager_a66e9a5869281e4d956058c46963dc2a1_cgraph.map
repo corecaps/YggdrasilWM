@@ -1,0 +1,5 @@
+<map id="WindowManager::setFocus" name="WindowManager::setFocus">
+<area shape="rect" id="Node000001" title="Set the focus to a client." alt="" coords="5,5,201,33"/>
+<area shape="rect" id="Node000002" href="$d1/d07/classClient.html#a3a8287ddf4cdbba7e6452d1e65346338" title="Client::getWindow return the window attribute of the client." alt="" coords="249,5,389,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,17,233,17,233,22,201,22"/>
+</map>

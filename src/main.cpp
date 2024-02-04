@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file main.cpp
  * @brief Main file.
- * @date 2021-06-23
+ * @date 2024-02-04
  * YggdrasilWM is a tiny window manager for X11.
  */
 
@@ -33,7 +33,10 @@
 #include "ConfigHandler.hpp"
 
 /**
+ * @fn int main(int argc, char** argv)
  * @brief YggdrasilWM
+ * Uses cxxopts to parse command line arguments and starts the WindowManager.
+ * creates a Logger and a ConfigHandler.
  */
 
 int main(int argc, char** argv) {

@@ -1,0 +1,11 @@
+<map id="WindowManager::setFocus" name="WindowManager::setFocus">
+<area shape="rect" id="Node000001" title="Set the focus to a client." alt="" coords="549,45,744,72"/>
+<area shape="rect" id="Node000002" href="$d9/d0e/classWindowManager.html#affe6131a42ae23d311ccd806f4adb75c" title="look for existing top level windows and create clients for them" alt="" coords="272,5,488,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="533,48,488,43,489,37,534,43"/>
+<area shape="rect" id="Node000004" href="$d9/d0a/classEventHandler.html#ab77bf3ab50542e3a2bd568a3ef684b8d" title="Handles the MapRequest event. The MapRequest event is sent to a client when it is mapped...." alt="" coords="259,74,501,102"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="534,73,502,77,501,72,533,68"/>
+<area shape="rect" id="Node000003" href="$d9/d0e/classWindowManager.html#aa22512aca297d6e04bccb2c2325486ba" title="Initialize the WindowManager set the event select mask on the root window creates clients for the exi..." alt="" coords="28,14,188,42"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="256,30,188,30,188,25,256,25"/>
+<area shape="rect" id="Node000005" href="$d9/d0a/classEventHandler.html#ac719b179e81f56479d7525fe4e2484ae" title="Construct a new Event Handler:: Event Handler object." alt="" coords="5,74,211,102"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="243,90,211,90,211,85,243,85"/>
+</map>

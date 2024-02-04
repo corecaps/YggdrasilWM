@@ -1,0 +1,5 @@
+<map id="WindowManager::Bar" name="WindowManager::Bar">
+<area shape="rect" id="Node000001" title="create the bar window" alt="" coords="213,5,373,33"/>
+<area shape="rect" id="Node000002" href="$d9/d0e/classWindowManager.html#aa22512aca297d6e04bccb2c2325486ba" title="Initialize the WindowManager set the event select mask on the root window creates clients for the exi..." alt="" coords="5,5,165,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="197,22,165,22,165,17,197,17"/>
+</map>

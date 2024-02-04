@@ -1,0 +1,7 @@
+<map id="Client::setMapped" name="Client::setMapped">
+<area shape="rect" id="Node000001" title="Client::setMapped() set the mapped status of the client." alt="" coords="535,5,674,33"/>
+<area shape="rect" id="Node000002" href="$d9/d0a/classEventHandler.html#a29a9353de9b6d810a5122d11c2475607" title="Handles the MapNotify event. The MapNotify event is sent to a client when it is mapped...." alt="" coords="259,5,487,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="520,22,487,22,487,17,520,17"/>
+<area shape="rect" id="Node000003" href="$d9/d0a/classEventHandler.html#ac719b179e81f56479d7525fe4e2484ae" title="Construct a new Event Handler:: Event Handler object." alt="" coords="5,5,211,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="243,22,211,22,211,17,243,17"/>
+</map>

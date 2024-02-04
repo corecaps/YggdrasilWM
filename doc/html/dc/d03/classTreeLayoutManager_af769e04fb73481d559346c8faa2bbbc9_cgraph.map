@@ -1,0 +1,30 @@
+<map id="TreeLayoutManager::splitSpace" name="TreeLayoutManager::splitSpace">
+<area shape="rect" id="Node000001" title="split a space in two Move the client to the left space and the old client to the right space increase..." alt="" coords="5,245,163,290"/>
+<area shape="rect" id="Node000002" href="$d3/d0b/classLayoutManager_1_1Space.html#a4f897b1d0f3a9b9a1ad2d0045ee3ba1b" title="Get the client of the space." alt="" coords="211,5,380,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,244,108,205,133,156,167,105,209,60,213,57,217,61,212,64,171,109,138,159,113,207,96,246"/>
+<area shape="rect" id="Node000003" href="$d3/d0b/classLayoutManager_1_1Space.html#abf23b692348b449867d0dd302d4f0c0e" title="Get the parent of the space." alt="" coords="211,75,380,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="101,243,147,191,209,136,226,125,229,129,212,140,151,195,105,247"/>
+<area shape="rect" id="Node000004" href="$d3/d0b/classLayoutManager_1_1Space.html#a56ef6cea41dce29d16239fa14db41a93" title="Get the position of the space." alt="" coords="428,116,597,161"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="124,242,165,221,210,202,313,172,412,151,413,156,315,177,212,208,167,226,126,247"/>
+<area shape="rect" id="Node000005" href="$d3/d0b/classLayoutManager_1_1Space.html#aab44ad303a2bb2b1bb8711705008843a" title="Get the size of the space." alt="" coords="428,185,597,230"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="158,242,210,230,314,216,413,209,413,214,315,222,211,236,160,247"/>
+<area shape="rect" id="Node000006" href="$d3/d0b/classLayoutManager_1_1Space.html#a73060d745b888a7e16873eafa99bf86b" title="Increment the number of subspaces." alt="" coords="211,365,380,410"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="121,288,212,344,234,356,231,360,209,349,118,293"/>
+<area shape="rect" id="Node000007" href="$dc/d03/classTreeLayoutManager.html#ac4e95a44daa7c410d480e01e885f14fa" title="place a client in a space moves and resizes the client window to fit the space restack the client win..." alt="" coords="217,245,374,290"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="163,265,201,265,201,270,163,270"/>
+<area shape="rect" id="Node000011" href="$d3/d0b/classLayoutManager_1_1Space.html#ac4db8cc564f8dd4ca3c6dffc87ba52e3" title="Set the client of the space." alt="" coords="428,409,597,454"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="164,287,381,351,397,362,406,373,416,384,430,395,438,400,435,404,426,399,412,387,402,376,393,366,379,355,162,292"/>
+<area shape="rect" id="Node000012" href="$d3/d0b/classLayoutManager_1_1Space.html#ac711885600aa5fcd632bd4758f926013" title="Set the left child of the space." alt="" coords="211,435,380,479"/>
+<area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="101,289,146,353,177,389,212,420,218,424,215,428,209,424,173,393,142,357,97,292"/>
+<area shape="rect" id="Node000013" href="$d3/d0b/classLayoutManager_1_1Space.html#a120bb362ba44bb29c7eb8b45ad250065" title="Set the right child of the space." alt="" coords="211,504,380,549"/>
+<area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="95,290,111,332,135,385,169,441,213,490,216,493,213,497,209,494,165,444,131,388,106,334,90,292"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="322,243,370,207,427,171,436,166,439,170,429,175,373,211,326,247"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="373,243,414,232,415,237,375,249"/>
+<area shape="rect" id="Node000008" href="$d1/d07/classClient.html#a7787490fde404953f58eb1d002b08def" title=": Client::move move the client window to the given position" alt="" coords="461,254,565,282"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="374,265,445,265,445,270,374,270"/>
+<area shape="rect" id="Node000009" href="$d1/d07/classClient.html#a98a7241a0954aa55eb796293f7f72bfb" title="Client::resize resize the client window to the given size." alt="" coords="460,306,566,334"/>
+<area shape="poly" id="edge10_Node000007_Node000009" title=" " alt="" coords="375,284,446,301,445,306,374,289"/>
+<area shape="rect" id="Node000010" href="$d1/d07/classClient.html#a9b7919729625c8637ca982a9f4af725f" title="Client::restack() restack the client window to avoid the frame to get in front of the client." alt="" coords="455,358,570,386"/>
+<area shape="poly" id="edge11_Node000007_Node000010" title=" " alt="" coords="348,288,381,307,405,326,429,343,444,350,442,354,427,347,402,330,379,311,345,293"/>
+<area shape="poly" id="edge12_Node000007_Node000011" title=" " alt="" coords="356,288,382,307,399,330,406,353,413,374,430,395,434,398,430,402,426,399,409,376,401,354,394,333,378,311,353,293"/>
+</map>

@@ -1,0 +1,136 @@
+<map id="EventHandler::EventHandler" name="EventHandler::EventHandler">
+<area shape="rect" id="Node000001" title="Construct a new Event Handler:: Event Handler object." alt="" coords="5,585,211,613"/>
+<area shape="rect" id="Node000002" href="$d9/d0a/classEventHandler.html#a4dd2ab5df79921f0cf9dec715fe31933" title="Handles the ButtonPress event. The ButtonPress event is sent to a client when a mouse button is press..." alt="" coords="561,406,765,451"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,584,121,529,146,451,166,409,191,370,221,335,257,306,290,288,320,277,349,272,376,272,434,284,502,306,540,323,575,345,632,393,629,397,572,349,537,327,500,311,432,289,376,277,349,277,322,282,292,293,260,311,224,338,195,373,171,412,151,453,126,530,114,585"/>
+<area shape="rect" id="Node000006" href="$d9/d0a/classEventHandler.html#aff32662d5d87d912b60822da90a9d4ae" title="Handles the ButtonRelease event." alt="" coords="278,62,482,107"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="107,585,110,504,117,445,129,379,148,309,174,239,210,174,257,117,263,111,267,115,261,121,214,177,179,242,153,310,134,380,122,446,116,504,112,585"/>
+<area shape="rect" id="Node000007" href="$d9/d0a/classEventHandler.html#af9474eac1b2821e010777868b328b5b8" title="Handles the ClientMessage event." alt="" coords="280,131,480,176"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="107,585,115,514,137,407,156,348,182,289,215,234,257,186,266,179,269,183,261,190,219,237,187,292,161,350,142,408,120,515,113,585"/>
+<area shape="rect" id="Node000008" href="$d9/d0a/classEventHandler.html#aa087c428cec403ed904d229f11199252" title="Handles the ConfigureNotify event." alt="" coords="268,201,492,245"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="109,584,121,525,148,439,167,392,192,345,221,301,257,262,271,251,275,255,260,266,226,304,196,348,172,394,153,441,127,527,114,585"/>
+<area shape="rect" id="Node000009" href="$d9/d0a/classEventHandler.html#a9ee16ed66b9d6d46aa324f19b6e57fff" title="Handles the ConfigureRequest event. The ConfigureRequest event is sent to a client when it requests a..." alt="" coords="552,475,775,520"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="148,582,258,550,401,524,536,507,536,512,402,529,259,555,150,587"/>
+<area shape="rect" id="Node000013" href="$d9/d0a/classEventHandler.html#a8b456da5adaa409c6c8e2ea9b608876b" title="Handles the DestroyNotify event." alt="" coords="274,321,486,365"/>
+<area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="112,583,131,542,161,486,203,427,229,399,257,375,264,371,267,375,260,380,233,403,208,430,166,489,136,545,117,586"/>
+<area shape="rect" id="Node000014" href="$d9/d0a/classEventHandler.html#ab9abc781ad0d8bcede9acb77bdfa76f3" title="Handles the EnterNotify event." alt="" coords="282,390,478,435"/>
+<area shape="poly" id="edge14_Node000001_Node000014" title=" " alt="" coords="118,583,173,521,213,484,257,451,281,439,284,443,260,456,216,488,177,524,122,587"/>
+<area shape="rect" id="Node000015" href="$d9/d0a/classEventHandler.html#a3678a163929cc5caea4d3adfebaa24b3" title="This where the bar is drawn, other windows are ignored." alt="" coords="559,285,767,313"/>
+<area shape="poly" id="edge15_Node000001_Node000015" title=" " alt="" coords="108,584,123,477,152,313,172,228,196,150,224,88,240,64,257,48,288,26,318,12,348,5,377,3,406,7,436,16,502,47,534,68,561,95,585,124,606,156,637,218,656,269,651,271,632,220,601,159,581,127,557,98,530,73,500,52,434,21,405,12,376,8,348,10,320,17,291,31,260,52,244,68,229,90,201,152,177,229,157,314,128,478,114,585"/>
+<area shape="rect" id="Node000018" href="$d9/d0a/classEventHandler.html#aead87b928e6928327b275882ca5ea678" title="Handles the FocusIn event. Changes the border color of the client." alt="" coords="558,596,768,623"/>
+<area shape="poly" id="edge19_Node000001_Node000018" title=" " alt="" coords="211,594,501,596,543,598,542,603,501,602,211,600"/>
+<area shape="rect" id="Node000023" href="$d9/d0a/classEventHandler.html#a86a04de876f37015e33592192a4d408c" title="Handles the FocusOut event. Changes the border color of the client." alt="" coords="553,544,774,571"/>
+<area shape="poly" id="edge28_Node000001_Node000023" title=" " alt="" coords="209,582,258,576,403,566,537,559,537,564,403,571,259,582,209,587"/>
+<area shape="rect" id="Node000024" href="$d9/d0a/classEventHandler.html#a819418b2b9874d30c109304648add429" title="Handles the KeyPress event." alt="" coords="270,610,490,638"/>
+<area shape="poly" id="edge37_Node000001_Node000024" title=" " alt="" coords="211,606,255,610,254,615,211,611"/>
+<area shape="rect" id="Node000025" href="$d9/d0a/classEventHandler.html#aabb727113b34ea6b2aa2de4151f56a7c" title="Handles the KeyRelease event." alt="" coords="261,662,499,690"/>
+<area shape="poly" id="edge38_Node000001_Node000025" title=" " alt="" coords="148,611,259,647,294,656,293,661,258,652,147,616"/>
+<area shape="rect" id="Node000026" href="$d9/d0a/classEventHandler.html#a43d912ae8d4adb51d2efb8c70847469b" title="Handles the LeaveNotify event." alt="" coords="280,714,480,759"/>
+<area shape="poly" id="edge39_Node000001_Node000026" title=" " alt="" coords="128,611,184,654,221,678,260,699,274,706,272,710,257,704,218,683,181,659,125,615"/>
+<area shape="rect" id="Node000027" href="$d9/d0a/classEventHandler.html#a29a9353de9b6d810a5122d11c2475607" title="Handles the MapNotify event. The MapNotify event is sent to a client when it is mapped...." alt="" coords="549,648,777,675"/>
+<area shape="poly" id="edge40_Node000001_Node000027" title=" " alt="" coords="119,612,138,646,169,691,210,735,234,754,260,769,326,795,354,802,382,805,409,804,437,798,500,769,510,760,517,751,523,730,530,707,536,695,547,685,553,681,556,685,551,689,541,699,535,709,529,731,522,753,514,764,502,773,438,803,410,809,382,811,353,807,324,800,258,773,231,758,206,739,165,694,133,649,114,615"/>
+<area shape="rect" id="Node000030" href="$d9/d0a/classEventHandler.html#ab77bf3ab50542e3a2bd568a3ef684b8d" title="Handles the MapRequest event. The MapRequest event is sent to a client when it is mapped...." alt="" coords="259,1073,501,1101"/>
+<area shape="poly" id="edge47_Node000001_Node000030" title=" " alt="" coords="112,613,116,692,122,749,134,813,152,880,179,946,214,1007,236,1035,260,1060,264,1062,260,1066,257,1064,232,1038,210,1010,174,948,147,882,129,815,117,750,110,693,107,613"/>
+<area shape="rect" id="Node000054" href="$d9/d0a/classEventHandler.html#a9fc1125bf2060f2b3bffe00f87cc16c9" title="Handles the MotionNotify event. this was previously used for dragging windows.r." alt="" coords="560,699,766,744"/>
+<area shape="poly" id="edge66_Node000001_Node000054" title=" " alt="" coords="116,612,133,654,162,710,204,766,230,791,260,810,323,836,351,841,377,841,433,831,500,810,515,803,524,794,547,773,592,749,595,753,551,777,528,798,518,807,502,815,434,837,378,847,350,846,322,841,257,815,227,795,201,770,158,713,128,656,111,614"/>
+<area shape="rect" id="Node000055" href="$d9/d0a/classEventHandler.html#a94d6a647ab1563ef05252cdfeb59d8ae" title="Handles the PropertyNotify event." alt="" coords="272,935,488,980"/>
+<area shape="poly" id="edge69_Node000001_Node000055" title=" " alt="" coords="114,613,126,670,153,753,172,799,196,843,226,885,260,921,265,925,262,929,257,925,221,888,192,846,167,801,148,755,121,671,109,614"/>
+<area shape="rect" id="Node000056" href="$d9/d0a/classEventHandler.html#ad8a60d688daa8d9fe73355ea0b217e65" title="Handles the ReparentNotify event." alt="" coords="270,1005,490,1049"/>
+<area shape="poly" id="edge70_Node000001_Node000056" title=" " alt="" coords="113,613,121,681,144,782,163,838,189,894,221,945,261,990,264,994,261,998,257,994,216,949,184,896,158,840,139,784,116,682,108,614"/>
+<area shape="rect" id="Node000057" href="$d9/d0a/classEventHandler.html#a1fc5645364720c301f14c94e9dec245d" title="Handles the Unknown event." alt="" coords="269,884,491,911"/>
+<area shape="poly" id="edge71_Node000001_Node000057" title=" " alt="" coords="116,612,131,661,159,729,202,802,229,835,260,863,279,875,276,880,257,868,225,839,198,805,155,731,126,663,110,614"/>
+<area shape="rect" id="Node000058" href="$d9/d0a/classEventHandler.html#a66c072b3d1a731df49726c660a329563" title="Handles the UnmapNotify event. The UnmapNotify event is sent to a client when it is unmapped...." alt="" coords="559,1278,767,1323"/>
+<area shape="poly" id="edge73_Node000001_Node000058" title=" " alt="" coords="112,613,118,695,125,756,138,826,157,900,183,974,217,1046,261,1111,290,1142,322,1169,395,1215,472,1249,545,1272,543,1278,470,1254,393,1219,319,1173,286,1145,257,1114,212,1048,178,976,152,901,133,827,120,757,112,696,107,613"/>
+<area shape="rect" id="Node000003" href="$d9/d0e/classWindowManager.html#a5627a14686c7d6db3ff8f1d50d22a30e" title="Get the Client by window ptr or frame ptr." alt="" coords="836,521,1034,549"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="755,449,779,461,794,473,803,485,812,497,827,507,838,513,835,517,824,512,809,500,799,488,790,477,776,465,753,454"/>
+<area shape="rect" id="Node000004" href="$d9/d0e/classWindowManager.html#a0dac20db062e34f396388a3feaf7f5e3" title="Get the Display object." alt="" coords="831,401,1039,429"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="766,421,815,418,816,423,766,426"/>
+<area shape="rect" id="Node000005" href="$d1/d07/classClient.html#ab3a6ce2b7c664ea581263df50c130e75" title="Client::getFrame() return the frame Window of the client." alt="" coords="870,573,1000,601"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="761,449,779,461,791,473,798,486,804,511,810,536,816,547,827,558,857,574,854,579,824,562,812,550,805,538,798,513,793,488,786,476,776,465,758,453"/>
+<area shape="poly" id="edge9_Node000009_Node000004" title=" " alt="" coords="743,472,776,460,824,438,847,431,849,436,826,443,778,465,745,477"/>
+<area shape="rect" id="Node000010" href="$db/d07/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="887,781,983,809"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="765,518,779,531,799,561,807,591,807,622,803,651,799,681,799,710,807,738,827,766,848,781,872,789,871,794,845,786,823,770,803,740,794,710,794,680,798,651,802,621,802,592,795,563,775,534,762,522"/>
+<area shape="rect" id="Node000011" href="$db/d07/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="1102,756,1257,783"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="983,787,1087,776,1087,782,984,793"/>
+<area shape="rect" id="Node000012" href="$db/d07/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="1115,808,1244,835"/>
+<area shape="poly" id="edge12_Node000010_Node000012" title=" " alt="" coords="984,798,1099,810,1099,816,983,803"/>
+<area shape="poly" id="edge18_Node000015_Node000004" title=" " alt="" coords="699,311,887,392,885,397,697,316"/>
+<area shape="rect" id="Node000016" href="$d9/d0e/classWindowManager.html#a217e0d55d527f74cbc5f71e698a1c17d" title="Get the Bar window." alt="" coords="844,326,1026,354"/>
+<area shape="poly" id="edge16_Node000015_Node000016" title=" " alt="" coords="759,311,829,322,829,327,758,316"/>
+<area shape="rect" id="Node000017" href="$d9/d0e/classWindowManager.html#afee116088855d27873dde04a00607b19" title="Get the number of clients." alt="" coords="836,258,1034,303"/>
+<area shape="poly" id="edge17_Node000015_Node000017" title=" " alt="" coords="768,289,821,285,821,291,768,294"/>
+<area shape="poly" id="edge20_Node000018_Node000003" title=" " alt="" coords="734,593,776,580,824,559,852,551,853,556,826,564,778,585,736,598"/>
+<area shape="poly" id="edge23_Node000018_Node000004" title=" " alt="" coords="758,593,776,581,789,564,796,547,799,511,801,475,809,456,823,438,827,436,830,440,827,442,813,459,807,476,804,512,801,549,794,567,779,585,761,597"/>
+<area shape="poly" id="edge24_Node000018_Node000005" title=" " alt="" coords="769,598,855,591,855,596,769,603"/>
+<area shape="poly" id="edge27_Node000018_Node000010" title=" " alt="" coords="760,622,779,634,793,651,801,668,804,702,807,735,814,751,827,766,848,780,872,788,871,793,846,785,824,770,810,754,802,737,799,702,795,669,789,654,776,638,757,626"/>
+<area shape="rect" id="Node000019" href="$d4/d06/classConfigHandler.html#a6377bd00fa65a54085bf63c2531c6d27" title="Get a configuration value." alt="" coords="843,625,1027,653"/>
+<area shape="poly" id="edge21_Node000018_Node000019" title=" " alt="" coords="769,618,828,625,827,630,769,624"/>
+<area shape="rect" id="Node000020" href="$d9/d0e/classWindowManager.html#af92222c3c30d2506a67b9dc2b7ed61f2" title="Get the Config Handler object." alt="" coords="835,453,1035,497"/>
+<area shape="poly" id="edge22_Node000018_Node000020" title=" " alt="" coords="753,593,776,581,792,564,799,546,807,526,824,508,830,503,833,507,827,512,812,529,804,548,796,567,779,585,755,598"/>
+<area shape="rect" id="Node000021" href="$d9/d0e/classWindowManager.html#a010edb6d0af0c1f0c08965fa199de397" title="Get the Root Window pointer." alt="" coords="840,833,1030,861"/>
+<area shape="poly" id="edge25_Node000018_Node000021" title=" " alt="" coords="762,622,779,634,797,657,804,681,806,705,804,728,802,752,804,774,811,797,827,818,831,822,828,826,823,822,806,799,798,775,797,752,799,728,801,705,799,682,792,660,775,638,759,626"/>
+<area shape="rect" id="Node000022" href="$d1/d07/classClient.html#a1b0d58c212ba4aeccdd7b11fa3e6bed2" title="Client::getTitle() return the title of the client, the title is get during the construction of the cl..." alt="" coords="876,885,994,913"/>
+<area shape="poly" id="edge26_Node000018_Node000022" title=" " alt="" coords="763,622,779,634,800,664,808,694,808,725,804,755,800,784,800,813,807,842,827,870,843,883,862,891,860,895,841,887,823,874,803,844,794,814,795,784,799,754,803,724,803,695,795,666,775,638,760,626"/>
+<area shape="poly" id="edge29_Node000023_Node000003" title=" " alt="" coords="774,546,820,542,821,547,775,551"/>
+<area shape="poly" id="edge32_Node000023_Node000004" title=" " alt="" coords="758,541,776,530,786,520,793,509,799,486,805,462,812,450,824,438,829,434,832,439,827,442,816,453,810,464,804,487,798,511,790,523,779,534,760,545"/>
+<area shape="poly" id="edge33_Node000023_Node000005" title=" " alt="" coords="775,567,855,576,854,581,774,572"/>
+<area shape="poly" id="edge36_Node000023_Node000010" title=" " alt="" coords="762,570,779,582,797,605,804,629,806,653,804,676,802,700,804,722,811,745,827,766,848,781,872,789,871,794,846,785,823,770,806,747,798,723,797,700,799,676,801,653,799,630,792,608,775,586,759,574"/>
+<area shape="poly" id="edge30_Node000023_Node000019" title=" " alt="" coords="740,570,778,582,803,596,826,610,848,618,847,623,824,615,800,601,776,587,739,575"/>
+<area shape="poly" id="edge31_Node000023_Node000020" title=" " alt="" coords="739,541,776,530,824,507,842,500,844,505,826,512,778,535,741,546"/>
+<area shape="poly" id="edge34_Node000023_Node000021" title=" " alt="" coords="763,570,779,582,800,612,808,642,808,673,804,703,800,732,800,761,807,790,827,819,831,822,827,826,823,822,803,792,794,762,795,732,799,702,803,672,803,643,795,614,775,586,760,574"/>
+<area shape="poly" id="edge35_Node000023_Node000022" title=" " alt="" coords="764,570,779,582,804,619,812,656,811,692,804,729,797,765,796,800,804,835,827,870,843,883,862,891,860,896,840,887,823,874,799,838,790,801,792,764,799,728,806,692,807,656,799,621,775,586,760,574"/>
+<area shape="poly" id="edge41_Node000027_Node000003" title=" " alt="" coords="753,645,776,633,792,616,799,597,807,578,824,560,833,554,836,558,827,564,811,581,804,599,796,619,779,637,755,650"/>
+<area shape="poly" id="edge42_Node000027_Node000005" title=" " alt="" coords="734,645,776,632,824,611,855,602,856,607,826,616,778,637,736,650"/>
+<area shape="poly" id="edge44_Node000027_Node000010" title=" " alt="" coords="759,674,779,685,797,705,804,727,811,747,827,766,849,778,873,786,871,791,846,783,824,770,806,750,799,728,792,708,776,689,756,678"/>
+<area shape="poly" id="edge43_Node000027_Node000022" title=" " alt="" coords="764,674,779,685,797,708,805,732,806,756,804,780,802,803,804,826,811,848,827,870,843,882,862,890,860,895,841,887,823,874,806,851,798,827,797,803,799,779,801,756,799,733,792,711,775,689,761,678"/>
+<area shape="rect" id="Node000028" href="$d1/d07/classClient.html#a9b7919729625c8637ca982a9f4af725f" title="Client::restack() restack the client window to avoid the frame to get in front of the client." alt="" coords="877,677,993,705"/>
+<area shape="poly" id="edge45_Node000027_Node000028" title=" " alt="" coords="778,671,862,680,862,686,778,677"/>
+<area shape="rect" id="Node000029" href="$d1/d07/classClient.html#a9b683356e12c2feac574f751ddbec0d2" title="Client::setMapped() set the mapped status of the client." alt="" coords="865,729,1005,757"/>
+<area shape="poly" id="edge46_Node000027_Node000029" title=" " alt="" coords="745,673,778,685,803,699,826,714,851,723,850,728,824,719,800,704,776,689,743,678"/>
+<area shape="poly" id="edge54_Node000030_Node000004" title=" " alt="" coords="486,1071,499,1060,514,1036,524,1004,530,967,532,924,528,828,518,724,509,620,507,525,510,483,517,446,529,415,547,392,586,365,630,350,677,344,725,346,772,354,817,366,890,392,889,397,815,371,771,359,724,352,677,350,631,355,588,370,551,396,534,418,522,448,515,484,512,525,514,620,523,723,533,828,537,924,535,967,529,1005,519,1038,503,1063,490,1075"/>
+<area shape="poly" id="edge63_Node000030_Node000010" title=" " alt="" coords="485,1071,499,1060,517,1036,524,1011,525,985,522,959,519,933,520,907,528,881,548,855,589,844,675,829,871,801,872,806,675,834,590,849,550,860,532,883,525,908,524,933,527,959,530,985,530,1012,522,1038,503,1063,488,1075"/>
+<area shape="poly" id="edge55_Node000030_Node000021" title=" " alt="" coords="482,1070,499,1060,510,1048,517,1037,523,1011,528,985,535,972,547,960,577,940,605,929,632,925,658,924,713,923,743,918,776,906,800,889,824,871,843,863,845,868,827,876,803,893,779,911,744,923,713,928,658,929,632,930,606,934,579,945,551,964,540,975,533,987,528,1012,522,1038,515,1051,503,1064,484,1075"/>
+<area shape="poly" id="edge56_Node000030_Node000022" title=" " alt="" coords="476,1070,500,1059,514,1047,523,1034,532,1021,548,1007,579,991,608,980,659,969,712,964,777,950,880,916,882,921,778,955,712,969,660,975,609,985,582,995,550,1012,536,1024,527,1037,518,1051,502,1064,478,1075"/>
+<area shape="rect" id="Node000031" href="$d1/d07/classClient.html#acce4a7604a676bd468f6203b1aa7b7b6" title="Client::frame create a frame around the client window, Map the frame, Add the window to the save set ..." alt="" coords="610,1174,716,1202"/>
+<area shape="poly" id="edge48_Node000030_Node000031" title=" " alt="" coords="414,1099,550,1154,596,1168,595,1173,548,1159,412,1104"/>
+<area shape="rect" id="Node000048" href="$d9/d0e/classWindowManager.html#a50facc69dc7eddcaf8e480b235790a6a" title="Get a ref to the Client by window ptr does not look for frames and throws if not found." alt="" coords="825,1106,1045,1134"/>
+<area shape="poly" id="edge53_Node000030_Node000048" title=" " alt="" coords="463,1099,549,1110,684,1117,810,1119,810,1124,683,1122,549,1115,463,1104"/>
+<area shape="rect" id="Node000049" href="$d9/d0e/classWindowManager.html#ab8b30dd79ad425cb52649c52ff1d3e93" title="Insert a client in the clients map." alt="" coords="557,869,770,897"/>
+<area shape="poly" id="edge57_Node000030_Node000049" title=" " alt="" coords="484,1070,499,1060,513,1043,520,1025,523,989,525,951,533,932,547,913,561,902,564,907,551,917,537,934,530,952,528,989,526,1027,518,1045,503,1064,487,1075"/>
+<area shape="rect" id="Node000050" href="$d1/d07/classClient.html#ac5428681219bb36dfd65213d5aad7245" title="Client::isFramed() check if the client is framed." alt="" coords="600,1021,727,1049"/>
+<area shape="poly" id="edge61_Node000030_Node000050" title=" " alt="" coords="459,1070,584,1047,585,1052,460,1075"/>
+<area shape="rect" id="Node000051" href="$d1/d07/classClient.html#ae127a5bca50ad1e58a90536708481d40" title="Client::isMapped() check if the client is mapped." alt="" coords="598,1073,728,1101"/>
+<area shape="poly" id="edge62_Node000030_Node000051" title=" " alt="" coords="501,1084,582,1084,582,1090,501,1090"/>
+<area shape="rect" id="Node000052" href="$d9/d0e/classWindowManager.html#a66e9a5869281e4d956058c46963dc2a1" title="Set the focus to a client." alt="" coords="566,1226,761,1254"/>
+<area shape="poly" id="edge64_Node000030_Node000052" title=" " alt="" coords="397,1099,460,1154,504,1185,550,1211,569,1219,567,1224,548,1216,501,1189,457,1158,394,1103"/>
+<area shape="rect" id="Node000032" href="$dc/d03/classTreeLayoutManager.html#a0163e2397e4c863ef87b0a9339165783" title="add a client to the layout it looks for the biggest space and splits it in two" alt="" coords="856,1158,1014,1203"/>
+<area shape="poly" id="edge49_Node000031_Node000032" title=" " alt="" coords="716,1184,841,1180,841,1186,716,1189"/>
+<area shape="rect" id="Node000033" href="$dc/d03/classTreeLayoutManager.html#aa23d629b53ff6869f4bcf47748ccd420" title=" " alt="" coords="1101,1258,1258,1303"/>
+<area shape="poly" id="edge50_Node000032_Node000033" title=" " alt="" coords="1014,1201,1046,1212,1123,1248,1121,1253,1044,1217,1012,1206"/>
+<area shape="poly" id="edge51_Node000033_Node000033" title=" " alt="" coords="1137,1258,1136,1248,1143,1239,1158,1233,1179,1231,1203,1234,1217,1240,1215,1245,1202,1239,1179,1237,1159,1238,1146,1243,1141,1249,1143,1257"/>
+<area shape="rect" id="Node000034" href="$d3/d0b/classLayoutManager_1_1Space.html#a4f897b1d0f3a9b9a1ad2d0045ee3ba1b" title="Get the client of the space." alt="" coords="1314,1354,1483,1399"/>
+<area shape="poly" id="edge52_Node000033_Node000034" title=" " alt="" coords="1234,1301,1333,1345,1331,1350,1231,1306"/>
+<area shape="poly" id="edge60_Node000049_Node000010" title=" " alt="" coords="726,866,776,849,800,834,824,819,871,804,873,809,826,824,803,838,778,853,728,871"/>
+<area shape="poly" id="edge58_Node000049_Node000019" title=" " alt="" coords="677,867,723,819,775,755,788,729,795,707,804,685,824,664,831,658,834,663,827,668,809,688,800,708,793,731,780,758,727,822,681,871"/>
+<area shape="poly" id="edge59_Node000049_Node000022" title=" " alt="" coords="771,887,861,892,861,897,770,892"/>
+<area shape="rect" id="Node000053" href="$d1/d07/classClient.html#a3a8287ddf4cdbba7e6452d1e65346338" title="Client::getWindow return the window attribute of the client." alt="" coords="865,1226,1005,1254"/>
+<area shape="poly" id="edge65_Node000052_Node000053" title=" " alt="" coords="761,1238,849,1238,849,1243,761,1243"/>
+<area shape="poly" id="edge68_Node000054_Node000005" title=" " alt="" coords="757,696,776,685,791,667,799,649,807,630,824,611,854,596,857,601,827,616,811,633,804,651,796,670,779,689,760,701"/>
+<area shape="poly" id="edge67_Node000054_Node000048" title=" " alt="" coords="687,743,731,793,780,856,862,986,922,1092,917,1094,858,989,775,859,727,797,683,746"/>
+<area shape="poly" id="edge72_Node000057_Node000010" title=" " alt="" coords="459,881,500,863,514,851,522,837,531,823,548,811,589,795,632,784,720,774,803,775,872,781,871,787,802,780,720,779,633,789,591,800,550,816,535,827,527,840,518,854,502,868,462,886"/>
+<area shape="poly" id="edge79_Node000058_Node000010" title=" " alt="" coords="763,1275,775,1264,795,1236,808,1208,815,1180,817,1153,811,1098,797,1043,783,988,778,933,781,904,788,876,802,848,823,820,845,804,870,795,872,800,847,808,827,824,807,851,793,878,786,905,783,933,789,987,802,1042,816,1097,822,1153,820,1181,813,1210,800,1238,779,1267,767,1279"/>
+<area shape="poly" id="edge77_Node000058_Node000021" title=" " alt="" coords="763,1276,775,1264,793,1239,804,1215,811,1190,813,1166,809,1118,797,1069,786,1020,782,971,785,946,792,922,805,897,823,872,826,869,830,872,827,875,809,900,797,924,790,948,787,971,791,1019,803,1068,814,1117,819,1166,816,1191,809,1216,797,1242,779,1267,766,1280"/>
+<area shape="poly" id="edge78_Node000058_Node000022" title=" " alt="" coords="761,1275,775,1264,792,1244,801,1225,808,1186,810,1144,814,1120,823,1094,870,999,914,924,919,927,874,1002,828,1096,820,1122,816,1145,813,1187,806,1226,796,1247,779,1268,764,1280"/>
+<area shape="poly" id="edge74_Node000058_Node000048" title=" " alt="" coords="760,1275,776,1264,787,1249,794,1235,798,1205,803,1174,810,1158,824,1144,828,1140,831,1145,827,1148,815,1161,808,1175,803,1205,799,1236,792,1252,779,1268,763,1279"/>
+<area shape="rect" id="Node000059" href="$d9/d0e/classWindowManager.html#a4ef740d26dd36561685b94d4f79c4052" title="Get the Clients map." alt="" coords="833,1330,1037,1358"/>
+<area shape="poly" id="edge75_Node000058_Node000059" title=" " alt="" coords="768,1315,831,1325,830,1330,767,1320"/>
+<area shape="rect" id="Node000060" href="$d9/d0e/classWindowManager.html#a69337589277e78f4db2ff5190c7552cf" title="Get the Layout Manager object." alt="" coords="833,1382,1037,1427"/>
+<area shape="poly" id="edge76_Node000058_Node000060" title=" " alt="" coords="715,1321,826,1367,845,1374,844,1379,824,1372,713,1326"/>
+<area shape="rect" id="Node000061" href="$dc/d03/classTreeLayoutManager.html#aa534370314f620ad2a72fc2f522f1735" title="remove a client from the layout use the recursive method to remove the client" alt="" coords="856,1451,1014,1496"/>
+<area shape="poly" id="edge80_Node000058_Node000061" title=" " alt="" coords="687,1321,747,1379,785,1410,827,1437,843,1445,840,1449,824,1441,782,1414,743,1383,683,1325"/>
+<area shape="rect" id="Node000063" href="$d1/d07/classClient.html#ab09fa9ad6079035fb96fa8b490a47087" title="Client::unframe unframe the client window by removing the frame and reparenting the window to the roo..." alt="" coords="874,1278,996,1306"/>
+<area shape="poly" id="edge84_Node000058_Node000063" title=" " alt="" coords="768,1295,858,1292,858,1297,768,1300"/>
+<area shape="rect" id="Node000062" href="$dc/d03/classTreeLayoutManager.html#a1b159ae9196f75ecc493e2b0d5564b7d" title="recursive method to add a client to the layout" alt="" coords="1093,1401,1266,1445"/>
+<area shape="poly" id="edge81_Node000061_Node000062" title=" " alt="" coords="1014,1455,1077,1441,1078,1447,1015,1460"/>
+<area shape="poly" id="edge82_Node000062_Node000034" title=" " alt="" coords="1266,1402,1298,1395,1299,1400,1267,1407"/>
+<area shape="poly" id="edge83_Node000062_Node000062" title=" " alt="" coords="1137,1400,1136,1391,1143,1382,1158,1376,1179,1374,1203,1376,1217,1383,1215,1388,1202,1382,1179,1379,1159,1381,1146,1386,1141,1392,1143,1400"/>
+</map>

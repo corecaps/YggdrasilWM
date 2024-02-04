@@ -1,0 +1,23 @@
+<map id="EventHandler::handleFocusIn" name="EventHandler::handleFocusIn">
+<area shape="rect" id="Node000001" title="Handles the FocusIn event. Changes the border color of the client." alt="" coords="5,204,216,232"/>
+<area shape="rect" id="Node000002" href="$d9/d0e/classWindowManager.html#a5627a14686c7d6db3ff8f1d50d22a30e" title="Get the Client by window ptr or frame ptr." alt="" coords="269,5,467,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,202,139,170,172,126,213,82,262,44,275,37,277,42,265,48,217,86,176,130,144,173,122,205"/>
+<area shape="rect" id="Node000003" href="$d4/d06/classConfigHandler.html#a6377bd00fa65a54085bf63c2531c6d27" title="Get a configuration value." alt="" coords="276,57,460,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="124,201,181,149,220,119,262,94,276,88,278,93,265,99,223,124,184,153,127,205"/>
+<area shape="rect" id="Node000004" href="$d9/d0e/classWindowManager.html#af92222c3c30d2506a67b9dc2b7ed61f2" title="Get the Config Handler object." alt="" coords="268,109,468,154"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="153,201,263,163,283,156,285,161,265,168,155,206"/>
+<area shape="rect" id="Node000005" href="$d9/d0e/classWindowManager.html#a0dac20db062e34f396388a3feaf7f5e3" title="Get the Display object." alt="" coords="264,177,472,205"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="216,204,248,201,248,206,216,210"/>
+<area shape="rect" id="Node000006" href="$d1/d07/classClient.html#ab3a6ce2b7c664ea581263df50c130e75" title="Client::getFrame() return the frame Window of the client." alt="" coords="303,229,433,257"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="216,226,288,233,287,238,216,231"/>
+<area shape="rect" id="Node000007" href="$d9/d0e/classWindowManager.html#a010edb6d0af0c1f0c08965fa199de397" title="Get the Root Window pointer." alt="" coords="273,281,463,309"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="153,230,264,266,294,274,293,279,263,271,151,235"/>
+<area shape="rect" id="Node000008" href="$d1/d07/classClient.html#a1b0d58c212ba4aeccdd7b11fa3e6bed2" title="Client::getTitle() return the title of the client, the title is get during the construction of the cl..." alt="" coords="309,333,427,361"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="130,230,188,273,225,297,265,318,295,329,293,334,263,323,223,302,185,278,127,234"/>
+<area shape="rect" id="Node000009" href="$db/d07/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="320,385,416,413"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="124,231,179,298,219,337,265,370,306,386,304,391,262,375,216,341,175,302,120,234"/>
+<area shape="rect" id="Node000010" href="$db/d07/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="520,359,674,386"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="416,391,504,381,505,386,416,396"/>
+<area shape="rect" id="Node000011" href="$db/d07/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="533,411,662,438"/>
+<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="416,402,517,413,517,418,416,407"/>
+</map>

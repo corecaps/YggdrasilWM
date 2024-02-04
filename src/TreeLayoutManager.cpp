@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file TreeLayoutManager
  * @brief handle Tree Style Layout.
- * @date 2021-06-23
+ * @date 2024-02-04
  */
 #include "TreeLayoutManager.hpp"
 TreeLayoutManager::TreeLayoutManager(Display *display, Window root, int size_x,int size_y,int pos_x,int pos_y) : LayoutManager(display, root) {

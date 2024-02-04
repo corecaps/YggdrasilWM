@@ -1,0 +1,22 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,107,60,134"/>
+<area shape="rect" id="Node000002" href="$d9/d0e/classWindowManager.html#a92d6ace16646bb6600c71816519a46d7" title="Create a WindowManager object." alt="" coords="123,5,304,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="44,104,70,76,106,49,133,36,135,41,109,53,74,80,47,108"/>
+<area shape="rect" id="Node000003" href="$db/d07/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="411,41,507,69"/>
+<area shape="poly" id="edge9_Node000001_Node000003" title=" " alt="" coords="59,107,107,93,184,78,262,67,395,56,396,61,263,73,185,83,108,98,61,112"/>
+<area shape="rect" id="Node000006" href="$d4/d06/classConfigHandler.html#ac09405071a15b25f0011f4f965dc54a2" title="Get the Config Path object." alt="" coords="108,107,319,134"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="60,118,92,118,92,123,60,123"/>
+<area shape="rect" id="Node000007" href="$d4/d06/classConfigHandler.html#a5ba2a00e50e7e199bb589619a45f36a9" title="Load the configuration file and parse it into a map." alt="" coords="118,159,309,186"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="61,128,108,143,138,152,137,157,107,148,59,133"/>
+<area shape="rect" id="Node000010" href="$d4/d06/classConfigHandler.html#afaf41371c369cf4a1ea00d52d5fb7782" title="Print the configuration to a string stream, this method is only used for debugging purpose and will b..." alt="" coords="117,211,310,238"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="46,133,72,165,109,196,122,202,120,207,106,200,68,169,42,137"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="305,30,396,43,395,49,304,35"/>
+<area shape="rect" id="Node000004" href="$db/d07/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="615,25,770,53"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="508,49,600,43,600,48,508,55"/>
+<area shape="rect" id="Node000005" href="$db/d07/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="628,77,757,105"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="508,60,613,76,612,81,507,65"/>
+<area shape="rect" id="Node000008" href="$d4/d06/classConfigHandler.html#a52a67b1b4b3502868fdc51cccefa4d8a" title="Parse a json value to a map." alt="" coords="367,150,551,195"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="309,170,352,170,352,175,309,175"/>
+<area shape="rect" id="Node000009" href="$d4/d06/classConfigHandler.html#a3b6e720e660e33a2eb02b6b8e0d6f9b0" title="Convert a string containing a color code to unsigned long." alt="" coords="599,150,786,195"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="552,170,584,170,584,175,552,175"/>
+</map>

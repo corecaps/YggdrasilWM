@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Logger.hpp
  * @brief Logger class header.
- * @date 2021-06-23
+ * @date 2024-02-04
  * This class is responsible for logging.
  * It can be created with a file name or an ostream.
  * The log level can be set to filter the messages.
@@ -49,6 +49,7 @@ enum LogLevel {
 	L_ERROR,
 };
 /**
+ * @class Logger
  * @brief Logger class
  * This class is responsible for logging.
  * It can be created with a file name or an ostream.
@@ -57,6 +58,7 @@ enum LogLevel {
 class Logger {
 public:
 /**
+ * @fn Logger(const std::string& logFile, LogLevel logLevel)
  * @brief Construct a new Logger:: Logger object
  * This constructor is used when the user wants to log to a file.
  * @param logFile the file to log to
@@ -64,6 +66,7 @@ public:
  */
 	Logger(const std::string& logFile, LogLevel logLevel);
 /**
+ * @fn Logger(std::ostream& output, LogLevel logLevel)
  * @brief Construct a new Logger:: Logger object
  * This constructor is used when the user wants to log to a stream.
  * @param output the stream to log to
@@ -77,6 +80,7 @@ public:
  */
 	virtual ~Logger();
 /**
+ * @fn virtual void Logger::Log(const std::string& message, LogLevel level) const
  * @brief Log a message
  * This method logs a message to the log file or stream.
  * The message is only logged if the log level is high enough.
@@ -89,18 +93,21 @@ public:
 
 private:
 /**
+ * @fn std::string Logger::GetLogLevel(LogLevel level)
  * @brief Get the log level as a string
  * @param level
  * @return a string representation of the log level
  */
 	static std::string GetLogLevel(LogLevel level);
 /**
+ * @fn std::string Logger::GetTime()
  * @brief Get the current time
  *  * This method returns the current time in the format: [YYYY-MM-DD-HH:MM:SS]
  * @return
  */
 	static std::string GetTime();
 /**
+ * @fn bool Logger::streamIsFile()
  * @brief check if the stream is a file or a stream
  * @return true if the stream is a file
  */

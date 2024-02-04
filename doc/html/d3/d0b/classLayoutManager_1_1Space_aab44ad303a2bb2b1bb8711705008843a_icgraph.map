@@ -1,0 +1,35 @@
+<map id="LayoutManager::Space::getSize" name="LayoutManager::Space::getSize">
+<area shape="rect" id="Node000001" title="Get the size of the space." alt="" coords="1643,60,1812,105"/>
+<area shape="rect" id="Node000002" href="$dc/d03/classTreeLayoutManager.html#aa23d629b53ff6869f4bcf47748ccd420" title=" " alt="" coords="1011,91,1168,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1677,54,1637,34,1594,19,1531,10,1467,9,1402,15,1340,27,1226,59,1141,92,1139,87,1225,54,1338,21,1401,10,1466,4,1531,5,1595,14,1640,29,1680,49"/>
+<area shape="rect" id="Node000009" href="$dc/d03/classTreeLayoutManager.html#a6d3cc6b641619f50305d32c92b9d6355" title="grow the space of the client in the x axis" alt="" coords="1437,29,1595,74"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="1627,70,1595,66,1596,60,1628,65"/>
+<area shape="rect" id="Node000010" href="$dc/d03/classTreeLayoutManager.html#ac4e95a44daa7c410d480e01e885f14fa" title="place a client in a space moves and resizes the client window to fit the space restack the client win..." alt="" coords="1437,149,1595,194"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="1660,113,1572,151,1570,146,1658,109"/>
+<area shape="rect" id="Node000014" href="$dc/d03/classTreeLayoutManager.html#af769e04fb73481d559346c8faa2bbbc9" title="split a space in two Move the client to the left space and the old client to the right space increase..." alt="" coords="1224,89,1381,134"/>
+<area shape="poly" id="edge19_Node000001_Node000014" title=" " alt="" coords="1627,92,1382,109,1381,103,1627,86"/>
+<area shape="poly" id="edge8_Node000002_Node000002" title=" " alt="" coords="1122,77,1110,71,1089,69,1070,71,1059,76,1054,82,1055,90,1050,90,1049,80,1055,72,1069,66,1089,64,1111,66,1124,72"/>
+<area shape="rect" id="Node000003" href="$dc/d03/classTreeLayoutManager.html#a0163e2397e4c863ef87b0a9339165783" title="add a client to the layout it looks for the biggest space and splits it in two" alt="" coords="805,91,963,135"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="995,116,963,116,963,110,995,110"/>
+<area shape="rect" id="Node000004" href="$d1/d07/classClient.html#acce4a7604a676bd468f6203b1aa7b7b6" title="Client::frame create a frame around the client window, Map the frame, Add the window to the save set ..." alt="" coords="600,99,706,127"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="790,116,707,116,707,110,790,110"/>
+<area shape="rect" id="Node000005" href="$d9/d0e/classWindowManager.html#affe6131a42ae23d311ccd806f4adb75c" title="look for existing top level windows and create clients for them" alt="" coords="272,91,488,135"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="585,116,489,116,489,110,585,110"/>
+<area shape="rect" id="Node000007" href="$d9/d0a/classEventHandler.html#ab77bf3ab50542e3a2bd568a3ef684b8d" title="Handles the MapRequest event. The MapRequest event is sent to a client when it is mapped...." alt="" coords="259,160,501,188"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="585,131,502,150,447,162,446,157,500,145,584,126"/>
+<area shape="rect" id="Node000006" href="$d9/d0e/classWindowManager.html#aa22512aca297d6e04bccb2c2325486ba" title="Initialize the WindowManager set the event select mask on the root window creates clients for the exi..." alt="" coords="28,99,188,127"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="256,116,188,116,188,110,256,110"/>
+<area shape="rect" id="Node000008" href="$d9/d0a/classEventHandler.html#ac719b179e81f56479d7525fe4e2484ae" title="Construct a new Event Handler:: Event Handler object." alt="" coords="5,186,211,213"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="243,190,211,193,211,187,243,184"/>
+<area shape="poly" id="edge11_Node000010_Node000002" title=" " alt="" coords="1422,170,1322,163,1216,149,1168,138,1169,133,1216,144,1323,158,1422,165"/>
+<area shape="rect" id="Node000011" href="$dc/d03/classTreeLayoutManager.html#a1b159ae9196f75ecc493e2b0d5564b7d" title="recursive method to add a client to the layout" alt="" coords="1216,233,1389,278"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="1444,203,1362,235,1361,230,1442,198"/>
+<area shape="poly" id="edge17_Node000010_Node000014" title=" " alt="" coords="1422,148,1381,136,1383,131,1423,143"/>
+<area shape="poly" id="edge16_Node000011_Node000011" title=" " alt="" coords="1337,220,1324,214,1303,212,1283,214,1271,218,1266,224,1267,232,1262,233,1260,223,1267,214,1282,209,1303,207,1326,209,1340,216"/>
+<area shape="rect" id="Node000012" href="$dc/d03/classTreeLayoutManager.html#aa534370314f620ad2a72fc2f522f1735" title="remove a client from the layout use the recursive method to remove the client" alt="" coords="1011,233,1168,278"/>
+<area shape="poly" id="edge13_Node000011_Node000012" title=" " alt="" coords="1201,258,1168,258,1168,253,1201,253"/>
+<area shape="rect" id="Node000013" href="$d9/d0a/classEventHandler.html#a66c072b3d1a731df49726c660a329563" title="Handles the UnmapNotify event. The UnmapNotify event is sent to a client when it is unmapped...." alt="" coords="549,209,757,254"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="995,253,758,240,758,235,996,248"/>
+<area shape="poly" id="edge15_Node000013_Node000008" title=" " alt="" coords="533,227,211,208,211,203,534,222"/>
+<area shape="poly" id="edge18_Node000014_Node000002" title=" " alt="" coords="1209,115,1169,115,1169,110,1209,109"/>
+</map>

@@ -1,0 +1,20 @@
+<map id="LayoutManager" name="LayoutManager">
+<area shape="rect" id="Node000001" title="LayoutManager class This a base class for the different layout managers. You should not use this clas..." alt="" coords="5,14,128,42"/>
+<area shape="rect" id="Node000006" href="$dc/d03/classTreeLayoutManager.html" title="TreeLayoutManager class this class is a subclass of LayoutManager it handles the tree style layout Wh..." alt="" coords="50,99,200,127"/>
+<area shape="poly" id="edge8_Node000006_Node000001" title=" " alt="" coords="87,53,118,97,114,100,82,56"/>
+<area shape="rect" id="Node000002" href="$d3/d0b/classLayoutManager_1_1Space.html" title="Space class This class represents a space in the layout. it&#39;s designed like a binary tree,..." alt="" coords="38,319,207,346"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,307,69,253,53,220,40,186,36,148,36,99,45,67,57,41,62,43,50,69,41,100,41,147,45,184,58,218,73,251,106,304"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="224,324,234,332,226,341,208,345,207,339,223,336,229,333,221,328"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,428,240,473"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="103,360,98,371,95,387,98,404,109,427,104,429,93,405,89,387,93,369,98,358"/>
+<area shape="rect" id="Node000003" href="$dc/d09/structLayoutManager_1_1Point.html" title="Point struct This struct represents a 2D point." alt="" coords="177,209,340,237"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="234,249,176,297,144,320,140,316,173,293,231,245"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="120,413,120,347,125,347,125,413"/>
+<area shape="rect" id="Node000005" href="$d1/d07/classClient.html" title="The Client class is responsible for managing the client windows. It creates a frame around the client..." alt="" coords="93,209,152,237"/>
+<area shape="poly" id="edge6_Node000002_Node000005" title=" " alt="" coords="125,252,125,319,120,319,120,252"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="127,143,127,151,125,209,120,208,122,151,122,143"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="227,99,314,127"/>
+<area shape="poly" id="edge9_Node000005_Node000007" title=" " alt="" coords="267,143,258,166,243,187,153,215,152,210,240,183,254,164,262,141"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="201,5,340,50"/>
+<area shape="poly" id="edge10_Node000007_Node000008" title=" " alt="" coords="273,65,273,99,268,99,268,65"/>
+</map>

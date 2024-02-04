@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file window_manager.hpp
  * @brief WindowManager class header.
- * @date 2024-02-03
+ * @date 2024-02-04
  */
 
 #ifndef WINDOW_MANAGER_HPP
@@ -66,7 +66,8 @@ struct Position {
 
 };
 /**
- * @Brief WindowManager class
+ * @class WindowManager
+ * @brief WindowManager class
  * This class is responsible for managing the windows.in an X11 session.
  * It is the main class of the project.
  * It should be instantiated only via the static Create function.
@@ -92,6 +93,7 @@ public:
  */
 	~WindowManager();
 /**
+ * @fn void WindowManager::Init()
  * @brief Initialize the WindowManager
  * set the event select mask on the root window
  * creates clients for the existing top level windows
@@ -99,73 +101,89 @@ public:
  */
 	void Init();
 /**
+ * @fn void WindowManager::Run()
  * @brief Run the window manager
  */
 	void Run();
 // Getters
 /**
+ * @fn const Logger &WindowManager::getLogger() const
  * @brief Get the Logger object
  */
 	const Logger &getLogger() const;
 /**
+ * @fn Display *WindowManager::getDisplay() const
  * @brief Get the Display object
  */
 	Display *getDisplay() const;
 /**
+ * @fn const Window WindowManager::getRoot() const
  * @brief Get the Root Window pointer
  */
 	const Window getRoot() const;
 /**
+ * @fn TreeLayoutManager *WindowManager::getLayoutManager() const
  * @brief Get the Layout Manager object
  */
 	TreeLayoutManager *getLayoutManager() const;
 /**
+ * @fn std::unordered_map<Window, Client *> &WindowManager::getClients()
  * @brief Get the Clients map
  */
 	std::unordered_map<Window, Client *> &getClients();
 /**
+ * @fn Client *WindowManager::getClient(Window window)
  * @brief Get the Client by window ptr or frame ptr
  * @param window
  * @return nullptr if not found
  */
 	Client * getClient(Window window);
 /**
+ * @fn Client &WindowManager::getClientRef(Window window)
  * @brief Get a ref to the Client by window ptr does not look for frames and throws if not found
  */
 	Client &getClientRef(Window window);
 /**
+ * @fn bool WindowManager::isFrame(Window window)
  * @brief check if a window is a frame
  */
 	bool isFrame(Window window);
 /**
+ * @fn Window WindowManager::getBar() const
  * @brief Get the Bar window
  */
 	Window getBar() const;
 /**
+ * @fn int WindowManager::getClientCount()
  * @brief Get the number of clients
  */
 	int getClientCount();
 // Setters
 /**
+ * @fn void WindowManager::setFocus(Client *client)
  * @brief Set the focus to a client
  */
 	void setFocus(Client *client);
 /**
+ * @fn void WindowManager::insertClient(Window window)
  * @brief Insert a client in the clients map
  * @param window
  */
 	void insertClient(Window window);
 // Running control
 /**
+ * @fn void WindowManager::Stop()
  * @brief Stop the window manager
-  TODO: implement a clean way to stop the window manager
+  @todo: implement a clean way to stop the window manager
  */
 	void Stop();
 /**
+ * @fn bool WindowManager::getRunning() const
  * @brief Get the Running status
  */
 	bool getRunning() const;
 /**
+ * @fn ConfigHandler &WindowManager::getConfigHandler()
  * @brief Get the Config Handler object
  */
 	ConfigHandler &getConfigHandler();
@@ -184,27 +202,33 @@ private:
 	std::unordered_map<Window, Client*>		clients_;
 // Initialisation
 /**
+ * @fn WindowManager::WindowManager(Display *display, const Logger &logger,ConfigHandler &configHandler)
  * @brief Construct a new WindowManager object
  */
 	WindowManager(Display *display, const Logger &logger,ConfigHandler &configHandler);
 /**
+ * @fn void WindowManager::selectEventOnRoot() const
  * @brief set the event mask on the root window and register as the window manager for the X session
  */
 	void selectEventOnRoot() const;
 /**
+ * @fn void WindowManager::getTopLevelWindows(std::stringstream &debug_stream)
  * @brief look for existing top level windows and create clients for them
  */
 	void getTopLevelWindows(std::stringstream &debug_stream);
 /**
+ * @fn void WindowManager::Bar()
  * @brief create the bar window
  */
 	void Bar();
 // Error Management
 /**
+ * @fn static int WindowManager::OnXError(Display *display, XErrorEvent *e)
  * @brief X11 Error handler
  */
 	static int OnXError(Display *display, XErrorEvent *e);
 /**
+ * @fn static int WindowManager::OnWMDetected(Display *display, XErrorEvent *e)
  * @brief When selecting events on the root window, we may get a BadAccess error if another window manager is running
   this function is called when a BadAccess error is detected
   it sets the wm_detected_ flag to true and stops the window manager

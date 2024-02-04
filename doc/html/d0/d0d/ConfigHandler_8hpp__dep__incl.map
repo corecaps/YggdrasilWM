@@ -1,0 +1,17 @@
+<map id="inc/ConfigHandler.hpp" name="inc/ConfigHandler.hpp">
+<area shape="rect" id="Node000001" title="ConfigHandler class header." alt="" coords="349,5,512,33"/>
+<area shape="rect" id="Node000002" href="$d8/d09/window__manager_8hpp.html" title="WindowManager class header." alt="" coords="188,81,374,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="391,43,309,83,306,78,389,38"/>
+<area shape="rect" id="Node000005" href="$df/d0a/main_8cpp.html" title="Main file." alt="" coords="398,157,503,184"/>
+<area shape="poly" id="edge8_Node000001_Node000005" title=" " alt="" coords="437,48,451,156,446,156,431,49"/>
+<area shape="rect" id="Node000007" href="$d4/d02/ConfigHandler_8cpp.html" title="ConfigHandler class implementation." alt="" coords="468,81,630,109"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="466,39,529,78,527,83,463,44"/>
+<area shape="rect" id="Node000003" href="$d2/d09/EventHandler_8hpp.html" title="EventHandler class header. this class dispatches the XEvents to the appropriate handler function...." alt="" coords="5,157,165,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="226,117,114,159,112,154,224,112"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="326,113,421,154,419,159,324,118"/>
+<area shape="rect" id="Node000006" href="$db/d04/window__manager_8cpp.html" title="WindowManager class implementation." alt="" coords="188,157,374,184"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="284,124,284,156,278,156,278,124"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="140,149,252,107,254,112,142,154"/>
+<area shape="rect" id="Node000004" href="$d8/d0e/EventHandler_8cpp.html" title="EventHandler class implementation." alt="" coords="6,232,164,260"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="88,200,88,232,82,232,82,200"/>
+</map>

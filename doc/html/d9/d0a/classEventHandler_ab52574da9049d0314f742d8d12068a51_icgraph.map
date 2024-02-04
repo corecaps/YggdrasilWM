@@ -1,0 +1,5 @@
+<map id="EventHandler::dispatchEvent" name="EventHandler::dispatchEvent">
+<area shape="rect" id="Node000001" title="Dispatches the event to the appropriate handler function. the eventHandlerArray is an array of pointe..." alt="" coords="217,5,426,33"/>
+<area shape="rect" id="Node000002" href="$d9/d0e/classWindowManager.html#a3823b9b86904084abf35758e27a55354" title="Run the window manager." alt="" coords="5,5,169,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,22,169,22,169,17,201,17"/>
+</map>

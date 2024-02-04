@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file LayoutManager.hpp
  * @brief LayoutManager class header.
- * @date 2021-06-23
+ * @date 2024-02-04
  * This class is responsible for managing the layout of the windows.
  */
 
@@ -34,6 +34,7 @@
 #include "Client.hpp"
 
 /**
+ * @class LayoutManager
  * @brief LayoutManager class
  * This a base class for the different layout managers.
  * You should not use this class directly, but use one of the derived classes.
@@ -41,6 +42,7 @@
 class LayoutManager {
 public:
 /**
+ * @struct Point
  * @brief Point struct
  * This struct represents a 2D point
  */
@@ -52,6 +54,7 @@ public:
 		Point() : x(0), y(0) {}
 	};
 /**
+ * @class Space
  * @brief Space class
  * This class represents a space in the layout.
  * it's designed like a binary tree, with a parent, a right and a left child.
@@ -70,6 +73,7 @@ public:
 
 	public:
 /**
+ * @fn Space(Point pos, Point size, int index, Space* parent = nullptr)
  * @brief Construct a new Space object
  * @param pos
  * @param size
@@ -77,21 +81,98 @@ public:
  * @param parent
  */
 		Space(Point pos, Point size, int index, Space* parent = nullptr);
+/**
+ * @fn const Point LayoutManager::Space::getPos()
+ * @brief Get the position of the space
+ */
 		const Point &getPos() const;
+/**
+ * @fn void LayoutManager::Space::setPos(const Point &pos)
+ * @brief Set the position of the space
+ * @param pos
+ */
 		void setPos(const Point &pos);
+/**
+ * @fn const Point LayoutManager::Space::getSize()
+ * @brief Get the size of the space
+ * @return
+ */
 		const Point &getSize() const;
+/**
+ * @fn void LayoutManager::Space::setSize(const Point &size)
+ * @brief Set the size of the space
+ * @param size
+ */
 		void setSize(const Point &size);
+/**
+ * @fn int LayoutManager::Space::getSubspaceCount()
+ * @brief Get the number of subspaces
+ */
 		int getSubspaceCount() const;
+/**
+ * @fn int LayoutManager::Space::getIndex()
+ * @brief Get the index of the space
+ * @return
+ */
 		int getIndex() const;
+/**
+ * @fn void LayoutManager::Space::setIndex(int index)
+ * @brief Set the index of the space
+ * @param index
+ */
 		void setIndex(int index);
+/**
+ * @fn Space * LayoutManager::Space::getParent()
+ * @brief Get the parent of the space
+ * @return
+ */
 		Space *getParent() const;
+/**
+ * @fn void LayoutManager::Space::setParent(Space *parent)
+ * @brief Set the parent of the space
+ * @param parent
+ */
 		void setParent(Space *parent);
+/**
+ * @fn const std::unique_ptr<Space> & LayoutManager::Space::getRight()
+ * @brief Get the right child of the space
+ * @return
+ */
 		const std::unique_ptr<Space> &getRight() const;
+/**
+ * @fn void LayoutManager::Space::setRight(std::unique_ptr<Space> right)
+ * @brief Set the right child of the space
+ * @param right
+ */
 		void setRight(std::unique_ptr<Space> right);
+/**
+ * @fn const std::unique_ptr<Space> & LayoutManager::Space::getLeft()
+ * @brief Get the left child of the space
+ * @return
+ */
 		const std::unique_ptr<Space> &getLeft() const;
+/**
+ * @fn void LayoutManager::Space::setLeft(std::unique_ptr<Space> left)
+ * @brief Set the left child of the space
+ * @param left
+ */
 		void setLeft(std::unique_ptr<Space> left);
+/**
+ * @fn Client * LayoutManager::Space::getClient()
+ * @brief Get the client of the space
+ * @return
+ */
 		Client *getClient() const;
+/**
+ * @fn void LayoutManager::Space::setClient(Client *client)
+ * @brief Set the client of the space
+ * @param client
+ */
 		void setClient(Client *client);
+/**
+ * @fn void LayoutManager::Space::incSubSpaceCount()
+ * @brief Increment the number of subspaces
+ */
 		void incSubSpaceCount();
 	};
 /**
@@ -104,6 +185,7 @@ public:
 		const char * what() const noexcept override;
 	};
 /**
+ * @fn LayoutManager(Display* display, Window root)
  * @brief Construct a new LayoutManager object
  * @param display
  * @param root
@@ -111,23 +193,27 @@ public:
 	LayoutManager(Display* display, Window root);
 	virtual ~LayoutManager() = default;
 /**
+ * @fn virtual void LayoutManager::updateGeometry()
  * @brief updateGeometry this method is a residual from the old implementation.
  * it should be removed in the future.
  */
 	virtual void	updateGeometry();
 /**
+ * @fn virtual Space * LayoutManager::findSpace(Client *client)
  * @brief find the space that contains the client
  * @param client
  * @return
  */
 	virtual Space	*findSpace(Client *client);
 /**
+ * @fn virtual Space * LayoutManager::findSpace(int index)
  * @brief find the space with the given index
  * @param index
  * @return
  */
 	virtual Space	*findSpace(int index);
 /**
+ * @fn virtual void LayoutManager::addClient(Client* client)
  * @brief add a client to the layout
  * @param client
  */

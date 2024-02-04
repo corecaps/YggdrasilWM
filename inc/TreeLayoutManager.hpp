@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file TreeLayoutManager
  * @brief handle Tree Style Layout.
- * @date 2021-06-23
+ * @date 2024-02-04
  */
 
 
@@ -31,6 +31,7 @@
 #include "LayoutManager.hpp"
 #include <iostream>
 /**
+ * @class TreeLayoutManager
  * @brief TreeLayoutManager class
  * this class is a subclass of LayoutManager
  * it handles the tree style layout
@@ -42,6 +43,7 @@
 class TreeLayoutManager :public LayoutManager {
 public:
 /**
+ * @fn TreeLayoutManager(Display* display, Window root,int size_x,int size_y,int pos_x,int pos_y)
  * @brief Construct a new Tree Layout Manager object
  * the size and position of the root space should take
  * account of the bar size and position and the border size
@@ -58,10 +60,12 @@ public:
  */
 	~TreeLayoutManager() override;
 /**
+ * @fn void TreeLayoutManager::updateGeometry()
  * @brief this method is an old implementation and should be removed
 */
 	void	updateGeometry() override;
 /**
+ * @fn Space* TreeLayoutManager::findSpace(Client* client)
  * @brief find the space containing the client
  * it looks recursively for the space containing the client
  * @param client
@@ -69,6 +73,7 @@ public:
  */
 	Space	*findSpace(Client* client) override;
 /**
+ * @fn Space* TreeLayoutManager::findSpaceRecursive(Client* client, Space* space)
  * @brief recursive method to find the space containing the client
  * @param client
  * @param space
@@ -77,6 +82,7 @@ public:
 	Space * findSpaceRecursive(Client *client, LayoutManager::Space * space);
 	Space	*findSpace(int index) override;
 /**
+ * @fn void TreeLayoutManager::addClient(Client* client)
  * @brief add a client to the layout
  * it looks for the biggest space and splits it in two
  * @param client
@@ -85,12 +91,14 @@ public:
  */
 	void	addClient(Client* client) override;
 /**
+ * @fn void TreeLayoutManager::removeClientRecursive(Client* client, Space* space)
  * @brief recursive method to add a client to the layout
  * @param client
  * @param space
  */
 	void	addClientRecursive(Client *client, Space *space);
 /**
+ * @fn void TreeLayoutManager::placeClientInSpace(Client* client, Space* space)
  * @brief place a client in a space
  * moves and resizes the client window to fit the space
  * restack the client window
@@ -99,6 +107,7 @@ public:
  */
 	void	placeClientInSpace(Client *client, Space *space);
 /**
+ * @fn void TreeLayoutManager::splitSpace(Client* client, Space* space, bool splitAlongX)
  * @brief split a space in two
  * Move the client to the left space and the old client to the right space
  * increase the subspaces counter of all the parent spaces
@@ -108,26 +117,30 @@ public:
  */
 	void	splitSpace(Client *client, Space *space, bool splitAlongX);
 /**
+ * @fn void TreeLayoutManager::removeClient(Client* client)
  * @brief remove a client from the layout
  * use the recursive method to remove the client
  * @param client
  */
 	void	removeClient(Client *client);
 /**
+ * @fn void TreeLayoutManager::removeClientRecursive(Client* client, Space* space)
  * @brief recursive method to remove a client from the layout
  * @param client
  * @param space
  */
 	void	removeClientRecursive(Client *client, Space* space);
 /**
+ * @fn void TreeLayoutManager::growSpaceX(Client* client)
  * @brief grow the space of the client in the x axis
- * this method is not implemented yet
+ * @todo this method is not implemented yet
  * @param client
  */
 	void	growSpaceX(Client *client);
 /**
+ * @fn void TreeLayoutManager::shrinkSpaceX(Client* client)
  * @brief shrink the space of the client in the y axis
- * this method is not implemented yet
+ * @todo this method is not implemented yet
  * @param client
  */
 	void	shrinkSpace(Client *client);

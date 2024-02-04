@@ -1,0 +1,22 @@
+<map id="inc/LayoutManager.hpp" name="inc/LayoutManager.hpp">
+<area shape="rect" id="Node000001" title="LayoutManager class header." alt="" coords="352,5,525,33"/>
+<area shape="rect" id="Node000002" href="$db/d07/TreeLayoutManager_8hpp.html" title=" " alt="" coords="235,81,434,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="409,44,354,83,351,78,406,40"/>
+<area shape="rect" id="Node000010" href="$d6/d02/LayoutManager_8cpp.html" title="LayoutManager class implementation." alt="" coords="458,81,629,109"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="471,40,527,78,523,83,468,44"/>
+<area shape="rect" id="Node000003" href="$d8/d09/window__manager_8hpp.html" title="WindowManager class header." alt="" coords="69,157,256,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="291,118,194,159,192,154,288,113"/>
+<area shape="rect" id="Node000008" href="$dc/d0f/Client_8cpp.html" title="Client class implementation." alt="" coords="280,157,389,184"/>
+<area shape="poly" id="edge8_Node000002_Node000008" title=" " alt="" coords="337,124,337,156,332,156,332,124"/>
+<area shape="rect" id="Node000009" href="$de/d00/TreeLayoutManager_8cpp.html" title=" " alt="" coords="413,157,611,184"/>
+<area shape="poly" id="edge9_Node000002_Node000009" title=" " alt="" coords="381,113,481,154,479,159,379,117"/>
+<area shape="rect" id="Node000004" href="$d2/d09/EventHandler_8hpp.html" title="EventHandler class header. this class dispatches the XEvents to the appropriate handler function...." alt="" coords="5,232,165,260"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="132,196,94,234,90,230,128,193"/>
+<area shape="rect" id="Node000006" href="$df/d0a/main_8cpp.html" title="Main file." alt="" coords="189,232,293,260"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="189,193,229,230,225,234,186,197"/>
+<area shape="rect" id="Node000007" href="$db/d04/window__manager_8cpp.html" title="WindowManager class implementation." alt="" coords="318,232,503,260"/>
+<area shape="poly" id="edge7_Node000003_Node000007" title=" " alt="" coords="222,187,367,229,365,234,220,192"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="115,220,154,183,157,187,119,224"/>
+<area shape="rect" id="Node000005" href="$d8/d0e/EventHandler_8cpp.html" title="EventHandler class implementation." alt="" coords="6,308,164,336"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="88,276,88,308,82,308,82,276"/>
+</map>

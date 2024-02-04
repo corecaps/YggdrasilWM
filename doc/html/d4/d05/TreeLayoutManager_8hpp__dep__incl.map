@@ -1,0 +1,18 @@
+<map id="inc/TreeLayoutManager.hpp" name="inc/TreeLayoutManager.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="235,5,434,33"/>
+<area shape="rect" id="Node000002" href="$d8/d09/window__manager_8hpp.html" title="WindowManager class header." alt="" coords="69,81,256,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="291,42,194,83,192,78,288,37"/>
+<area shape="rect" id="Node000007" href="$dc/d0f/Client_8cpp.html" title="Client class implementation." alt="" coords="280,81,389,109"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="337,49,337,81,332,81,332,49"/>
+<area shape="rect" id="Node000008" href="$de/d00/TreeLayoutManager_8cpp.html" title=" " alt="" coords="413,81,611,109"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="381,37,481,78,479,83,379,42"/>
+<area shape="rect" id="Node000003" href="$d2/d09/EventHandler_8hpp.html" title="EventHandler class header. this class dispatches the XEvents to the appropriate handler function...." alt="" coords="5,157,165,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="132,121,94,158,90,154,128,117"/>
+<area shape="rect" id="Node000005" href="$df/d0a/main_8cpp.html" title="Main file." alt="" coords="189,157,293,184"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="189,118,229,154,225,158,186,122"/>
+<area shape="rect" id="Node000006" href="$db/d04/window__manager_8cpp.html" title="WindowManager class implementation." alt="" coords="318,157,503,184"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="222,111,367,154,365,159,220,116"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="115,145,154,107,157,111,119,149"/>
+<area shape="rect" id="Node000004" href="$d8/d0e/EventHandler_8cpp.html" title="EventHandler class implementation." alt="" coords="6,232,164,260"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="88,200,88,232,82,232,82,200"/>
+</map>

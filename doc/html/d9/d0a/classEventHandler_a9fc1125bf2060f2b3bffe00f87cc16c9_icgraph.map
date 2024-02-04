@@ -1,0 +1,5 @@
+<map id="EventHandler::handleMotionNotify" name="EventHandler::handleMotionNotify">
+<area shape="rect" id="Node000001" title="Handles the MotionNotify event. this was previously used for dragging windows.r." alt="" coords="259,5,465,50"/>
+<area shape="rect" id="Node000002" href="$d9/d0a/classEventHandler.html#ac719b179e81f56479d7525fe4e2484ae" title="Construct a new Event Handler:: Event Handler object." alt="" coords="5,14,211,42"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="243,30,211,30,211,25,243,25"/>
+</map>

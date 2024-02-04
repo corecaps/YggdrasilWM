@@ -1,0 +1,5 @@
+<map id="LayoutManager::findSpace" name="LayoutManager::findSpace">
+<area shape="rect" id="Node000001" title="find the space that contains the client" alt="" coords="211,14,404,42"/>
+<area shape="rect" id="Node000002" href="$dc/d03/classTreeLayoutManager.html#ae7a33ae94965e0a38edf42fd18b34681" title="find the space with the given index" alt="" coords="5,5,163,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,30,163,30,163,25,195,25"/>
+</map>

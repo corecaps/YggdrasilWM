@@ -1,0 +1,13 @@
+<map id="WindowManager::getClientRef" name="WindowManager::getClientRef">
+<area shape="rect" id="Node000001" title="Get a ref to the Client by window ptr does not look for frames and throws if not found." alt="" coords="549,65,768,93"/>
+<area shape="rect" id="Node000002" href="$d9/d0a/classEventHandler.html#ab77bf3ab50542e3a2bd568a3ef684b8d" title="Handles the MapRequest event. The MapRequest event is sent to a client when it is mapped...." alt="" coords="259,5,501,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="577,64,500,47,450,36,451,31,502,42,578,59"/>
+<area shape="rect" id="Node000004" href="$d9/d0a/classEventHandler.html#a9fc1125bf2060f2b3bffe00f87cc16c9" title="Handles the MotionNotify event. this was previously used for dragging windows.r." alt="" coords="277,57,483,102"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="533,82,484,82,484,77,533,77"/>
+<area shape="rect" id="Node000005" href="$d9/d0a/classEventHandler.html#a66c072b3d1a731df49726c660a329563" title="Handles the UnmapNotify event. The UnmapNotify event is sent to a client when it is unmapped...." alt="" coords="276,126,484,171"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="586,100,473,128,472,123,584,95"/>
+<area shape="rect" id="Node000003" href="$d9/d0a/classEventHandler.html#ac719b179e81f56479d7525fe4e2484ae" title="Construct a new Event Handler:: Event Handler object." alt="" coords="5,65,211,93"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="295,39,259,47,171,67,170,62,258,42,294,34"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="261,82,211,82,211,77,261,77"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="274,124,165,96,166,91,275,119"/>
+</map>

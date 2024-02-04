@@ -1,0 +1,13 @@
+<map id="inc/LayoutManager.hpp" name="inc/LayoutManager.hpp">
+<area shape="rect" id="Node000001" title="LayoutManager class header." alt="" coords="63,5,235,33"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,81,82,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,36,76,74,73,70,128,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="106,81,192,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="152,34,152,65,146,65,146,34"/>
+<area shape="rect" id="Node000004" href="$d3/d0e/Client_8hpp.html" title="This class is responsible for managing the client windows." alt="" coords="216,81,303,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="170,31,229,70,226,75,167,36"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="167,157,254,184"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="253,111,230,145,225,142,248,108"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="278,157,337,184"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="270,108,293,142,288,145,266,111"/>
+</map>

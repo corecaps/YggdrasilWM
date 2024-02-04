@@ -1,0 +1,7 @@
+<map id="WindowManager::getClientCount" name="WindowManager::getClientCount">
+<area shape="rect" id="Node000001" title="Get the number of clients." alt="" coords="515,5,712,50"/>
+<area shape="rect" id="Node000002" href="$d9/d0a/classEventHandler.html#a3678a163929cc5caea4d3adfebaa24b3" title="This where the bar is drawn, other windows are ignored." alt="" coords="259,14,467,42"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="500,30,468,30,468,25,500,25"/>
+<area shape="rect" id="Node000003" href="$d9/d0a/classEventHandler.html#ac719b179e81f56479d7525fe4e2484ae" title="Construct a new Event Handler:: Event Handler object." alt="" coords="5,14,211,42"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="243,30,211,30,211,25,243,25"/>
+</map>

@@ -1,0 +1,48 @@
+<map id="Logger::GetLogLevel" name="Logger::GetLogLevel">
+<area shape="rect" id="Node000001" title="Get the log level as a string." alt="" coords="989,353,1143,381"/>
+<area shape="rect" id="Node000002" href="$db/d07/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="844,353,941,381"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="973,370,941,370,941,365,973,365"/>
+<area shape="rect" id="Node000003" href="$d9/d0e/classWindowManager.html#a85fe43b904cbd90ad0c109248ac22f5e" title="create the bar window" alt="" coords="593,5,753,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="889,338,886,276,873,197,861,156,845,116,823,79,795,47,775,33,752,25,754,20,777,29,798,42,827,76,850,113,867,154,879,196,892,276,895,338"/>
+<area shape="rect" id="Node000005" href="$d9/d0e/classWindowManager.html#a92d6ace16646bb6600c71816519a46d7" title="Create a WindowManager object." alt="" coords="582,125,763,153"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="883,339,872,301,854,256,829,211,795,173,763,155,765,151,798,169,833,208,859,254,877,299,888,338"/>
+<area shape="rect" id="Node000006" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="353,145,407,173"/>
+<area shape="poly" id="edge26_Node000002_Node000006" title=" " alt="" coords="879,340,867,310,849,276,825,244,795,217,763,203,719,192,608,175,493,166,407,162,408,157,493,161,608,170,720,187,765,198,798,213,829,240,853,273,872,307,884,338"/>
+<area shape="rect" id="Node000007" href="$d9/d0a/classEventHandler.html#ab52574da9049d0314f742d8d12068a51" title="Dispatches the event to the appropriate handler function. the eventHandlerArray is an array of pointe..." alt="" coords="568,227,777,254"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="870,343,837,307,795,275,753,257,755,252,798,270,841,303,874,340"/>
+<area shape="rect" id="Node000009" href="$d9/d0e/classWindowManager.html#affe6131a42ae23d311ccd806f4adb75c" title="look for existing top level windows and create clients for them" alt="" coords="565,57,781,102"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="886,339,878,290,862,230,835,168,817,140,795,116,779,104,782,100,798,112,821,137,840,166,867,228,884,289,891,338"/>
+<area shape="rect" id="Node000010" href="$d9/d0a/classEventHandler.html#a9ee16ed66b9d6d46aa324f19b6e57fff" title="Handles the ConfigureRequest event. The ConfigureRequest event is sent to a client when it requests a..." alt="" coords="268,269,492,314"/>
+<area shape="poly" id="edge10_Node000002_Node000010" title=" " alt="" coords="829,352,796,344,637,319,492,303,492,298,638,314,797,339,830,347"/>
+<area shape="rect" id="Node000012" href="$d9/d0a/classEventHandler.html#aead87b928e6928327b275882ca5ea678" title="Handles the FocusIn event. Changes the border color of the client." alt="" coords="275,337,485,365"/>
+<area shape="poly" id="edge12_Node000002_Node000012" title=" " alt="" coords="829,368,485,357,485,352,829,363"/>
+<area shape="rect" id="Node000013" href="$d9/d0a/classEventHandler.html#a86a04de876f37015e33592192a4d408c" title="Handles the FocusOut event. Changes the border color of the client." alt="" coords="269,389,491,417"/>
+<area shape="poly" id="edge14_Node000002_Node000013" title=" " alt="" coords="829,374,491,398,491,393,829,369"/>
+<area shape="rect" id="Node000014" href="$d9/d0a/classEventHandler.html#a29a9353de9b6d810a5122d11c2475607" title="Handles the MapNotify event. The MapNotify event is sent to a client when it is mapped...." alt="" coords="266,441,494,469"/>
+<area shape="poly" id="edge16_Node000002_Node000014" title=" " alt="" coords="836,389,797,399,639,428,495,447,494,441,639,423,796,394,834,384"/>
+<area shape="rect" id="Node000015" href="$d9/d0a/classEventHandler.html#ab77bf3ab50542e3a2bd568a3ef684b8d" title="Handles the MapRequest event. The MapRequest event is sent to a client when it is mapped...." alt="" coords="259,493,501,521"/>
+<area shape="poly" id="edge18_Node000002_Node000015" title=" " alt="" coords="869,394,837,422,797,446,724,472,646,490,571,501,502,508,501,502,570,496,645,485,722,467,795,441,834,417,866,390"/>
+<area shape="rect" id="Node000016" href="$d9/d0a/classEventHandler.html#a1fc5645364720c301f14c94e9dec245d" title="Handles the Unknown event." alt="" coords="562,583,784,610"/>
+<area shape="poly" id="edge20_Node000002_Node000016" title=" " alt="" coords="889,397,878,437,861,484,835,532,818,553,798,572,778,584,775,580,795,568,814,550,830,529,856,482,873,436,883,396"/>
+<area shape="rect" id="Node000017" href="$d9/d0a/classEventHandler.html#a66c072b3d1a731df49726c660a329563" title="Handles the UnmapNotify event. The UnmapNotify event is sent to a client when it is unmapped...." alt="" coords="569,634,777,679"/>
+<area shape="poly" id="edge22_Node000002_Node000017" title=" " alt="" coords="891,397,884,446,868,507,840,570,821,598,798,624,779,637,776,633,795,620,817,595,836,567,863,505,878,445,886,396"/>
+<area shape="rect" id="Node000018" href="$d9/d0e/classWindowManager.html#ab8b30dd79ad425cb52649c52ff1d3e93" title="Insert a client in the clients map." alt="" coords="566,531,779,558"/>
+<area shape="poly" id="edge24_Node000002_Node000018" title=" " alt="" coords="883,396,851,456,827,488,798,515,763,532,761,528,795,510,823,484,846,454,878,394"/>
+<area shape="rect" id="Node000019" href="$d9/d0e/classWindowManager.html#a64121b0951524d9b411b2e2abb6045a1" title="Construct a new WindowManager object." alt="" coords="549,703,796,730"/>
+<area shape="poly" id="edge27_Node000002_Node000019" title=" " alt="" coords="895,397,892,459,879,539,867,581,850,622,827,660,798,693,783,704,780,700,795,689,823,657,845,620,862,579,874,538,886,458,889,397"/>
+<area shape="rect" id="Node000004" href="$d9/d0e/classWindowManager.html#aa22512aca297d6e04bccb2c2325486ba" title="Initialize the WindowManager set the event select mask on the root window creates clients for the exi..." alt="" coords="300,36,460,64"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="578,32,460,44,460,39,577,26"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="567,149,407,160,407,155,566,144"/>
+<area shape="rect" id="Node000008" href="$d9/d0e/classWindowManager.html#a3823b9b86904084abf35758e27a55354" title="Run the window manager." alt="" coords="298,217,462,245"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="552,239,462,236,462,231,552,234"/>
+<area shape="poly" id="edge9_Node000009_Node000004" title=" " alt="" coords="549,69,460,60,460,55,549,64"/>
+<area shape="rect" id="Node000011" href="$d9/d0a/classEventHandler.html#ac719b179e81f56479d7525fe4e2484ae" title="Construct a new Event Handler:: Event Handler object." alt="" coords="5,441,211,469"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="272,322,260,328,218,355,179,387,124,443,120,439,176,383,215,351,257,324,269,318"/>
+<area shape="poly" id="edge13_Node000012_Node000011" title=" " alt="" coords="286,372,260,380,190,412,134,443,131,439,187,407,258,375,285,367"/>
+<area shape="poly" id="edge15_Node000013_Node000011" title=" " alt="" coords="289,423,185,443,184,438,288,418"/>
+<area shape="poly" id="edge17_Node000014_Node000011" title=" " alt="" coords="250,458,211,458,211,453,250,453"/>
+<area shape="poly" id="edge19_Node000015_Node000011" title=" " alt="" coords="288,492,184,472,185,467,289,487"/>
+<area shape="poly" id="edge21_Node000016_Node000011" title=" " alt="" coords="545,590,406,571,331,555,258,535,187,504,130,472,133,467,189,499,260,530,332,550,407,566,546,585"/>
+<area shape="poly" id="edge23_Node000017_Node000011" title=" " alt="" coords="553,657,484,650,408,638,331,618,257,590,213,563,174,530,119,471,123,468,177,526,216,558,260,585,333,613,409,632,485,645,553,651"/>
+<area shape="poly" id="edge25_Node000018_Node000015" title=" " alt="" coords="550,532,493,524,494,519,551,526"/>
+</map>

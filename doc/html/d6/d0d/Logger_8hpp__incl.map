@@ -1,0 +1,17 @@
+<map id="inc/Logger.hpp" name="inc/Logger.hpp">
+<area shape="rect" id="Node000001" title="Logger class header." alt="" coords="262,5,378,33"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,81,64,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="264,36,79,83,78,78,263,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="88,81,168,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="286,36,177,78,175,73,285,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="192,81,266,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="305,36,259,73,255,69,302,31"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="291,81,349,109"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="323,34,323,65,317,65,317,34"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="373,81,448,109"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="338,31,384,69,381,73,334,36"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="472,81,544,109"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="354,31,461,73,460,78,352,36"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="568,81,645,109"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="372,31,554,77,553,83,370,36"/>
+</map>

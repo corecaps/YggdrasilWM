@@ -1,0 +1,13 @@
+<map id="WindowManager::Run" name="WindowManager::Run">
+<area shape="rect" id="Node000001" title="Run the window manager." alt="" coords="5,32,169,60"/>
+<area shape="rect" id="Node000002" href="$d9/d0a/classEventHandler.html#ab52574da9049d0314f742d8d12068a51" title="Dispatches the event to the appropriate handler function. the eventHandlerArray is an array of pointe..." alt="" coords="217,32,426,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,43,201,43,201,49,169,49"/>
+<area shape="rect" id="Node000003" href="$d8/d0e/EventHandler_8cpp.html#a83dc41898982825a68e80829412d10a1" title=" " alt="" coords="474,5,624,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="426,31,458,27,458,32,426,36"/>
+<area shape="rect" id="Node000004" href="$db/d07/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="501,57,597,85"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="426,55,486,62,485,67,426,60"/>
+<area shape="rect" id="Node000005" href="$db/d07/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="672,31,827,58"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="597,62,657,54,657,59,598,67"/>
+<area shape="rect" id="Node000006" href="$db/d07/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="685,83,814,110"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="598,75,670,84,669,89,598,80"/>
+</map>
