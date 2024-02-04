@@ -168,6 +168,20 @@ Client_Err Client::unframe() {
 Window Client::getWindow() const {
 	return this->window_;
 }
+void Client::move(int x, int y) {
+	if (this->framed) {
+		XMoveWindow(display_, frame_, x, y);
+	}
+	else {
+		XMoveWindow(display_, window_, x, y);
+	}
+}
+void Client::resize(int width, int height) {
+	if (this->framed) {
+		XResizeWindow(display_, frame_, width, height);
+	}
+	XResizeWindow(display_, window_, width , height );
+}
 std::string Client::getError(Client_Err error) {
 	switch (error) {
 		case YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT:
@@ -188,17 +202,3 @@ bool Client::isMapped() const { return mapped; }
 void Client::setMapped(bool m) { Client::mapped = m; }
 const std::string &Client::getTitle() const { return title_; }
 const std::string &Client::getClass() const { return class_; }
-void Client::move(int x, int y) {
-	if (this->framed) {
-		XMoveWindow(display_, frame_, x, y);
-	}
-	else {
-		XMoveWindow(display_, window_, x, y);
-	}
-}
-void Client::resize(int width, int height) {
-	if (this->framed) {
-		XResizeWindow(display_, frame_, width, height);
-	}
-	XResizeWindow(display_, window_, width , height );
-}
