@@ -94,6 +94,8 @@ set(SOURCES
         ${INCLUDE_DIR}/LayoutManager.hpp
         ${SOURCE_DIR}/ConfigHandler.cpp
         ${INCLUDE_DIR}/ConfigHandler.hpp
+        ${SOURCE_DIR}/Group.cpp
+        ${INCLUDE_DIR}/Group.hpp
         src/TreeLayoutManager.cpp
         inc/TreeLayoutManager.hpp
 )

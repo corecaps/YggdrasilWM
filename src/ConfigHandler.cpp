@@ -32,6 +32,7 @@ using ConfigValue = std::variant<std::string, int, bool,unsigned long>;
 const std::vector<std::string> ConfigHandler::defaultPaths = {
 		"config.json",
 		"$HOME/.config/YggdrasilWM/config.json",
+		"$HOME/.YggdrasilWM/config.json",
 		"/etc/YggdrasilWM/config.json"
 };
 ConfigHandler::ConfigHandler() : configPath_(""), configMap_() {
