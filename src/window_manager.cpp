@@ -67,12 +67,14 @@ WindowManager::~WindowManager() {
 	XCloseDisplay(display_);
 }
 void handleSIGHUP(int signal) {
+	std::cout << "Caught signal " << signal << std::endl;
 	if (windowManagerInstance != nullptr) {
 		windowManagerInstance->Stop();
 	}
 }
 void WindowManager::Stop() {
-	running = false;
+	this->running = false;
+	std::cout << "Stopping WindowManager" << std::endl;
 }
 void WindowManager::Init() {
 	std::stringstream debug_stream;
@@ -159,11 +161,10 @@ void WindowManager::selectEventOnRoot() const {
 }
 void WindowManager::Run() {
 	EventHandler eventHandler(*this, logger_);
-	while (running) {
-		XSync(display_, false);
-		XEvent e;
-		XNextEvent(display_, &e);
+	XEvent e;
+	while (running && !XNextEvent(display_, &e)) {
 		eventHandler.dispatchEvent(e);
+		XSync(display_, false);
 	}
 }
 int WindowManager::OnXError(Display *display, XErrorEvent *e) {
