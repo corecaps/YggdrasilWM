@@ -65,7 +65,8 @@ public:
 	 * @param gap The gap between the clients
 	 * @param barHeight The height of the bar
 	 * @param windowManager The WindowManager
-	 * @todo implementation
+	 * @param layoutType The layout type
+	 * @todo add the other layout types
 	 */
 	Group(std::string name,
 		  int borderSize,
@@ -84,21 +85,18 @@ public:
  * @brief Add a client to the group
  * @param window
  * @param client
- * @todo implementation
  */
 	void		AddClient(Window window, Client *client);
 /**
  * @fn void Group::RemoveClient(Window window)
  * @brief Definitely remove a client from the group
  * @param window
- * @todo implementation
  */
 	void		RemoveClient(Window window);
 /**
  * @fn void Group::RemoveClient(Client *client)
  * @brief Definitely remove a client from the group
  * @param client
- * @todo implementation
  */
 	void		RemoveClient(Client *client);
 /**
@@ -106,7 +104,6 @@ public:
  * @brief Move a client to another group
  * @param window
  * @param group
- * @todo implementation
  */
 	void		moveClientToGroup(Window window, Group *group);
 /**

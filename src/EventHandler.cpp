@@ -125,6 +125,7 @@ void EventHandler::handleUnmapNotify(const XEvent &event) {
 		return;
 	}
 	try {
+/** @todo : handle when client is unmappad from group switch */
 		Client &client = wm_.getClientRef(e.window);
 		logger_.Log("Unmapping window: " + client.getTitle(), L_INFO);
 		client.getGroup()->RemoveClient(&client);
@@ -182,21 +183,11 @@ void EventHandler::handleButtonPress(const XEvent &event) {
 	// 3. Raise clicked window to top.
 	XRaiseWindow(wm_.getDisplay(),frame);
 }
-void EventHandler::handleButtonRelease(const XEvent &event) {
-	// TODO IMPLEMENT
-}
-void EventHandler::handleKeyPress(const XEvent &event) {
-	// TODO IMPLEMENT
-}
-void EventHandler::handleKeyRelease(const XEvent &event) {
-	// TODO IMPLEMENT
-}
-void EventHandler::handleEnterNotify(const XEvent &event) {
-	// TODO IMPLEMENT
-}
-void EventHandler::handleLeaveNotify(const XEvent &event) {
-	// TODO IMPLEMENT
-}
+void EventHandler::handleButtonRelease(const XEvent &event) {}
+void EventHandler::handleKeyPress(const XEvent &event) {}
+void EventHandler::handleKeyRelease(const XEvent &event) {}
+void EventHandler::handleEnterNotify(const XEvent &event) {}
+void EventHandler::handleLeaveNotify(const XEvent &event) {}
 void EventHandler::handleExpose(const XEvent &event) {
 	auto e = event.xexpose;
 	auto bar = wm_.getBar();
@@ -245,18 +236,10 @@ void EventHandler::handleFocusOut(const XEvent &event) {
 		XFlush(wm_.getDisplay());
 	}
 }
-void EventHandler::handlePropertyNotify(const XEvent &event) {
-	// TODO IMPLEMENT
-}
-void EventHandler::handleClientMessage(const XEvent &event) {
-	// TODO IMPLEMENT
-}
-void EventHandler::handleDestroyNotify(const XEvent &event) {
-	// TODO IMPLEMENT
-}
-void EventHandler::handleReparentNotify(const XEvent &event) {
-	// TODO IMPLEMENT
-}
+void EventHandler::handlePropertyNotify(const XEvent &event) {}
+void EventHandler::handleClientMessage(const XEvent &event) {}
+void EventHandler::handleDestroyNotify(const XEvent &event) {}
+void EventHandler::handleReparentNotify(const XEvent &event) {}
 void EventHandler::handleMapRequest(const XEvent &event) {
 	XMapRequestEvent e = event.xmaprequest;
 	if (e.parent != wm_.getRoot()) {
@@ -290,7 +273,6 @@ void EventHandler::handleMapRequest(const XEvent &event) {
 	}
 	XMapWindow(wm_.getDisplay(), e.window);
 }
-
 void EventHandler::handleMotionNotify(const XEvent &event) {
 	auto e = event.xmotion;
 	const Window frame = wm_.getClientRef(event.xmotion.window).getFrame();
@@ -323,9 +305,7 @@ void EventHandler::handleMotionNotify(const XEvent &event) {
 //				dest_frame_size.width, dest_frame_size.height);
 //	}
 }
-void EventHandler::handleCreateNotify(const XEvent &event) {
-	// TODO IMPLEMENT
-}
+void EventHandler::handleCreateNotify(const XEvent &event) {}
 void EventHandler::handleUnknown(const XEvent &event) {
 	logger_.Log("Unknown event type: " + std::to_string(event.type), L_WARNING);
 }

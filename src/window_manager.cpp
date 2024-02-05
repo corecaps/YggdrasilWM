@@ -25,19 +25,14 @@
  * @date 2024-02-04
  *
  */
-
-
 #include "window_manager.hpp"
-
 #include "EventHandler.hpp"
-using ::std::max;
-using ::std::string;
-using ::std::unique_ptr;
 
 bool WindowManager::wm_detected_;
 static WindowManager *windowManagerInstance = nullptr;
-
-unique_ptr<WindowManager> WindowManager::Create(Logger &logger,ConfigHandler& configHandler, const string &display_str) {
+std::unique_ptr<WindowManager> WindowManager::Create(Logger &logger,
+													 ConfigHandler& configHandler,
+													 const std::string &display_str) {
 	std::stringstream debug_stream;
 	const char *display_c_str =
 			display_str.empty() ? nullptr : display_str.c_str();
@@ -49,7 +44,7 @@ unique_ptr<WindowManager> WindowManager::Create(Logger &logger,ConfigHandler& co
 	}
 	debug_stream << "Opened X display " << XDisplayName(display_c_str);
 	logger.Log(debug_stream.str(), L_INFO);
-	return unique_ptr<WindowManager>(new WindowManager(display, logger, configHandler));
+	return std::unique_ptr<WindowManager>(new WindowManager(display, logger, configHandler));
 }
 WindowManager::WindowManager(Display *display,
 							 const Logger &logger,
@@ -104,24 +99,23 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 			&top_level_windows,
 			&num_top_level_windows);
 	if (returned_root != root_) {
-		debug_stream << "Root window is not the same as the one returned by XQueryTree" << std::endl;
-		logger_.Log(debug_stream.str(), L_ERROR);
-		debug_stream.str("");
-		debug_stream.clear();
+		logger_.Log("Root window is not the same as the one returned by XQueryTree", L_ERROR);
 	}
 	debug_stream << "Found " << num_top_level_windows << " top level windows." << "root:" << root_ << std::endl;
 	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
 	int BarHeight = std::get<int>(configHandler_.getConfig("BarHeight"));
-	groups_.emplace_back("default", BorderSize, 0, BarHeight, *this, LayoutType::TREE);
-//	this->layout_manager_ = new TreeLayoutManager(this->display_, this->root_, size_x, size_y, pos_x, pos_y);
-	logger_.Log(debug_stream.str(), L_INFO);
+	int gap = std::get<int>(configHandler_.getConfig("Gap"));
 	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
+/** @todo create multiple groups fronm config, need a separate method */
+	groups_.emplace_back("default", BorderSize, gap, BarHeight, *this, LayoutType::TREE);
+	logger_.Log(debug_stream.str(), L_INFO);
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
 		auto *newClient = new Client(display_, root_, top_level_windows[i], &groups_[0], InActiveColor, BorderSize);
 		Client_Err err = newClient->frame();
 		setFocus(newClient);
 		XMapWindow(display_, top_level_windows[i]);
 		LogLevel debug_level;
+/** @todo this should be way more concise */
 		switch (err) {
 			case YGG_CLI_NO_ERROR:
 				debug_stream << "Client framed: " << newClient->getTitle() << "\t[" << top_level_windows[i] << "]";
@@ -170,12 +164,13 @@ int WindowManager::OnXError(Display *display, XErrorEvent *e) {
 	const int MAX_ERROR_TEXT_LENGTH = 1024;
 	char error_text[MAX_ERROR_TEXT_LENGTH];
 	XGetErrorText(display, e->error_code, error_text, sizeof(error_text));
-	std::cerr << "Received X error:\n"
+	std::stringstream error_stream;
+	error_stream << "Received X error:\n"
 			  << "    Request: " << int(e->request_code)
 			  << "    Error code: " << int(e->error_code)
 			  << " - " << error_text << "\n"
-			  << "    Resource ID: " << e->resourceid
-			  << std::endl;
+			  << "    Resource ID: " << e->resourceid;
+	windowManagerInstance->getLogger().Log(error_stream.str(), L_ERROR);
 	// The return value is ignored.
 	return 0;
 }
@@ -227,13 +222,14 @@ void WindowManager::setFocus(Client *client) {
 }
 void WindowManager::Bar() {
 	int screen = DefaultScreen(display_);
+	int barHeight = std::get<int>(configHandler_.getConfig("BarHeight"));
 	bar_ = XCreateSimpleWindow(
 			display_,
 			root_,
 			0,
 			0,
 			DisplayWidth(display_, screen),
-			20,
+			barHeight,
 			0,
 			BlackPixel(display_, screen),
 			WhitePixel(display_, screen));

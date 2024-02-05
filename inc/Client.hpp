@@ -133,7 +133,6 @@ public:
  * @fn void Client::setMapped(bool mapped)
  * @brief Client::setMapped() set the mapped status of the client
  * @param mapped
- * @todo : update Mapped status in EventHandler Class
  */
 	void setMapped(bool mapped);
 /**

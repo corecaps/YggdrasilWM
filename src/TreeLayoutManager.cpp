@@ -35,8 +35,8 @@ TreeLayoutManager::TreeLayoutManager(Display *display,
 									 int gap,
 									 int barHeight) :
 	LayoutManager(display, root, size_x, size_y, pos_x, pos_y, gap, borderSize, barHeight) {
-	Point pos(pos_x, pos_y);
-	Point size(size_x, size_y);
+	Point pos(pos_x, pos_y + barHeight);
+	Point size(size_x - borderSize, size_y - barHeight - borderSize);
 	this->rootSpace_ = new Space(pos, size, 0);
 }
 TreeLayoutManager::~TreeLayoutManager() { delete rootSpace_; }
@@ -117,8 +117,8 @@ void TreeLayoutManager::addClientRecursive(Client* client, Space* space) {
 	}
 }
 void TreeLayoutManager::placeClientInSpace(Client* client, Space* space) {
-	client->move(space->getPos().x, space->getPos().y);
-	client->resize(space->getSize().x, space->getSize().y);
+	client->move(space->getPos().x + border_size_ + gap_ / 2, space->getPos().y + border_size_ + gap_ / 2);
+	client->resize(space->getSize().x - (border_size_ * 2)- gap_, space->getSize().y - (border_size_ * 2) - gap_);
 	client->restack();
 	space->setClient(client);
 }
