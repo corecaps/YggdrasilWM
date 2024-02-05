@@ -1,7 +1,0 @@
-<map id="ConfigHandler::findConfigFile" name="ConfigHandler::findConfigFile">
-<area shape="rect" id="Node000001" title="Find the configuration file in the default paths." alt="" coords="5,45,215,72"/>
-<area shape="rect" id="Node000002" href="$d4/d06/classConfigHandler.html#aab958661ab3acce75854c1d1b17fa6ed" title="Expand environment variables in a string." alt="" coords="263,5,515,50"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="215,44,247,41,248,46,215,49"/>
-<area shape="rect" id="Node000003" href="$d4/d06/classConfigHandler.html#a853f904ee6883d40173a36260ba42899" title="Check if a file exists." alt="" coords="299,74,479,102"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="215,67,283,74,283,79,215,72"/>
-</map>

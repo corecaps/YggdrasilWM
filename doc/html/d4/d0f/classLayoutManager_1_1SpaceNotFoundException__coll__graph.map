@@ -1,7 +1,0 @@
-<map id="LayoutManager::SpaceNotFoundException" name="LayoutManager::SpaceNotFoundException">
-<area shape="rect" id="Node000001" title="SpaceNotFoundException class This exception is thrown when a space is not found." alt="" coords="5,240,228,348"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="52,123,181,192"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,207,119,240,114,240,114,207"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="64,5,169,75"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="119,90,119,123,114,123,114,90"/>
-</map>

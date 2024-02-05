@@ -1,5 +1,0 @@
-<map id="EventHandler::handleMapNotify" name="EventHandler::handleMapNotify">
-<area shape="rect" id="Node000001" title="Handles the MapNotify event. The MapNotify event is sent to a client when it is mapped...." alt="" coords="259,5,487,33"/>
-<area shape="rect" id="Node000002" href="$d9/d0a/classEventHandler.html#ac719b179e81f56479d7525fe4e2484ae" title="Construct a new Event Handler:: Event Handler object." alt="" coords="5,5,211,33"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="243,22,211,22,211,17,243,17"/>
-</map>

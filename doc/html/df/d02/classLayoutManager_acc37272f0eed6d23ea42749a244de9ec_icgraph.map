@@ -1,5 +1,0 @@
-<map id="LayoutManager::updateGeometry" name="LayoutManager::updateGeometry">
-<area shape="rect" id="Node000001" title="updateGeometry this method is a residual from the old implementation. it should be removed in the fut..." alt="" coords="211,14,451,42"/>
-<area shape="rect" id="Node000002" href="$dc/d03/classTreeLayoutManager.html#a6352f5d0d2f6dc88e10e9912bddaf358" title="this method is an old implementation and should be removed" alt="" coords="5,5,163,50"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,30,163,30,163,25,195,25"/>
-</map>

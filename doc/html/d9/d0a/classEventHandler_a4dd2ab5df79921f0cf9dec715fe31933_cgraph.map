@@ -1,9 +1,0 @@
-<map id="EventHandler::handleButtonPress" name="EventHandler::handleButtonPress">
-<area shape="rect" id="Node000001" title="Handles the ButtonPress event. The ButtonPress event is sent to a client when a mouse button is press..." alt="" coords="5,49,210,94"/>
-<area shape="rect" id="Node000002" href="$d9/d0e/classWindowManager.html#a5627a14686c7d6db3ff8f1d50d22a30e" title="Get the Client by window ptr or frame ptr." alt="" coords="263,5,461,33"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,48,275,34,276,39,211,53"/>
-<area shape="rect" id="Node000003" href="$d9/d0e/classWindowManager.html#a0dac20db062e34f396388a3feaf7f5e3" title="Get the Display object." alt="" coords="258,57,466,85"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,69,242,69,242,74,210,74"/>
-<area shape="rect" id="Node000004" href="$d1/d07/classClient.html#ab3a6ce2b7c664ea581263df50c130e75" title="Client::getFrame() return the frame Window of the client." alt="" coords="297,109,427,137"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="211,89,283,104,282,110,210,95"/>
-</map>

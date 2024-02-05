@@ -1,9 +1,0 @@
-<map id="ConfigHandler::colorCodeToULong" name="ConfigHandler::colorCodeToULong">
-<area shape="rect" id="Node000001" title="Convert a string containing a color code to unsigned long." alt="" coords="578,5,765,50"/>
-<area shape="rect" id="Node000002" href="$d4/d06/classConfigHandler.html#a52a67b1b4b3502868fdc51cccefa4d8a" title="Parse a json value to a map." alt="" coords="346,5,530,50"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="562,30,531,30,531,25,562,25"/>
-<area shape="rect" id="Node000003" href="$d4/d06/classConfigHandler.html#a5ba2a00e50e7e199bb589619a45f36a9" title="Load the configuration file and parse it into a map." alt="" coords="108,14,298,42"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="330,30,299,30,299,25,330,25"/>
-<area shape="rect" id="Node000004" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,14,60,42"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="92,30,60,30,60,25,92,25"/>
-</map>

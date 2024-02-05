@@ -1,5 +1,0 @@
-<map id="TreeLayoutManager" name="TreeLayoutManager">
-<area shape="rect" id="Node000001" title="TreeLayoutManager class this class is a subclass of LayoutManager it handles the tree style layout Wh..." alt="" coords="5,336,193,683"/>
-<area shape="rect" id="Node000002" href="$df/d02/classLayoutManager.html" title="LayoutManager class This a base class for the different layout managers. You should not use this clas..." alt="" coords="25,5,173,288"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,303,102,337,97,337,97,303"/>
-</map>

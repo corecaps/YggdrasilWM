@@ -1,7 +1,0 @@
-<map id="WindowManager::selectEventOnRoot" name="WindowManager::selectEventOnRoot">
-<area shape="rect" id="Node000001" title="set the event mask on the root window and register as the window manager for the X session" alt="" coords="5,24,220,68"/>
-<area shape="rect" id="Node000002" href="$d9/d0e/classWindowManager.html#a86658254a1f3b2c4bcba54bf51cafaa1" title="When selecting events on the root window, we may get a BadAccess error if another window manager is r..." alt="" coords="268,5,508,33"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,33,252,30,252,35,220,38"/>
-<area shape="rect" id="Node000003" href="$d9/d0e/classWindowManager.html#addd68a462f5a21ee2406757eb01e2595" title="X11 Error handler." alt="" coords="290,57,486,85"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="220,53,274,58,274,63,220,58"/>
-</map>

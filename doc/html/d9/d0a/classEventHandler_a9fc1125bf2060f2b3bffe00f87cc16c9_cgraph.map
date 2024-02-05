@@ -1,7 +1,0 @@
-<map id="EventHandler::handleMotionNotify" name="EventHandler::handleMotionNotify">
-<area shape="rect" id="Node000001" title="Handles the MotionNotify event. this was previously used for dragging windows.r." alt="" coords="5,24,212,68"/>
-<area shape="rect" id="Node000002" href="$d9/d0e/classWindowManager.html#a50facc69dc7eddcaf8e480b235790a6a" title="Get a ref to the Client by window ptr does not look for frames and throws if not found." alt="" coords="260,5,479,33"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,33,244,29,245,35,213,38"/>
-<area shape="rect" id="Node000003" href="$d1/d07/classClient.html#ab3a6ce2b7c664ea581263df50c130e75" title="Client::getFrame() return the frame Window of the client." alt="" coords="305,57,434,85"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="212,53,289,61,289,66,212,59"/>
-</map>

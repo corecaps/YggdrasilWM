@@ -1,5 +1,0 @@
-<map id="LayoutManager::Space::setSize" name="LayoutManager::Space::setSize">
-<area shape="rect" id="Node000001" title="Set the size of the space." alt="" coords="211,5,380,50"/>
-<area shape="rect" id="Node000002" href="$dc/d03/classTreeLayoutManager.html#a6d3cc6b641619f50305d32c92b9d6355" title="grow the space of the client in the x axis" alt="" coords="5,5,163,50"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,30,163,30,163,25,195,25"/>
-</map>
