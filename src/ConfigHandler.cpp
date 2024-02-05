@@ -42,7 +42,7 @@ ConfigHandler::ConfigHandler() : configPath_(""), configMap_() {
 	}
 	std::cout << "Config file found at: " << this->configPath_ << std::endl;
 }
-ConfigHandler::ConfigHandler(const std::string configPath) : configPath_(""), configMap_() {
+ConfigHandler::ConfigHandler(const std::string& configPath) : configPath_(""), configMap_() {
 	if (fileExists(configPath)) {
 		this->configPath_ = configPath;
 	} else {
@@ -66,11 +66,11 @@ ConfigValue ConfigHandler::getConfig(const std::string &key) {
 }
 void ConfigHandler::saveConfig() {
 }
-bool ConfigHandler::fileExists(const std::string& path) const {
+bool ConfigHandler::fileExists(const std::string& path) {
 	std::ifstream f(path.c_str());
 	return f.good();
 }
-std::string ConfigHandler::findConfigFile() const {
+std::string ConfigHandler::findConfigFile() {
 	for (const auto&path : defaultPaths) {
 		if (fileExists(expandEnvironmentVariables(path))) {
 			return path;
@@ -78,7 +78,7 @@ std::string ConfigHandler::findConfigFile() const {
 	}
 	return "";
 }
-std::string ConfigHandler::expandEnvironmentVariables(const std::string& path) const {
+std::string ConfigHandler::expandEnvironmentVariables(const std::string& path) {
 	if (path.empty() || path[0] != '$') {
 		return path;
 	}

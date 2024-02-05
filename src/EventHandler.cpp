@@ -196,7 +196,7 @@ void EventHandler::handleExpose(const XEvent &event) {
 		auto screen = DefaultScreen(display_);
 		std::stringstream message;
 		auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-		std::tm localTime;
+		std::tm localTime{};
 		localtime_r(&now, &localTime);
 		message << PROGRAM_NAME << " " << PROGRAM_VERSION << " " << wm_.getClientCount() << " clients" << " " << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S") ;
 		XClearWindow(display_, bar);

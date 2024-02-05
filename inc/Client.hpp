@@ -122,7 +122,7 @@ public:
  * @param width
  * @param height
  */
-	void resize(int width, int height);
+	void resize(unsigned int width,unsigned int height);
 /**
  * @fn bool Client::isFramed() const
  * @brief Client::isFramed() check if the client is framed

@@ -174,7 +174,7 @@ int WindowManager::OnXError(Display *display, XErrorEvent *e) {
 	// The return value is ignored.
 	return 0;
 }
-int WindowManager::OnWMDetected(Display *display, XErrorEvent *e) {
+int WindowManager::OnWMDetected([[maybe_unused]] Display *display, XErrorEvent *e) {
 	if (static_cast<int>(e->error_code) == BadAccess)
 		wm_detected_ = true;
 	return 0;

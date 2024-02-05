@@ -208,6 +208,6 @@ private:
   it sets the wm_detected_ flag to true and stops the window manager
   only one window manager can run at a time
  */
-	static int OnWMDetected(Display *display, XErrorEvent *e);
+	static int OnWMDetected([[maybe_unused]] Display *display, XErrorEvent *e);
 };
 #endif

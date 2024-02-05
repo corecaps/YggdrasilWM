@@ -57,7 +57,7 @@ public:
  * @brief Construct a new ConfigHandler object with a path, if the path is not valid try to find the file in the default paths
  * @param configPath
  */
-	ConfigHandler(const std::string configPath);
+	explicit ConfigHandler(const std::string& configPath);
 	~ConfigHandler();
 /**
  * @fn void ConfigHandler::setConfig(const std::string &key, const std::string &value)
@@ -103,21 +103,21 @@ private:
  * @brief Find the configuration file in the default paths
  * @return a string with the path to the configuration file
  */
-	std::string findConfigFile() const;
+	static std::string findConfigFile() ;
 /**
  * @fn bool ConfigHandler::fileExists(const std::string &path) const
  * @brief Check if a file exists
  * @param path
  * @return true if the file exists false otherwise
  */
-	bool fileExists(const std::string &path) const;
+	static bool fileExists(const std::string &path) ;
 /**
  * @fn std::string ConfigHandler::expandEnvironmentVariables(const std::string &path) const
  * @brief Expand environment variables in a string
  * @param path
  * @return expanded string
  */
-	std::string expandEnvironmentVariables(const std::string &path) const;
+	static std::string expandEnvironmentVariables(const std::string &path) ;
 /**
  * @fn std::unordered_map<std::string, ConfigValue> ConfigHandler::parseJsonToMap(const Json::Value &jsonValue)
  * @brief Parse a json value to a map
@@ -131,6 +131,6 @@ private:
  * @param colorCode
  * @return unsigned long color code
  */
-	unsigned long colorCodeToULong(const std::string &colorCode);
+	static unsigned long colorCodeToULong(const std::string &colorCode);
 };
 #endif //YGGDRASILWM_CONFIGHANDLER_HPP

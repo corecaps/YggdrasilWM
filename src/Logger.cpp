@@ -26,10 +26,9 @@
  *
  */
 #include "Logger.hpp"
-#include <utility>
 Logger::Logger(const std::string& logFile, LogLevel logLevel)
 		: logLevel_(logLevel) {
-	std::ofstream* fileStream = new std::ofstream(logFile, std::ios::out | std::ios::app);
+	auto* fileStream = new std::ofstream(logFile, std::ios::out | std::ios::app);
 	if (!fileStream->good()) {
 		std::cerr << "Failed to open log file: " << logFile << std::endl;
 		delete fileStream;
@@ -61,7 +60,7 @@ void Logger::Log(const std::string& message, LogLevel level) const {
 	*logStream_ << GetTime() << GetLogLevel(level) << message << std::endl;
 }
 std::string Logger::GetTime() {
-	time_t now = time(0);
+	time_t now = time(nullptr);
 	tm* ltm = localtime(&now);
 	std::stringstream ss;
 	ss << std::put_time(ltm, "[%Y-%m-%d-%H:%M:%S]\t");

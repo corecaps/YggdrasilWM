@@ -26,10 +26,12 @@
  */
 #include "window_manager.hpp"
 #include "Group.hpp"
+
+#include <utility>
 #include "Client.hpp"
 #include "LayoutManager.hpp"
 
-Group::Group(std::string name,
+Group::Group(const std::string& name,
 			 int borderSize,
 			 int gap,
 			 int barHeight,
@@ -40,7 +42,8 @@ Group::Group(std::string name,
 			 borderSize_(borderSize),
 			 gap_(gap),
 			 barHeight_(barHeight),
-			 wm_(windowManager){
+			 wm_(windowManager),
+			 active_(false){
 	wm_.getLogger().Log("Group Created [" + name + "]", L_INFO);
 	Display *display = wm_.getDisplay();
 	int size_x = DisplayWidth(display, DefaultScreen(display));
@@ -60,7 +63,7 @@ Group::Group(std::string name,
 		case MAX:
 		case VERTICAL:
 		case HORIZONTAL:
-		defaut:
+		default:
 			layoutManager_ = new TreeLayoutManager(display,
 												   wm_.getRoot(),
 												   size_x,
@@ -109,8 +112,8 @@ void Group::switchTo() {
 void Group::switchFrom() {
 
 }
-bool Group::IsActive() { return active_; }
-void Group::SetName(std::string name) { name_ = name; }
+bool Group::IsActive() const { return active_; }
+void Group::SetName(std::string name) { name_ = std::move(name); }
 std::string Group::GetName() { return name_; }
 Client *Group::GetClient(Window window) { return clients_[window]; }
 std::unordered_map<Window, Client *> Group::GetClients() { return clients_; }

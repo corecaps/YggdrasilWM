@@ -68,7 +68,7 @@ public:
 	 * @param layoutType The layout type
 	 * @todo add the other layout types
 	 */
-	Group(std::string name,
+	Group(const std::string& name,
 		  int borderSize,
 		  int gap,
 		  int barHeight,
@@ -117,7 +117,7 @@ public:
  * @brief Check if the group is active
  * @return bool
  */
-	bool		IsActive();
+	bool		IsActive() const;
 /**
  * @fn void Group::SetName(std::string name)
  * @brief Set the name of the group
@@ -168,7 +168,7 @@ private:
 	int										borderSize_;
 	int										gap_;
 	int										barHeight_;
-	bool									active_;
+	bool									active_{};
 	WindowManager &							wm_;
 };
 #endif //YGGDRASILWM_GROUP_H

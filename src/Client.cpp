@@ -179,10 +179,10 @@ void Client::move(int x, int y) {
 		XMoveWindow(display_, frame_, x, y);
 	}
 	else {
-		XMoveWindow(display_, window_, x+ border_width / 2, y + border_width / 2);
+		XMoveWindow(display_, window_, x + (int)border_width / 2, y + (int)border_width / 2);
 	}
 }
-void Client::resize(int width, int height) {
+void Client::resize(unsigned int width,unsigned int height) {
 	if (this->framed) {
 		XResizeWindow(display_, frame_, width, height);
 	}
