@@ -13,9 +13,8 @@ var searchData=
   ['setright_10',['setRight',['../d3/d0b/classLayoutManager_1_1Space.html#a120bb362ba44bb29c7eb8b45ad250065',1,'LayoutManager::Space']]],
   ['setsize_11',['setSize',['../d3/d0b/classLayoutManager_1_1Space.html#a11cc90cc05494e7b852a23794aa4c09d',1,'LayoutManager::Space']]],
   ['shrinkspace_12',['shrinkSpace',['../dc/d03/classTreeLayoutManager.html#a8152af0ad21629c3de67e7c1e950940c',1,'TreeLayoutManager']]],
-  ['size_13',['size',['../d7/d02/structSize.html#a4de65bd806731e73d51f5d89bfd20900',1,'Size::Size()=default'],['../d7/d02/structSize.html#af1c5ad71aa40371fa62aa71ee81c3dde',1,'Size::Size(T w, T h)']]],
-  ['space_14',['Space',['../d3/d0b/classLayoutManager_1_1Space.html#adef9fbb8aeed549a55082700840b6a47',1,'LayoutManager::Space']]],
-  ['spacenotfoundexception_15',['SpaceNotFoundException',['../d8/d04/classLayoutManager_1_1SpaceNotFoundException.html#a0507686f07e5a70cb04d5519b26c2451',1,'LayoutManager::SpaceNotFoundException']]],
-  ['splitspace_16',['splitSpace',['../dc/d03/classTreeLayoutManager.html#af769e04fb73481d559346c8faa2bbbc9',1,'TreeLayoutManager']]],
-  ['stop_17',['Stop',['../d9/d0e/classWindowManager.html#acd4961e330d8c138052a206867029e12',1,'WindowManager']]]
+  ['space_13',['Space',['../d3/d0b/classLayoutManager_1_1Space.html#adef9fbb8aeed549a55082700840b6a47',1,'LayoutManager::Space']]],
+  ['spacenotfoundexception_14',['SpaceNotFoundException',['../d8/d04/classLayoutManager_1_1SpaceNotFoundException.html#a0507686f07e5a70cb04d5519b26c2451',1,'LayoutManager::SpaceNotFoundException']]],
+  ['splitspace_15',['splitSpace',['../dc/d03/classTreeLayoutManager.html#af769e04fb73481d559346c8faa2bbbc9',1,'TreeLayoutManager']]],
+  ['stop_16',['Stop',['../d9/d0e/classWindowManager.html#acd4961e330d8c138052a206867029e12',1,'WindowManager']]]
 ];

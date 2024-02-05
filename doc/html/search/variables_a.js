@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['right_5f_0',['right_',['../d3/d0b/classLayoutManager_1_1Space.html#a0dbaa516c62b128e4ad4ca0a504162fc',1,'LayoutManager::Space']]],
-  ['root_5f_1',['root_',['../d1/d07/classClient.html#a094e4db31286876410940783f97b0588',1,'Client::root_'],['../d9/d0e/classWindowManager.html#a3c2c7a6239ed102b86b2988c5685e702',1,'WindowManager::root_']]],
-  ['rootspace_5f_2',['rootSpace_',['../df/d02/classLayoutManager.html#a4c2754cd6974453fccb9b96f0a19b04a',1,'LayoutManager']]],
-  ['rootwindow_5f_3',['rootWindow_',['../df/d02/classLayoutManager.html#adda630e43e9e689062f1cc2f384881ec',1,'LayoutManager']]],
-  ['running_4',['running',['../d9/d0e/classWindowManager.html#ad1056546f568c76ea57448f753123462',1,'WindowManager']]]
+  ['screen_5fheight_5f_0',['screen_height_',['../df/d02/classLayoutManager.html#a5093d6f9363b2a780027dbce38da401d',1,'LayoutManager']]],
+  ['screen_5fwidth_5f_1',['screen_width_',['../df/d02/classLayoutManager.html#acd8c24341e42db4d487d17ab0fddf5f6',1,'LayoutManager']]],
+  ['size_5f_2',['size_',['../d3/d0b/classLayoutManager_1_1Space.html#a23634211981839e306271c2a0ac807c7',1,'LayoutManager::Space']]],
+  ['space_5fcount_5f_3',['space_count_',['../df/d02/classLayoutManager.html#a1d876b87a993b5d848e6c10d65ccef99',1,'LayoutManager']]],
+  ['streamisfile_5f_4',['streamIsFile_',['../db/d07/classLogger.html#a9a49ed3ff93624d732de1795004feef2',1,'Logger']]],
+  ['subspace_5fcount_5f_5',['subspace_count_',['../d3/d0b/classLayoutManager_1_1Space.html#a24d3a8818dbbf709d01234a603fcf520',1,'LayoutManager::Space']]]
 ];

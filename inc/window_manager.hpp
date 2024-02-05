@@ -96,10 +96,10 @@ public:
  */
 	Display *getDisplay() const;
 /**
- * @fn const Window WindowManager::getRoot() const
+ * @fn Window WindowManager::getRoot() const
  * @brief Get the Root Window pointer
  */
-	const Window getRoot() const;
+	Window getRoot() const;
 /**
  * @fn std::unordered_map<Window, Client *> &WindowManager::getClients()
  * @brief Get the Clients map
@@ -128,10 +128,10 @@ public:
  */
 	Window getBar() const;
 /**
- * @fn int WindowManager::getClientCount()
+ * @fn unsigned long WindowManager::getClientCount()
  * @brief Get the number of clients
  */
-	int getClientCount();
+	unsigned long getClientCount();
 // Setters
 /**
  * @fn void WindowManager::setFocus(Client *client)

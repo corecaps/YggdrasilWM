@@ -112,12 +112,12 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 	debug_stream << "Found " << num_top_level_windows << " top level windows." << "root:" << root_ << std::endl;
 	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
 	int BarHeight = std::get<int>(configHandler_.getConfig("BarHeight"));
-	groups_.emplace_back("default", BorderSize, 0, BarHeight, *this);
+	groups_.emplace_back("default", BorderSize, 0, BarHeight, *this, LayoutType::TREE);
 //	this->layout_manager_ = new TreeLayoutManager(this->display_, this->root_, size_x, size_y, pos_x, pos_y);
 	logger_.Log(debug_stream.str(), L_INFO);
 	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
-		Client *newClient = new Client(display_, root_, top_level_windows[i], groups_[0].GetLayoutManager(),&groups_[0], InActiveColor, BorderSize);
+		auto *newClient = new Client(display_, root_, top_level_windows[i], &groups_[0], InActiveColor, BorderSize);
 		Client_Err err = newClient->frame();
 		setFocus(newClient);
 		XMapWindow(display_, top_level_windows[i]);
@@ -188,7 +188,7 @@ const Logger &WindowManager::getLogger() const { return logger_; }
 Display *WindowManager::getDisplay() const { return display_; }
 std::unordered_map<Window, Client *> &WindowManager::getClients() { return clients_; }
 Client &WindowManager::getClientRef(Window window) { return *clients_.at(window); }
-const Window WindowManager::getRoot() const { return root_; }
+Window WindowManager::getRoot() const { return root_; }
 Client *WindowManager::getClient(Window window) {
 	auto clientIter = clients_.find(window);
 	if (clientIter != clients_.end()) {
@@ -205,7 +205,7 @@ void WindowManager::insertClient(Window window) {
 	std::stringstream debug_stream;
 	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
 	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
-	Client *client = new Client(display_, root_, window, groups_[0].GetLayoutManager() , &groups_[0], InActiveColor, BorderSize);
+	auto *client = new Client(display_, root_, window, &groups_[0], InActiveColor, BorderSize);
 	debug_stream << "Inserting client in map: " << client->getTitle() << "\t[" << window << "]";
 	logger_.Log(debug_stream.str(), L_INFO);
 	clients_.insert({window, client});
@@ -218,7 +218,7 @@ bool WindowManager::isFrame(Window window) {
 	return false;
 }
 Window WindowManager::getBar() const { return bar_; }
-int WindowManager::getClientCount() { return clients_.size(); }
+unsigned long WindowManager::getClientCount() { return clients_.size(); }
 ConfigHandler &WindowManager::getConfigHandler() { return configHandler_; }
 void WindowManager::setFocus(Client *client) {
 	if (client != nullptr) {

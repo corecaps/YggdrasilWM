@@ -33,7 +33,8 @@ Group::Group(std::string name,
 			 int borderSize,
 			 int gap,
 			 int barHeight,
-			 WindowManager &windowManager):
+			 WindowManager &windowManager,
+			 LayoutType layoutType) :
 			 name_(name),
 			 layoutManager_(nullptr),
 			 borderSize_(borderSize),
@@ -44,33 +45,63 @@ Group::Group(std::string name,
 	Display *display = wm_.getDisplay();
 	int size_x = DisplayWidth(display, DefaultScreen(display));
 	int size_y = DisplayHeight(display, DefaultScreen(display));
-	layoutManager_ = new TreeLayoutManager(display,
-										  wm_.getRoot(),
-										  size_x,
-										  size_y,
-										  0,
-										  0,
-										  borderSize_,
-										  gap_,
-										  barHeight_);
-}
-Group::~Group() {
-	if (layoutManager_ != nullptr) {
-		delete layoutManager_;
+	switch (layoutType) {
+		case TREE:
+			layoutManager_ = new TreeLayoutManager(display,
+												   wm_.getRoot(),
+												   size_x,
+												   size_y,
+												   0,
+												   0,
+												   borderSize_,
+												   gap_,
+												   barHeight_);
+			break;
+		case MAX:
+		case VERTICAL:
+		case HORIZONTAL:
+		defaut:
+			layoutManager_ = new TreeLayoutManager(display,
+												   wm_.getRoot(),
+												   size_x,
+												   size_y,
+												   0,
+												   0,
+												   borderSize_,
+												   gap_,
+												   barHeight_);
+			break;
 	}
 }
+Group::~Group() {
+	delete layoutManager_;
+}
 void Group::AddClient(Window window, Client *client) {
-
+	clients_[window] = client;
+	layoutManager_->addClient(client);
 }
 void Group::RemoveClient(Window window) {
-
+	clients_.erase(window);
+	try {
+		auto c = wm_.getClient(window);
+		layoutManager_->removeClient(c);
+	} catch (const std::exception &e) {
+		wm_.getLogger().Log(e.what(), L_ERROR);
+	}
 }
 void Group::RemoveClient(Client *client) {
-
+	clients_.erase(client->getWindow());
+	layoutManager_->removeClient(client);
 }
 void Group::SetActive(bool active) { active_ = active; }
 void Group::moveClientToGroup(Window window, Group *group) {
-
+	clients_.erase(window);
+	try {
+		auto c = wm_.getClient(window);
+		group->AddClient(window, c);
+	} catch (const std::exception &e) {
+		wm_.getLogger().Log(e.what(), L_ERROR);
+	}
 }
 void Group::switchTo() {
 

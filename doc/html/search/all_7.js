@@ -22,6 +22,5 @@ var searchData=
   ['handlereparentnotify_19',['handleReparentNotify',['../d9/d0a/classEventHandler.html#ad8a60d688daa8d9fe73355ea0b217e65',1,'EventHandler']]],
   ['handlesighup_20',['handleSIGHUP',['../db/d04/window__manager_8cpp.html#a7d71577ccb806afca3967b5405e66650',1,'window_manager.cpp']]],
   ['handleunknown_21',['handleUnknown',['../d9/d0a/classEventHandler.html#a1fc5645364720c301f14c94e9dec245d',1,'EventHandler']]],
-  ['handleunmapnotify_22',['handleUnmapNotify',['../d9/d0a/classEventHandler.html#a66c072b3d1a731df49726c660a329563',1,'EventHandler']]],
-  ['height_23',['height',['../d7/d02/structSize.html#a0f50fb5c063f022b3d4326c065221cc0',1,'Size']]]
+  ['handleunmapnotify_22',['handleUnmapNotify',['../d9/d0a/classEventHandler.html#a66c072b3d1a731df49726c660a329563',1,'EventHandler']]]
 ];

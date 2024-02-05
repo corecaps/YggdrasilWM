@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['y_0',['y',['../dc/d09/structLayoutManager_1_1Point.html#a23a3a49b6b0af543ebcc3fd6a9d65003',1,'LayoutManager::Point::y'],['../d0/d04/structPosition.html#aae9e146c4d2c1bcc7af980bfb7cd91f9',1,'Position::y']]],
+  ['y_0',['y',['../dc/d09/structLayoutManager_1_1Point.html#a23a3a49b6b0af543ebcc3fd6a9d65003',1,'LayoutManager::Point']]],
   ['ygg_5fcli_5ferr_5fretrieve_5fattr_1',['YGG_CLI_ERR_RETRIEVE_ATTR',['../d3/d0e/Client_8hpp.html#ad162835c9ebb7cbbabf404a7b25d8d35a7e40f714e7c2aa19e3bd55d2f9f8ffd5',1,'Client.hpp']]],
   ['ygg_5fcli_5ferror_2',['YGG_CLI_ERROR',['../d3/d0e/Client_8hpp.html#ad162835c9ebb7cbbabf404a7b25d8d35a0bc4243e827103ecec6996db8885e6bf',1,'Client.hpp']]],
   ['ygg_5fcli_5flog_3',['YGG_CLI_LOG',['../d3/d0e/Client_8hpp.html#ad162835c9ebb7cbbabf404a7b25d8d35af9f8aaee0a9f173d67371603416397d8',1,'Client.hpp']]],

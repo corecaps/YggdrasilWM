@@ -25,9 +25,6 @@ var classEventHandler =
     [ "handleReparentNotify", "d9/d0a/classEventHandler.html#ad8a60d688daa8d9fe73355ea0b217e65", null ],
     [ "handleUnknown", "d9/d0a/classEventHandler.html#a1fc5645364720c301f14c94e9dec245d", null ],
     [ "handleUnmapNotify", "d9/d0a/classEventHandler.html#a66c072b3d1a731df49726c660a329563", null ],
-    [ "drag_start_frame_pos_", "d9/d0a/classEventHandler.html#a0eecd4cb8586e57f596292ae104ff608", null ],
-    [ "drag_start_frame_size_", "d9/d0a/classEventHandler.html#a69f1bab6344213049d6b9d8e0e2da363", null ],
-    [ "drag_start_pos_", "d9/d0a/classEventHandler.html#ad686f8a7e51c6de29ae4506987a8d3ef", null ],
     [ "eventHandlerArray", "d9/d0a/classEventHandler.html#a8afb94c47fa32b7d27b995b36a2d1f7d", null ],
     [ "logger_", "d9/d0a/classEventHandler.html#a2a37f3bda6d041c7795503fdfb2c2902", null ],
     [ "wm_", "d9/d0a/classEventHandler.html#ab3c32bd9a8b6cb6ae9b090f0b60445d6", null ]

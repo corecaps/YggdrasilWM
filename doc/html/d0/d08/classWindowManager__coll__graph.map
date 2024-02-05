@@ -1,44 +1,44 @@
 <map id="WindowManager" name="WindowManager">
-<area shape="rect" id="Node000001" title="WindowManager class This class is responsible for managing the windows.in an X11 session...." alt="" coords="1822,92,1952,120"/>
-<area shape="rect" id="Node000002" href="$db/d07/classLogger.html" title="Logger class This class is responsible for logging. It can be created with a file name or an ostream...." alt="" coords="1550,21,1615,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1631,37,1710,48,1799,68,1856,89,1855,94,1797,73,1709,53,1630,42"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="1190,15,1293,43"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1309,27,1549,31,1549,37,1309,33"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="759,5,904,50"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="919,25,1189,26,1189,32,919,31"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="428,14,598,42"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="613,25,759,25,759,30,613,30"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="193,14,299,42"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="315,25,428,25,428,30,315,30"/>
-<area shape="rect" id="Node000007" href="$d4/d06/classConfigHandler.html" title="ConfigHandler class This class is responsible for handling the configuration file...." alt="" coords="775,334,888,362"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="903,345,995,342,1109,335,1234,322,1358,300,1507,258,1650,207,1771,156,1855,118,1857,123,1773,161,1652,212,1509,263,1359,305,1235,327,1109,340,995,348,903,350"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="420,336,606,364"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="621,347,774,345,774,351,621,352"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="203,308,289,336"/>
-<area shape="poly" id="edge10_Node000007_Node000009" title=" " alt="" coords="287,341,345,369,413,390,463,397,515,400,618,393,711,377,783,359,784,365,712,382,619,398,515,405,463,403,412,395,343,374,284,346"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="305,336,324,339,420,347,420,353,323,345,304,341"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="412,268,614,313"/>
-<area shape="poly" id="edge12_Node000011_Node000009" title=" " alt="" coords="305,313,411,300,412,305,305,318"/>
-<area shape="rect" id="Node000017" href="$d1/d07/classClient.html" title="The Client class is responsible for managing the client windows. It creates a frame around the client..." alt="" coords="483,143,543,171"/>
-<area shape="poly" id="edge22_Node000017_Node000009" title=" " alt="" coords="276,296,337,251,411,203,482,167,484,172,414,207,340,255,279,301"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="5,300,144,345"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="159,320,203,320,203,325,159,325"/>
-<area shape="poly" id="edge11_Node000007_Node000011" title=" " alt="" coords="629,306,723,322,775,333,774,338,722,328,628,311"/>
-<area shape="rect" id="Node000012" href="$dc/d03/classTreeLayoutManager.html" title="TreeLayoutManager class this class is a subclass of LayoutManager it handles the tree style layout Wh..." alt="" coords="1508,124,1657,152"/>
-<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="1672,132,1798,121,1821,117,1822,122,1798,126,1673,137"/>
-<area shape="poly" id="edge21_Node000017_Node000012" title=" " alt="" coords="1492,143,543,159,543,154,1492,137"/>
-<area shape="rect" id="Node000013" href="$df/d02/classLayoutManager.html" title="LayoutManager class This a base class for the different layout managers. You should not use this clas..." alt="" coords="1180,175,1303,203"/>
-<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="1317,178,1483,154,1508,150,1509,155,1484,160,1318,183"/>
-<area shape="rect" id="Node000014" href="$d3/d0b/classLayoutManager_1_1Space.html" title="Space class This class represents a space in the layout. it&#39;s designed like a binary tree,..." alt="" coords="747,223,916,251"/>
-<area shape="poly" id="edge15_Node000013_Node000014" title=" " alt="" coords="931,221,940,220,1179,193,1180,198,940,225,932,226"/>
-<area shape="poly" id="edge17_Node000014_Node000014" title=" " alt="" coords="804,205,813,199,831,197,848,199,859,205,862,214,858,224,853,222,857,214,855,208,847,204,831,202,815,204,806,210"/>
-<area shape="rect" id="Node000016" title=" " alt="" coords="1124,245,1359,290"/>
-<area shape="poly" id="edge19_Node000016_Node000014" title=" " alt="" coords="932,242,1124,256,1124,262,932,247"/>
-<area shape="rect" id="Node000015" href="$dc/d09/structLayoutManager_1_1Point.html" title="Point struct This struct represents a 2D point." alt="" coords="431,216,595,244"/>
-<area shape="poly" id="edge16_Node000014_Node000015" title=" " alt="" coords="610,235,638,236,723,236,746,236,746,241,723,242,638,242,610,240"/>
-<area shape="poly" id="edge18_Node000014_Node000016" title=" " alt="" coords="1153,297,1104,306,1050,312,994,312,939,303,888,281,849,254,852,249,891,276,941,298,994,307,1049,307,1103,301,1152,292"/>
-<area shape="poly" id="edge20_Node000014_Node000017" title=" " alt="" coords="559,164,723,202,785,220,783,225,722,208,557,169"/>
-<area shape="rect" id="Node000018" title=" " alt="" coords="940,65,1100,110"/>
-<area shape="poly" id="edge24_Node000018_Node000017" title=" " alt="" coords="557,139,637,117,717,104,798,96,939,87,939,92,798,101,718,110,638,122,558,144"/>
-<area shape="poly" id="edge23_Node000001_Node000018" title=" " alt="" coords="1116,87,1822,102,1822,108,1116,92"/>
+<area shape="rect" id="Node000001" title="WindowManager class This class is responsible for managing the windows.in an X11 session...." alt="" coords="512,2111,687,2650"/>
+<area shape="rect" id="Node000002" href="$db/d07/classLogger.html" title="Logger class This class is responsible for logging. It can be created with a file name or an ostream...." alt="" coords="315,1774,433,1972"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="380,1971,389,2029,405,2086,425,2133,449,2178,504,2261,500,2264,445,2181,420,2135,400,2088,384,2030,375,1972"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="203,1469,297,1539"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="264,1538,338,1757,333,1759,259,1539"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="58,1022,194,1109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="145,1122,243,1469,238,1470,139,1124"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,517,167,586"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="92,600,125,1022,120,1022,87,601"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="37,141,135,211"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="89,226,89,517,83,517,83,226"/>
+<area shape="rect" id="Node000007" href="$d4/d06/classConfigHandler.html" title="ConfigHandler class This class is responsible for handling the configuration file...." alt="" coords="323,892,550,1239"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="461,1238,567,2094,561,2095,455,1239"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="191,517,368,586"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="280,586,279,641,281,712,291,790,311,867,319,888,314,890,305,869,286,791,276,712,273,641,275,585"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="439,141,517,211"/>
+<area shape="poly" id="edge10_Node000007_Node000009" title=" " alt="" coords="462,212,445,250,432,293,420,368,411,444,404,598,407,745,416,875,411,875,402,745,399,598,406,444,414,367,427,292,440,248,457,209"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="440,183,411,189,379,199,349,214,324,236,304,266,290,299,280,335,274,370,270,440,274,499,269,500,265,440,268,370,275,333,285,298,300,264,320,233,346,210,377,194,409,184,439,178"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="524,508,717,595"/>
+<area shape="poly" id="edge12_Node000011_Node000009" title=" " alt="" coords="493,209,601,491,596,493,488,211"/>
+<area shape="rect" id="Node000017" href="$d1/d07/classClient.html" title="The Client class is responsible for managing the client windows. It creates a frame around the client..." alt="" coords="921,293,1032,810"/>
+<area shape="poly" id="edge22_Node000017_Node000009" title=" " alt="" coords="517,180,610,195,728,219,838,251,881,270,910,291,912,293,908,296,907,295,878,275,836,256,727,224,609,200,516,185"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="413,5,543,92"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="481,107,481,141,475,141,475,107"/>
+<area shape="poly" id="edge11_Node000007_Node000011" title=" " alt="" coords="608,595,507,877,502,875,603,594"/>
+<area shape="rect" id="Node000012" href="$dc/d03/classTreeLayoutManager.html" title="TreeLayoutManager class this class is a subclass of LayoutManager it handles the tree style layout Wh..." alt="" coords="767,1700,955,2046"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="774,2047,697,2197,692,2194,769,2045"/>
+<area shape="poly" id="edge21_Node000017_Node000012" title=" " alt="" coords="928,1699,945,1634,954,1517,962,1312,971,827,976,827,967,1312,960,1518,950,1635,933,1701"/>
+<area shape="rect" id="Node000013" href="$df/d02/classLayoutManager.html" title="LayoutManager class This a base class for the different layout managers. You should not use this clas..." alt="" coords="787,1373,935,1635"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="863,1650,863,1700,858,1700,858,1650"/>
+<area shape="rect" id="Node000014" href="$d3/d0b/classLayoutManager_1_1Space.html" title="Space class This class represents a space in the layout. it&#39;s designed like a binary tree,..." alt="" coords="692,913,853,1217"/>
+<area shape="poly" id="edge15_Node000013_Node000014" title=" " alt="" coords="806,1217,834,1356,829,1357,800,1218"/>
+<area shape="poly" id="edge17_Node000014_Node000014" title=" " alt="" coords="855,1025,873,1039,878,1051,880,1065,877,1083,870,1095,865,1093,872,1081,875,1065,873,1052,868,1042,851,1030"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="537,1461,763,1547"/>
+<area shape="poly" id="edge19_Node000016_Node000014" title=" " alt="" coords="754,1218,740,1284,722,1350,703,1400,682,1446,677,1444,698,1398,717,1349,735,1283,749,1217"/>
+<area shape="rect" id="Node000015" href="$dc/d09/structLayoutManager_1_1Point.html" title="Point struct This struct represents a 2D point." alt="" coords="742,495,897,607"/>
+<area shape="poly" id="edge16_Node000014_Node000015" title=" " alt="" coords="817,607,791,897,785,896,812,607"/>
+<area shape="poly" id="edge18_Node000014_Node000016" title=" " alt="" coords="648,1461,654,1369,662,1315,675,1262,685,1232,690,1234,680,1263,668,1316,660,1369,653,1461"/>
+<area shape="poly" id="edge20_Node000014_Node000017" title=" " alt="" coords="924,776,911,811,864,914,859,912,906,809,919,774"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="1102,1263,1254,1349"/>
+<area shape="poly" id="edge24_Node000018_Node000017" title=" " alt="" coords="1035,758,1165,1245,1160,1247,1029,760"/>
+<area shape="poly" id="edge23_Node000001_Node000018" title=" " alt="" coords="1177,1349,1160,1475,1145,1560,1124,1654,1097,1753,1063,1855,1020,1954,970,2048,911,2128,841,2200,770,2263,702,2314,699,2310,766,2259,838,2196,906,2124,965,2045,1016,1952,1058,1853,1092,1752,1119,1652,1140,1558,1155,1474,1172,1349"/>
 </map>

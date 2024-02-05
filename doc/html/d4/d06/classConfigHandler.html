@@ -111,19 +111,19 @@ Collaboration diagram for ConfigHandler:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d6/d09/classConfigHandler__coll__graph.png" border="0" usemap="#aConfigHandler_coll__map" alt="Collaboration graph"/></div>
 <map name="aConfigHandler_coll__map" id="aConfigHandler_coll__map">
-<area shape="rect" title="ConfigHandler class This class is responsible for handling the configuration file...." alt="" coords="727,42,840,70"/>
-<area shape="rect" title=" " alt="" coords="400,42,586,70"/>
-<area shape="poly" title=" " alt="" coords="601,53,726,53,726,58,601,58"/>
-<area shape="rect" title=" " alt="" coords="193,42,279,70"/>
-<area shape="poly" title=" " alt="" coords="287,34,303,30,348,27,392,28,548,20,616,21,703,30,739,39,738,44,702,36,616,26,548,26,392,33,348,32,304,36,288,39"/>
-<area shape="poly" title=" " alt="" coords="294,53,400,53,400,58,294,58"/>
-<area shape="rect" title=" " alt="" coords="392,93,594,138"/>
-<area shape="poly" title=" " alt="" coords="292,72,304,75,392,96,391,101,303,81,291,77"/>
-<area shape="rect" title=" " alt="" coords="5,33,144,78"/>
-<area shape="poly" title=" " alt="" coords="159,53,193,53,193,58,159,58"/>
-<area shape="poly" title=" " alt="" coords="608,94,702,75,733,68,734,73,703,81,609,100"/>
+<area shape="rect" title="ConfigHandler class This class is responsible for handling the configuration file...." alt="" coords="89,427,316,774"/>
+<area shape="rect" title=" " alt="" coords="114,284,291,354"/>
+<area shape="poly" title=" " alt="" coords="205,353,205,411,200,411,200,353"/>
+<area shape="rect" title=" " alt="" coords="164,141,241,211"/>
+<area shape="poly" title=" " alt="" coords="165,188,128,200,87,218,50,243,20,277,10,299,8,318,20,361,46,418,81,470,76,473,42,420,15,363,3,318,5,297,16,274,46,239,85,213,126,195,163,183"/>
+<area shape="poly" title=" " alt="" coords="205,211,205,267,200,267,200,211"/>
+<area shape="rect" title=" " alt="" coords="315,276,508,362"/>
+<area shape="poly" title=" " alt="" coords="242,201,336,264,333,268,239,205"/>
+<area shape="rect" title=" " alt="" coords="138,5,267,92"/>
+<area shape="poly" title=" " alt="" coords="205,107,205,141,200,141,200,107"/>
+<area shape="poly" title=" " alt="" coords="382,364,328,436,324,433,378,361"/>
 </map>
-<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
+</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -223,16 +223,16 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Construct a new <a class="el" href="../../d4/d06/classConfigHandler.html" title="ConfigHandler class This class is responsible for handling the configuration file....">ConfigHandler</a> object without a path. </p>
-<div class="fragment"><div class="line"><span class="lineno">   37</span>                             : <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>(<span class="stringliteral">&quot;&quot;</span>), <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a>() {</div>
-<div class="line"><span class="lineno">   38</span>    this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a> = <a class="code hl_function" href="../../d4/d06/classConfigHandler.html#ac5add4d5d878cbd99d05cbd195b64d0a">findConfigFile</a>();</div>
-<div class="line"><span class="lineno">   39</span>    <span class="keywordflow">if</span> (this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>.empty()) {</div>
-<div class="line"><span class="lineno">   40</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;No config file found.&quot;</span>);</div>
-<div class="line"><span class="lineno">   41</span>    }</div>
-<div class="line"><span class="lineno">   42</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Config file found at: &quot;</span> &lt;&lt; this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a> &lt;&lt; std::endl;</div>
-<div class="line"><span class="lineno">   43</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">   38</span>                             : <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>(<span class="stringliteral">&quot;&quot;</span>), <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a>() {</div>
+<div class="line"><span class="lineno">   39</span>    this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a> = <a class="code hl_function" href="../../d4/d06/classConfigHandler.html#ac5add4d5d878cbd99d05cbd195b64d0a">findConfigFile</a>();</div>
+<div class="line"><span class="lineno">   40</span>    <span class="keywordflow">if</span> (this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>.empty()) {</div>
+<div class="line"><span class="lineno">   41</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;No config file found.&quot;</span>);</div>
+<div class="line"><span class="lineno">   42</span>    }</div>
+<div class="line"><span class="lineno">   43</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Config file found at: &quot;</span> &lt;&lt; this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a> &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">   44</span>}</div>
 <div class="ttc" id="aclassConfigHandler_html_a06ab3c7e4ad28e2458ed281306e8d586"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">ConfigHandler::configPath_</a></div><div class="ttdeci">std::string configPath_</div><div class="ttdef"><b>Definition</b> ConfigHandler.hpp:99</div></div>
 <div class="ttc" id="aclassConfigHandler_html_a5692558039e83dadc1c476a308d0ae94"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">ConfigHandler::configMap_</a></div><div class="ttdeci">std::unordered_map&lt; std::string, ConfigValue &gt; configMap_</div><div class="ttdef"><b>Definition</b> ConfigHandler.hpp:100</div></div>
-<div class="ttc" id="aclassConfigHandler_html_ac5add4d5d878cbd99d05cbd195b64d0a"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#ac5add4d5d878cbd99d05cbd195b64d0a">ConfigHandler::findConfigFile</a></div><div class="ttdeci">std::string findConfigFile() const</div><div class="ttdoc">Find the configuration file in the default paths.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:72</div></div>
+<div class="ttc" id="aclassConfigHandler_html_ac5add4d5d878cbd99d05cbd195b64d0a"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#ac5add4d5d878cbd99d05cbd195b64d0a">ConfigHandler::findConfigFile</a></div><div class="ttdeci">std::string findConfigFile() const</div><div class="ttdoc">Find the configuration file in the default paths.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:73</div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>, and <a class="el" href="../../d4/d06/classConfigHandler.html#ac5add4d5d878cbd99d05cbd195b64d0a">findConfigFile()</a>.</p>
 <div class="dynheader">
@@ -275,18 +275,18 @@ Here is the call graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">   44</span>                                                       : <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>(<span class="stringliteral">&quot;&quot;</span>), <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a>() {</div>
-<div class="line"><span class="lineno">   45</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="../../d4/d06/classConfigHandler.html#a853f904ee6883d40173a36260ba42899">fileExists</a>(configPath)) {</div>
-<div class="line"><span class="lineno">   46</span>        this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a> = configPath;</div>
-<div class="line"><span class="lineno">   47</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   48</span>        this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a> = <a class="code hl_function" href="../../d4/d06/classConfigHandler.html#ac5add4d5d878cbd99d05cbd195b64d0a">findConfigFile</a>();</div>
-<div class="line"><span class="lineno">   49</span>    }</div>
-<div class="line"><span class="lineno">   50</span>    <span class="keywordflow">if</span> (this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>.empty()) {</div>
-<div class="line"><span class="lineno">   51</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;No config file found.&quot;</span>);</div>
-<div class="line"><span class="lineno">   52</span>    }</div>
-<div class="line"><span class="lineno">   53</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Config file found at: &quot;</span> &lt;&lt; this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a> &lt;&lt; std::endl;</div>
-<div class="line"><span class="lineno">   54</span>}</div>
-<div class="ttc" id="aclassConfigHandler_html_a853f904ee6883d40173a36260ba42899"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a853f904ee6883d40173a36260ba42899">ConfigHandler::fileExists</a></div><div class="ttdeci">bool fileExists(const std::string &amp;path) const</div><div class="ttdoc">Check if a file exists.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:68</div></div>
+<div class="fragment"><div class="line"><span class="lineno">   45</span>                                                       : <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>(<span class="stringliteral">&quot;&quot;</span>), <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a>() {</div>
+<div class="line"><span class="lineno">   46</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="../../d4/d06/classConfigHandler.html#a853f904ee6883d40173a36260ba42899">fileExists</a>(configPath)) {</div>
+<div class="line"><span class="lineno">   47</span>        this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a> = configPath;</div>
+<div class="line"><span class="lineno">   48</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   49</span>        this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a> = <a class="code hl_function" href="../../d4/d06/classConfigHandler.html#ac5add4d5d878cbd99d05cbd195b64d0a">findConfigFile</a>();</div>
+<div class="line"><span class="lineno">   50</span>    }</div>
+<div class="line"><span class="lineno">   51</span>    <span class="keywordflow">if</span> (this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>.empty()) {</div>
+<div class="line"><span class="lineno">   52</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;No config file found.&quot;</span>);</div>
+<div class="line"><span class="lineno">   53</span>    }</div>
+<div class="line"><span class="lineno">   54</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Config file found at: &quot;</span> &lt;&lt; this-&gt;<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a> &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">   55</span>}</div>
+<div class="ttc" id="aclassConfigHandler_html_a853f904ee6883d40173a36260ba42899"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a853f904ee6883d40173a36260ba42899">ConfigHandler::fileExists</a></div><div class="ttdeci">bool fileExists(const std::string &amp;path) const</div><div class="ttdoc">Check if a file exists.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:69</div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>, <a class="el" href="../../d4/d06/classConfigHandler.html#a853f904ee6883d40173a36260ba42899">fileExists()</a>, and <a class="el" href="../../d4/d06/classConfigHandler.html#ac5add4d5d878cbd99d05cbd195b64d0a">findConfigFile()</a>.</p>
 <div class="dynheader">
@@ -365,16 +365,16 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>unsigned long color code </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  137</span>                                                                        {</div>
-<div class="line"><span class="lineno">  138</span>    <span class="keywordflow">if</span> (colorCode.size() != 7 || colorCode[0] != <span class="charliteral">&#39;#&#39;</span> || !isxdigit(colorCode[1])) {</div>
-<div class="line"><span class="lineno">  139</span>        <span class="keywordflow">return</span> 0x000000;</div>
-<div class="line"><span class="lineno">  140</span>    }</div>
-<div class="line"><span class="lineno">  141</span>    std::istringstream iss(colorCode.substr(1));</div>
-<div class="line"><span class="lineno">  142</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> colorValue;</div>
-<div class="line"><span class="lineno">  143</span>    iss &gt;&gt; std::hex &gt;&gt; colorValue;</div>
-<div class="line"><span class="lineno">  144</span>    <span class="keywordflow">if</span> (iss.fail()) { <span class="keywordflow">return</span> 0x000000; }</div>
-<div class="line"><span class="lineno">  145</span>    <span class="keywordflow">return</span> colorValue;</div>
-<div class="line"><span class="lineno">  146</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  138</span>                                                                        {</div>
+<div class="line"><span class="lineno">  139</span>    <span class="keywordflow">if</span> (colorCode.size() != 7 || colorCode[0] != <span class="charliteral">&#39;#&#39;</span> || !isxdigit(colorCode[1])) {</div>
+<div class="line"><span class="lineno">  140</span>        <span class="keywordflow">return</span> 0x000000;</div>
+<div class="line"><span class="lineno">  141</span>    }</div>
+<div class="line"><span class="lineno">  142</span>    std::istringstream iss(colorCode.substr(1));</div>
+<div class="line"><span class="lineno">  143</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> colorValue;</div>
+<div class="line"><span class="lineno">  144</span>    iss &gt;&gt; std::hex &gt;&gt; colorValue;</div>
+<div class="line"><span class="lineno">  145</span>    <span class="keywordflow">if</span> (iss.fail()) { <span class="keywordflow">return</span> 0x000000; }</div>
+<div class="line"><span class="lineno">  146</span>    <span class="keywordflow">return</span> colorValue;</div>
+<div class="line"><span class="lineno">  147</span>}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d4/d06/classConfigHandler.html#a52a67b1b4b3502868fdc51cccefa4d8a">parseJsonToMap()</a>.</p>
 <div class="dynheader">
@@ -426,14 +426,14 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>expanded string </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">   80</span>                                                                               {</div>
-<div class="line"><span class="lineno">   81</span>    <span class="keywordflow">if</span> (path.empty() || path[0] != <span class="charliteral">&#39;$&#39;</span>) {</div>
-<div class="line"><span class="lineno">   82</span>        <span class="keywordflow">return</span> path;</div>
-<div class="line"><span class="lineno">   83</span>    }</div>
-<div class="line"><span class="lineno">   84</span>    std::string variable = path.substr(1);</div>
-<div class="line"><span class="lineno">   85</span>    <span class="keyword">const</span> <span class="keywordtype">char</span>* value = std::getenv(variable.c_str());</div>
-<div class="line"><span class="lineno">   86</span>    <span class="keywordflow">return</span> value ? value : <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><span class="lineno">   87</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">   81</span>                                                                               {</div>
+<div class="line"><span class="lineno">   82</span>    <span class="keywordflow">if</span> (path.empty() || path[0] != <span class="charliteral">&#39;$&#39;</span>) {</div>
+<div class="line"><span class="lineno">   83</span>        <span class="keywordflow">return</span> path;</div>
+<div class="line"><span class="lineno">   84</span>    }</div>
+<div class="line"><span class="lineno">   85</span>    std::string variable = path.substr(1);</div>
+<div class="line"><span class="lineno">   86</span>    <span class="keyword">const</span> <span class="keywordtype">char</span>* value = std::getenv(variable.c_str());</div>
+<div class="line"><span class="lineno">   87</span>    <span class="keywordflow">return</span> value ? value : <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><span class="lineno">   88</span>}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d4/d06/classConfigHandler.html#ac5add4d5d878cbd99d05cbd195b64d0a">findConfigFile()</a>.</p>
 <div class="dynheader">
@@ -485,10 +485,10 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the file exists false otherwise </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">   68</span>                                                          {</div>
-<div class="line"><span class="lineno">   69</span>    std::ifstream f(path.c_str());</div>
-<div class="line"><span class="lineno">   70</span>    <span class="keywordflow">return</span> f.good();</div>
-<div class="line"><span class="lineno">   71</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">   69</span>                                                          {</div>
+<div class="line"><span class="lineno">   70</span>    std::ifstream f(path.c_str());</div>
+<div class="line"><span class="lineno">   71</span>    <span class="keywordflow">return</span> f.good();</div>
+<div class="line"><span class="lineno">   72</span>}</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d4/d06/classConfigHandler.html#a009d682cc1a8102451fb127f3074f669">ConfigHandler()</a>, and <a class="el" href="../../d4/d06/classConfigHandler.html#ac5add4d5d878cbd99d05cbd195b64d0a">findConfigFile()</a>.</p>
 <div class="dynheader">
@@ -534,16 +534,16 @@ Here is the caller graph for this function:</div>
 
 <p>Find the configuration file in the default paths. </p>
 <dl class="section return"><dt>Returns</dt><dd>a string with the path to the configuration file </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">   72</span>                                              {</div>
-<div class="line"><span class="lineno">   73</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp;path : <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a431f233a7dd0a27e07c26fbbd88cc2d1">defaultPaths</a>) {</div>
-<div class="line"><span class="lineno">   74</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="../../d4/d06/classConfigHandler.html#a853f904ee6883d40173a36260ba42899">fileExists</a>(<a class="code hl_function" href="../../d4/d06/classConfigHandler.html#aab958661ab3acce75854c1d1b17fa6ed">expandEnvironmentVariables</a>(path))) {</div>
-<div class="line"><span class="lineno">   75</span>            <span class="keywordflow">return</span> path;</div>
-<div class="line"><span class="lineno">   76</span>        }</div>
-<div class="line"><span class="lineno">   77</span>    }</div>
-<div class="line"><span class="lineno">   78</span>    <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><span class="lineno">   79</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">   73</span>                                              {</div>
+<div class="line"><span class="lineno">   74</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp;path : <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a431f233a7dd0a27e07c26fbbd88cc2d1">defaultPaths</a>) {</div>
+<div class="line"><span class="lineno">   75</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="../../d4/d06/classConfigHandler.html#a853f904ee6883d40173a36260ba42899">fileExists</a>(<a class="code hl_function" href="../../d4/d06/classConfigHandler.html#aab958661ab3acce75854c1d1b17fa6ed">expandEnvironmentVariables</a>(path))) {</div>
+<div class="line"><span class="lineno">   76</span>            <span class="keywordflow">return</span> path;</div>
+<div class="line"><span class="lineno">   77</span>        }</div>
+<div class="line"><span class="lineno">   78</span>    }</div>
+<div class="line"><span class="lineno">   79</span>    <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><span class="lineno">   80</span>}</div>
 <div class="ttc" id="aclassConfigHandler_html_a431f233a7dd0a27e07c26fbbd88cc2d1"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a431f233a7dd0a27e07c26fbbd88cc2d1">ConfigHandler::defaultPaths</a></div><div class="ttdeci">static const std::vector&lt; std::string &gt; defaultPaths</div><div class="ttdef"><b>Definition</b> ConfigHandler.hpp:32</div></div>
-<div class="ttc" id="aclassConfigHandler_html_aab958661ab3acce75854c1d1b17fa6ed"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#aab958661ab3acce75854c1d1b17fa6ed">ConfigHandler::expandEnvironmentVariables</a></div><div class="ttdeci">std::string expandEnvironmentVariables(const std::string &amp;path) const</div><div class="ttdoc">Expand environment variables in a string.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:80</div></div>
+<div class="ttc" id="aclassConfigHandler_html_aab958661ab3acce75854c1d1b17fa6ed"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#aab958661ab3acce75854c1d1b17fa6ed">ConfigHandler::expandEnvironmentVariables</a></div><div class="ttdeci">std::string expandEnvironmentVariables(const std::string &amp;path) const</div><div class="ttdoc">Expand environment variables in a string.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:81</div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d4/d06/classConfigHandler.html#a431f233a7dd0a27e07c26fbbd88cc2d1">defaultPaths</a>, <a class="el" href="../../d4/d06/classConfigHandler.html#aab958661ab3acce75854c1d1b17fa6ed">expandEnvironmentVariables()</a>, and <a class="el" href="../../d4/d06/classConfigHandler.html#a853f904ee6883d40173a36260ba42899">fileExists()</a>.</p>
 
@@ -599,13 +599,13 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a variant of string, int, bool or unsigned long </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">   59</span>                                                         {</div>
-<div class="line"><span class="lineno">   60</span>    <span class="keyword">auto</span> it = <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a>.find(key);</div>
-<div class="line"><span class="lineno">   61</span>    <span class="keywordflow">if</span> (it != <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a>.end()) {</div>
-<div class="line"><span class="lineno">   62</span>        <span class="keywordflow">return</span> it-&gt;second;</div>
-<div class="line"><span class="lineno">   63</span>    }</div>
-<div class="line"><span class="lineno">   64</span>    <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../d4/d02/ConfigHandler_8cpp.html#a59b6d075b50f181dedc8097665b402cb">ConfigValue</a> {};</div>
-<div class="line"><span class="lineno">   65</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">   60</span>                                                         {</div>
+<div class="line"><span class="lineno">   61</span>    <span class="keyword">auto</span> it = <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a>.find(key);</div>
+<div class="line"><span class="lineno">   62</span>    <span class="keywordflow">if</span> (it != <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a>.end()) {</div>
+<div class="line"><span class="lineno">   63</span>        <span class="keywordflow">return</span> it-&gt;second;</div>
+<div class="line"><span class="lineno">   64</span>    }</div>
+<div class="line"><span class="lineno">   65</span>    <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../d4/d02/ConfigHandler_8cpp.html#a59b6d075b50f181dedc8097665b402cb">ConfigValue</a> {};</div>
+<div class="line"><span class="lineno">   66</span>}</div>
 <div class="ttc" id="aConfigHandler_8cpp_html_a59b6d075b50f181dedc8097665b402cb"><div class="ttname"><a href="../../d4/d02/ConfigHandler_8cpp.html#a59b6d075b50f181dedc8097665b402cb">ConfigValue</a></div><div class="ttdeci">std::variant&lt; std::string, int, bool, unsigned long &gt; ConfigValue</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:30</div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a>.</p>
@@ -655,7 +655,7 @@ Here is the caller graph for this function:</div>
 
 <p>Get the Config Path object. </p>
 <dl class="section return"><dt>Returns</dt><dd>a string with the path to the configuration file </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  136</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>; }</div>
+<div class="fragment"><div class="line"><span class="lineno">  137</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>; }</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>.</p>
 
@@ -691,23 +691,23 @@ Here is the caller graph for this function:</div>
 <p>Load the configuration file and parse it into a map. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the file was loaded successfully false otherwise </dd></dl>
 <dl class="todo"><dt><b><a class="el" href="../../dd/d00/todo.html#_todo000002">Todo:</a></b></dt><dd>: Implement the saveConfig function </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">   88</span>                               {</div>
-<div class="line"><span class="lineno">   89</span>    std::ifstream file(<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>);</div>
-<div class="line"><span class="lineno">   90</span>    <span class="keywordflow">if</span> (!file.is_open()) {</div>
-<div class="line"><span class="lineno">   91</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   92</span>    }</div>
-<div class="line"><span class="lineno">   93</span>    <span class="keywordflow">try</span> {</div>
-<div class="line"><span class="lineno">   94</span>        Json::CharReaderBuilder readerBuilder;</div>
-<div class="line"><span class="lineno">   95</span>        Json::Value root;</div>
-<div class="line"><span class="lineno">   96</span>        Json::parseFromStream(readerBuilder, file, &amp;root, <span class="keyword">nullptr</span>);</div>
-<div class="line"><span class="lineno">   97</span>        <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a> = <a class="code hl_function" href="../../d4/d06/classConfigHandler.html#a52a67b1b4b3502868fdc51cccefa4d8a">parseJsonToMap</a>(root);</div>
-<div class="line"><span class="lineno">   98</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   99</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> Json::Exception &amp;e) {</div>
-<div class="line"><span class="lineno">  100</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error parsing config file: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
-<div class="line"><span class="lineno">  101</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  102</span>    }</div>
-<div class="line"><span class="lineno">  103</span>}</div>
-<div class="ttc" id="aclassConfigHandler_html_a52a67b1b4b3502868fdc51cccefa4d8a"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a52a67b1b4b3502868fdc51cccefa4d8a">ConfigHandler::parseJsonToMap</a></div><div class="ttdeci">std::unordered_map&lt; std::string, ConfigValue &gt; parseJsonToMap(const Json::Value &amp;jsonValue)</div><div class="ttdoc">Parse a json value to a map.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:104</div></div>
+<div class="fragment"><div class="line"><span class="lineno">   89</span>                               {</div>
+<div class="line"><span class="lineno">   90</span>    std::ifstream file(<a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>);</div>
+<div class="line"><span class="lineno">   91</span>    <span class="keywordflow">if</span> (!file.is_open()) {</div>
+<div class="line"><span class="lineno">   92</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   93</span>    }</div>
+<div class="line"><span class="lineno">   94</span>    <span class="keywordflow">try</span> {</div>
+<div class="line"><span class="lineno">   95</span>        Json::CharReaderBuilder readerBuilder;</div>
+<div class="line"><span class="lineno">   96</span>        Json::Value root;</div>
+<div class="line"><span class="lineno">   97</span>        Json::parseFromStream(readerBuilder, file, &amp;root, <span class="keyword">nullptr</span>);</div>
+<div class="line"><span class="lineno">   98</span>        <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a> = <a class="code hl_function" href="../../d4/d06/classConfigHandler.html#a52a67b1b4b3502868fdc51cccefa4d8a">parseJsonToMap</a>(root);</div>
+<div class="line"><span class="lineno">   99</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  100</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> Json::Exception &amp;e) {</div>
+<div class="line"><span class="lineno">  101</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error parsing config file: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">  102</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  103</span>    }</div>
+<div class="line"><span class="lineno">  104</span>}</div>
+<div class="ttc" id="aclassConfigHandler_html_a52a67b1b4b3502868fdc51cccefa4d8a"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a52a67b1b4b3502868fdc51cccefa4d8a">ConfigHandler::parseJsonToMap</a></div><div class="ttdeci">std::unordered_map&lt; std::string, ConfigValue &gt; parseJsonToMap(const Json::Value &amp;jsonValue)</div><div class="ttdoc">Parse a json value to a map.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:105</div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a>, <a class="el" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>, and <a class="el" href="../../d4/d06/classConfigHandler.html#a52a67b1b4b3502868fdc51cccefa4d8a">parseJsonToMap()</a>.</p>
 
@@ -769,27 +769,27 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a map with the json values </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  104</span>                                                                                                 {</div>
-<div class="line"><span class="lineno">  105</span>    std::unordered_map&lt;std::string, ConfigValue&gt; result;</div>
-<div class="line"><span class="lineno">  106</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; key : jsonValue.getMemberNames()) {</div>
-<div class="line"><span class="lineno">  107</span>        <span class="keyword">const</span> Json::Value&amp; jsonSubValue = jsonValue[key];</div>
-<div class="line"><span class="lineno">  108</span>        <span class="keywordflow">if</span> (jsonSubValue.isString()) {</div>
-<div class="line"><span class="lineno">  109</span>            <span class="keywordflow">if</span> (jsonSubValue.asString().size() == 7 &amp;&amp; jsonSubValue.asString()[0] == <span class="charliteral">&#39;#&#39;</span>) {</div>
-<div class="line"><span class="lineno">  110</span>                result[key] = <a class="code hl_function" href="../../d4/d06/classConfigHandler.html#a3b6e720e660e33a2eb02b6b8e0d6f9b0">colorCodeToULong</a>(jsonSubValue.asString());</div>
-<div class="line"><span class="lineno">  111</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  112</span>                result[key] = jsonSubValue.asString();</div>
-<div class="line"><span class="lineno">  113</span>            }</div>
-<div class="line"><span class="lineno">  114</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (jsonSubValue.isInt()) {</div>
-<div class="line"><span class="lineno">  115</span>            result[key] = jsonSubValue.asInt();</div>
-<div class="line"><span class="lineno">  116</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (jsonSubValue.isBool()) {</div>
-<div class="line"><span class="lineno">  117</span>            result[key] = jsonSubValue.asBool();</div>
-<div class="line"><span class="lineno">  118</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  119</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Unsupported value type for key: &quot;</span> &lt;&lt; key &lt;&lt; std::endl;</div>
-<div class="line"><span class="lineno">  120</span>        }</div>
-<div class="line"><span class="lineno">  121</span>    }</div>
-<div class="line"><span class="lineno">  122</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">  123</span>}</div>
-<div class="ttc" id="aclassConfigHandler_html_a3b6e720e660e33a2eb02b6b8e0d6f9b0"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a3b6e720e660e33a2eb02b6b8e0d6f9b0">ConfigHandler::colorCodeToULong</a></div><div class="ttdeci">unsigned long colorCodeToULong(const std::string &amp;colorCode)</div><div class="ttdoc">Convert a string containing a color code to unsigned long.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:137</div></div>
+<div class="fragment"><div class="line"><span class="lineno">  105</span>                                                                                                 {</div>
+<div class="line"><span class="lineno">  106</span>    std::unordered_map&lt;std::string, ConfigValue&gt; result;</div>
+<div class="line"><span class="lineno">  107</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; key : jsonValue.getMemberNames()) {</div>
+<div class="line"><span class="lineno">  108</span>        <span class="keyword">const</span> Json::Value&amp; jsonSubValue = jsonValue[key];</div>
+<div class="line"><span class="lineno">  109</span>        <span class="keywordflow">if</span> (jsonSubValue.isString()) {</div>
+<div class="line"><span class="lineno">  110</span>            <span class="keywordflow">if</span> (jsonSubValue.asString().size() == 7 &amp;&amp; jsonSubValue.asString()[0] == <span class="charliteral">&#39;#&#39;</span>) {</div>
+<div class="line"><span class="lineno">  111</span>                result[key] = <a class="code hl_function" href="../../d4/d06/classConfigHandler.html#a3b6e720e660e33a2eb02b6b8e0d6f9b0">colorCodeToULong</a>(jsonSubValue.asString());</div>
+<div class="line"><span class="lineno">  112</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  113</span>                result[key] = jsonSubValue.asString();</div>
+<div class="line"><span class="lineno">  114</span>            }</div>
+<div class="line"><span class="lineno">  115</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (jsonSubValue.isInt()) {</div>
+<div class="line"><span class="lineno">  116</span>            result[key] = jsonSubValue.asInt();</div>
+<div class="line"><span class="lineno">  117</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (jsonSubValue.isBool()) {</div>
+<div class="line"><span class="lineno">  118</span>            result[key] = jsonSubValue.asBool();</div>
+<div class="line"><span class="lineno">  119</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  120</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Unsupported value type for key: &quot;</span> &lt;&lt; key &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">  121</span>        }</div>
+<div class="line"><span class="lineno">  122</span>    }</div>
+<div class="line"><span class="lineno">  123</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  124</span>}</div>
+<div class="ttc" id="aclassConfigHandler_html_a3b6e720e660e33a2eb02b6b8e0d6f9b0"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a3b6e720e660e33a2eb02b6b8e0d6f9b0">ConfigHandler::colorCodeToULong</a></div><div class="ttdeci">unsigned long colorCodeToULong(const std::string &amp;colorCode)</div><div class="ttdoc">Convert a string containing a color code to unsigned long.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:138</div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d4/d06/classConfigHandler.html#a3b6e720e660e33a2eb02b6b8e0d6f9b0">colorCodeToULong()</a>.</p>
 
@@ -836,18 +836,18 @@ Here is the caller graph for this function:</div>
 
 <p>Print the configuration to a string stream, this method is only used for debugging purpose and will be removed. </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  124</span>                                           {</div>
-<div class="line"><span class="lineno">  125</span>    std::stringstream result;</div>
-<div class="line"><span class="lineno">  126</span>    result &lt;&lt; <span class="stringliteral">&quot;\n\tConfig file: &quot;</span> &lt;&lt; <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a> &lt;&lt; std::endl;</div>
-<div class="line"><span class="lineno">  127</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; keyValue : <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a>) {</div>
-<div class="line"><span class="lineno">  128</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; key = keyValue.first;</div>
-<div class="line"><span class="lineno">  129</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="../../d4/d02/ConfigHandler_8cpp.html#a59b6d075b50f181dedc8097665b402cb">ConfigValue</a>&amp; value = keyValue.second;</div>
-<div class="line"><span class="lineno">  130</span>        std::visit([&amp;result, &amp;key](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; v) {</div>
-<div class="line"><span class="lineno">  131</span>            result &lt;&lt; <span class="stringliteral">&quot;\t\t&quot;</span> &lt;&lt; key &lt;&lt; <span class="stringliteral">&quot; : &quot;</span> &lt;&lt; v &lt;&lt; std::endl;</div>
-<div class="line"><span class="lineno">  132</span>        }, value);</div>
-<div class="line"><span class="lineno">  133</span>    }</div>
-<div class="line"><span class="lineno">  134</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">  135</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  125</span>                                           {</div>
+<div class="line"><span class="lineno">  126</span>    std::stringstream result;</div>
+<div class="line"><span class="lineno">  127</span>    result &lt;&lt; <span class="stringliteral">&quot;\n\tConfig file: &quot;</span> &lt;&lt; <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a> &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">  128</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; keyValue : <a class="code hl_variable" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a>) {</div>
+<div class="line"><span class="lineno">  129</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; key = keyValue.first;</div>
+<div class="line"><span class="lineno">  130</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="../../d4/d02/ConfigHandler_8cpp.html#a59b6d075b50f181dedc8097665b402cb">ConfigValue</a>&amp; value = keyValue.second;</div>
+<div class="line"><span class="lineno">  131</span>        std::visit([&amp;result, &amp;key](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; v) {</div>
+<div class="line"><span class="lineno">  132</span>            result &lt;&lt; <span class="stringliteral">&quot;\t\t&quot;</span> &lt;&lt; key &lt;&lt; <span class="stringliteral">&quot; : &quot;</span> &lt;&lt; v &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">  133</span>        }, value);</div>
+<div class="line"><span class="lineno">  134</span>    }</div>
+<div class="line"><span class="lineno">  135</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">  136</span>}</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="../../d4/d06/classConfigHandler.html#a5692558039e83dadc1c476a308d0ae94">configMap_</a>, and <a class="el" href="../../d4/d06/classConfigHandler.html#a06ab3c7e4ad28e2458ed281306e8d586">configPath_</a>.</p>
 
@@ -879,8 +879,8 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   66</span>                               {</div>
-<div class="line"><span class="lineno">   67</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">   67</span>                               {</div>
+<div class="line"><span class="lineno">   68</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -918,9 +918,9 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">   56</span>                                                                          {</div>
-<div class="line"><span class="lineno">   57</span> </div>
-<div class="line"><span class="lineno">   58</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">   57</span>                                                                          {</div>
+<div class="line"><span class="lineno">   58</span> </div>
+<div class="line"><span class="lineno">   59</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -995,6 +995,7 @@ Here is the caller graph for this function:</div>
 <b>Initial value:</b><div class="fragment"><div class="line">= {</div>
 <div class="line">        <span class="stringliteral">&quot;config.json&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;$HOME/.config/YggdrasilWM/config.json&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;$HOME/.YggdrasilWM/config.json&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;/etc/YggdrasilWM/config.json&quot;</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><div class="fragment"><div class="line"><span class="lineno">   47</span>                    {</div>
@@ -1021,14 +1022,14 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  134</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code hl_function" href="../../d4/d06/classConfigHandler.html#a3b6e720e660e33a2eb02b6b8e0d6f9b0">colorCodeToULong</a>(<span class="keyword">const</span> std::string &amp;colorCode);</div>
 <div class="line"><span class="lineno">  135</span>};</div>
 <div class="line"><span class="lineno">  136</span><span class="preprocessor">#endif </span><span class="comment">//YGGDRASILWM_CONFIGHANDLER_HPP</span></div>
-<div class="ttc" id="aclassConfigHandler_html_a074df5f959b10b7dfc8d59b8c669e52b"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a074df5f959b10b7dfc8d59b8c669e52b">ConfigHandler::setConfig</a></div><div class="ttdeci">void setConfig(const std::string &amp;key, const std::string &amp;value)</div><div class="ttdoc">Set a configuration value during runtime.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:56</div></div>
+<div class="ttc" id="aclassConfigHandler_html_a074df5f959b10b7dfc8d59b8c669e52b"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a074df5f959b10b7dfc8d59b8c669e52b">ConfigHandler::setConfig</a></div><div class="ttdeci">void setConfig(const std::string &amp;key, const std::string &amp;value)</div><div class="ttdoc">Set a configuration value during runtime.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:57</div></div>
 <div class="ttc" id="aclassConfigHandler_html_a3f671da464078b83cb4460a303a49184"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a3f671da464078b83cb4460a303a49184">ConfigHandler::~ConfigHandler</a></div><div class="ttdeci">~ConfigHandler()</div></div>
-<div class="ttc" id="aclassConfigHandler_html_a586c2473cd30b71644c5ba89643b97d8"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a586c2473cd30b71644c5ba89643b97d8">ConfigHandler::saveConfig</a></div><div class="ttdeci">void saveConfig()</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:66</div></div>
-<div class="ttc" id="aclassConfigHandler_html_a5ba2a00e50e7e199bb589619a45f36a9"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a5ba2a00e50e7e199bb589619a45f36a9">ConfigHandler::loadConfig</a></div><div class="ttdeci">bool loadConfig()</div><div class="ttdoc">Load the configuration file and parse it into a map.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:88</div></div>
-<div class="ttc" id="aclassConfigHandler_html_a6377bd00fa65a54085bf63c2531c6d27"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a6377bd00fa65a54085bf63c2531c6d27">ConfigHandler::getConfig</a></div><div class="ttdeci">ConfigValue getConfig(const std::string &amp;key)</div><div class="ttdoc">Get a configuration value.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:59</div></div>
-<div class="ttc" id="aclassConfigHandler_html_a6982ea5727629d7f99f314e2884c5346"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a6982ea5727629d7f99f314e2884c5346">ConfigHandler::ConfigHandler</a></div><div class="ttdeci">ConfigHandler()</div><div class="ttdoc">Construct a new ConfigHandler object without a path.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:37</div></div>
-<div class="ttc" id="aclassConfigHandler_html_ac09405071a15b25f0011f4f965dc54a2"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#ac09405071a15b25f0011f4f965dc54a2">ConfigHandler::getConfigPath</a></div><div class="ttdeci">const std::string &amp; getConfigPath() const</div><div class="ttdoc">Get the Config Path object.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:136</div></div>
-<div class="ttc" id="aclassConfigHandler_html_afaf41371c369cf4a1ea00d52d5fb7782"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#afaf41371c369cf4a1ea00d52d5fb7782">ConfigHandler::printConfig</a></div><div class="ttdeci">std::stringstream printConfig()</div><div class="ttdoc">Print the configuration to a string stream, this method is only used for debugging purpose and will b...</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:124</div></div>
+<div class="ttc" id="aclassConfigHandler_html_a586c2473cd30b71644c5ba89643b97d8"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a586c2473cd30b71644c5ba89643b97d8">ConfigHandler::saveConfig</a></div><div class="ttdeci">void saveConfig()</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:67</div></div>
+<div class="ttc" id="aclassConfigHandler_html_a5ba2a00e50e7e199bb589619a45f36a9"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a5ba2a00e50e7e199bb589619a45f36a9">ConfigHandler::loadConfig</a></div><div class="ttdeci">bool loadConfig()</div><div class="ttdoc">Load the configuration file and parse it into a map.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:89</div></div>
+<div class="ttc" id="aclassConfigHandler_html_a6377bd00fa65a54085bf63c2531c6d27"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a6377bd00fa65a54085bf63c2531c6d27">ConfigHandler::getConfig</a></div><div class="ttdeci">ConfigValue getConfig(const std::string &amp;key)</div><div class="ttdoc">Get a configuration value.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:60</div></div>
+<div class="ttc" id="aclassConfigHandler_html_a6982ea5727629d7f99f314e2884c5346"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#a6982ea5727629d7f99f314e2884c5346">ConfigHandler::ConfigHandler</a></div><div class="ttdeci">ConfigHandler()</div><div class="ttdoc">Construct a new ConfigHandler object without a path.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:38</div></div>
+<div class="ttc" id="aclassConfigHandler_html_ac09405071a15b25f0011f4f965dc54a2"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#ac09405071a15b25f0011f4f965dc54a2">ConfigHandler::getConfigPath</a></div><div class="ttdeci">const std::string &amp; getConfigPath() const</div><div class="ttdoc">Get the Config Path object.</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:137</div></div>
+<div class="ttc" id="aclassConfigHandler_html_afaf41371c369cf4a1ea00d52d5fb7782"><div class="ttname"><a href="../../d4/d06/classConfigHandler.html#afaf41371c369cf4a1ea00d52d5fb7782">ConfigHandler::printConfig</a></div><div class="ttdeci">std::stringstream printConfig()</div><div class="ttdoc">Print the configuration to a string stream, this method is only used for debugging purpose and will b...</div><div class="ttdef"><b>Definition</b> ConfigHandler.cpp:125</div></div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="../../d4/d06/classConfigHandler.html#ac5add4d5d878cbd99d05cbd195b64d0a">findConfigFile()</a>.</p>
 

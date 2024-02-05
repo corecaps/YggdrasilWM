@@ -71,7 +71,8 @@ public:
 		  int borderSize,
 		  int gap,
 		  int barHeight,
-		  WindowManager &windowManager);
+		  WindowManager &windowManager,
+		  LayoutType layoutType);
 /**
  * @fn ~Group()
  * @brief Group destructor
@@ -101,13 +102,6 @@ public:
  */
 	void		RemoveClient(Client *client);
 /**
- * @fn void Group::SetActive(bool active)
- * @brief Set the group as active
- * @param active
- * @todo implementation
- */
-	void		SetActive(bool active);
-/**
  * @fn void Group::moveClientToGroup(Window window, Group *group)
  * @brief Move a client to another group
  * @param window
@@ -116,43 +110,43 @@ public:
  */
 	void		moveClientToGroup(Window window, Group *group);
 /**
+ * @fn void Group::SetActive(bool active)
+ * @brief Set the group as active
+ * @param active
+ */
+	void		SetActive(bool active);
+/**
  * @fn bool Group::IsActive()
  * @brief Check if the group is active
  * @return bool
- * @todo implementation
  */
 	bool		IsActive();
 /**
  * @fn void Group::SetName(std::string name)
  * @brief Set the name of the group
  * @param name
- * @todo implementation
  */
 	void		SetName(std::string name);
 /**
  * @fn std::string Group::GetName()
  * @brief Get the name of the group
  * @return
- * @todo implementation
  */
 	std::string	GetName();
 /**
  * @fn Client* Group::GetClient(Window window)
  * @brief Get a client from the group
  * @param window
- * @todo implementation
  */
 	Client *	GetClient(Window window);
 /**
  * @fn std::unordered_map<Window, Client *> GetClients()
  * @brief Get the list of clients of the group
- * @todo implementation
  */
 	std::unordered_map<Window, Client *> GetClients();
 /**
  * @fn LayoutManager* Group::GetLayoutManager()
  * @brief Get the layout manager of the group
- * @todo implementation
  */
 	LayoutManager*	GetLayoutManager();
 /**

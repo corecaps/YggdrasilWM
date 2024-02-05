@@ -70,7 +70,6 @@ public:
 	Client(Display *display,
 		   Window root,
 		   Window window,
-		   LayoutManager *layout_manager,
 		   Group *group,
 		   unsigned long InActiveColor,
 		   int BorderSize);
@@ -97,11 +96,6 @@ public:
  * @return Window
  */
 	Window getWindow() const;
-/**
- * @fn LayoutManager *Client::getLayoutManager() const
- * @brief return the layout manager of the client
- */
-	LayoutManager *getLayoutManager() const;
 /**
  * @fn Group *Client::getGroup() const
  * @brief return the group of the client
@@ -174,7 +168,6 @@ public:
 
 private:
 	Display *display_;
-	LayoutManager *layout_manager_;
 	Window root_;
 	Window window_;
 	Window frame_;

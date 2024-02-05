@@ -1,13 +1,13 @@
 <map id="ConfigHandler" name="ConfigHandler">
-<area shape="rect" id="Node000001" title="ConfigHandler class This class is responsible for handling the configuration file...." alt="" coords="727,42,840,70"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="400,42,586,70"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="601,53,726,53,726,58,601,58"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="193,42,279,70"/>
-<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="287,34,303,30,348,27,392,28,548,20,616,21,703,30,739,39,738,44,702,36,616,26,548,26,392,33,348,32,304,36,288,39"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="294,53,400,53,400,58,294,58"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="392,93,594,138"/>
-<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="292,72,304,75,392,96,391,101,303,81,291,77"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="5,33,144,78"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="159,53,193,53,193,58,159,58"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="608,94,702,75,733,68,734,73,703,81,609,100"/>
+<area shape="rect" id="Node000001" title="ConfigHandler class This class is responsible for handling the configuration file...." alt="" coords="89,427,316,774"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="114,284,291,354"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,353,205,411,200,411,200,353"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="164,141,241,211"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="165,188,128,200,87,218,50,243,20,277,10,299,8,318,20,361,46,418,81,470,76,473,42,420,15,363,3,318,5,297,16,274,46,239,85,213,126,195,163,183"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="205,211,205,267,200,267,200,211"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="315,276,508,362"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="242,201,336,264,333,268,239,205"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="138,5,267,92"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="205,107,205,141,200,141,200,107"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="382,364,328,436,324,433,378,361"/>
 </map>
