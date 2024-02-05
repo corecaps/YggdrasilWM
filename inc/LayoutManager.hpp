@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file LayoutManager.hpp
  * @brief LayoutManager class header.
- * @date 2024-02-04
+ * @date 2024-02-05
  * This class is responsible for managing the layout of the windows.
  */
 

@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Client.hpp
  * @brief  This class is responsible for managing the client windows.
- * @date 2024-02-04
+ * @date 2024-02-05
  *
  */
 #ifndef YGGDRASILWM_CLIENT_HPP

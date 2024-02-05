@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file LayoutManager.cpp
  * @brief LayoutManager class implementation.
- * @date 2024-02-04
+ * @date 2024-02-05
  *
  */
 #include "LayoutManager.hpp"
