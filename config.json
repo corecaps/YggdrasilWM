@@ -1,6 +1,7 @@
 {
-  "BorderWidth": 4,
+  "BorderWidth": 2,
   "ActiveColor": "#ff0000",
   "InActiveColor": "#00ff00",
-  "BarHeight": 30
+  "BarHeight": 30,
+  "Gap": 10
 }
