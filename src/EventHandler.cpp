@@ -25,6 +25,7 @@
  * @date 2024-02-04
  */
 #include "EventHandler.hpp"
+#include "Group.hpp"
 
 std::string GetEventTypeName(int eventType) {
 	std::string name;
@@ -126,7 +127,8 @@ void EventHandler::handleUnmapNotify(const XEvent &event) {
 	try {
 		Client &client = wm_.getClientRef(e.window);
 		logger_.Log("Unmapping window: " + client.getTitle(), L_INFO);
-		wm_.getLayoutManager()->removeClient(&client);
+		client.getLayoutManager()->removeClient(&client);
+		client.getGroup()->RemoveClient(&client);
 		client.unframe();
 		wm_.getClients().erase(e.window);
 		delete &client;

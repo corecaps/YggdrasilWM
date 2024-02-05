@@ -28,9 +28,26 @@
 
 #ifndef YGGDRASILWM_GROUP_H
 #define YGGDRASILWM_GROUP_H
-#include "window_manager.hpp"
-#include "Client.hpp"
-#include "LayoutManager.hpp"
+#include <unordered_map>
+#include <string>
+extern "C" {
+#include <X11/Xlib.h>
+}
+class LayoutManager;
+class Client;
+class WindowManager;
+/**
+ * @enum LayoutType
+ * @brief LayoutType enum
+ * This enum is used to define the different layout managers.
+ */
+enum LayoutType {
+	TREE,
+	MAX,
+	VERTICAL,
+	HORIZONTAL,
+	FLOAT
+};
 /**
  * @class Group
  * @brief Groups are defined in the config file.
@@ -161,6 +178,6 @@ private:
 	int										gap_;
 	int										barHeight_;
 	bool									active_;
-	WindowManager							wm_;
+	WindowManager &							wm_;
 };
 #endif //YGGDRASILWM_GROUP_H

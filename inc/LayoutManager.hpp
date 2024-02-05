@@ -70,7 +70,6 @@ public:
 		std::unique_ptr<Space>	right_;
 		std::unique_ptr<Space>	left_;
 		Client*					client_{};
-
 	public:
 /**
  * @fn Space(Point pos, Point size, int index, Space* parent = nullptr)
@@ -189,8 +188,23 @@ public:
  * @brief Construct a new LayoutManager object
  * @param display
  * @param root
+ * @param size_x
+ * @param size_y
+ * @param pos_x
+ * @param pos_y
+ * @param gap
+ * @param border_size
+ * @param bar_height
  */
-	LayoutManager(Display* display, Window root);
+	LayoutManager(Display* display,
+				  Window root,
+				  int size_x,
+				  int size_y,
+				  int pos_x,
+				  int pos_y,
+				  int gap,
+				  int border_size,
+				  int bar_height);
 	virtual ~LayoutManager() = default;
 /**
  * @fn virtual void LayoutManager::updateGeometry()
@@ -218,10 +232,19 @@ public:
  * @param client
  */
 	virtual void	addClient(Client* client);
+/**
+ * @fn virtual void LayoutManager::removeClient(Client* client)
+ * @brief remove a client from the layout
+ * @param client
+ */
+	virtual void removeClient(Client* client);
 protected:
 	Space*	rootSpace_;
 	int		screen_width_;
 	int		screen_height_;
+	int		gap_;
+	int		border_size_;
+	int		bar_height_;
 	int		space_count_;
 	Display	*display_;
 	Window	rootWindow_;

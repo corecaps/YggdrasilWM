@@ -169,7 +169,6 @@ TEST_F(WindowManagerTest, initWM) {
 	ASSERT_EQ(windowManager->getRunning(), true);
 	ASSERT_GE(windowManager->getClients().size(), 0);
 	std::cout << "Client size : " << windowManager->getClients().size() << std::endl;
-	ASSERT_NE(windowManager->getLayoutManager(), nullptr);
 	ASSERT_NE(windowManager->getDisplay(), nullptr);
 	ASSERT_NE(windowManager->getRoot(), 0);
 }

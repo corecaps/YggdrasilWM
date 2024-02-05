@@ -29,12 +29,18 @@
 #include <iostream>
 #include <cstring>
 #include "Client.hpp"
-#include "TreeLayoutManager.hpp"
-Client::Client(Display *display, Window root, Window window, TreeLayoutManager *layout_manager,
-			   unsigned long InActiveColor, int BorderSize)
+#include "LayoutManager.hpp"
+Client::Client(Display *display,
+			   Window root,
+			   Window window,
+			   LayoutManager *layout_manager,
+			   Group *group,
+			   unsigned long InActiveColor,
+			   int BorderSize)
 		: display_(display),
 		  layout_manager_(layout_manager),
 		  root_(root),
+		  group_(group),
 		  window_(window),
 		  frame_(0),
 		  border_width(BorderSize),
@@ -202,3 +208,5 @@ bool Client::isMapped() const { return mapped; }
 void Client::setMapped(bool m) { Client::mapped = m; }
 const std::string &Client::getTitle() const { return title_; }
 const std::string &Client::getClass() const { return class_; }
+LayoutManager *Client::getLayoutManager() const { return layout_manager_; }
+Group *Client::getGroup() const { return group_; }

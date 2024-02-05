@@ -53,8 +53,19 @@ public:
  * @param size_y
  * @param pos_x
  * @param pos_y
+ * @param borderSize
+ * @param gap
+ * @param barHeight
  */
-	TreeLayoutManager(Display* display, Window root,int size_x,int size_y,int pos_x,int pos_y);
+	TreeLayoutManager(Display* display,
+					  Window root,
+					  int size_x,
+					  int size_y,
+					  int pos_x,
+					  int pos_y,
+					  int borderSize,
+					  int gap,
+					  int barHeight);
 /**
  * @brief Destroy the Tree Layout Manager object
  */
@@ -122,7 +133,7 @@ public:
  * use the recursive method to remove the client
  * @param client
  */
-	void	removeClient(Client *client);
+	void	removeClient(Client *client) override;
 /**
  * @fn void TreeLayoutManager::removeClientRecursive(Client* client, Space* space)
  * @brief recursive method to remove a client from the layout

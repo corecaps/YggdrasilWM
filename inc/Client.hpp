@@ -32,8 +32,8 @@ extern "C" {
 }
 
 #include <string>
-
-class TreeLayoutManager;
+class Group;
+class LayoutManager;
 /**
  * @enum Client_Err
  * @brief Client_Err enum to handle the error of the Client class
@@ -67,8 +67,13 @@ public:
  * @param InActiveColor color of the border
  * @param BorderSize size of the border
  */
-	Client(Display *display, Window root, Window window, TreeLayoutManager *layout_manager,
-		   unsigned long InActiveColor, int BorderSize);
+	Client(Display *display,
+		   Window root,
+		   Window window,
+		   LayoutManager *layout_manager,
+		   Group *group,
+		   unsigned long InActiveColor,
+		   int BorderSize);
 /**
  * @fn ~Client()
  * @brief Client destructor Destroy the Client object & the Frame Window it needed
@@ -92,6 +97,17 @@ public:
  * @return Window
  */
 	Window getWindow() const;
+/**
+ * @fn LayoutManager *Client::getLayoutManager() const
+ * @brief return the layout manager of the client
+ */
+	LayoutManager *getLayoutManager() const;
+/**
+ * @fn Group *Client::getGroup() const
+ * @brief return the group of the client
+ * @return
+ */
+	Group *getGroup() const;
 /**
  * @fn static std::string Client::getError(Client_Err error)
  * @brief Client::getError Return a string from an error of Client_Err enum
@@ -158,7 +174,7 @@ public:
 
 private:
 	Display *display_;
-	TreeLayoutManager *layout_manager_;
+	LayoutManager *layout_manager_;
 	Window root_;
 	Window window_;
 	Window frame_;
@@ -168,6 +184,7 @@ private:
 	bool mapped{};
 	std::string title_;
 	std::string class_;
+	Group *group_;
 };
 
 #endif //YGGDRASILWM_CLIENT_HPP

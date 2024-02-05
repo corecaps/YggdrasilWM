@@ -39,9 +39,9 @@ extern "C" {
 #include "TreeLayoutManager.hpp"
 #include "ConfigHandler.hpp"
 #include <iostream>
-
 #include <algorithm>
 #include <csignal>
+#include "Group.hpp"
 using ConfigValue = std::variant<std::string, int, bool,unsigned long>;
 
 /**
@@ -100,11 +100,6 @@ public:
  * @brief Get the Root Window pointer
  */
 	const Window getRoot() const;
-/**
- * @fn TreeLayoutManager *WindowManager::getLayoutManager() const
- * @brief Get the Layout Manager object
- */
-	TreeLayoutManager *getLayoutManager() const;
 /**
  * @fn std::unordered_map<Window, Client *> &WindowManager::getClients()
  * @brief Get the Clients map
@@ -171,10 +166,10 @@ private:
 	Display									*display_;
 	static bool								wm_detected_;
 	const Window							root_;
-	Window 									bar_;
+	Window 									bar_{};
 	const Logger&							logger_;
 	ConfigHandler							configHandler_;
-	TreeLayoutManager						*layout_manager_;
+	std::vector<Group>						groups_;
 	const Atom								WM_PROTOCOLS;
 	const Atom								WM_DELETE_WINDOW;
 	bool									running;

@@ -28,6 +28,7 @@
 
 
 #include "window_manager.hpp"
+
 #include "EventHandler.hpp"
 using ::std::max;
 using ::std::string;
@@ -50,7 +51,9 @@ unique_ptr<WindowManager> WindowManager::Create(Logger &logger,ConfigHandler& co
 	logger.Log(debug_stream.str(), L_INFO);
 	return unique_ptr<WindowManager>(new WindowManager(display, logger, configHandler));
 }
-WindowManager::WindowManager(Display *display, const Logger &logger, ConfigHandler &configHandler)
+WindowManager::WindowManager(Display *display,
+							 const Logger &logger,
+							 ConfigHandler &configHandler)
 		: display_(display),
 		  logger_(logger),
 		  configHandler_(configHandler),
@@ -58,12 +61,11 @@ WindowManager::WindowManager(Display *display, const Logger &logger, ConfigHandl
 		  WM_PROTOCOLS(XInternAtom(display_, "WM_PROTOCOLS", false)),
 		  WM_DELETE_WINDOW(XInternAtom(display_, "WM_DELETE_WINDOW", false)),
 		  running(true),
-		  layout_manager_(nullptr) {
+		  bar_(0){
 	logger_.Log("Window Manager Created !\n", L_INFO);
 }
 bool WindowManager::getRunning() const { return running; }
 WindowManager::~WindowManager() {
-	delete layout_manager_;
 	XCloseDisplay(display_);
 }
 void handleSIGHUP(int signal) {
@@ -110,15 +112,12 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 	debug_stream << "Found " << num_top_level_windows << " top level windows." << "root:" << root_ << std::endl;
 	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
 	int BarHeight = std::get<int>(configHandler_.getConfig("BarHeight"));
-	int size_x = DisplayWidth(display_, DefaultScreen(display_)) - 2 * BorderSize;
-	int size_y = DisplayHeight(display_, DefaultScreen(display_)) - BarHeight - 2 * BorderSize;
-	int pos_x = 0;
-	int pos_y = BarHeight;
-	this->layout_manager_ = new TreeLayoutManager(this->display_, this->root_, size_x, size_y, pos_x, pos_y);
+	groups_.emplace_back("default", BorderSize, 0, BarHeight, *this);
+//	this->layout_manager_ = new TreeLayoutManager(this->display_, this->root_, size_x, size_y, pos_x, pos_y);
 	logger_.Log(debug_stream.str(), L_INFO);
 	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
-		Client *newClient = new Client(display_, root_, top_level_windows[i], layout_manager_, InActiveColor, BorderSize);
+		Client *newClient = new Client(display_, root_, top_level_windows[i], groups_[0].GetLayoutManager(),&groups_[0], InActiveColor, BorderSize);
 		Client_Err err = newClient->frame();
 		setFocus(newClient);
 		XMapWindow(display_, top_level_windows[i]);
@@ -206,7 +205,7 @@ void WindowManager::insertClient(Window window) {
 	std::stringstream debug_stream;
 	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
 	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
-	Client *client = new Client(display_, root_, window, layout_manager_, InActiveColor, BorderSize);
+	Client *client = new Client(display_, root_, window, groups_[0].GetLayoutManager() , &groups_[0], InActiveColor, BorderSize);
 	debug_stream << "Inserting client in map: " << client->getTitle() << "\t[" << window << "]";
 	logger_.Log(debug_stream.str(), L_INFO);
 	clients_.insert({window, client});
@@ -218,7 +217,6 @@ bool WindowManager::isFrame(Window window) {
 	}
 	return false;
 }
-TreeLayoutManager *WindowManager::getLayoutManager() const { return layout_manager_; }
 Window WindowManager::getBar() const { return bar_; }
 int WindowManager::getClientCount() { return clients_.size(); }
 ConfigHandler &WindowManager::getConfigHandler() { return configHandler_; }

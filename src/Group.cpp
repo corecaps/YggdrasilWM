@@ -24,7 +24,10 @@
  * @brief Group class implementation.
  * @date 2024-02-04
  */
+#include "window_manager.hpp"
 #include "Group.hpp"
+#include "Client.hpp"
+#include "LayoutManager.hpp"
 
 Group::Group(std::string name,
 			 int borderSize,
@@ -38,6 +41,18 @@ Group::Group(std::string name,
 			 barHeight_(barHeight),
 			 wm_(windowManager){
 	wm_.getLogger().Log("Group Created [" + name + "]", L_INFO);
+	Display *display = wm_.getDisplay();
+	int size_x = DisplayWidth(display, DefaultScreen(display));
+	int size_y = DisplayHeight(display, DefaultScreen(display));
+	layoutManager_ = new TreeLayoutManager(display,
+										  wm_.getRoot(),
+										  size_x,
+										  size_y,
+										  0,
+										  0,
+										  borderSize_,
+										  gap_,
+										  barHeight_);
 }
 Group::~Group() {
 	if (layoutManager_ != nullptr) {

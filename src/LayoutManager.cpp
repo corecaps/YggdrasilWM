@@ -26,20 +26,34 @@
  *
  */
 #include "LayoutManager.hpp"
-LayoutManager::LayoutManager(Display *display, Window root) :
+LayoutManager::LayoutManager(Display *display,
+							 Window root,
+							 int size_x,
+							 int size_y,
+							 int pos_x,
+							 int pos_y,
+							 int borderSize,
+							 int gap,
+							 int barHeight) :
 	display_(display),
 	rootWindow_(root),
-	space_count_(0){}
+	space_count_(0),
+	border_size_(borderSize),
+	gap_(gap),
+	bar_height_(barHeight),
+	rootSpace_(nullptr),
+	screen_height_(0),
+	screen_width_(0) {}
 void LayoutManager::updateGeometry() {}
 LayoutManager::Space * LayoutManager::findSpace(Client *client) {
-	//TODO : should move the implementation to the derived classes here
 	return nullptr;
 }
 LayoutManager::Space * LayoutManager::findSpace(int index) {
-	//TODO : should move the implementation to the derived classes here
 	return nullptr;
 }
 void LayoutManager::addClient(Client *client) {}
+void LayoutManager::removeClient(Client *client) {}
+
 LayoutManager::SpaceNotFoundException::SpaceNotFoundException(const std::string &message) : runtime_error(message) {}
 const char *LayoutManager::SpaceNotFoundException::what() const noexcept {
 	return runtime_error::what();
