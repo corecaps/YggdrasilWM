@@ -61,6 +61,9 @@ WindowManager::WindowManager(Display *display, ConfigHandler &configHandler)
 }
 bool WindowManager::getRunning() const { return running; }
 WindowManager::~WindowManager() {
+	for (auto &client: clients_) {
+		delete client.second;
+	}
 	XCloseDisplay(display_);
 }
 void handleSIGHUP(int signal) {

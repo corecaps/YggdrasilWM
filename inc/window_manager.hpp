@@ -167,6 +167,15 @@ public:
  * @return WindowManager* instance
  */
 	static WindowManager * getInstance();
+/**
+ * @fn static void WindowManager::Destroy()
+ * @brief Destroy the WindowManager instance
+  this function destroys the WindowManager instance
+  and sets the instance_ pointer to nullptr
+  this is a singleton class
+  this function should be called when the WindowManager is no longer needed
+ */
+	static void Destroy();
 
 private:
 	Display									*display_;
