@@ -84,6 +84,12 @@ public:
  */
 	static Logger* GetInstance();
 /**
+ * @fn static void Logger::Destroy()
+ * @brief Destroy the Logger:: Logger object
+ * closes the log file if it was opened.
+ */
+	static void Destroy();
+/**
  * @brief Destroy the Logger:: Logger object
  * closes the log file if it was opened.
  * The destructor is virtual to allow for subclassing.for gmock

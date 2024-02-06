@@ -35,101 +35,80 @@
 #include <json/json.h>
 #include <variant>
 #include <cctype>
+class ConfigFileHandler;
 /**
  * @class ConfigHandler
  * @brief ConfigHandler class
- * This class is responsible for handling the configuration file.
- * It is used to read and write the configuration file. And
- * Transmits the configuration to the WindowManager class.
- * The constructor will search for the configuration file in the default paths.
- * @see WindowManager
+ * This class is responsible for handling the configuration
+ * It can be created with a file name or not, if not config
+ * files will be looked up in default path defined in ConfigFileHandler
+ * ConfigHandler is a Singleton class and should be created after
+ * the Logger class and before the WindowManager class.
+ * @see ConfigFileHandler
+ * @see ConfigDataBase
  */
 class ConfigHandler {
 public:
-	using ConfigValue = std::variant<std::string, int, bool,unsigned long>;
+/**
+ * @fn static void ConfigHandler::Create(const std::string& configPath)
+ * @brief Create a ConfigHandler object with a path
+ * @param configPath path to the configuration file
+ */
+	static void Create(const std::string& configPath);
+/**
+ * @fn static void ConfigHandler::Create()
+ * @brief Create a ConfigHandler object without a path
+ */
+	static void Create();
+/**
+ * @fn static ConfigHandler& ConfigHandler::GetInstance()
+ * @brief Get the ConfigHandler object Throws an exception if the object is not created
+ */
+	static ConfigHandler& GetInstance();
+/**
+ * @fn static void ConfigHandler::Destroy()
+ * @brief Destroy the ConfigHandler object
+ */
+	static void Destroy();
+/**
+ * @fn Json::Value& ConfigHandler::getRoot()
+ * @brief Get the root JSON object, the ConfigHandler::configInit() must be called first
+ * @return the root JSON object in Json::Value
+ */
+	Json::Value& getRoot();
+/**
+ * @fn void ConfigHandler::configInit()
+ * @brief Initialize the ConfigHandler
+ * Read the configuration file and store the JSon root object in Json::Value root_
+ * Get the configFilePath form which the config has been read
+ */
+	void configInit();
+	~ConfigHandler();
+
+private:
+	std::string configPath_;
+	std::unique_ptr<ConfigFileHandler> configFileHandler_;
+	static ConfigHandler* instance_;
+	Json::Value root_;
 /**
  * @fn ConfigHandler()
  * @brief Construct a new ConfigHandler object without a path
+ * Instanciate a ConfigFileHandler Object without a path
  */
 	ConfigHandler();
 /**
  * @fn ConfigHandler(const std::string configPath)
- * @brief Construct a new ConfigHandler object with a path, if the path is not valid try to find the file in the default paths
+ * @brief Construct a new ConfigHandler object with a path
+ * Instanciate a ConfigFileHandler Object with a path
  * @param configPath
  */
 	explicit ConfigHandler(const std::string& configPath);
-	~ConfigHandler();
-/**
- * @fn void ConfigHandler::setConfig(const std::string &key, const std::string &value)
- * @brief Set a configuration value during runtime
- * @param key
- * @param value
- */
-	void setConfig(const std::string &key, const std::string &value);
-/**
- * @fn ConfigValue ConfigHandler::getConfig(const std::string &key)
- * @brief Get a configuration value
- * @param key
- * @return a variant of string, int, bool or unsigned long
- */
-	ConfigValue getConfig(const std::string &key);
-
-	void saveConfig();
-/**
- * @fn bool ConfigHandler::loadConfig()
- * @brief Load the configuration file and parse it into a map
- * @return true if the file was loaded successfully false otherwise
- * @todo : Implement the saveConfig function
- */
-	bool loadConfig();
-/**
- * @fn const std::string &ConfigHandler::getConfigPath() const
- * @brief Get the Config Path object
- * @return a string with the path to the configuration file
- */
-	const std::string &getConfigPath() const;
-/**
- * @fn std::stringstream ConfigHandler::printConfig()
- * @brief Print the configuration to a string stream, this method is only used for debugging purpose and will be removed
- * @return
- */
-	std::stringstream printConfig();
-private:
-	static const std::vector<std::string> defaultPaths;
-	std::string configPath_;
-	std::unordered_map<std::string,ConfigValue> configMap_;
-/**
- * @fn std::string ConfigHandler::findConfigFile() const
- * @brief Find the configuration file in the default paths
- * @return a string with the path to the configuration file
- */
-	static std::string findConfigFile() ;
-/**
- * @fn bool ConfigHandler::fileExists(const std::string &path) const
- * @brief Check if a file exists
- * @param path
- * @return true if the file exists false otherwise
- */
-	static bool fileExists(const std::string &path) ;
-/**
- * @fn std::string ConfigHandler::expandEnvironmentVariables(const std::string &path) const
- * @brief Expand environment variables in a string
- * @param path
- * @return expanded string
- */
-	static std::string expandEnvironmentVariables(const std::string &path) ;
-/**
- * @fn std::unordered_map<std::string, ConfigValue> ConfigHandler::parseJsonToMap(const Json::Value &jsonValue)
- * @brief Parse a json value to a map
- * @param jsonValue
- * @return a map with the json values
- */
-	std::unordered_map<std::string, ConfigValue> parseJsonToMap(const Json::Value& jsonValue);
 /**
  * @fn unsigned long ConfigHandler::colorCodeToULong(const std::string &colorCode)
  * @brief Convert a string containing a color code to unsigned long
  * @param colorCode
  * @return unsigned long color code
+ * @todo : move to the appropriate ConfigDataBase child classes
  */
 	static unsigned long colorCodeToULong(const std::string &colorCode);
 };

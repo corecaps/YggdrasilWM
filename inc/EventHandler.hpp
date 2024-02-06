@@ -35,7 +35,7 @@
 extern "C" {
 #include <X11/Xutil.h>
 }
-#include "window_manager.hpp"
+#include "WindowManager.hpp"
 #include "Logger.hpp"
 /**
  * @class EventHandler

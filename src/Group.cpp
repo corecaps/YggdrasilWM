@@ -24,7 +24,7 @@
  * @brief Group class implementation.
  * @date 2024-02-05
  */
-#include "window_manager.hpp"
+#include "WindowManager.hpp"
 #include "Group.hpp"
 
 #include <utility>

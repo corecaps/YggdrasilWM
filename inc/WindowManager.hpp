@@ -20,7 +20,7 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- * @file window_manager.hpp
+ * @file WindowManager.hpp
  * @brief WindowManager class header.
  * @date 2024-02-05
  */

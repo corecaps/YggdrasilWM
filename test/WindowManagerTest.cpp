@@ -27,7 +27,7 @@
  */
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "window_manager.hpp"
+#include "WindowManager.hpp"
 #include "Logger.hpp"
 #include <cstdlib>
 #include <unistd.h>
@@ -116,6 +116,7 @@ protected:
 		// Cleanup
 		killXeyes();
 		killXephyr();
+		MockLogger::Destroy();
 	}
 	void TearDown() override {
 	}

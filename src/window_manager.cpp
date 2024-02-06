@@ -25,7 +25,7 @@
  * @date 2024-02-05
  *
  */
-#include "window_manager.hpp"
+#include "WindowManager.hpp"
 #include "EventHandler.hpp"
 
 bool WindowManager::wm_detected_;

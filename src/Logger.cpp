@@ -95,3 +95,10 @@ std::string Logger::GetLogLevel(LogLevel level) {
 			return "[UNKNOWN]\t";
 	}
 }
+
+void Logger::Destroy() {
+	if (instance_ != nullptr) {
+		delete instance_;
+		instance_ = nullptr;
+	}
+}

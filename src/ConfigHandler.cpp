@@ -27,114 +27,49 @@
  */
 
 #include "ConfigHandler.hpp"
-using ConfigValue = std::variant<std::string, int, bool,unsigned long>;
-
-const std::vector<std::string> ConfigHandler::defaultPaths = {
-		"config.json",
-		"$HOME/.config/YggdrasilWM/config.json",
-		"$HOME/.YggdrasilWM/config.json",
-		"/etc/YggdrasilWM/config.json"
-};
-ConfigHandler::ConfigHandler() : configPath_(""), configMap_() {
-	this->configPath_ = findConfigFile();
-	if (this->configPath_.empty()) {
-		throw std::runtime_error("No config file found.");
+#include "ConfigFileHandler.hpp"
+ConfigHandler::instance_ = nullptr;
+void ConfigHandler::Create(const std::string& configPath) {
+	if (instance_ == nullptr) {
+		instance_ = new ConfigHandler(configPath);
 	}
-	std::cout << "Config file found at: " << this->configPath_ << std::endl;
 }
-ConfigHandler::ConfigHandler(const std::string& configPath) : configPath_(""), configMap_() {
-	if (fileExists(configPath)) {
-		this->configPath_ = configPath;
-	} else {
-		this->configPath_ = findConfigFile();
+void ConfigHandler::Create() {
+	if (instance_ == nullptr) {
+		instance_ = new ConfigHandler();
 	}
-	if (this->configPath_.empty()) {
-		throw std::runtime_error("No config file found.");
+}
+ConfigHandler& ConfigHandler::GetInstance() {
+	if (instance_ == nullptr) {
+		throw std::runtime_error("ConfigHandler instance not created");
 	}
-	std::cout << "Config file found at: " << this->configPath_ << std::endl;
+	return *instance_;
+}
+void ConfigHandler::Destroy() {
+	if (instance_ != nullptr) {
+		delete instance_;
+		instance_ = nullptr;
+	}
+}
+ConfigHandler::ConfigHandler() :
+	configPath_(),
+	configFileHandler_(std::make_unique<ConfigFileHandler>(ConfigFileHandler())),
+	root_(){
+}
+ConfigHandler::ConfigHandler(const std::string& configPath) :
+	configPath_(configPath),
+	configFileHandler_(std::make_unique<ConfigFileHandler>(ConfigFileHandler(configPath))),
+	root_(){
+}
+Json::Value &ConfigHandler::getRoot() {
+	return root_;
+}
+void ConfigHandler::configInit() {
+	configFileHandler_->readConfig();
+	configPath_ = configFileHandler_->getConfigPath();
+	root_ = configFileHandler_->getRoot();
 }
 ConfigHandler::~ConfigHandler() = default;
-void ConfigHandler::setConfig(const std::string &key, const std::string &value) {
-
-}
-ConfigValue ConfigHandler::getConfig(const std::string &key) {
-	auto it = configMap_.find(key);
-	if (it != configMap_.end()) {
-		return it->second;
-	}
-	return ConfigValue {};
-}
-void ConfigHandler::saveConfig() {
-}
-bool ConfigHandler::fileExists(const std::string& path) {
-	std::ifstream f(path.c_str());
-	return f.good();
-}
-std::string ConfigHandler::findConfigFile() {
-	for (const auto&path : defaultPaths) {
-		if (fileExists(expandEnvironmentVariables(path))) {
-			return path;
-		}
-	}
-	return "";
-}
-std::string ConfigHandler::expandEnvironmentVariables(const std::string& path) {
-	if (path.empty() || path[0] != '$') {
-		return path;
-	}
-	std::string variable = path.substr(1);
-	const char* value = std::getenv(variable.c_str());
-	return value ? value : "";
-}
-bool ConfigHandler::loadConfig() {
-	std::ifstream file(configPath_);
-	if (!file.is_open()) {
-		return false;
-	}
-	try {
-		Json::CharReaderBuilder readerBuilder;
-		Json::Value root;
-		Json::parseFromStream(readerBuilder, file, &root, nullptr);
-		configMap_ = parseJsonToMap(root);
-		return true;
-	} catch (const Json::Exception &e) {
-		std::cerr << "Error parsing config file: " << e.what() << std::endl;
-		return false;
-	}
-}
-std::unordered_map<std::string, ConfigValue> ConfigHandler::parseJsonToMap(const Json::Value& jsonValue) {
-	std::unordered_map<std::string, ConfigValue> result;
-	for (const auto& key : jsonValue.getMemberNames()) {
-		const Json::Value& jsonSubValue = jsonValue[key];
-		if (jsonSubValue.isString()) {
-			if (jsonSubValue.asString().size() == 7 && jsonSubValue.asString()[0] == '#') {
-				result[key] = colorCodeToULong(jsonSubValue.asString());
-			} else {
-				result[key] = jsonSubValue.asString();
-			}
-		} else if (jsonSubValue.isInt()) {
-			result[key] = jsonSubValue.asInt();
-		} else if (jsonSubValue.isBool()) {
-			result[key] = jsonSubValue.asBool();
-		} else {
-			std::cerr << "Unsupported value type for key: " << key << std::endl;
-		}
-	}
-	return result;
-}
-std::stringstream ConfigHandler::printConfig() {
-	std::stringstream result;
-	result << "\n\tConfig file: " << configPath_ << std::endl;
-	for (const auto& keyValue : configMap_) {
-		const auto& key = keyValue.first;
-		const ConfigValue& value = keyValue.second;
-		std::visit([&result, &key](const auto& v) {
-			result << "\t\t" << key << " : " << v << std::endl;
-		}, value);
-	}
-	return result;
-}
-const std::string &ConfigHandler::getConfigPath() const { return configPath_; }
 unsigned long ConfigHandler::colorCodeToULong(const std::string& colorCode) {
 	if (colorCode.size() != 7 || colorCode[0] != '#' || !isxdigit(colorCode[1])) {
 		return 0x000000;
@@ -145,3 +80,4 @@ unsigned long ConfigHandler::colorCodeToULong(const std::string& colorCode) {
 	if (iss.fail()) { return 0x000000; }
 	return colorValue;
 }
+

@@ -96,8 +96,12 @@ set(SOURCES
         ${INCLUDE_DIR}/ConfigHandler.hpp
         ${SOURCE_DIR}/Group.cpp
         ${INCLUDE_DIR}/Group.hpp
-        src/TreeLayoutManager.cpp
-        inc/TreeLayoutManager.hpp
+        ${SOURCE_DIR}/ConfigFileHandler.cpp
+        ${INCLUDE_DIR}/ConfigFileHandler.hpp
+        ${SOURCE_DIR}/ConfigDataBase.cpp
+        ${INCLUDE_DIR}/ConfigDataBase.hpp
+        ${SOURCE_DIR}/TreeLayoutManager.cpp
+        ${INCLUDE_DIR}/TreeLayoutManager.hpp
 )
 
 # Create the executable

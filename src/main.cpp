@@ -27,7 +27,7 @@
  */
 
 #include <cstdlib>
-#include "window_manager.hpp"
+#include "WindowManager.hpp"
 #include "Logger.hpp"
 #include <cxxopts.hpp>
 #include "ConfigHandler.hpp"
