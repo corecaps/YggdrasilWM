@@ -43,6 +43,7 @@ extern "C" {
  * This class is responsible for handling the XEvents.
  * It is a part of the WindowManager class
  * The event handlers functions are private and are called by the dispatchEvent function.
+ * @todo see the pertinence of implementing observer pattern here
  * @see WindowManager
  * @see Client
  * @see Logger

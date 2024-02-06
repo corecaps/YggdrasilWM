@@ -38,6 +38,7 @@
  * @brief LayoutManager class
  * This a base class for the different layout managers.
  * You should not use this class directly, but use one of the derived classes.
+ * @todo A factory should be used to create the layout managers.
  */
 class LayoutManager {
 public:
@@ -211,33 +212,33 @@ public:
  * @brief updateGeometry this method is a residual from the old implementation.
  * it should be removed in the future.
  */
-	virtual void	updateGeometry();
+	virtual void	updateGeometry() = 0;
 /**
  * @fn virtual Space * LayoutManager::findSpace(Client *client)
  * @brief find the space that contains the client
  * @param client
  * @return
  */
-	virtual Space	*findSpace(Client *client);
+	virtual Space	*findSpace(Client *client) = 0;
 /**
  * @fn virtual Space * LayoutManager::findSpace(int index)
  * @brief find the space with the given index
  * @param index
  * @return
  */
-	virtual Space	*findSpace(int index);
+	virtual Space	*findSpace(int index) = 0;
 /**
  * @fn virtual void LayoutManager::addClient(Client* client)
  * @brief add a client to the layout
  * @param client
  */
-	virtual void	addClient(Client* client);
+	virtual void	addClient(Client* client) = 0;
 /**
  * @fn virtual void LayoutManager::removeClient(Client* client)
  * @brief remove a client from the layout
  * @param client
  */
-	virtual void removeClient(Client* client);
+	virtual void removeClient(Client* client) = 0;
 protected:
 	Space*	rootSpace_;
 	int		screen_width_;

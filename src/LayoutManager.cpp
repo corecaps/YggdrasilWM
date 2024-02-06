@@ -44,15 +44,7 @@ LayoutManager::LayoutManager(Display *display,
 	rootSpace_(nullptr),
 	screen_height_(0),
 	screen_width_(0) {}
-void LayoutManager::updateGeometry() {}
-LayoutManager::Space * LayoutManager::findSpace(Client *client) {
-	return nullptr;
-}
-LayoutManager::Space * LayoutManager::findSpace(int index) {
-	return nullptr;
-}
-void LayoutManager::addClient(Client *client) {}
-void LayoutManager::removeClient(Client *client) {}
+
 
 LayoutManager::SpaceNotFoundException::SpaceNotFoundException(const std::string &message) : runtime_error(message) {}
 const char *LayoutManager::SpaceNotFoundException::what() const noexcept {
