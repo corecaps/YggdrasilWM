@@ -30,12 +30,10 @@
 
 bool WindowManager::wm_detected_;
 WindowManager * WindowManager::instance_ = nullptr;
-std::mutex WindowManager::mutex_ = std::mutex();
 
 void WindowManager::Create(  ConfigHandler& configHandler,
 							 const std::string &display_str) {
 	std::stringstream debug_stream;
-	std::lock_guard<std::mutex> lock(mutex_);
 	if (WindowManager::instance_ != nullptr) {
 		throw std::runtime_error("WindowManager instance already created");
 	}
@@ -50,7 +48,6 @@ void WindowManager::Create(  ConfigHandler& configHandler,
 	debug_stream << "Opened X display " << XDisplayName(display_c_str);
 	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);
 	WindowManager::instance_ = new WindowManager(display, configHandler);
-	std::lock_guard<std::mutex> unlock(mutex_);
 }
 WindowManager::WindowManager(Display *display, ConfigHandler &configHandler)
 		: display_(display),
@@ -240,12 +237,16 @@ void WindowManager::Bar() {
 	XFlush(display_);
 }
 WindowManager * WindowManager::getInstance() {
-	std::lock_guard<std::mutex> lock(mutex_);
 	if (WindowManager::instance_ != nullptr) {
-		std::lock_guard<std::mutex> unlock(mutex_);
 		return WindowManager::instance_;
 	} else {
-		std::lock_guard<std::mutex> unlock(mutex_);
 		throw std::runtime_error("WindowManager instance not created");
+	}
+}
+
+void WindowManager::Destroy() {
+	if (WindowManager::instance_ != nullptr) {
+		delete WindowManager::instance_;
+		WindowManager::instance_ = nullptr;
 	}
 }

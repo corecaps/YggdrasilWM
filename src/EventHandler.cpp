@@ -69,20 +69,14 @@ std::string GetEventTypeName(int eventType) {
 	return name;
 }
 EventHandler * EventHandler::instance_ = nullptr;
-std::mutex EventHandler::mutex_ = std::mutex();
 void EventHandler::create() {
-	std::lock_guard<std::mutex> lock(mutex_);
 	if (instance_ != nullptr) {
-		std::lock_guard<std::mutex> unlock(mutex_);
 		throw std::runtime_error("EventHandler instance already created");
 	}
 	instance_ = new EventHandler();
-	std::lock_guard<std::mutex> unlock(mutex_);
 }
 EventHandler *EventHandler::getInstance() {
-	std::lock_guard<std::mutex> lock(mutex_);
 	if (instance_ == nullptr) {
-		std::lock_guard<std::mutex> unlock(mutex_);
 		throw std::runtime_error("EventHandler instance not created");
 	}
 	return instance_;

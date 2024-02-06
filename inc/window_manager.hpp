@@ -180,7 +180,6 @@ private:
 	bool									running;
 	std::unordered_map<Window, Client*>		clients_;
 	static WindowManager *					instance_;
-	static std::mutex						mutex_;
 // Initialisation
 /**
  * @fn WindowManager::WindowManager(Display *display, const Logger &logger,ConfigHandler &configHandler)

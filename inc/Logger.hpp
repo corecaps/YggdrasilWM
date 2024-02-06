@@ -139,7 +139,6 @@ private:
  */
 	bool streamIsFile_;
 	static Logger*		instance_;
-	static std::mutex	mutex_;
 	std::ostream*		logStream_;
 	LogLevel			logLevel_;
 };

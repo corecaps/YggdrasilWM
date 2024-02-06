@@ -79,7 +79,6 @@ private:
 	using Handler = void (EventHandler::*)(const XEvent&);
 	Handler eventHandlerArray[LASTEvent]{};
 	static EventHandler *					instance_;
-	static std::mutex						mutex_;
 /**
  * @fn EventHandler(WindowManager &wm, const Logger &logger)
  * @brief Construct a new Event Handler:: Event Handler object
