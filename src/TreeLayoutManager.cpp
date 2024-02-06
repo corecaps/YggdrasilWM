@@ -40,7 +40,7 @@ TreeLayoutManager::TreeLayoutManager(Display *display,
 	this->rootSpace_ = new Space(pos, size, 0);
 }
 TreeLayoutManager::~TreeLayoutManager() { delete rootSpace_; }
-void TreeLayoutManager::updateGeometry() { LayoutManager::updateGeometry(); }
+void TreeLayoutManager::updateGeometry() {  }
 LayoutManager::Space * TreeLayoutManager::findSpaceRecursive(Client *client, LayoutManager::Space * space) {
 	if (space->getClient() == client) {
 		return space;
@@ -64,7 +64,7 @@ LayoutManager::Space * TreeLayoutManager::findSpace(Client *client) {
 	return findSpaceRecursive(client, space);
 }
 LayoutManager::Space * TreeLayoutManager::findSpace(int index) {
-	return LayoutManager::findSpace(index);
+	return nullptr;
 }
 void TreeLayoutManager::removeClient(Client* client) {
 	removeClientRecursive(client, rootSpace_);
