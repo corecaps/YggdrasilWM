@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigFileHandler.cpp
  * @brief ConfigFileHandler class implementation.
- * @date 2024-02-05
+ * @date 2024-02-06
  *
  */
 #ifndef YGGDRASILWM_CONFIGFILEHANDLER_H

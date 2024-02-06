@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Logger.hpp
  * @brief Logger class header.
- * @date 2024-02-04
+ * @date 2024-02-06
  * This class is responsible for logging.
  * It can be created with a file name or an ostream.
  * The log level can be set to filter the messages.

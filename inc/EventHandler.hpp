@@ -25,7 +25,7 @@
  * this class dispatches the XEvents to the appropriate handler function.
  * it is also responsible for handling the bars drawing.
   * The event handlers functions are private and are called by the dispatchEvent function.
- * @date 2024-02-04
+ * @date 2024-02-06
  * @see WindowManager
  * @see Client
  * @see Logger
