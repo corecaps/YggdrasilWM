@@ -95,24 +95,21 @@ int main(int argc, char** argv) {
 	}
 	//	Logger::Create(LogFilePath, static_cast<LogLevel>(logLevel));
 	Logger::Create(std::cout, static_cast<LogLevel>(logLevel));
-	ConfigHandler configHandler = ConfigHandler(ConfigFilePath);
-	bool validConfig = configHandler.loadConfig();
-	if (validConfig)
-		Logger::GetInstance()->Log("Loaded config: " + configHandler.getConfigPath(), L_INFO);
-	else {
-		Logger::GetInstance()->Log("Failed to load config: " + configHandler.getConfigPath(),L_ERROR);
-		return EXIT_FAILURE;
+	if (ConfigFilePath.empty()) {
+		ConfigHandler::Create();
+	} else
+	{
+		ConfigHandler::Create(ConfigFilePath);
 	}
-	Logger::GetInstance()->Log(configHandler.printConfig().str(), L_INFO);
-	std::cout << std::endl;
+	ConfigHandler::GetInstance().configInit();
 	Logger::GetInstance()->Log("Starting " + std::string(PROGRAM_NAME) + " " + std::string(PROGRAM_VERSION), L_INFO);
 	try {
 		if (!Display.empty()) {
 			Logger::GetInstance()->Log("Using display " + Display, L_INFO);
-			WindowManager::Create(configHandler, Display);
+			WindowManager::Create(Display);
 		} else {
 			Logger::GetInstance()->Log("Using default display", L_INFO);
-			WindowManager::Create(configHandler);
+			WindowManager::Create();
 		}
 		Logger::GetInstance()->Log("Starting WindowManager.", L_INFO);
 	} catch (const std::exception &e) {

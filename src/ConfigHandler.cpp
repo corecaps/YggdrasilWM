@@ -28,7 +28,7 @@
 
 #include "ConfigHandler.hpp"
 #include "ConfigFileHandler.hpp"
-ConfigHandler::instance_ = nullptr;
+ConfigHandler * ConfigHandler::instance_ = nullptr;
 void ConfigHandler::Create(const std::string& configPath) {
 	if (instance_ == nullptr) {
 		instance_ = new ConfigHandler(configPath);

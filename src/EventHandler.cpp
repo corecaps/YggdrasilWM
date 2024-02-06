@@ -224,7 +224,9 @@ void EventHandler::handleFocusIn(const XEvent &event) {
 		return;
 	}
 	else {
-		unsigned long ActiveColor = std::get<unsigned long>(WindowManager::getInstance()->getConfigHandler().getConfig("ActiveColor"));
+//		unsigned long ActiveColor = std::get<unsigned long>(WindowManager::getInstance()->getConfigHandler().getConfig("ActiveColor"));
+/// Temporary hardcoded value
+		unsigned long ActiveColor = 0xff0000;
 		Logger::GetInstance()->Log("Window focused: " + client->getTitle() , L_INFO);
 		XSetWindowBorder(WindowManager::getInstance()->getDisplay(), client->getFrame(), ActiveColor);
 		XFlush(WindowManager::getInstance()->getDisplay());
@@ -240,7 +242,9 @@ void EventHandler::handleFocusOut(const XEvent &event) {
 		return;
 	}
 	else {
-		unsigned long InActiveColor = std::get<unsigned long>(WindowManager::getInstance()->getConfigHandler().getConfig("InActiveColor"));
+//		unsigned long InActiveColor = std::get<unsigned long>(WindowManager::getInstance()->getConfigHandler().getConfig("InActiveColor"));
+///Temporary hardcoded value
+		unsigned long InActiveColor = 0x00ff00;
 		Logger::GetInstance()->Log("Window unfocused: " + client->getTitle() , L_INFO);
 		XSetWindowBorder(WindowManager::getInstance()->getDisplay(), client->getFrame(), InActiveColor);
 		XFlush(WindowManager::getInstance()->getDisplay());

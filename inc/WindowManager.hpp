@@ -60,13 +60,9 @@ public:
 	WindowManager& operator=(const WindowManager&) = delete;
 /**
  * @brief Create a WindowManager object
- * @param logger
- * @param configHandler
- * @param display_str
- * @return
+ * @param display_str Optional X Display string if not set, the DISPLAY environment variable will be used
  */
 	static void Create(
-		ConfigHandler &configHandler,
 		const std::string &display_str = std::string());
 /**
  * @brief Destroy the WindowManager object
@@ -154,11 +150,6 @@ public:
  */
 	bool getRunning() const;
 /**
- * @fn ConfigHandler &WindowManager::getConfigHandler()
- * @brief Get the Config Handler object
- */
-	ConfigHandler &getConfigHandler();
-/**
  * @fn WindowManager *WindowManager::getInstance()
  * @brief Get the WindowManager instance
   this is a singleton class
@@ -182,7 +173,6 @@ private:
 	static bool								wm_detected_;
 	const Window							root_;
 	Window 									bar_{};
-	ConfigHandler							configHandler_;
 	std::vector<Group>						groups_;
 	const Atom								WM_PROTOCOLS;
 	const Atom								WM_DELETE_WINDOW;
@@ -194,7 +184,7 @@ private:
  * @fn WindowManager::WindowManager(Display *display, const Logger &logger,ConfigHandler &configHandler)
  * @brief Construct a new WindowManager object
  */
-	WindowManager(Display *display, ConfigHandler &configHandler);
+	WindowManager(Display *display);
 /**
  * @fn void WindowManager::selectEventOnRoot() const
  * @brief set the event mask on the root window and register as the window manager for the X session

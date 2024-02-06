@@ -49,6 +49,8 @@ class ConfigFileHandler;
  */
 class ConfigHandler {
 public:
+	ConfigHandler(const ConfigHandler&) = delete;
+	ConfigHandler& operator=(const ConfigHandler&) = delete;
 /**
  * @fn static void ConfigHandler::Create(const std::string& configPath)
  * @brief Create a ConfigHandler object with a path

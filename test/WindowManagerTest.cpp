@@ -108,9 +108,6 @@ protected:
 	}
 
 	void SetUp() override {
-		configHandler_ = ConfigHandler();
-		configHandler_.loadConfig();
-
 	}
 	static void TearDownTestSuite() {
 		// Cleanup
@@ -120,13 +117,12 @@ protected:
 	}
 	void TearDown() override {
 	}
-	ConfigHandler configHandler_;
 };
 
 TEST_F(WindowManagerTest, CreateWithValidDisplay) {
 // Try to create a WindowManager with a valid display
 
-WindowManager::Create(configHandler_,":1");
+WindowManager::Create(":1");
 
 // Check if the WindowManager object is created
 ASSERT_TRUE(WindowManager::getInstance());
@@ -137,14 +133,14 @@ WindowManager::Destroy();
 TEST_F(WindowManagerTest, CreateWithInvalidDisplay) {
 // Try to create a WindowManager with an invalid display
 	// Try to create a WindowManager with an invalid display and expect it to throw
-	EXPECT_THROW(WindowManager::Create(configHandler_,"invalid_display"), std::runtime_error);
+	EXPECT_THROW(WindowManager::Create("invalid_display"), std::runtime_error);
 	// Now, check if getting the instance throws, indicating no instance was created
 	EXPECT_THROW(WindowManager::getInstance(), std::runtime_error);
 	WindowManager::Destroy();
 }
 
 TEST_F(WindowManagerTest, initWM) {
-	WindowManager::Create( configHandler_,":1");
+	WindowManager::Create(":1");
 	WindowManager::getInstance()->Init();
 	ASSERT_EQ(WindowManager::getInstance()->getRunning(), true);
 	ASSERT_GE(WindowManager::getInstance()->getClients().size(), 0);

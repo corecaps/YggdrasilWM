@@ -31,8 +31,7 @@
 bool WindowManager::wm_detected_;
 WindowManager * WindowManager::instance_ = nullptr;
 
-void WindowManager::Create(  ConfigHandler& configHandler,
-							 const std::string &display_str) {
+void WindowManager::Create( const std::string &display_str) {
 	std::stringstream debug_stream;
 	if (WindowManager::instance_ != nullptr) {
 		throw std::runtime_error("WindowManager instance already created");
@@ -47,11 +46,10 @@ void WindowManager::Create(  ConfigHandler& configHandler,
 	}
 	debug_stream << "Opened X display " << XDisplayName(display_c_str);
 	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);
-	WindowManager::instance_ = new WindowManager(display, configHandler);
+	WindowManager::instance_ = new WindowManager(display);
 }
-WindowManager::WindowManager(Display *display, ConfigHandler &configHandler)
+WindowManager::WindowManager(Display *display)
 		: display_(display),
-		  configHandler_(configHandler),
 		  root_(DefaultRootWindow(display)),
 		  WM_PROTOCOLS(XInternAtom(display_, "WM_PROTOCOLS", false)),
 		  WM_DELETE_WINDOW(XInternAtom(display_, "WM_DELETE_WINDOW", false)),
@@ -104,15 +102,20 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 		Logger::GetInstance()->Log("Root window is not the same as the one returned by XQueryTree", L_ERROR);
 	}
 	debug_stream << "Found " << num_top_level_windows << " top level windows." << "root:" << root_ << std::endl;
-	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
-	int BarHeight = std::get<int>(configHandler_.getConfig("BarHeight"));
-	int gap = std::get<int>(configHandler_.getConfig("Gap"));
-	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
+//	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
+//	int BarHeight = std::get<int>(configHandler_.getConfig("BarHeight"));
+//	int gap = std::get<int>(configHandler_.getConfig("Gap"));
+//	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
+/// Temp Hadcoded values
+	int BorderSize = 2;
+	int BarHeight = 20;
+	int gap = 5;
+	unsigned long inactiveColor = 0x00ff00;
 /** @todo create multiple groups from config, need a separate method */
 	groups_.emplace_back("default", BorderSize, gap, BarHeight, LayoutType::TREE);
 	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
-		auto *newClient = new Client(display_, root_, top_level_windows[i], &groups_[0], InActiveColor, BorderSize);
+		auto *newClient = new Client(display_, root_, top_level_windows[i], &groups_[0], inactiveColor, BorderSize);
 		Client_Err err = newClient->frame();
 		setFocus(newClient);
 		XMapWindow(display_, top_level_windows[i]);
@@ -199,9 +202,12 @@ Client *WindowManager::getClient(Window window) {
 }
 void WindowManager::insertClient(Window window) {
 	std::stringstream debug_stream;
-	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
-	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
-	auto *client = new Client(display_, root_, window, &groups_[0], InActiveColor, BorderSize);
+//	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
+//	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
+/// Temporary hardcoded values
+	unsigned long int inactiveColor=0x00ff00;
+	int BorderSize = 2;
+	auto *client = new Client(display_, root_, window, &groups_[0], inactiveColor, BorderSize);
 	debug_stream << "Inserting client in map: " << client->getTitle() << "\t[" << window << "]";
 	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);
 	clients_.insert({window, client});
@@ -215,7 +221,6 @@ bool WindowManager::isFrame(Window window) {
 }
 Window WindowManager::getBar() const { return bar_; }
 unsigned long WindowManager::getClientCount() { return clients_.size(); }
-ConfigHandler &WindowManager::getConfigHandler() { return configHandler_; }
 void WindowManager::setFocus(Client *client) {
 	if (client != nullptr) {
 		XSetInputFocus(display_, client->getWindow(), RevertToParent, CurrentTime);
@@ -223,7 +228,9 @@ void WindowManager::setFocus(Client *client) {
 }
 void WindowManager::Bar() {
 	int screen = DefaultScreen(display_);
-	int barHeight = std::get<int>(configHandler_.getConfig("BarHeight"));
+//	int barHeight = std::get<int>(configHandler_.getConfig("BarHeight"));
+/// Temporary hardcoded value
+	int barHeight = 30;
 	bar_ = XCreateSimpleWindow(
 			display_,
 			root_,
