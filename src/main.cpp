@@ -93,38 +93,38 @@ int main(int argc, char** argv) {
 		std::cout << options.help() << std::endl;
 		return EXIT_FAILURE;
 	}
-	//	Logger logger(LogFilePath, static_cast<LogLevel>(logLevel));
-	Logger logger(std::cout, static_cast<LogLevel>(logLevel));
+	//	Logger::Create(LogFilePath, static_cast<LogLevel>(logLevel));
+	Logger::Create(std::cout, static_cast<LogLevel>(logLevel));
 	ConfigHandler configHandler = ConfigHandler(ConfigFilePath);
 	bool validConfig = configHandler.loadConfig();
 	if (validConfig)
-		logger.Log("Loaded config: " + configHandler.getConfigPath(), L_INFO);
+		Logger::GetInstance()->Log("Loaded config: " + configHandler.getConfigPath(), L_INFO);
 	else {
-		logger.Log("Failed to load config: " + configHandler.getConfigPath(),L_ERROR);
+		Logger::GetInstance()->Log("Failed to load config: " + configHandler.getConfigPath(),L_ERROR);
 		return EXIT_FAILURE;
 	}
-	logger.Log(configHandler.printConfig().str(), L_INFO);
+	Logger::GetInstance()->Log(configHandler.printConfig().str(), L_INFO);
 	std::cout << std::endl;
-	logger.Log("Starting " + std::string(PROGRAM_NAME) + " " + std::string(PROGRAM_VERSION), L_INFO);
-	std::unique_ptr<WindowManager> windowManager;
-	if (!Display.empty()) {
-		logger.Log("Using display " + Display, L_INFO);
-		windowManager = WindowManager::Create(logger,configHandler, Display);
-	} else {
-		logger.Log("Using default display", L_INFO);
-		windowManager = WindowManager::Create(logger, configHandler);
-	}
-	if (!windowManager) {
-		logger.Log("Failed to initialize WindowManager.", L_ERROR);
-		return EXIT_FAILURE;
-	}
-	logger.Log("Starting WindowManager.", L_INFO);
+	Logger::GetInstance()->Log("Starting " + std::string(PROGRAM_NAME) + " " + std::string(PROGRAM_VERSION), L_INFO);
 	try {
-		windowManager->Init();
+		if (!Display.empty()) {
+			Logger::GetInstance()->Log("Using display " + Display, L_INFO);
+			WindowManager::Create(configHandler, Display);
+		} else {
+			Logger::GetInstance()->Log("Using default display", L_INFO);
+			WindowManager::Create(configHandler);
+		}
+		Logger::GetInstance()->Log("Starting WindowManager.", L_INFO);
 	} catch (const std::exception &e) {
-		logger.Log(e.what(), L_ERROR);
+		Logger::GetInstance()->Log(e.what(), L_ERROR);
 		return EXIT_FAILURE;
 	}
-	windowManager->Run();
+	try {
+		WindowManager::getInstance()->Init();
+	} catch (const std::exception &e) {
+		Logger::GetInstance()->Log(e.what(), L_ERROR);
+		return EXIT_FAILURE;
+	}
+	WindowManager::getInstance()->Run();
 	return (EXIT_SUCCESS);
 }

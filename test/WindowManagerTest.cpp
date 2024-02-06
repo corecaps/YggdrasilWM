@@ -133,13 +133,13 @@ EXPECT_CALL(*mockLogger, Log(::testing::_, L_INFO))
 
 // Try to create a WindowManager with a valid display
 
-auto windowManager = WindowManager::Create(*mockLogger, configHandler_,":1");
+WindowManager::Create(*mockLogger, configHandler_,":1");
 
 // Check if the WindowManager object is created
-ASSERT_TRUE(windowManager);
+ASSERT_TRUE(WindowManager::getInstance());
 
 // Check if the Logger instance is correctly set
-ASSERT_EQ(&windowManager->getLogger(), mockLogger.get());
+ASSERT_EQ(WindowManager::getInstance()->getLogger(), mockLogger.get());
 }
 
 TEST_F(WindowManagerTest, CreateWithInvalidDisplay) {
@@ -148,27 +148,27 @@ EXPECT_CALL(*mockLogger, Log(::testing::_, L_ERROR))
 .Times(::testing::AtLeast(1));
 
 // Try to create a WindowManager with an invalid display
-auto windowManager = WindowManager::Create(*mockLogger, configHandler_,"invalid_display");
+WindowManager::Create(*mockLogger, configHandler_,"invalid_display");
 
 // Check if the WindowManager object is not created
-ASSERT_FALSE(windowManager);
+ASSERT_FALSE(WindowManager::getInstance());
 }
 
 TEST_F(WindowManagerTest, GetLogger) {
 	EXPECT_CALL(*mockLogger, Log(::testing::_, L_INFO))
 			.Times(::testing::AtLeast(1));
-auto windowManager = WindowManager::Create(*mockLogger, configHandler_,":1");
-ASSERT_EQ(&windowManager->getLogger(), mockLogger.get());
+WindowManager::Create(*mockLogger, configHandler_,":1");
+ASSERT_EQ(WindowManager::getInstance()->getLogger(), mockLogger.get());
 }
 TEST_F(WindowManagerTest, initWM) {
 	EXPECT_CALL(*mockLogger, Log(::testing::_, L_INFO))
 			.Times(::testing::AtLeast(1));
-	auto windowManager = WindowManager::Create(*mockLogger, configHandler_,":1");
-	ASSERT_EQ(&windowManager->getLogger(), mockLogger.get());
-	windowManager->Init();
-	ASSERT_EQ(windowManager->getRunning(), true);
-	ASSERT_GE(windowManager->getClients().size(), 0);
-	std::cout << "Client size : " << windowManager->getClients().size() << std::endl;
-	ASSERT_NE(windowManager->getDisplay(), nullptr);
-	ASSERT_NE(windowManager->getRoot(), 0);
+	WindowManager::Create(*mockLogger, configHandler_,":1");
+	ASSERT_EQ(WindowManager::getInstance()->getLogger(), mockLogger.get());
+	WindowManager::getInstance()->Init();
+	ASSERT_EQ(WindowManager::getInstance()->getRunning(), true);
+	ASSERT_GE(WindowManager::getInstance()->getClients().size(), 0);
+	std::cout << "Client size : " << WindowManager::getInstance()->getClients().size() << std::endl;
+	ASSERT_NE(WindowManager::getInstance()->getDisplay(), nullptr);
+	ASSERT_NE(WindowManager::getInstance()->getRoot(), 0);
 }

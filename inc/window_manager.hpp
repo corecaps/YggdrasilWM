@@ -41,6 +41,7 @@ extern "C" {
 #include <iostream>
 #include <algorithm>
 #include <csignal>
+#include <mutex>
 #include "Group.hpp"
 using ConfigValue = std::variant<std::string, int, bool,unsigned long>;
 
@@ -55,6 +56,8 @@ using ConfigValue = std::variant<std::string, int, bool,unsigned long>;
  */
 class WindowManager {
 public:
+	WindowManager(const WindowManager&) = delete;
+	WindowManager& operator=(const WindowManager&) = delete;
 /**
  * @brief Create a WindowManager object
  * @param logger
@@ -62,8 +65,7 @@ public:
  * @param display_str
  * @return
  */
-	static ::std::unique_ptr<WindowManager> Create(
-		Logger &logger,
+	static void Create(
 		ConfigHandler &configHandler,
 		const std::string &display_str = std::string());
 /**
@@ -85,11 +87,6 @@ public:
  */
 	void Run();
 // Getters
-/**
- * @fn const Logger &WindowManager::getLogger() const
- * @brief Get the Logger object
- */
-	const Logger &getLogger() const;
 /**
  * @fn Display *WindowManager::getDisplay() const
  * @brief Get the Display object
@@ -161,25 +158,35 @@ public:
  * @brief Get the Config Handler object
  */
 	ConfigHandler &getConfigHandler();
+/**
+ * @fn WindowManager *WindowManager::getInstance()
+ * @brief Get the WindowManager instance
+  this is a singleton class
+  this function returns the instance of the WindowManager
+  if it does not exist, it creates it
+ * @return WindowManager* instance
+ */
+	static WindowManager * getInstance();
 
 private:
 	Display									*display_;
 	static bool								wm_detected_;
 	const Window							root_;
 	Window 									bar_{};
-	const Logger&							logger_;
 	ConfigHandler							configHandler_;
 	std::vector<Group>						groups_;
 	const Atom								WM_PROTOCOLS;
 	const Atom								WM_DELETE_WINDOW;
 	bool									running;
 	std::unordered_map<Window, Client*>		clients_;
+	static WindowManager *					instance_;
+	static std::mutex						mutex_;
 // Initialisation
 /**
  * @fn WindowManager::WindowManager(Display *display, const Logger &logger,ConfigHandler &configHandler)
  * @brief Construct a new WindowManager object
  */
-	WindowManager(Display *display, const Logger &logger,ConfigHandler &configHandler);
+	WindowManager(Display *display, ConfigHandler &configHandler);
 /**
  * @fn void WindowManager::selectEventOnRoot() const
  * @brief set the event mask on the root window and register as the window manager for the X session

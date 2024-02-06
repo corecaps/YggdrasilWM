@@ -64,7 +64,6 @@ public:
 	 * @param borderSize The size of the border
 	 * @param gap The gap between the clients
 	 * @param barHeight The height of the bar
-	 * @param windowManager The WindowManager
 	 * @param layoutType The layout type
 	 * @todo add the other layout types
 	 */
@@ -72,7 +71,6 @@ public:
 		  int borderSize,
 		  int gap,
 		  int barHeight,
-		  WindowManager &windowManager,
 		  LayoutType layoutType);
 /**
  * @fn ~Group()
@@ -169,6 +167,5 @@ private:
 	int										gap_;
 	int										barHeight_;
 	bool									active_{};
-	WindowManager &							wm_;
 };
 #endif //YGGDRASILWM_GROUP_H

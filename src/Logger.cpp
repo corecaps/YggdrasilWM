@@ -26,6 +26,32 @@
  *
  */
 #include "Logger.hpp"
+Logger *Logger::instance_ = nullptr;
+std::mutex Logger::mutex_ = std::mutex();
+
+void Logger::Create(const std::string &logFile, LogLevel logLevel) {
+	std::lock_guard<std::mutex> lock(mutex_);
+	if (instance_ == nullptr) {
+		instance_ = new Logger(logFile, logLevel);
+	}
+	std::lock_guard<std::mutex> unlock(mutex_);
+}
+void Logger::Create(std::ostream &output, LogLevel logLevel) {
+	std::lock_guard<std::mutex> lock(mutex_);
+	if (instance_ == nullptr) {
+		instance_ = new Logger(output, logLevel);
+	}
+	std::lock_guard<std::mutex> unlock(mutex_);
+}
+Logger *Logger::GetInstance() {
+	std::lock_guard<std::mutex> lock(mutex_);
+	if (instance_ == nullptr) {
+		std::lock_guard<std::mutex> unlock(mutex_);
+		throw std::runtime_error("Logger instance not created");
+	}
+	std::lock_guard<std::mutex> unlock(mutex_);
+	return instance_;
+}
 Logger::Logger(const std::string& logFile, LogLevel logLevel)
 		: logLevel_(logLevel) {
 	auto* fileStream = new std::ofstream(logFile, std::ios::out | std::ios::app);
@@ -52,7 +78,6 @@ Logger::~Logger() {
 		delete logStream_;
 	}
 }
-
 void Logger::Log(const std::string& message, LogLevel level) const {
 	if (level < logLevel_) {
 		return;

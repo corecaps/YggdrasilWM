@@ -29,35 +29,38 @@
 #include "EventHandler.hpp"
 
 bool WindowManager::wm_detected_;
-static WindowManager *windowManagerInstance = nullptr;
-std::unique_ptr<WindowManager> WindowManager::Create(Logger &logger,
-													 ConfigHandler& configHandler,
-													 const std::string &display_str) {
+WindowManager * WindowManager::instance_ = nullptr;
+std::mutex WindowManager::mutex_ = std::mutex();
+
+void WindowManager::Create(  ConfigHandler& configHandler,
+							 const std::string &display_str) {
 	std::stringstream debug_stream;
+	std::lock_guard<std::mutex> lock(mutex_);
+	if (WindowManager::instance_ != nullptr) {
+		throw std::runtime_error("WindowManager instance already created");
+	}
 	const char *display_c_str =
 			display_str.empty() ? nullptr : display_str.c_str();
 	Display *display = XOpenDisplay(display_c_str);
 	if (display == nullptr) {
 		debug_stream << "Failed to open X display " << XDisplayName(display_c_str);
-		logger.Log(debug_stream.str(), L_ERROR);
-		return nullptr;
+		Logger::GetInstance()->Log(debug_stream.str(), L_ERROR);
+		throw std::runtime_error("Failed to open X display");
 	}
 	debug_stream << "Opened X display " << XDisplayName(display_c_str);
-	logger.Log(debug_stream.str(), L_INFO);
-	return std::unique_ptr<WindowManager>(new WindowManager(display, logger, configHandler));
+	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);
+	WindowManager::instance_ = new WindowManager(display, configHandler);
+	std::lock_guard<std::mutex> unlock(mutex_);
 }
-WindowManager::WindowManager(Display *display,
-							 const Logger &logger,
-							 ConfigHandler &configHandler)
+WindowManager::WindowManager(Display *display, ConfigHandler &configHandler)
 		: display_(display),
-		  logger_(logger),
 		  configHandler_(configHandler),
 		  root_(DefaultRootWindow(display)),
 		  WM_PROTOCOLS(XInternAtom(display_, "WM_PROTOCOLS", false)),
 		  WM_DELETE_WINDOW(XInternAtom(display_, "WM_DELETE_WINDOW", false)),
 		  running(true),
 		  bar_(0){
-	logger_.Log("Window Manager Created !\n", L_INFO);
+	Logger::GetInstance()->Log("Window Manager Created !\n", L_INFO);
 }
 bool WindowManager::getRunning() const { return running; }
 WindowManager::~WindowManager() {
@@ -65,8 +68,8 @@ WindowManager::~WindowManager() {
 }
 void handleSIGHUP(int signal) {
 	std::cout << "Caught signal " << signal << std::endl;
-	if (windowManagerInstance != nullptr) {
-		windowManagerInstance->Stop();
+	if (WindowManager::getInstance() != nullptr) {
+		WindowManager::getInstance()->Stop();
 	}
 }
 void WindowManager::Stop() {
@@ -83,7 +86,6 @@ void WindowManager::Init() {
 	getTopLevelWindows(debug_stream);
 	XUngrabServer(display_);
 	XFlush(display_);
-	windowManagerInstance = this;
 	Bar();
 	signal(SIGINT, handleSIGHUP);
 }
@@ -99,16 +101,16 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 			&top_level_windows,
 			&num_top_level_windows);
 	if (returned_root != root_) {
-		logger_.Log("Root window is not the same as the one returned by XQueryTree", L_ERROR);
+		Logger::GetInstance()->Log("Root window is not the same as the one returned by XQueryTree", L_ERROR);
 	}
 	debug_stream << "Found " << num_top_level_windows << " top level windows." << "root:" << root_ << std::endl;
 	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
 	int BarHeight = std::get<int>(configHandler_.getConfig("BarHeight"));
 	int gap = std::get<int>(configHandler_.getConfig("Gap"));
 	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
-/** @todo create multiple groups fronm config, need a separate method */
-	groups_.emplace_back("default", BorderSize, gap, BarHeight, *this, LayoutType::TREE);
-	logger_.Log(debug_stream.str(), L_INFO);
+/** @todo create multiple groups from config, need a separate method */
+	groups_.emplace_back("default", BorderSize, gap, BarHeight, LayoutType::TREE);
+	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
 		auto *newClient = new Client(display_, root_, top_level_windows[i], &groups_[0], InActiveColor, BorderSize);
 		Client_Err err = newClient->frame();
@@ -138,7 +140,7 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 				debug_level = L_INFO;
 				break;
 		}
-		logger_.Log(debug_stream.str(), debug_level);
+		Logger::GetInstance()->Log(debug_stream.str(), debug_level);
 		clients_[newClient->getWindow()] = newClient;
 	}
 	XFree(top_level_windows);
@@ -153,7 +155,7 @@ void WindowManager::selectEventOnRoot() const {
 	XSetErrorHandler(&WindowManager::OnXError);
 }
 void WindowManager::Run() {
-	EventHandler eventHandler(*this, logger_);
+	auto eventHandler = EventHandler();
 	XEvent e;
 	while (running && !XNextEvent(display_, &e)) {
 		eventHandler.dispatchEvent(e);
@@ -170,7 +172,7 @@ int WindowManager::OnXError(Display *display, XErrorEvent *e) {
 			  << "    Error code: " << int(e->error_code)
 			  << " - " << error_text << "\n"
 			  << "    Resource ID: " << e->resourceid;
-	windowManagerInstance->getLogger().Log(error_stream.str(), L_ERROR);
+	Logger::GetInstance()->Log(error_stream.str(), L_ERROR);
 	// The return value is ignored.
 	return 0;
 }
@@ -179,7 +181,6 @@ int WindowManager::OnWMDetected([[maybe_unused]] Display *display, XErrorEvent *
 		wm_detected_ = true;
 	return 0;
 }
-const Logger &WindowManager::getLogger() const { return logger_; }
 Display *WindowManager::getDisplay() const { return display_; }
 std::unordered_map<Window, Client *> &WindowManager::getClients() { return clients_; }
 Client &WindowManager::getClientRef(Window window) { return *clients_.at(window); }
@@ -202,7 +203,7 @@ void WindowManager::insertClient(Window window) {
 	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
 	auto *client = new Client(display_, root_, window, &groups_[0], InActiveColor, BorderSize);
 	debug_stream << "Inserting client in map: " << client->getTitle() << "\t[" << window << "]";
-	logger_.Log(debug_stream.str(), L_INFO);
+	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);
 	clients_.insert({window, client});
 }
 bool WindowManager::isFrame(Window window) {
@@ -233,8 +234,18 @@ void WindowManager::Bar() {
 			0,
 			BlackPixel(display_, screen),
 			WhitePixel(display_, screen));
-	logger_.Log("Bar created", L_INFO);
+	Logger::GetInstance()->Log("Bar created", L_INFO);
 	XSelectInput(display_, bar_, ExposureMask | KeyPressMask);
 	XMapWindow(display_, bar_);
 	XFlush(display_);
+}
+WindowManager * WindowManager::getInstance() {
+	std::lock_guard<std::mutex> lock(mutex_);
+	if (WindowManager::instance_ != nullptr) {
+		std::lock_guard<std::mutex> unlock(mutex_);
+		return WindowManager::instance_;
+	} else {
+		std::lock_guard<std::mutex> unlock(mutex_);
+		throw std::runtime_error("WindowManager instance not created");
+	}
 }

@@ -68,10 +68,7 @@ std::string GetEventTypeName(int eventType) {
 	}
 	return name;
 }
-EventHandler::EventHandler(WindowManager &wm, const Logger &logger)
-	:	wm_(wm),
-		logger_(logger)
-		{
+EventHandler::EventHandler() {
 	for (auto & i : eventHandlerArray) {
 		i = &EventHandler::handleUnknown;
 	}
@@ -101,17 +98,17 @@ void EventHandler::dispatchEvent(const XEvent &event) {
 	if (event.type > 0 && event.type < LASTEvent && eventHandlerArray[event.type] != nullptr)
 		(this->*eventHandlerArray[event.type])(event);
 	else
-		logger_.Log("Unknown event type: ["  + std::to_string(event.type) + "]\t" + name, L_WARNING);
+		Logger::GetInstance()->Log("Unknown event type: ["  + std::to_string(event.type) + "]\t" + name, L_WARNING);
 }
 void EventHandler::handleMapNotify(const XEvent &event) {
 	auto e = event.xmap;
-	Client * client = wm_.getClient(e.window);
+	Client * client = WindowManager::getInstance()->getClient(e.window);
 	if (client == nullptr) {
-		logger_.Log("Ignoring map for unknown window: " + std::to_string(e.window), L_INFO);
+		Logger::GetInstance()->Log("Ignoring map for unknown window: " + std::to_string(e.window), L_INFO);
 		return;
 	}
 	else {
-		logger_.Log("Window Mapped: " + client->getTitle() , L_INFO);
+		Logger::GetInstance()->Log("Window Mapped: " + client->getTitle() , L_INFO);
 		if (client->getFrame() != e.window) {
 			client->restack();
 			client->setMapped(true);
@@ -120,21 +117,21 @@ void EventHandler::handleMapNotify(const XEvent &event) {
 }
 void EventHandler::handleUnmapNotify(const XEvent &event) {
 	auto e = event.xunmap;
-	if (e.event == wm_.getRoot()) {
-		logger_.Log("Ignoring unmap for root window", L_INFO);
+	if (e.event == WindowManager::getInstance()->getRoot()) {
+		Logger::GetInstance()->Log("Ignoring unmap for root window", L_INFO);
 		return;
 	}
 	try {
 /** @todo : handle when client is unmappad from group switch */
-		Client &client = wm_.getClientRef(e.window);
-		logger_.Log("Unmapping window: " + client.getTitle(), L_INFO);
+		Client &client = WindowManager::getInstance()->getClientRef(e.window);
+		Logger::GetInstance()->Log("Unmapping window: " + client.getTitle(), L_INFO);
 		client.getGroup()->RemoveClient(&client);
 		client.unframe();
-		wm_.getClients().erase(e.window);
+		WindowManager::getInstance()->getClients().erase(e.window);
 		delete &client;
 	}
 	catch (std::out_of_range &err) {
-		logger_.Log("Unmapping unknown window: " + std::to_string(e.window), L_WARNING);
+		Logger::GetInstance()->Log("Unmapping unknown window: " + std::to_string(e.window), L_WARNING);
 	}
 }
 void EventHandler::handleConfigureRequest(const XEvent &event) {
@@ -147,23 +144,23 @@ void EventHandler::handleConfigureRequest(const XEvent &event) {
 	changes.border_width = e.border_width;
 	changes.sibling = e.above;
 	changes.stack_mode = e.detail;
-	XConfigureWindow(wm_.getDisplay(),e.window,e.value_mask,&changes);
+	XConfigureWindow(WindowManager::getInstance()->getDisplay(),e.window,e.value_mask,&changes);
 	std::stringstream msg;
 	msg << "x:" << changes.x << " y:" << changes.y
 		<< "\twidth:" << changes.width << " height:" << changes.height
 		<< "\t sibling" << changes.sibling << " stack mode :" << changes.stack_mode
 		<< "\t value mask" << e.value_mask << std::endl;
-	logger_.Log("Configure request for : "+ std::to_string(e.window), L_INFO);
-	logger_.Log(msg.str(),L_INFO);
+	Logger::GetInstance()->Log("Configure request for : "+ std::to_string(e.window), L_INFO);
+	Logger::GetInstance()->Log(msg.str(),L_INFO);
 
 }
 void EventHandler::handleConfigureNotify(const XEvent &event) {
 }
 void EventHandler::handleButtonPress(const XEvent &event) {
 	auto e = event.xbutton;
-	const Window frame = wm_.getClient(event.xbutton.window)->getFrame();
+	const Window frame = WindowManager::getInstance()->getClient(event.xbutton.window)->getFrame();
 	// give focus to the window
-	XSetInputFocus(wm_.getDisplay(), frame, RevertToParent, CurrentTime);
+	XSetInputFocus(WindowManager::getInstance()->getDisplay(), frame, RevertToParent, CurrentTime);
 	// 1. Save initial cursor position.
 //	drag_start_pos_ = Position<int>(e.x_root, e.y_root);
 //	// 2. Save initial window info.
@@ -181,7 +178,7 @@ void EventHandler::handleButtonPress(const XEvent &event) {
 //	drag_start_frame_pos_ = Position<int>(x, y);
 //	drag_start_frame_size_ = Size<int>(width, height);
 	// 3. Raise clicked window to top.
-	XRaiseWindow(wm_.getDisplay(),frame);
+	XRaiseWindow(WindowManager::getInstance()->getDisplay(),frame);
 }
 void EventHandler::handleButtonRelease(const XEvent &event) {}
 void EventHandler::handleKeyPress(const XEvent &event) {}
@@ -190,50 +187,50 @@ void EventHandler::handleEnterNotify(const XEvent &event) {}
 void EventHandler::handleLeaveNotify(const XEvent &event) {}
 void EventHandler::handleExpose(const XEvent &event) {
 	auto e = event.xexpose;
-	auto bar = wm_.getBar();
+	auto bar = WindowManager::getInstance()->getBar();
 	if (e.window == bar) {
-		auto display_ = wm_.getDisplay();
+		auto display_ = WindowManager::getInstance()->getDisplay();
 		auto screen = DefaultScreen(display_);
 		std::stringstream message;
 		auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 		std::tm localTime{};
 		localtime_r(&now, &localTime);
-		message << PROGRAM_NAME << " " << PROGRAM_VERSION << " " << wm_.getClientCount() << " clients" << " " << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S") ;
+		message << PROGRAM_NAME << " " << PROGRAM_VERSION << " " << WindowManager::getInstance()->getClientCount() << " clients" << " " << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S") ;
 		XClearWindow(display_, bar);
-		XDrawString(wm_.getDisplay(), wm_.getBar(), DefaultGC(display_, screen), 300, 15, message.str().c_str(), message.str().size());
+		XDrawString(WindowManager::getInstance()->getDisplay(), WindowManager::getInstance()->getBar(), DefaultGC(display_, screen), 300, 15, message.str().c_str(), message.str().size());
 		XFlush(display_);
 	}
 }
 void EventHandler::handleFocusIn(const XEvent &event) {
 	auto e = event.xfocus;
-	if (e.window == wm_.getRoot()) {
+	if (e.window == WindowManager::getInstance()->getRoot()) {
 		return;
 	}
-	Client * client = wm_.getClient(e.window);
+	Client * client = WindowManager::getInstance()->getClient(e.window);
 	if (client == nullptr) {
 		return;
 	}
 	else {
-		unsigned long ActiveColor = std::get<unsigned long>(wm_.getConfigHandler().getConfig("ActiveColor"));
-		logger_.Log("Window focused: " + client->getTitle() , L_INFO);
-		XSetWindowBorder(wm_.getDisplay(), client->getFrame(), ActiveColor);
-		XFlush(wm_.getDisplay());
+		unsigned long ActiveColor = std::get<unsigned long>(WindowManager::getInstance()->getConfigHandler().getConfig("ActiveColor"));
+		Logger::GetInstance()->Log("Window focused: " + client->getTitle() , L_INFO);
+		XSetWindowBorder(WindowManager::getInstance()->getDisplay(), client->getFrame(), ActiveColor);
+		XFlush(WindowManager::getInstance()->getDisplay());
 	}
 }
 void EventHandler::handleFocusOut(const XEvent &event) {
 	auto e = event.xfocus;
-	if (e.window == wm_.getRoot()) {
+	if (e.window == WindowManager::getInstance()->getRoot()) {
 		return;
 	}
-	Client * client = wm_.getClient(e.window);
+	Client * client = WindowManager::getInstance()->getClient(e.window);
 	if (client == nullptr) {
 		return;
 	}
 	else {
-		unsigned long InActiveColor = std::get<unsigned long>(wm_.getConfigHandler().getConfig("InActiveColor"));
-		logger_.Log("Window unfocused: " + client->getTitle() , L_INFO);
-		XSetWindowBorder(wm_.getDisplay(), client->getFrame(), InActiveColor);
-		XFlush(wm_.getDisplay());
+		unsigned long InActiveColor = std::get<unsigned long>(WindowManager::getInstance()->getConfigHandler().getConfig("InActiveColor"));
+		Logger::GetInstance()->Log("Window unfocused: " + client->getTitle() , L_INFO);
+		XSetWindowBorder(WindowManager::getInstance()->getDisplay(), client->getFrame(), InActiveColor);
+		XFlush(WindowManager::getInstance()->getDisplay());
 	}
 }
 void EventHandler::handlePropertyNotify(const XEvent &event) {}
@@ -242,40 +239,40 @@ void EventHandler::handleDestroyNotify(const XEvent &event) {}
 void EventHandler::handleReparentNotify(const XEvent &event) {}
 void EventHandler::handleMapRequest(const XEvent &event) {
 	XMapRequestEvent e = event.xmaprequest;
-	if (e.parent != wm_.getRoot()) {
-		logger_.Log("Ignoring map request for window: " + std::to_string(e.window), L_INFO);
+	if (e.parent != WindowManager::getInstance()->getRoot()) {
+		Logger::GetInstance()->Log("Ignoring map request for window: " + std::to_string(e.window), L_INFO);
 		return;
 	}
 	try {
-		if (wm_.getClientRef(e.window).isMapped()) {
-			logger_.Log("Window already mapped: " + std::to_string(e.window), L_INFO);
+		if (WindowManager::getInstance()->getClientRef(e.window).isMapped()) {
+			Logger::GetInstance()->Log("Window already mapped: " + std::to_string(e.window), L_INFO);
 			return;
 		}
-		Client &client = wm_.getClientRef(e.window);
+		Client &client = WindowManager::getInstance()->getClientRef(e.window);
 		if (client.isFramed()) {
-			logger_.Log("Window already framed: " + std::to_string(e.window), L_INFO);
+			Logger::GetInstance()->Log("Window already framed: " + std::to_string(e.window), L_INFO);
 			return;
 		}
 		else {
-			logger_.Log("Framing window: " + client.getTitle(), L_INFO);
+			Logger::GetInstance()->Log("Framing window: " + client.getTitle(), L_INFO);
 			if (client.frame() != YGG_CLI_NO_ERROR)
-				logger_.Log("Failed to frame window: " + std::to_string(e.window), L_ERROR);
-			wm_.setFocus(&client);
+				Logger::GetInstance()->Log("Failed to frame window: " + std::to_string(e.window), L_ERROR);
+			WindowManager::getInstance()->setFocus(&client);
 		}
-		logger_.Log("Window already mapped: " + std::to_string(e.window), L_INFO);
+		Logger::GetInstance()->Log("Window already mapped: " + std::to_string(e.window), L_INFO);
 		return;
 	}
 	catch (std::out_of_range &err) {
-		logger_.Log("Creating new client for window: " + std::to_string(e.window), L_INFO);
-		wm_.insertClient(e.window);
-		if (wm_.getClientRef(e.window).frame() != YGG_CLI_NO_ERROR)
-			logger_.Log("Failed to frame window: " + std::to_string(e.window), L_ERROR);
+		Logger::GetInstance()->Log("Creating new client for window: " + std::to_string(e.window), L_INFO);
+		WindowManager::getInstance()->insertClient(e.window);
+		if (WindowManager::getInstance()->getClientRef(e.window).frame() != YGG_CLI_NO_ERROR)
+			Logger::GetInstance()->Log("Failed to frame window: " + std::to_string(e.window), L_ERROR);
 	}
-	XMapWindow(wm_.getDisplay(), e.window);
+	XMapWindow(WindowManager::getInstance()->getDisplay(), e.window);
 }
 void EventHandler::handleMotionNotify(const XEvent &event) {
 	auto e = event.xmotion;
-	const Window frame = wm_.getClientRef(event.xmotion.window).getFrame();
+	const Window frame = WindowManager::getInstance()->getClientRef(event.xmotion.window).getFrame();
 //	const Position<int> drag_pos(e.x_root, e.y_root);
 //	const Vector2D<int> delta = drag_pos - drag_start_pos_;
 //
@@ -307,6 +304,6 @@ void EventHandler::handleMotionNotify(const XEvent &event) {
 }
 void EventHandler::handleCreateNotify(const XEvent &event) {}
 void EventHandler::handleUnknown(const XEvent &event) {
-	logger_.Log("Unknown event type: " + std::to_string(event.type), L_WARNING);
+	Logger::GetInstance()->Log("Unknown event type: " + std::to_string(event.type), L_WARNING);
 }
 

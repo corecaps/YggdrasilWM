@@ -56,7 +56,7 @@ public:
  * @param logger Constant reference to the Logger object.
  * @return EventHandler object.
  */
-	EventHandler(WindowManager &wm, const Logger &logger);
+	EventHandler();
 /**
  * @fn ~EventHandler()
  * @brief Destroy the Event Handler:: Event Handler object
@@ -72,8 +72,6 @@ public:
  */
 	void dispatchEvent(const XEvent& event);
 private:
-	WindowManager wm_;
-	const Logger &logger_;
 	using Handler = void (EventHandler::*)(const XEvent&);
 	Handler eventHandlerArray[LASTEvent]{};
 /**

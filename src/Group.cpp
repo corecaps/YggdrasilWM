@@ -35,23 +35,21 @@ Group::Group(const std::string& name,
 			 int borderSize,
 			 int gap,
 			 int barHeight,
-			 WindowManager &windowManager,
 			 LayoutType layoutType) :
 			 name_(name),
 			 layoutManager_(nullptr),
 			 borderSize_(borderSize),
 			 gap_(gap),
 			 barHeight_(barHeight),
-			 wm_(windowManager),
 			 active_(false){
-	wm_.getLogger().Log("Group Created [" + name + "]", L_INFO);
-	Display *display = wm_.getDisplay();
+	Logger::GetInstance()->Log("Group Created [" + name + "]", L_INFO);
+	Display *display = WindowManager::getInstance()->getDisplay();
 	int size_x = DisplayWidth(display, DefaultScreen(display));
 	int size_y = DisplayHeight(display, DefaultScreen(display));
 	switch (layoutType) {
 		case TREE:
 			layoutManager_ = new TreeLayoutManager(display,
-												   wm_.getRoot(),
+												   WindowManager::getInstance()->getRoot(),
 												   size_x,
 												   size_y,
 												   0,
@@ -65,7 +63,7 @@ Group::Group(const std::string& name,
 		case HORIZONTAL:
 		default:
 			layoutManager_ = new TreeLayoutManager(display,
-												   wm_.getRoot(),
+												   WindowManager::getInstance()->getRoot(),
 												   size_x,
 												   size_y,
 												   0,
@@ -86,10 +84,10 @@ void Group::AddClient(Window window, Client *client) {
 void Group::RemoveClient(Window window) {
 	clients_.erase(window);
 	try {
-		auto c = wm_.getClient(window);
+		auto c = WindowManager::getInstance()->getClient(window);
 		layoutManager_->removeClient(c);
 	} catch (const std::exception &e) {
-		wm_.getLogger().Log(e.what(), L_ERROR);
+		Logger::GetInstance()->Log(e.what(), L_ERROR);
 	}
 }
 void Group::RemoveClient(Client *client) {
@@ -100,10 +98,10 @@ void Group::SetActive(bool active) { active_ = active; }
 void Group::moveClientToGroup(Window window, Group *group) {
 	clients_.erase(window);
 	try {
-		auto c = wm_.getClient(window);
+		auto c = WindowManager::getInstance()->getClient(window);
 		group->AddClient(window, c);
 	} catch (const std::exception &e) {
-		wm_.getLogger().Log(e.what(), L_ERROR);
+		Logger::GetInstance()->Log(e.what(), L_ERROR);
 	}
 }
 void Group::switchTo() {

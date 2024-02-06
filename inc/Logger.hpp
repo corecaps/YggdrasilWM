@@ -37,6 +37,8 @@
 #include <sstream>
 #include <fstream>
 #include <memory>
+#include <mutex>
+
 /**
  * @brief Log levels
  * L_INFO: Informational messages
@@ -57,22 +59,30 @@ enum LogLevel {
  */
 class Logger {
 public:
+	Logger(const Logger&) = delete;
+	Logger& operator=(const Logger&) = delete;
 /**
- * @fn Logger(const std::string& logFile, LogLevel logLevel)
- * @brief Construct a new Logger:: Logger object
- * This constructor is used when the user wants to log to a file.
- * @param logFile the file to log to
- * @param logLevel level of logging 0: info, 1: warning, 2: error
+ * @fn static Logger* Logger::Create(const std::string& logFile, LogLevel logLevel)
+ * @brief Create a Logger object that logs to a file
+ * @param logFile
+ * @param logLevel
+ * @return
  */
-	Logger(const std::string& logFile, LogLevel logLevel);
+	static void Create(const std::string& logFile, LogLevel logLevel);
 /**
- * @fn Logger(std::ostream& output, LogLevel logLevel)
- * @brief Construct a new Logger:: Logger object
- * This constructor is used when the user wants to log to a stream.
- * @param output the stream to log to
- * @param logLevel level of logging 0: info, 1: warning, 2: error
+ * @fn static Logger* Logger::Create(std::ostream& output, LogLevel logLevel)
+ * @brief Create a Logger object that logs to a stream
+ * @param output
+ * @param logLevel
+ * @return
  */
-	Logger(std::ostream& output, LogLevel logLevel);
+	static void Create(std::ostream& output, LogLevel logLevel);
+/**
+ * @fn static Logger* Logger::GetInstance()
+ * @brief Get the Logger object
+ * @return
+ */
+	static Logger* GetInstance();
 /**
  * @brief Destroy the Logger:: Logger object
  * closes the log file if it was opened.
@@ -93,6 +103,22 @@ public:
 
 private:
 /**
+ * @fn Logger(const std::string& logFile, LogLevel logLevel)
+ * @brief Construct a new Logger:: Logger object
+ * This constructor is used when the user wants to log to a file.
+ * @param logFile the file to log to
+ * @param logLevel level of logging 0: info, 1: warning, 2: error
+ */
+	Logger(const std::string& logFile, LogLevel logLevel);
+/**
+ * @fn Logger(std::ostream& output, LogLevel logLevel)
+ * @brief Construct a new Logger:: Logger object
+ * This constructor is used when the user wants to log to a stream.
+ * @param output the stream to log to
+ * @param logLevel level of logging 0: info, 1: warning, 2: error
+ */
+	Logger(std::ostream& output, LogLevel logLevel);
+/**
  * @fn std::string Logger::GetLogLevel(LogLevel level)
  * @brief Get the log level as a string
  * @param level
@@ -112,7 +138,9 @@ private:
  * @return true if the stream is a file
  */
 	bool streamIsFile_;
-	std::ostream* logStream_;
-	LogLevel logLevel_;
+	static Logger*		instance_;
+	static std::mutex	mutex_;
+	std::ostream*		logStream_;
+	LogLevel			logLevel_;
 };
 #endif //WINDOWMANAGER_LOGGER_H
