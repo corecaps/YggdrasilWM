@@ -90,8 +90,6 @@ void killXephyr() {
 // Mock Logger class for testing
 class MockLogger : public Logger {
 public:
-	explicit MockLogger(std::ostream& output = std::cout, LogLevel logLevel = L_INFO)
-			: Logger(output, logLevel) {}
 	MOCK_METHOD(void, Log, (const std::string& message, LogLevel logLevel), (const));
 };
 
@@ -106,10 +104,10 @@ protected:
 		sleep(3);
 		runXeyes();
 		sleep(1);
+		MockLogger::Create(std::cout, L_INFO);
 	}
 
 	void SetUp() override {
-		mockLogger = std::make_shared<MockLogger>();
 		configHandler_ = ConfigHandler();
 		configHandler_.loadConfig();
 
@@ -120,55 +118,37 @@ protected:
 		killXephyr();
 	}
 	void TearDown() override {
-	mockLogger.reset();
 	}
 	ConfigHandler configHandler_;
-	std::shared_ptr<MockLogger> mockLogger;
 };
 
 TEST_F(WindowManagerTest, CreateWithValidDisplay) {
-// Expect the Log method to be called with INFO level
-EXPECT_CALL(*mockLogger, Log(::testing::_, L_INFO))
-.Times(::testing::AtLeast(1));
-
 // Try to create a WindowManager with a valid display
 
-WindowManager::Create(*mockLogger, configHandler_,":1");
+WindowManager::Create(configHandler_,":1");
 
 // Check if the WindowManager object is created
 ASSERT_TRUE(WindowManager::getInstance());
+WindowManager::Destroy();
 
-// Check if the Logger instance is correctly set
-ASSERT_EQ(WindowManager::getInstance()->getLogger(), mockLogger.get());
 }
 
 TEST_F(WindowManagerTest, CreateWithInvalidDisplay) {
-// Expect the Log method to be called with ERROR level
-EXPECT_CALL(*mockLogger, Log(::testing::_, L_ERROR))
-.Times(::testing::AtLeast(1));
-
 // Try to create a WindowManager with an invalid display
-WindowManager::Create(*mockLogger, configHandler_,"invalid_display");
-
-// Check if the WindowManager object is not created
-ASSERT_FALSE(WindowManager::getInstance());
+	// Try to create a WindowManager with an invalid display and expect it to throw
+	EXPECT_THROW(WindowManager::Create(configHandler_,"invalid_display"), std::runtime_error);
+	// Now, check if getting the instance throws, indicating no instance was created
+	EXPECT_THROW(WindowManager::getInstance(), std::runtime_error);
+	WindowManager::Destroy();
 }
 
-TEST_F(WindowManagerTest, GetLogger) {
-	EXPECT_CALL(*mockLogger, Log(::testing::_, L_INFO))
-			.Times(::testing::AtLeast(1));
-WindowManager::Create(*mockLogger, configHandler_,":1");
-ASSERT_EQ(WindowManager::getInstance()->getLogger(), mockLogger.get());
-}
 TEST_F(WindowManagerTest, initWM) {
-	EXPECT_CALL(*mockLogger, Log(::testing::_, L_INFO))
-			.Times(::testing::AtLeast(1));
-	WindowManager::Create(*mockLogger, configHandler_,":1");
-	ASSERT_EQ(WindowManager::getInstance()->getLogger(), mockLogger.get());
+	WindowManager::Create( configHandler_,":1");
 	WindowManager::getInstance()->Init();
 	ASSERT_EQ(WindowManager::getInstance()->getRunning(), true);
 	ASSERT_GE(WindowManager::getInstance()->getClients().size(), 0);
 	std::cout << "Client size : " << WindowManager::getInstance()->getClients().size() << std::endl;
 	ASSERT_NE(WindowManager::getInstance()->getDisplay(), nullptr);
 	ASSERT_NE(WindowManager::getInstance()->getRoot(), 0);
+	WindowManager::Destroy();
 }
