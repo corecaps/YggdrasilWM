@@ -155,10 +155,10 @@ void WindowManager::selectEventOnRoot() const {
 	XSetErrorHandler(&WindowManager::OnXError);
 }
 void WindowManager::Run() {
-	auto eventHandler = EventHandler();
+	EventHandler::create();
 	XEvent e;
 	while (running && !XNextEvent(display_, &e)) {
-		eventHandler.dispatchEvent(e);
+		EventHandler::getInstance()->dispatchEvent(e);
 		XSync(display_, false);
 	}
 }

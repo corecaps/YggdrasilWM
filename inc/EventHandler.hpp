@@ -49,14 +49,18 @@ extern "C" {
  */
 class EventHandler {
 public:
+	EventHandler(const EventHandler&) = delete;
+	EventHandler& operator=(const EventHandler&) = delete;
 /**
- * @fn EventHandler(WindowManager &wm, const Logger &logger)
- * @brief Construct a new Event Handler:: Event Handler object
- * @param wm Constant reference to the WindowManager object.
- * @param logger Constant reference to the Logger object.
- * @return EventHandler object.
+ * @fn static void EventHandler::create()
+ * @brief Create the Event Handler:: Event Handler object
  */
-	EventHandler();
+	static void create();
+/**
+ * @fn EventHandler * EventHandler::getInstance()
+ * @brief Get the Event Handler:: Event Handler object
+ */
+	static EventHandler * getInstance();
 /**
  * @fn ~EventHandler()
  * @brief Destroy the Event Handler:: Event Handler object
@@ -74,6 +78,16 @@ public:
 private:
 	using Handler = void (EventHandler::*)(const XEvent&);
 	Handler eventHandlerArray[LASTEvent]{};
+	static EventHandler *					instance_;
+	static std::mutex						mutex_;
+/**
+ * @fn EventHandler(WindowManager &wm, const Logger &logger)
+ * @brief Construct a new Event Handler:: Event Handler object
+ * @param wm Constant reference to the WindowManager object.
+ * @param logger Constant reference to the Logger object.
+ * @return EventHandler object.
+ */
+	EventHandler();
 /**
  * @fn void EventHandler::handleMapNotify(const XEvent& event)
  * @brief Handles the MapNotify event.
