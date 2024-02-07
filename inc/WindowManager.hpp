@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file WindowManager.hpp
  * @brief WindowManager class header.
- * @date 2024-02-06
+ * @date 2024-02-07
  */
 
 #ifndef WINDOW_MANAGER_HPP

@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file main.cpp
  * @brief Main file.
- * @date 2024-02-06
+ * @date 2024-02-07
  * YggdrasilWM is a tiny window manager for X11.
  */
 

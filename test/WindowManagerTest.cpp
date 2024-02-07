@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file WindowManagerTest.cpp
  * @brief Unit tests for WindowManager class.
- * @date 2024-02-06
+ * @date 2024-02-07
  *
  */
 #include <gtest/gtest.h>

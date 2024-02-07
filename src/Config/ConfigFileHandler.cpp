@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigFileHandler.cpp
  * @brief ConfigFileHandler class implementation.
- * @date 2024-02-06
+ * @date 2024-02-07
  *
  */
 #include "Config/ConfigFileHandler.hpp"
