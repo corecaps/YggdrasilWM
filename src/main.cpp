@@ -30,7 +30,7 @@
 #include "WindowManager.hpp"
 #include "Logger.hpp"
 #include <cxxopts.hpp>
-#include "ConfigHandler.hpp"
+#include "Config/ConfigHandler.hpp"
 
 /**
  * @fn int main(int argc, char** argv)

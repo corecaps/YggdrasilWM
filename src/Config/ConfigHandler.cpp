@@ -26,8 +26,9 @@
  *
  */
 
-#include "ConfigHandler.hpp"
-#include "ConfigFileHandler.hpp"
+#include "Config/ConfigHandler.hpp"
+#include "Config/ConfigFileHandler.hpp"
+#include "Logger.hpp"
 ConfigHandler * ConfigHandler::instance_ = nullptr;
 void ConfigHandler::Create(const std::string& configPath) {
 	if (instance_ == nullptr) {
@@ -68,6 +69,15 @@ void ConfigHandler::configInit() {
 	configFileHandler_->readConfig();
 	configPath_ = configFileHandler_->getConfigPath();
 	root_ = configFileHandler_->getRoot();
+	if (root_.empty() || !root_.isObject()) {
+		throw std::runtime_error("Config file is empty or not an object");
+	}
+	Json::Value Groups = root_["Groups"];
+	Json::Value Bars = root_["Bars"];
+	Json::Value Bindings = root_["Bindings"];
+	if (Groups.empty() || !Groups.isObject() || Bars.empty() || !Bars.isObject() || Bindings.empty() || !Bindings.isObject()){
+		throw std::runtime_error("Config file is missing Groups, Bars or Bindings See Documentation for more information");
+	}
 }
 ConfigHandler::~ConfigHandler() = default;
 unsigned long ConfigHandler::colorCodeToULong(const std::string& colorCode) {

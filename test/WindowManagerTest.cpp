@@ -31,7 +31,7 @@
 #include "Logger.hpp"
 #include <cstdlib>
 #include <unistd.h>
-#include "ConfigHandler.hpp"
+#include "Config/ConfigHandler.hpp"
 
 void runXephyr () {
 	pid_t pid = fork();

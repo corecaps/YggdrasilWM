@@ -36,8 +36,8 @@ extern "C" {
 #include <chrono>
 #include "Logger.hpp"
 #include "Client.hpp"
-#include "TreeLayoutManager.hpp"
-#include "ConfigHandler.hpp"
+#include "Layouts/TreeLayoutManager.hpp"
+#include "Config/ConfigHandler.hpp"
 #include <iostream>
 #include <algorithm>
 #include <csignal>

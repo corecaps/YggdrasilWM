@@ -24,7 +24,7 @@
  * @brief handle Tree Style Layout.
  * @date 2024-02-06
  */
-#include "TreeLayoutManager.hpp"
+#include "Layouts/TreeLayoutManager.hpp"
 TreeLayoutManager::TreeLayoutManager(Display *display,
 									 Window root,
 									 int size_x,

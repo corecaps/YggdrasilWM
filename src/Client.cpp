@@ -29,7 +29,7 @@
 #include <iostream>
 #include <cstring>
 #include "Client.hpp"
-#include "LayoutManager.hpp"
+#include "Layouts/LayoutManager.hpp"
 #include "Group.hpp"
 
 Client::Client(Display *display,

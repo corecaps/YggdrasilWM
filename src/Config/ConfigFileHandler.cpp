@@ -25,7 +25,7 @@
  * @date 2024-02-06
  *
  */
-#include "ConfigFileHandler.hpp"
+#include "Config/ConfigFileHandler.hpp"
 #include "Logger.hpp"
 const std::vector<std::string> ConfigFileHandler::defaultPaths = {
 		"config.json",

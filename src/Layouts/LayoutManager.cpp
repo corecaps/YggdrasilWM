@@ -25,7 +25,7 @@
  * @date 2024-02-06
  *
  */
-#include "LayoutManager.hpp"
+#include "Layouts/LayoutManager.hpp"
 LayoutManager::LayoutManager(Display *display,
 							 Window root,
 							 int size_x,

@@ -90,18 +90,28 @@ set(SOURCES
         ${INCLUDE_DIR}/Client.hpp
         ${SOURCE_DIR}/EventHandler.cpp
         ${INCLUDE_DIR}/EventHandler.hpp
-        ${SOURCE_DIR}/LayoutManager.cpp
-        ${INCLUDE_DIR}/LayoutManager.hpp
-        ${SOURCE_DIR}/ConfigHandler.cpp
-        ${INCLUDE_DIR}/ConfigHandler.hpp
+        ${SOURCE_DIR}/Layouts/LayoutManager.cpp
+        ${INCLUDE_DIR}/Layouts/LayoutManager.hpp
+        ${SOURCE_DIR}/Layouts/TreeLayoutManager.cpp
+        ${INCLUDE_DIR}/Layouts/TreeLayoutManager.hpp
+        ${SOURCE_DIR}/Config/ConfigHandler.cpp
+        ${INCLUDE_DIR}/Config/ConfigHandler.hpp
+        ${SOURCE_DIR}/Config/ConfigDataBase.cpp
+        ${INCLUDE_DIR}/Config/ConfigDataBase.hpp
+        ${SOURCE_DIR}/Config/ConfigDataGroups.cpp
+        ${INCLUDE_DIR}/Config/ConfigDataGroups.hpp
+        ${SOURCE_DIR}/Config/ConfigDataGroup.cpp
+        ${INCLUDE_DIR}/Config/ConfigDataGroup.hpp
+        ${SOURCE_DIR}/Config/ConfigDataBars.cpp
+        ${INCLUDE_DIR}/Config/ConfigDataBars.hpp
+        ${SOURCE_DIR}/Config/ConfigDataBar.cpp
+        ${INCLUDE_DIR}/Config/ConfigDataBar.hpp
+        ${SOURCE_DIR}/Config/ConfigDataBindings.cpp
+        ${INCLUDE_DIR}/Config/ConfigDataBindings.hpp
+        ${SOURCE_DIR}/Config/ConfigFileHandler.cpp
+        ${INCLUDE_DIR}/Config/ConfigFileHandler.hpp
         ${SOURCE_DIR}/Group.cpp
         ${INCLUDE_DIR}/Group.hpp
-        ${SOURCE_DIR}/ConfigFileHandler.cpp
-        ${INCLUDE_DIR}/ConfigFileHandler.hpp
-        ${SOURCE_DIR}/ConfigDataBase.cpp
-        ${INCLUDE_DIR}/ConfigDataBase.hpp
-        ${SOURCE_DIR}/TreeLayoutManager.cpp
-        ${INCLUDE_DIR}/TreeLayoutManager.hpp
 )
 
 # Create the executable

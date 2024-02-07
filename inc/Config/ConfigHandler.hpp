@@ -32,9 +32,12 @@
 #include <string>
 #include <fstream>
 #include <unordered_map>
-#include <json/json.h>
+#include "json/json.h"
 #include <variant>
 #include <cctype>
+#include <typeindex>
+class ConfigData;
+
 class ConfigFileHandler;
 /**
  * @class ConfigHandler
@@ -51,6 +54,30 @@ class ConfigHandler {
 public:
 	ConfigHandler(const ConfigHandler&) = delete;
 	ConfigHandler& operator=(const ConfigHandler&) = delete;
+/**
+ * @fn template <typename T> T* ConfigHandler::getConfigData()
+ * @brief Get the ConfigData object of type T
+ * @tparam T Type of the ConfigData object
+ * @return a pointer to an object form a subclass of ConfigData
+ */
+	template <typename T>
+	T* getConfigData() {
+		auto it = configMap_.find(std::type_index(typeid(T)));
+		if (it == configMap_.end()) {
+			throw std::runtime_error("ConfigData not found");
+		}
+		return static_cast<T*>(it->second);
+	}
+/**
+ * @fn template <typename T> void ConfigHandler::addConfigData(T* configData)
+ * @tparam T Type of the ConfigData object you want to add to the ConfigHandler
+ * @param configData the ConfigData object you want to add
+ */
+	template <typename T>
+	void addConfigData(T* configData) {
+		static_assert(std::is_base_of<ConfigData, T>::value, "T must be a subclass of ConfigData");
+		configMap_[std::type_index(typeid(T))] = configData;
+	}
 /**
  * @fn static void ConfigHandler::Create(const std::string& configPath)
  * @brief Create a ConfigHandler object with a path
@@ -92,6 +119,7 @@ private:
 	std::unique_ptr<ConfigFileHandler> configFileHandler_;
 	static ConfigHandler* instance_;
 	Json::Value root_;
+	std::unordered_map<std::type_index, ConfigData * > configMap_;
 /**
  * @fn ConfigHandler()
  * @brief Construct a new ConfigHandler object without a path

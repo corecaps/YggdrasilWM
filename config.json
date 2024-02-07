@@ -1,7 +1,48 @@
 {
-  "BorderWidth": 2,
-  "ActiveColor": "#ff0000",
-  "InActiveColor": "#00ff00",
-  "BarHeight": 30,
-  "Gap": 10
+  // Yggdrasil Window Manager Configuration
+  "Groups": {
+    "1" : {
+      "Name": "1",
+      "Layout": "Tree",
+      "Inactive_Color": "#FF0000",
+      "Active_Color": "#00FF00",
+      "Border_Size": 2,
+      "Gap": 10
+    },
+    "2" : {
+      "Name": "2",
+      "Layout": "Tree",
+      "Inactive_Color": "#FF0000",
+      "Active_Color": "#00FF00",
+      "Border_Size": 2,
+      "Gap": 10
+    },
+    "3" : {
+      "Name": "3",
+      "Layout": "Tree",
+      "Inactive_Color": "#FF0000",
+      "Active_Color": "#00FF00",
+      "Border_Size": 2,
+      "Gap": 10
+    }
+  },
+  "Bars": {
+    "1": {
+      "Height": 30,
+      "Font": "Arial",
+      "Font_Size": 12,
+      "Font_Color": "#000000",
+      "Background_Color": "#FFFFFF",
+      "Border_Size": 2,
+      "Border_Color": "#000000"
+    }
+  },
+  "Bindings": {
+    "ModMask": "Mod4",
+    "Move": "Mod1",
+    "Resize": "Mod3",
+    "Close": "Mod2",
+    "Next": "Tab",
+    "Terminal": "Return"
+  }
 }

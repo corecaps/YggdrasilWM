@@ -29,7 +29,7 @@
 
 #include <utility>
 #include "Client.hpp"
-#include "LayoutManager.hpp"
+#include "Layouts/LayoutManager.hpp"
 
 Group::Group(const std::string& name,
 			 int borderSize,
