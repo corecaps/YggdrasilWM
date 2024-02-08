@@ -22,12 +22,15 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigHandler.cpp
  * @brief ConfigHandler class implementation.
- * @date 2024-02-07
+ * @date 2024-02-08
  *
  */
 
 #include "Config/ConfigHandler.hpp"
 #include "Config/ConfigFileHandler.hpp"
+#include "Config/ConfigDataGroups.hpp"
+#include "Config/ConfigDataBars.hpp"
+#include "Config/ConfigDataBindings.hpp"
 #include "Logger.hpp"
 ConfigHandler * ConfigHandler::instance_ = nullptr;
 void ConfigHandler::Create(const std::string& configPath) {
@@ -66,6 +69,7 @@ Json::Value &ConfigHandler::getRoot() {
 	return root_;
 }
 void ConfigHandler::configInit() {
+	Logger::GetInstance()->Log("===================Loading Config===================",L_INFO);
 	configFileHandler_->readConfig();
 	configPath_ = configFileHandler_->getConfigPath();
 	root_ = configFileHandler_->getRoot();
@@ -78,6 +82,12 @@ void ConfigHandler::configInit() {
 	if (Groups.empty() || !Groups.isObject() || Bars.empty() || !Bars.isObject() || Bindings.empty() || !Bindings.isObject()){
 		throw std::runtime_error("Config file is missing Groups, Bars or Bindings See Documentation for more information");
 	}
+	addConfigData(new ConfigDataGroups());
+	addConfigData(new ConfigDataBars());
+	addConfigData(new ConfigDataBindings());
+	getConfigData<ConfigDataGroups>()->configInit(Groups);
+	getConfigData<ConfigDataBars>()->configInit(Bars);
+	getConfigData<ConfigDataBindings>()->configInit(Bindings);
 }
 ConfigHandler::~ConfigHandler() = default;
 unsigned long ConfigHandler::colorCodeToULong(const std::string& colorCode) {

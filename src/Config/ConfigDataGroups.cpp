@@ -22,14 +22,26 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataGroups.cpp
  * @brief ConfigDataGroups class implementation.
- * @date 2024-02-07
+ * @date 2024-02-08
  */
 #include "Config/ConfigDataGroups.hpp"
 #include "Config/ConfigDataGroup.hpp"
+#include "Logger.hpp"
+#include <strstream>
 
 ConfigDataGroups::ConfigDataGroups() : groups_(), root_() {}
 void ConfigDataGroups::configInit(Json::Value &root_) {
-
+	root_ = root_;
+	if (root_.empty() || !root_.isObject()) {
+		throw std::runtime_error("Invalid configuration file");
+	}
+	for (auto const &groupName : root_.getMemberNames()) {
+		auto group = new ConfigDataGroup();
+		group->configInit(root_[groupName]);
+		groups_[groupName] = group;
+		Logger::GetInstance()->Log("=============================\t\tGroup [" + groupName + "] Configuration loaded ✓",L_INFO);
+	}
+	Logger::GetInstance()->Log(std::to_string(groups_.size()) + " Groups configuration loaded [✓]",L_INFO);
 }
 Json::Value ConfigDataGroups::configSave() {
 	return Json::Value();

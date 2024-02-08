@@ -22,9 +22,11 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataGroup.cpp
  * @brief ConfigDataGroup class implementation.
- * @date 2024-02-07
+ * @date 2024-02-08
  */
 #include "Config/ConfigDataGroup.hpp"
+#include "Logger.hpp"
+#include <sstream>
 ConfigDataGroup::ConfigDataGroup() {
 	groupName_ = "Default";
 	groupLayout_ = "Tree";
@@ -34,6 +36,46 @@ ConfigDataGroup::ConfigDataGroup() {
 	groupGap_ = 10;
 }
 void ConfigDataGroup::configInit(Json::Value &root_) {
+	root_ = root_;
+	if (root_.empty() || !root_.isObject()) {
+		throw std::runtime_error("ConfigDataGroup::configInit root is empty or not an object");
+	}
+	if (root_["Name"].empty() || !root_["Name"].isString()) {
+		Logger::GetInstance()->Log("ConfigDataGroup::configInit Name is empty or not a string",L_ERROR);
+	} else {
+		groupName_ = root_["Name"].asString();
+	}
+	if (root_["Layout"].empty() || !root_["Layout"].isString()) {
+		Logger::GetInstance()->Log("ConfigDataGroup::configInit Layout is empty or not a string",L_ERROR);
+	} else {
+		groupLayout_ = root_["Layout"].asString();
+	}
+////	if (root_["Inactive_Color"].empty() || !root_["Inactive_Color"].isString()) {
+////		Logger::GetInstance()->Log("ConfigDataGroup::configInit Inactive_Color is empty or not a string",L_ERROR);
+////	} else {
+////		groupInactiveColor_ = root_["Inactive_Color"].asUInt();
+////	}
+//	groupInactiveColor_ = std::stoul(root_["Inactive_Color"].asString(), nullptr, 16);
+//	groupActiveColor_ = std::stoul(root_["Active_Color"].asString(), nullptr, 16);
+	if (root_["Border_Size"].empty() || !root_["Border_Size"].isInt()) {
+		Logger::GetInstance()->Log("ConfigDataGroup::configInit Border_Size is empty or not an int",L_ERROR);
+	} else {
+		groupBorderSize_ = root_["Border_Size"].asInt();
+	}
+	if (root_["Gap"].empty() || !root_["Gap"].isInt()) {
+		Logger::GetInstance()->Log("ConfigDataGroup::configInit Gap is empty or not an int",L_ERROR);
+	} else {
+		groupGap_ = root_["Gap"].asInt();
+	}
+	std::ostringstream msg;
+	msg << "Group[" << groupName_ << "]"
+	<< "\tLayout [" << groupLayout_ << "]"
+//	<< "\tInactive_Color [" << groupInactiveColor_ << "]"
+//	<< "\tActive_Color [" << groupActiveColor_ << "]"
+	<< "\tBorder_Size [" << groupBorderSize_ << "]"
+	<< "\tGap [" << groupGap_ << "]"
+	<< "-> loaded\t\t[✓]";
+	Logger::GetInstance()->Log(msg.str(),L_INFO);
 
 }
 Json::Value ConfigDataGroup::configSave() {

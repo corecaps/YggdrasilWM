@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigHandler.hpp
  * @brief ConfigHandler class header.
- * @date 2024-02-07
+ * @date 2024-02-08
  *
  */
 
@@ -33,6 +33,7 @@
 #include <fstream>
 #include <unordered_map>
 #include "json/json.h"
+#include "ConfigDataBase.hpp"
 #include <variant>
 #include <cctype>
 #include <typeindex>
@@ -75,7 +76,7 @@ public:
  */
 	template <typename T>
 	void addConfigData(T* configData) {
-		static_assert(std::is_base_of<ConfigData, T>::value, "T must be a subclass of ConfigData");
+		static_assert(std::is_base_of<ConfigDataBase, T>::value, "T must be a subclass of ConfigData");
 		configMap_[std::type_index(typeid(T))] = configData;
 	}
 /**
@@ -119,7 +120,7 @@ private:
 	std::unique_ptr<ConfigFileHandler> configFileHandler_;
 	static ConfigHandler* instance_;
 	Json::Value root_;
-	std::unordered_map<std::type_index, ConfigData * > configMap_;
+	std::unordered_map<std::type_index, ConfigDataBase * > configMap_;
 /**
  * @fn ConfigHandler()
  * @brief Construct a new ConfigHandler object without a path
