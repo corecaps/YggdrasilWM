@@ -27,6 +27,9 @@
  */
 #include "WindowManager.hpp"
 #include "EventHandler.hpp"
+#include "Config/ConfigDataBars.hpp"
+#include "Config/ConfigHandler.hpp"
+#include "Config/ConfigDataBar.hpp"
 
 bool WindowManager::wm_detected_;
 WindowManager * WindowManager::instance_ = nullptr;
@@ -228,9 +231,7 @@ void WindowManager::setFocus(Client *client) {
 }
 void WindowManager::Bar() {
 	int screen = DefaultScreen(display_);
-//	int barHeight = std::get<int>(configHandler_.getConfig("BarHeight"));
-/// Temporary hardcoded value
-	int barHeight = 30;
+	int barHeight = ConfigHandler::GetInstance().getConfigData<ConfigDataBars>()->getBar(0)->getBarHeight();
 	bar_ = XCreateSimpleWindow(
 			display_,
 			root_,

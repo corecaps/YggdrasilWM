@@ -50,3 +50,4 @@ Json::Value ConfigDataBars::configSave() {
 ConfigDataBar *ConfigDataBars::getBar(int index) { return bars_[index]; }
 void ConfigDataBars::addBar(const std::string &barName, ConfigDataBar *bar) { bars_.emplace_back(bar); }
 void ConfigDataBars::removeBar(int index) { bars_.erase(bars_.begin() + index);}
+const std::vector<ConfigDataBar *> &ConfigDataBars::getBars() const { return bars_; }

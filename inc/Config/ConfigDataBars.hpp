@@ -45,6 +45,10 @@ public:
 	void removeBar(int index);
 
 private:
+public:
+	const std::vector<ConfigDataBar *> &getBars() const;
+
+private:
 	std::vector<ConfigDataBar *> bars_;
 	Json::Value root_;
 };
