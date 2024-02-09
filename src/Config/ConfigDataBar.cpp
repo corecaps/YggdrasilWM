@@ -30,7 +30,14 @@
 #include "Logger.hpp"
 #include <sstream>
 
-ConfigDataBar::ConfigDataBar() {
+ConfigDataBar::ConfigDataBar() :
+		barHeight_(20),
+		barFont_("Arial"),
+		barFontColor_(0x00ff00),
+		barFontSize_(12),
+		barBackgroundColor_(0x00ff00),
+		barBorderSize_(2),
+		barBorderColor_(0x00ff00) {
 
 }
 void ConfigDataBar::configInit(Json::Value &root_) {
