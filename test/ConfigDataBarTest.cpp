@@ -30,23 +30,30 @@
 #include "Config/ConfigDataBar.hpp"
 #include "json/json.h"
 #include "Logger.hpp"
-
 class ConfigDataBarTest : public ::testing::Test {
 protected:
+	static void SetUpTestSuite() {
+		std::cout << " =================================================================================== " << std::endl;
+		std::cout << " ======================== ConfigDataBar Tests Set up =============================== " << std::endl;
+		std::cout << " =================================================================================== " << std::endl;
+	}
 	void SetUp() override {
 		Logger::Create(std::cout, L_INFO);
 	}
-
 	void TearDown() override {
 		Logger::Destroy();
 	}
 };
-
 TEST_F(ConfigDataBarTest, Initialization) {
 	ConfigDataBar bar;
-	EXPECT_NE(&bar, nullptr);  // Example expectation
+	EXPECT_NE(&bar, nullptr);
+	EXPECT_EQ(bar.getBarHeight(), 20);
+	EXPECT_EQ(bar.getBarFont(), "Arial");
+	EXPECT_EQ(bar.getBarFontSize(), 12);
+	EXPECT_EQ(bar.getBarFontColor(), 0x00ff00);
+	EXPECT_EQ(bar.getBarBackgroundColor(), 0x00ff00);
+	EXPECT_EQ(bar.getBarBorderSize(), 2);
 }
-
 TEST_F(ConfigDataBarTest, ConfigInitialization) {
 	Json::Value root;
 	root["Height"] = 20; // Example configuration
@@ -65,7 +72,6 @@ TEST_F(ConfigDataBarTest, ConfigInitialization) {
 	EXPECT_EQ(bar.getBarBackgroundColor(), 0xff0000);
 	EXPECT_EQ(bar.getBarBorderColor(), 0x0000ff);
 }
-
 TEST_F(ConfigDataBarTest, ConfigInitializationInvalid) {
 	Json::Value root;
 	ConfigDataBar bar;

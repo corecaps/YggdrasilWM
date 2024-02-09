@@ -32,71 +32,47 @@
 #include <cstdlib>
 #include <unistd.h>
 #include "Config/ConfigHandler.hpp"
-
 void runXephyr () {
 	pid_t pid = fork();
-
 	if (pid == -1) {
-		// Error handling if fork fails
 		perror("Fork failed");
 		exit(EXIT_FAILURE);
 	} else if (pid == 0) {
-		// Child process
 		freopen("/dev/null", "w", stdout);
 		freopen("/dev/null", "w", stderr);
-
 		execlp("/usr/bin/Xephyr", "/usr/bin/Xephyr", "-ac", "-br", "-noreset", "-screen", "800x600", ":1", nullptr);
-
-		// If exec fails
 		perror("Exec failed");
 		exit(EXIT_FAILURE);
 	} else {
 		std::cout << "[       OK ] Xephyr Launched on Display :1" << std::endl;
 	}
 }
-
 void runXeyes() {
 	pid_t pid = fork();
-
 	if (pid == -1) {
-		// Error handling if fork fails
 		perror("Fork failed");
 		exit(EXIT_FAILURE);
 	} else if (pid == 0) {
-		// Child process
 		if (setenv("DISPLAY", ":1", 1) != 0) {
 			perror("setenv failed");
 			exit(EXIT_FAILURE);
 		}
-
 		execlp("/usr/bin/xeyes", "/usr/bin/xeyes", nullptr);
-
-		// If exec fails
 		perror("Exec failed");
 		exit(EXIT_FAILURE);
 	} else {
 		std::cout << "[       OK ] Xeyes Launched on Display :1" << std::endl;
 	}
 }
-
-void killXeyes() {
-	system("pkill xeyes");
-}
-
-void killXephyr() {
-	system("pkill Xephyr");
-}
-
-// Mock Logger class for testing
+void killXeyes() { system("pkill xeyes"); }
+void killXephyr() { system("pkill Xephyr"); }
 class MockLogger : public Logger {
 public:
 	MOCK_METHOD(void, Log, (const std::string& message, LogLevel logLevel), (const));
 };
-
 class WindowManagerTest : public ::testing::Test {
 protected:
 	static void SetUpTestSuite() {
-		// Setup
 		std::cout << " =================================================================================== " << std::endl;
 		std::cout << " ======================== WindowManagerTest SetUpTestSuite ========================= " << std::endl;
 		std::cout << " =================================================================================== " << std::endl;
@@ -108,11 +84,9 @@ protected:
 		ConfigHandler::Create();
 		ConfigHandler::GetInstance().configInit();
 	}
-
 	void SetUp() override {
 	}
 	static void TearDownTestSuite() {
-		// Cleanup
 		killXeyes();
 		killXephyr();
 		MockLogger::Destroy();
@@ -121,27 +95,16 @@ protected:
 	void TearDown() override {
 	}
 };
-
 TEST_F(WindowManagerTest, CreateWithValidDisplay) {
-// Try to create a WindowManager with a valid display
-
-WindowManager::Create(":1");
-
-// Check if the WindowManager object is created
-ASSERT_TRUE(WindowManager::getInstance());
-WindowManager::Destroy();
-
+	WindowManager::Create(":1");
+	ASSERT_TRUE(WindowManager::getInstance());
+	WindowManager::Destroy();
 }
-
 TEST_F(WindowManagerTest, CreateWithInvalidDisplay) {
-// Try to create a WindowManager with an invalid display
-	// Try to create a WindowManager with an invalid display and expect it to throw
 	EXPECT_THROW(WindowManager::Create("invalid_display"), std::runtime_error);
-	// Now, check if getting the instance throws, indicating no instance was created
 	EXPECT_THROW(WindowManager::getInstance(), std::runtime_error);
 	WindowManager::Destroy();
 }
-
 TEST_F(WindowManagerTest, initWM) {
 	WindowManager::Create(":1");
 	WindowManager::getInstance()->Init();
