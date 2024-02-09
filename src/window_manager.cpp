@@ -28,10 +28,7 @@
 #include "WindowManager.hpp"
 #include "EventHandler.hpp"
 #include "Config/ConfigDataBars.hpp"
-#include "Config/ConfigDataBar.hpp"
 #include "Config/ConfigHandler.hpp"
-#include "Config/ConfigDataBar.hpp"
-//#include "Config/ConfigDataGroup.hpp"
 #include "Config/ConfigDataGroups.hpp"
 
 bool WindowManager::wm_detected_;
@@ -74,7 +71,6 @@ WindowManager::~WindowManager() {
 		delete group;
 	}
 	groups_.clear();
-
 	XCloseDisplay(display_);
 }
 void handleSIGHUP(int signal) {
@@ -151,7 +147,6 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 	}
 	XFree(top_level_windows);
 }
-
 void WindowManager::addGroupsFromConfig() {
 	auto configGroups = ConfigHandler::GetInstance().getConfigData<ConfigDataGroups>()->getGroups();
 	for (auto group: configGroups) {
@@ -161,7 +156,6 @@ void WindowManager::addGroupsFromConfig() {
 	groups_[0]->SetActive(true);
 	active_group_ = groups_[0];
 }
-
 void WindowManager::selectEventOnRoot() const {
 	XSetErrorHandler(&WindowManager::OnWMDetected);
 	XSelectInput(
@@ -216,11 +210,8 @@ Client *WindowManager::getClient(Window window) {
 }
 void WindowManager::insertClient(Window window) {
 	std::stringstream debug_stream;
-//	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
-//	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
-/// Temporary hardcoded values
-	unsigned long int inactiveColor=0x00ff00;
-	int BorderSize = 2;
+	int BorderSize = active_group_->getBorderSize();
+	unsigned long inactiveColor = active_group_->getInactiveColor();
 	auto *client = new Client(display_, root_, window, active_group_, inactiveColor, BorderSize);
 	debug_stream << "Inserting client in map: " << client->getTitle() << "\t[" << window << "]";
 	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);

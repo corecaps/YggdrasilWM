@@ -97,8 +97,7 @@ int main(int argc, char** argv) {
 	Logger::Create(std::cout, static_cast<LogLevel>(logLevel));
 	if (ConfigFilePath.empty()) {
 		ConfigHandler::Create();
-	} else
-	{
+	} else {
 		ConfigHandler::Create(ConfigFilePath);
 	}
 	ConfigHandler::GetInstance().configInit();
