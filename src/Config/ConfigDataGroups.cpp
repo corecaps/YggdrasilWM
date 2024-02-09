@@ -50,3 +50,10 @@ ConfigDataGroup *ConfigDataGroups::getGroup(const std::string &groupName) { retu
 void ConfigDataGroups::addGroup(const std::string &groupName, ConfigDataGroup *group) { groups_[groupName] = group; }
 void ConfigDataGroups::removeGroup(const std::string &groupName) { groups_.erase(groupName); }
 const std::unordered_map<std::string, ConfigDataGroup *> &ConfigDataGroups::getGroups() const { return groups_;}
+
+ConfigDataGroups::~ConfigDataGroups() {
+	for (auto const &group : groups_) {
+		delete group.second;
+	}
+	groups_.clear();
+}

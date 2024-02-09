@@ -105,6 +105,8 @@ protected:
 		runXeyes();
 		sleep(1);
 		MockLogger::Create(std::cout, L_INFO);
+		ConfigHandler::Create();
+		ConfigHandler::GetInstance().configInit();
 	}
 
 	void SetUp() override {
@@ -114,6 +116,7 @@ protected:
 		killXeyes();
 		killXephyr();
 		MockLogger::Destroy();
+		ConfigHandler::Destroy();
 	}
 	void TearDown() override {
 	}

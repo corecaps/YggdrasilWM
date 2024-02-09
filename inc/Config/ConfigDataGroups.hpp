@@ -36,7 +36,7 @@ class ConfigDataGroup;
 class ConfigDataGroups : public ConfigDataBase {
 public:
 	ConfigDataGroups();
-	~ConfigDataGroups() override = default;
+	~ConfigDataGroups() override;
 	void configInit(Json::Value& root_) override;
 	Json::Value configSave() override;
 	ConfigDataGroup * getGroup(const std::string& groupName);

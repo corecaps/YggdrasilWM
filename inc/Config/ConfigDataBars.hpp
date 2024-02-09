@@ -37,7 +37,7 @@ class ConfigDataBar;
 class ConfigDataBars : public ConfigDataBase {
 public:
 	ConfigDataBars();
-	~ConfigDataBars() override = default;
+	~ConfigDataBars() override;
 	void configInit(Json::Value& root_);
 	Json::Value configSave();
 	ConfigDataBar * getBar(int index);

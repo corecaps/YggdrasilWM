@@ -89,7 +89,11 @@ void ConfigHandler::configInit() {
 	getConfigData<ConfigDataBars>()->configInit(Bars);
 	getConfigData<ConfigDataBindings>()->configInit(Bindings);
 }
-ConfigHandler::~ConfigHandler() = default;
+ConfigHandler::~ConfigHandler() {
+	for (auto it = configMap_.begin(); it != configMap_.end(); ++it) {
+		delete it->second;
+	}
+};
 unsigned long ConfigHandler::colorCodeToULong(const std::string& colorCode) {
 	if (colorCode.size() != 7 || colorCode[0] != '#' || !isxdigit(colorCode[1])) {
 		return 0x000000;

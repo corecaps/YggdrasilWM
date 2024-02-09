@@ -27,7 +27,7 @@
 
 #include "Config/ConfigDataBar.hpp"
 #include "Logger.hpp"
-#include <strstream>
+#include <sstream>
 
 ConfigDataBar::ConfigDataBar() {
 
@@ -43,7 +43,7 @@ void ConfigDataBar::configInit(Json::Value &root_) {
 //	barBackgroundColor_ = root_["Background_Color"].asUInt();
 	barBorderSize_ = root_["Border_Size"].asInt();
 //	barBorderColor_ = root_["Border_Color"].asUInt();
-	std::strstream msg;
+	std::stringstream msg;
 	msg << "Bar :\t Height [" << barHeight_ << "] Font [" << barFont_ << "] FontSize [" << barFontSize_ << "] BorderSize [" << barBorderSize_ << "]";
 	Logger::GetInstance()->Log(msg.str(),L_INFO);
 }

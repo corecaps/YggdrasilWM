@@ -67,6 +67,12 @@ WindowManager::~WindowManager() {
 	for (auto &client: clients_) {
 		delete client.second;
 	}
+	clients_.clear();
+	for (auto &group: groups_) {
+		delete group;
+	}
+	groups_.clear();
+
 	XCloseDisplay(display_);
 }
 void handleSIGHUP(int signal) {
