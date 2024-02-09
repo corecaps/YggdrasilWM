@@ -26,6 +26,7 @@
  */
 
 #include "Config/ConfigDataBar.hpp"
+#include "Config/ConfigHandler.hpp"
 #include "Logger.hpp"
 #include <sstream>
 
@@ -36,13 +37,44 @@ void ConfigDataBar::configInit(Json::Value &root_) {
 	if (root_.empty() || !root_.isObject()) {
 		throw std::runtime_error("Invalid configuration file");
 	}
-	barHeight_ = root_["Height"].asInt();
-	barFont_ = root_["Font"].asString();
-//	barFontColor_ = root_["Font_Color"].asUInt();
-	barFontSize_ = root_["Font_Size"].asInt();
-//	barBackgroundColor_ = root_["Background_Color"].asUInt();
-	barBorderSize_ = root_["Border_Size"].asInt();
-//	barBorderColor_ = root_["Border_Color"].asUInt();
+	if (root_["Height"].empty() || !root_["Height"].isInt()) {
+		Logger::GetInstance()->Log("ConfigDataBar::Height is empty or not an integer",L_ERROR);
+	} else {
+		barHeight_ = root_["Height"].asInt();
+	}
+	if (root_["Font"].empty() || !root_["Font"].isString()) {
+		Logger::GetInstance()->Log("ConfigDataBar::Font is empty or not a string", L_ERROR);
+	} else {
+		barFont_ = root_["Font"].asString();
+	}
+	if (root_["Font_Color"].empty() || !root_["Font_Color"].isString()) {
+		Logger::GetInstance()->Log("ConfigDataBar::Font_Color is empty or not a string",L_ERROR);
+	} else
+	{
+		barFontColor_ = ConfigHandler::colorCodeToULong(root_["Font_Color"].asString());
+	}
+	if (root_["Background_Color"].empty() || !root_["Background_Color"].isString()) {
+		Logger::GetInstance()->Log("ConfigDataBar::Background_Color is empty or not a string",L_ERROR);
+	} else
+	{
+		barBackgroundColor_ = ConfigHandler::colorCodeToULong(root_["Background_Color"].asString());
+	}
+	if (root_["Border_Color"].empty() || !root_["Border_Color"].isString()) {
+		Logger::GetInstance()->Log("ConfigDataBar::Border_Color is empty or not a string",L_ERROR);
+	} else
+	{
+		barBorderColor_ = ConfigHandler::colorCodeToULong(root_["Border_Color"].asString());
+	}
+	if (root_["Font_Size"].empty() || !root_["Font_Size"].isInt()) {
+		Logger::GetInstance()->Log("ConfigDataBar::Font_Size is empty or not an integer",L_ERROR);
+	} else {
+		barFontSize_ = root_["Font_Size"].asInt();
+	}
+	if (root_["Border_Size"].empty() || !root_["Border_Size"].isInt()) {
+		Logger::GetInstance()->Log("ConfigDataBar::Border_Size is empty or not an integer",L_ERROR);
+	} else {
+		barBorderSize_ = root_["Border_Size"].asInt();
+	}
 	std::stringstream msg;
 	msg << "Bar :\t Height [" << barHeight_ << "] Font [" << barFont_ << "] FontSize [" << barFontSize_ << "] BorderSize [" << barBorderSize_ << "]";
 	Logger::GetInstance()->Log(msg.str(),L_INFO);
