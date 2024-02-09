@@ -33,6 +33,7 @@
 extern "C" {
 #include <X11/Xlib.h>
 }
+#include "Config/ConfigDataGroup.hpp"
 class LayoutManager;
 class Client;
 class WindowManager;
@@ -67,11 +68,7 @@ public:
 	 * @param layoutType The layout type
 	 * @todo add the other layout types
 	 */
-	Group(const std::string& name,
-		  int borderSize,
-		  int gap,
-		  int barHeight,
-		  LayoutType layoutType);
+	Group(ConfigDataGroup *config);
 /**
  * @fn ~Group()
  * @brief Group destructor
@@ -165,6 +162,18 @@ private:
 	LayoutManager*							layoutManager_;
 	int										borderSize_;
 	int										gap_;
+	unsigned long 							inactiveColor_;
+public:
+	int getBorderSize() const;
+
+	int getGap() const;
+
+	unsigned long getInactiveColor() const;
+
+	unsigned long getActiveColor() const;
+
+private:
+	unsigned long 							activeColor_;
 	int										barHeight_;
 	bool									active_{};
 };

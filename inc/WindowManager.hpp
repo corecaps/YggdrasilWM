@@ -158,6 +158,8 @@ public:
  * @return WindowManager* instance
  */
 	static WindowManager * getInstance();
+	void setActiveGroup(Group *activeGroup);
+
 /**
  * @fn static void WindowManager::Destroy()
  * @brief Destroy the WindowManager instance
@@ -167,13 +169,13 @@ public:
   this function should be called when the WindowManager is no longer needed
  */
 	static void Destroy();
-
 private:
 	Display									*display_;
 	static bool								wm_detected_;
 	const Window							root_;
 	Window 									bar_{};
-	std::vector<Group>						groups_;
+	std::vector<Group *>					groups_;
+	Group *									active_group_{};
 	const Atom								WM_PROTOCOLS;
 	const Atom								WM_DELETE_WINDOW;
 	bool									running;
@@ -214,5 +216,7 @@ private:
   only one window manager can run at a time
  */
 	static int OnWMDetected([[maybe_unused]] Display *display, XErrorEvent *e);
+
+	void addGroupsFromConfig();
 };
 #endif

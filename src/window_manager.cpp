@@ -28,9 +28,10 @@
 #include "WindowManager.hpp"
 #include "EventHandler.hpp"
 #include "Config/ConfigDataBars.hpp"
+#include "Config/ConfigDataBar.hpp"
 #include "Config/ConfigHandler.hpp"
 #include "Config/ConfigDataBar.hpp"
-#include "Config/ConfigDataGroup.hpp"
+//#include "Config/ConfigDataGroup.hpp"
 #include "Config/ConfigDataGroups.hpp"
 
 bool WindowManager::wm_detected_;
@@ -58,6 +59,7 @@ WindowManager::WindowManager(Display *display)
 		  root_(DefaultRootWindow(display)),
 		  WM_PROTOCOLS(XInternAtom(display_, "WM_PROTOCOLS", false)),
 		  WM_DELETE_WINDOW(XInternAtom(display_, "WM_DELETE_WINDOW", false)),
+		  active_group_(nullptr),
 		  running(true),
 		  bar_(0){
 	Logger::GetInstance()->Log("Window Manager Created !\n", L_INFO);
@@ -113,25 +115,10 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 		Logger::GetInstance()->Log("Root window is not the same as the one returned by XQueryTree", L_ERROR);
 	}
 	debug_stream << "Found " << num_top_level_windows << " top level windows." << "root:" << root_ << std::endl;
-//	int BorderSize = std::get<int>(configHandler_.getConfig("BorderWidth"));
-//	int BarHeight = std::get<int>(configHandler_.getConfig("BarHeight"));
-//	int gap = std::get<int>(configHandler_.getConfig("Gap"));
-//	unsigned long InActiveColor = std::get<unsigned long>(configHandler_.getConfig("InActiveColor"));
-/// Temp Hadcoded values
-	int BorderSize = 2;
-	int BarHeight = 20;
-	int gap = 5;
-	unsigned long inactiveColor = 0x00ff00;
-/** @todo create multiple groups from config, need a separate method */
-	auto configGroups = ConfigHandler::GetInstance().getConfigData<ConfigDataGroups>()->getGroups();
-	for (auto group: configGroups) {
-		int BorderSize = group.second->getGroupBorderWidth();
-		groups_.emplace_back(group.first, BorderSize, gap, BarHeight, LayoutType::TREE);
-	}
-	groups_.emplace_back("default", BorderSize, gap, BarHeight, LayoutType::TREE);
+	addGroupsFromConfig();
 	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
-		auto *newClient = new Client(display_, root_, top_level_windows[i], &groups_[0], inactiveColor, BorderSize);
+		auto *newClient = new Client(display_, root_, top_level_windows[i], active_group_, active_group_->getInactiveColor(), active_group_->getBorderSize());
 		Client_Err err = newClient->frame();
 		setFocus(newClient);
 		XMapWindow(display_, top_level_windows[i]);
@@ -164,6 +151,17 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 	}
 	XFree(top_level_windows);
 }
+
+void WindowManager::addGroupsFromConfig() {
+	auto configGroups = ConfigHandler::GetInstance().getConfigData<ConfigDataGroups>()->getGroups();
+	for (auto group: configGroups) {
+		Group *g = new Group(group.second);
+		groups_.push_back(g);
+	}
+	groups_[0]->SetActive(true);
+	active_group_ = groups_[0];
+}
+
 void WindowManager::selectEventOnRoot() const {
 	XSetErrorHandler(&WindowManager::OnWMDetected);
 	XSelectInput(
@@ -223,7 +221,7 @@ void WindowManager::insertClient(Window window) {
 /// Temporary hardcoded values
 	unsigned long int inactiveColor=0x00ff00;
 	int BorderSize = 2;
-	auto *client = new Client(display_, root_, window, &groups_[0], inactiveColor, BorderSize);
+	auto *client = new Client(display_, root_, window, active_group_, inactiveColor, BorderSize);
 	debug_stream << "Inserting client in map: " << client->getTitle() << "\t[" << window << "]";
 	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);
 	clients_.insert({window, client});
@@ -244,7 +242,8 @@ void WindowManager::setFocus(Client *client) {
 }
 void WindowManager::Bar() {
 	int screen = DefaultScreen(display_);
-	int barHeight = ConfigHandler::GetInstance().getConfigData<ConfigDataBars>()->getBar(0)->getBarHeight();
+//	int barHeight = ConfigHandler::GetInstance().getConfigData<ConfigDataBars>()->getBar(0)->getBarHeight();
+	int barHeight = 30;
 	bar_ = XCreateSimpleWindow(
 			display_,
 			root_,
@@ -267,10 +266,12 @@ WindowManager * WindowManager::getInstance() {
 		throw std::runtime_error("WindowManager instance not created");
 	}
 }
-
 void WindowManager::Destroy() {
 	if (WindowManager::instance_ != nullptr) {
 		delete WindowManager::instance_;
 		WindowManager::instance_ = nullptr;
 	}
+}
+void WindowManager::setActiveGroup(Group *activeGroup) {
+	active_group_ = activeGroup;
 }

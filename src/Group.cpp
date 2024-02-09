@@ -31,18 +31,25 @@
 #include "Client.hpp"
 #include "Layouts/LayoutManager.hpp"
 
-Group::Group(const std::string& name,
-			 int borderSize,
-			 int gap,
-			 int barHeight,
-			 LayoutType layoutType) :
-			 name_(name),
-			 layoutManager_(nullptr),
-			 borderSize_(borderSize),
-			 gap_(gap),
-			 barHeight_(barHeight),
-			 active_(false){
-	Logger::GetInstance()->Log("Group Created [" + name + "]", L_INFO);
+Group::Group(ConfigDataGroup *config) {
+	name_ = config->getGroupName();
+	LayoutType layoutType;
+	if (config->getGroupLayout() == "Tree") {
+		layoutType = TREE;
+	} else if (config->getGroupLayout() == "Max") {
+		layoutType = MAX;
+	} else if (config->getGroupLayout() == "Vertical") {
+		layoutType = VERTICAL;
+	} else if (config->getGroupLayout() == "Horizontal") {
+		layoutType = HORIZONTAL;
+	} else {
+		layoutType = TREE;
+	}
+	borderSize_ = config->getGroupBorderWidth();
+	gap_ = config->getGroupGap();
+	barHeight_ = 30;
+	active_ = false;
+	Logger::GetInstance()->Log("Group Created [" + name_ + "]", L_INFO);
 	Display *display = WindowManager::getInstance()->getDisplay();
 	int size_x = DisplayWidth(display, DefaultScreen(display));
 	int size_y = DisplayHeight(display, DefaultScreen(display));
@@ -110,9 +117,15 @@ void Group::switchTo() {
 void Group::switchFrom() {
 
 }
+void Group::SetName(std::string name) {
+	name_ = std::move(name);
+}
 bool Group::IsActive() const { return active_; }
-void Group::SetName(std::string name) { name_ = std::move(name); }
 std::string Group::GetName() { return name_; }
 Client *Group::GetClient(Window window) { return clients_[window]; }
 std::unordered_map<Window, Client *> Group::GetClients() { return clients_; }
 LayoutManager *Group::GetLayoutManager() { return layoutManager_; }
+int Group::getBorderSize() const { return borderSize_; }
+int Group::getGap() const { return gap_; }
+unsigned long Group::getInactiveColor() const { return inactiveColor_; }
+unsigned long Group::getActiveColor() const { return activeColor_; }
