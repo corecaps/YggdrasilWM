@@ -112,10 +112,24 @@ void Group::moveClientToGroup(Window window, Group *group) {
 	}
 }
 void Group::switchTo() {
-
+	for (auto &client: WindowManager::getInstance()->getClients()) {
+		if (client.second->getGroup() == this) {
+			XMapWindow(WindowManager::getInstance()->getDisplay(), client.second->getWindow());
+		}
+	}
+	this->active_= true;
+	WindowManager::getInstance()->setActiveGroup(this);
+	Logger::GetInstance()->Log("Group switched to [" + name_ + "]", L_INFO);
 }
 void Group::switchFrom() {
-
+	for (auto &client: WindowManager::getInstance()->getClients()) {
+		if (client.second->getGroup() == this) {
+//			client.second->unframe();
+			XUnmapWindow(WindowManager::getInstance()->getDisplay(), client.second->getWindow());
+		}
+	}
+	this->active_ = false;
+	Logger::GetInstance()->Log("Group switched from [" + name_ + "]", L_INFO);
 }
 void Group::SetName(std::string name) {
 	name_ = std::move(name);

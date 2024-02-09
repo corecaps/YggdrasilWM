@@ -154,6 +154,7 @@ void WindowManager::addGroupsFromConfig() {
 		groups_.push_back(g);
 	}
 	groups_[0]->SetActive(true);
+	Logger::GetInstance()->Log("Active Group is [" + groups_[0]->GetName() + "]", L_INFO);
 	active_group_ = groups_[0];
 }
 void WindowManager::selectEventOnRoot() const {
@@ -173,6 +174,19 @@ void WindowManager::Run() {
 		XSync(display_, false);
 	}
 }
+
+void WindowManager::testRun() {
+	try {
+		EventHandler::getInstance();
+	} catch (const std::exception &e) {
+		EventHandler::create();
+	}
+	XSync(display_, false);
+	XEvent ev;
+	EventHandler::getInstance()->dispatchEvent(ev);
+	XSync(display_, false);
+}
+
 int WindowManager::OnXError(Display *display, XErrorEvent *e) {
 	const int MAX_ERROR_TEXT_LENGTH = 1024;
 	char error_text[MAX_ERROR_TEXT_LENGTH];
@@ -265,4 +279,12 @@ void WindowManager::Destroy() {
 }
 void WindowManager::setActiveGroup(Group *activeGroup) {
 	active_group_ = activeGroup;
+}
+
+Group *WindowManager::getActiveGroup() const {
+	return active_group_;
+}
+
+const std::vector<Group *> &WindowManager::getGroups() const {
+	return groups_;
 }

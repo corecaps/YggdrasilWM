@@ -144,6 +144,11 @@ public:
   @todo: implement a clean way to stop the window manager
  */
 	void Stop();
+
+	const std::vector<Group *> &getGroups() const;
+
+	Group *getActiveGroup() const;
+
 /**
  * @fn bool WindowManager::getRunning() const
  * @brief Get the Running status
@@ -169,6 +174,7 @@ public:
   this function should be called when the WindowManager is no longer needed
  */
 	static void Destroy();
+	void testRun();
 private:
 	Display									*display_;
 	static bool								wm_detected_;
@@ -218,5 +224,7 @@ private:
 	static int OnWMDetected([[maybe_unused]] Display *display, XErrorEvent *e);
 
 	void addGroupsFromConfig();
+
+
 };
 #endif

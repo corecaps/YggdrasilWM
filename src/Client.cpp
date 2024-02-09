@@ -138,7 +138,7 @@ Client_Err Client::frame() {
 	//   c. Kill windows with alt + f4.
 	XGrabKey(
 			display_,
-			XKeysymToKeycode(display_, XK_F4),
+			XKeysymToKeycode(display_, XK_2),
 			Mod1Mask,
 			window_,
 			false,
@@ -153,6 +153,13 @@ Client_Err Client::frame() {
 			false,
 			GrabModeAsync,
 			GrabModeAsync);
+	XGrabKey(display_,
+			 XKeysymToKeycode(display_, XK_1),
+			 Mod1Mask ,
+			 window_,
+			 false,
+			 GrabModeAsync,
+			 GrabModeAsync);
 	this->framed = true;
 	this->group_->AddClient(window_,this);
 	return YGG_CLI_NO_ERROR;

@@ -26,6 +26,9 @@
  */
 #include "EventHandler.hpp"
 #include "Group.hpp"
+extern "C" {
+#include <X11/XKBlib.h>
+};
 
 std::string GetEventTypeName(int eventType) {
 	std::string name;
@@ -138,10 +141,10 @@ void EventHandler::handleUnmapNotify(const XEvent &event) {
 /** @todo : handle when client is unmappad from group switch */
 		Client &client = WindowManager::getInstance()->getClientRef(e.window);
 		Logger::GetInstance()->Log("Unmapping window: " + client.getTitle(), L_INFO);
-		client.getGroup()->RemoveClient(&client);
-		client.unframe();
-		WindowManager::getInstance()->getClients().erase(e.window);
-		delete &client;
+//		client.getGroup()->RemoveClient(&client);
+//		client.unframe();
+//		WindowManager::getInstance()->getClients().erase(e.window);
+//		delete &client;
 	}
 	catch (std::out_of_range &err) {
 		Logger::GetInstance()->Log("Unmapping unknown window: " + std::to_string(e.window), L_WARNING);
@@ -194,7 +197,32 @@ void EventHandler::handleButtonPress(const XEvent &event) {
 	XRaiseWindow(WindowManager::getInstance()->getDisplay(),frame);
 }
 void EventHandler::handleButtonRelease(const XEvent &event) {}
-void EventHandler::handleKeyPress(const XEvent &event) {}
+void EventHandler::handleKeyPress(const XEvent &event) {
+	auto e = event.xkey;
+	auto keyEvent = event.xkey;
+	auto display = WindowManager::getInstance()->getDisplay();
+	bool altPressed = keyEvent.state & Mod1Mask; // Mod1Mask is often the Alt key
+	KeySym keySym = XkbKeycodeToKeysym(display, keyEvent.keycode, 0, (altPressed ? 1 : 0));
+	std::string keySymbol = XKeysymToString(keySym);
+	Logger::GetInstance()->Log("Key pressed: " + keySymbol, L_INFO);
+	if ( keySymbol == "exclam" ) {
+		if (WindowManager::getInstance()->getActiveGroup() != WindowManager::getInstance()->getGroups()[0]) {
+			WindowManager::getInstance()->getActiveGroup()->switchFrom();
+			XSync(display, false);
+			WindowManager::getInstance()->getGroups()[1]->switchTo();
+			XSync(display, false);
+		}
+	}
+	else if (keySymbol == "at") {
+		if (WindowManager::getInstance()->getActiveGroup() != WindowManager::getInstance()->getGroups()[1]) {
+			WindowManager::getInstance()->getActiveGroup()->switchFrom();
+			XSync(display, false);
+			WindowManager::getInstance()->getGroups()[0]->switchTo();
+			XSync(display, false);
+
+		}
+	}
+}
 void EventHandler::handleKeyRelease(const XEvent &event) {}
 void EventHandler::handleEnterNotify(const XEvent &event) {}
 void EventHandler::handleLeaveNotify(const XEvent &event) {}

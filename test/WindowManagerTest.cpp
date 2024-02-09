@@ -32,6 +32,8 @@
 #include <cstdlib>
 #include <unistd.h>
 #include "Config/ConfigHandler.hpp"
+std::vector<pid_t> xeyesPid;
+pid_t xephyrPid;
 void runXephyr () {
 	pid_t pid = fork();
 	if (pid == -1) {
@@ -44,6 +46,7 @@ void runXephyr () {
 		perror("Exec failed");
 		exit(EXIT_FAILURE);
 	} else {
+		xephyrPid = pid;
 		std::cout << "[       OK ] Xephyr Launched on Display :1" << std::endl;
 	}
 }
@@ -61,11 +64,16 @@ void runXeyes() {
 		perror("Exec failed");
 		exit(EXIT_FAILURE);
 	} else {
+		xeyesPid.push_back(pid);
 		std::cout << "[       OK ] Xeyes Launched on Display :1" << std::endl;
 	}
 }
-void killXeyes() { system("pkill xeyes"); }
-void killXephyr() { system("pkill Xephyr"); }
+void killXeyes() {
+	for (auto pid : xeyesPid) {
+			kill(pid, SIGKILL);
+	}
+}
+void killXephyr() { kill(xephyrPid,SIGKILL); }
 class MockLogger : public Logger {
 public:
 	MOCK_METHOD(void, Log, (const std::string& message, LogLevel logLevel), (const));
@@ -78,21 +86,23 @@ protected:
 		std::cout << " =================================================================================== " << std::endl;
 		runXephyr();
 		sleep(3);
-		runXeyes();
-		sleep(1);
+
 		MockLogger::Create(std::cout, L_INFO);
 		ConfigHandler::Create();
 		ConfigHandler::GetInstance().configInit();
 	}
 	void SetUp() override {
+		runXeyes();
+		sleep(1);
 	}
 	static void TearDownTestSuite() {
-		killXeyes();
+
 		killXephyr();
 		MockLogger::Destroy();
 		ConfigHandler::Destroy();
 	}
 	void TearDown() override {
+		killXeyes();
 	}
 };
 TEST_F(WindowManagerTest, CreateWithValidDisplay) {
@@ -113,5 +123,30 @@ TEST_F(WindowManagerTest, initWM) {
 	std::cout << "Client size : " << WindowManager::getInstance()->getClients().size() << std::endl;
 	ASSERT_NE(WindowManager::getInstance()->getDisplay(), nullptr);
 	ASSERT_NE(WindowManager::getInstance()->getRoot(), 0);
+	WindowManager::Destroy();
+}
+
+TEST_F(WindowManagerTest, SwitchGroup) {
+	WindowManager::Create(":1");
+	WindowManager::getInstance()->Init();
+	runXeyes();
+	WindowManager::getInstance()->testRun();
+	runXeyes();
+	WindowManager::getInstance()->testRun();
+	sleep(1);
+	ASSERT_EQ(WindowManager::getInstance()->getActiveGroup(), WindowManager::getInstance()->getGroups()[0]);
+	WindowManager::getInstance()->getActiveGroup()->switchFrom();
+	WindowManager::getInstance()->testRun();
+	WindowManager::getInstance()->getGroups()[1]->switchTo();
+	WindowManager::getInstance()->testRun();
+	ASSERT_EQ(WindowManager::getInstance()->getActiveGroup(), WindowManager::getInstance()->getGroups()[1]);
+	sleep(1);
+	WindowManager::getInstance()->testRun();
+	WindowManager::getInstance()->getActiveGroup()->switchFrom();
+	WindowManager::getInstance()->testRun();
+	WindowManager::getInstance()->getGroups()[0]->switchTo();
+	WindowManager::getInstance()->testRun();
+	ASSERT_EQ(WindowManager::getInstance()->getActiveGroup(), WindowManager::getInstance()->getGroups()[0]);
+	sleep(1);
 	WindowManager::Destroy();
 }
