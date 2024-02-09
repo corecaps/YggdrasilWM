@@ -26,6 +26,7 @@
  */
 #include "EventHandler.hpp"
 #include "Group.hpp"
+#include <string>
 extern "C" {
 #include <X11/XKBlib.h>
 };
@@ -141,10 +142,15 @@ void EventHandler::handleUnmapNotify(const XEvent &event) {
 /** @todo : handle when client is unmappad from group switch */
 		Client &client = WindowManager::getInstance()->getClientRef(e.window);
 		Logger::GetInstance()->Log("Unmapping window: " + client.getTitle(), L_INFO);
-//		client.getGroup()->RemoveClient(&client);
-//		client.unframe();
-//		WindowManager::getInstance()->getClients().erase(e.window);
-//		delete &client;
+		if (client.getFrame() != e.window) {
+			client.setMapped(false);
+		}
+		else {
+			client.unframe();
+			client.getGroup()->RemoveClient(&client);
+			WindowManager::getInstance()->getClients().erase(e.window);
+			delete &client;
+		}
 	}
 	catch (std::out_of_range &err) {
 		Logger::GetInstance()->Log("Unmapping unknown window: " + std::to_string(e.window), L_WARNING);
@@ -206,18 +212,21 @@ void EventHandler::handleKeyPress(const XEvent &event) {
 	std::string keySymbol = XKeysymToString(keySym);
 	Logger::GetInstance()->Log("Key pressed: " + keySymbol, L_INFO);
 	if ( keySymbol == "exclam" ) {
+		Logger::GetInstance()->Log("Current Active Group :" + WindowManager::getInstance()->getActiveGroup()->GetName(), L_INFO);
 		if (WindowManager::getInstance()->getActiveGroup() != WindowManager::getInstance()->getGroups()[0]) {
 			WindowManager::getInstance()->getActiveGroup()->switchFrom();
 			XSync(display, false);
-			WindowManager::getInstance()->getGroups()[1]->switchTo();
+			WindowManager::getInstance()->getGroups()[0]->switchTo();
+			Logger::GetInstance()->Log("Active Group is [" + WindowManager::getInstance()->getActiveGroup()->GetName() + "]", L_INFO);
 			XSync(display, false);
 		}
 	}
 	else if (keySymbol == "at") {
+		Logger::GetInstance()->Log("Current Active Group :" + WindowManager::getInstance()->getActiveGroup()->GetName(), L_INFO);
 		if (WindowManager::getInstance()->getActiveGroup() != WindowManager::getInstance()->getGroups()[1]) {
 			WindowManager::getInstance()->getActiveGroup()->switchFrom();
 			XSync(display, false);
-			WindowManager::getInstance()->getGroups()[0]->switchTo();
+			WindowManager::getInstance()->getGroups()[1]->switchTo();
 			XSync(display, false);
 
 		}
@@ -280,7 +289,24 @@ void EventHandler::handleFocusOut(const XEvent &event) {
 }
 void EventHandler::handlePropertyNotify(const XEvent &event) {}
 void EventHandler::handleClientMessage(const XEvent &event) {}
-void EventHandler::handleDestroyNotify(const XEvent &event) {}
+void EventHandler::handleDestroyNotify(const XEvent &event) {
+	auto e = event.xdestroywindow;
+	if (e.window == WindowManager::getInstance()->getRoot()) {
+		Logger::GetInstance()->Log("Ignoring destroy for root window", L_INFO);
+		return;
+	}
+	try {
+		Client &client = WindowManager::getInstance()->getClientRef(e.window);
+		Logger::GetInstance()->Log("Destroying window: " + client.getTitle(), L_INFO);
+		client.unframe();
+		WindowManager::getInstance()->getClients().erase(e.window);
+		client.getGroup()->RemoveClient(&client);
+		delete &client;
+	}
+	catch (std::out_of_range &err) {
+		Logger::GetInstance()->Log("Destroying unknown window: " + std::to_string(e.window), L_WARNING);
+	}
+}
 void EventHandler::handleReparentNotify(const XEvent &event) {}
 void EventHandler::handleMapRequest(const XEvent &event) {
 	XMapRequestEvent e = event.xmaprequest;

@@ -151,11 +151,16 @@ void WindowManager::addGroupsFromConfig() {
 	auto configGroups = ConfigHandler::GetInstance().getConfigData<ConfigDataGroups>()->getGroups();
 	for (auto group: configGroups) {
 		Group *g = new Group(group.second);
+		Logger::GetInstance()->Log("Index:\t" + std::to_string(groups_.size()) +"\tName\t" +  g->GetName(), L_INFO);
 		groups_.push_back(g);
 	}
 	groups_[0]->SetActive(true);
-	Logger::GetInstance()->Log("Active Group is [" + groups_[0]->GetName() + "]", L_INFO);
 	active_group_ = groups_[0];
+	Logger::GetInstance()->Log("Active Group is [" + active_group_->GetName() + "]", L_INFO);
+	Logger::GetInstance()->Log("Group[0]:" + groups_[0]->GetName(), L_INFO);
+	Logger::GetInstance()->Log("Group[1]:" + groups_[1]->GetName(), L_INFO);
+	Logger::GetInstance()->Log("Group[2]:" + groups_[2]->GetName(), L_INFO);
+
 }
 void WindowManager::selectEventOnRoot() const {
 	XSetErrorHandler(&WindowManager::OnWMDetected);
@@ -163,6 +168,20 @@ void WindowManager::selectEventOnRoot() const {
 			display_,
 			root_,
 			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask);
+	XGrabKey(display_,
+			 XKeysymToKeycode(display_, XK_1),
+			 Mod1Mask ,
+			 root_,
+			 false,
+			 GrabModeAsync,
+			 GrabModeAsync);
+	XGrabKey(display_,
+			 XKeysymToKeycode(display_, XK_2),
+			 Mod1Mask ,
+			 root_,
+			 false,
+			 GrabModeAsync,
+			 GrabModeAsync);
 	XSync(display_, false);
 	XSetErrorHandler(&WindowManager::OnXError);
 }
