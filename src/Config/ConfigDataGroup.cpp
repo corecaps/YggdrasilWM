@@ -26,7 +26,10 @@
  */
 #include "Config/ConfigDataGroup.hpp"
 #include "Logger.hpp"
+#include "Config/ConfigHandler.hpp"
 #include <sstream>
+#include <iomanip>
+
 ConfigDataGroup::ConfigDataGroup() {
 	groupName_ = "Default";
 	groupLayout_ = "Tree";
@@ -50,13 +53,18 @@ void ConfigDataGroup::configInit(Json::Value &root_) {
 	} else {
 		groupLayout_ = root_["Layout"].asString();
 	}
-////	if (root_["Inactive_Color"].empty() || !root_["Inactive_Color"].isString()) {
-////		Logger::GetInstance()->Log("ConfigDataGroup::configInit Inactive_Color is empty or not a string",L_ERROR);
-////	} else {
-////		groupInactiveColor_ = root_["Inactive_Color"].asUInt();
-////	}
-//	groupInactiveColor_ = std::stoul(root_["Inactive_Color"].asString(), nullptr, 16);
-//	groupActiveColor_ = std::stoul(root_["Active_Color"].asString(), nullptr, 16);
+	if (root_["Inactive_Color"].empty() || !root_["Inactive_Color"].isString()) {
+		Logger::GetInstance()->Log("ConfigDataGroup::configInit Inactive_Color is empty or not a string",L_ERROR);
+	} else
+	{
+		groupInactiveColor_ = ConfigHandler::colorCodeToULong(root_["Inactive_Color"].asString());
+	}
+	if (root_["Active_Color"].empty() || !root_["Active_Color"].isString()) {
+		Logger::GetInstance()->Log("ConfigDataGroup::configInit Active_Color is empty or not a string",L_ERROR);
+	} else
+	{
+		groupActiveColor_ = ConfigHandler::colorCodeToULong(root_["Active_Color"].asString());
+	}
 	if (root_["Border_Size"].empty() || !root_["Border_Size"].isInt()) {
 		Logger::GetInstance()->Log("ConfigDataGroup::configInit Border_Size is empty or not an int",L_ERROR);
 	} else {
@@ -70,8 +78,8 @@ void ConfigDataGroup::configInit(Json::Value &root_) {
 	std::ostringstream msg;
 	msg << "Group[" << groupName_ << "]"
 	<< "\tLayout [" << groupLayout_ << "]"
-//	<< "\tInactive_Color [" << groupInactiveColor_ << "]"
-//	<< "\tActive_Color [" << groupActiveColor_ << "]"
+	<< "\tInactive_Color [#" << std::hex << std::setw(6) << std::setfill('0') << groupInactiveColor_ << std::dec << "]"
+	<< "\tActive_Color [#" << std::hex <<  std::setw(6) << std::setfill('0') << groupActiveColor_ << std::dec << "]"
 	<< "\tBorder_Size [" << groupBorderSize_ << "]"
 	<< "\tGap [" << groupGap_ << "]"
 	<< "-> loaded\t\t[✓]";

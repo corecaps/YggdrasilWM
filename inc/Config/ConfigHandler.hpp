@@ -114,6 +114,13 @@ public:
  */
 	void configInit();
 	~ConfigHandler();
+/**
+ * @fn unsigned long ConfigHandler::colorCodeToULong(const std::string &colorCode)
+ * @brief Convert a string containing a color code to unsigned long
+ * @param colorCode
+ * @return unsigned long color code
+ */
+	static unsigned long colorCodeToULong(const std::string &colorCode);
 
 private:
 	std::string configPath_;
@@ -134,13 +141,5 @@ private:
  * @param configPath
  */
 	explicit ConfigHandler(const std::string& configPath);
-/**
- * @fn unsigned long ConfigHandler::colorCodeToULong(const std::string &colorCode)
- * @brief Convert a string containing a color code to unsigned long
- * @param colorCode
- * @return unsigned long color code
- * @todo : move to the appropriate ConfigDataBase child classes
- */
-	static unsigned long colorCodeToULong(const std::string &colorCode);
 };
 #endif //YGGDRASILWM_CONFIGHANDLER_HPP

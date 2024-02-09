@@ -49,3 +49,4 @@ Json::Value ConfigDataGroups::configSave() {
 ConfigDataGroup *ConfigDataGroups::getGroup(const std::string &groupName) { return groups_[groupName]; }
 void ConfigDataGroups::addGroup(const std::string &groupName, ConfigDataGroup *group) { groups_[groupName] = group; }
 void ConfigDataGroups::removeGroup(const std::string &groupName) { groups_.erase(groupName); }
+const std::unordered_map<std::string, ConfigDataGroup *> &ConfigDataGroups::getGroups() const { return groups_;}

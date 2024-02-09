@@ -30,6 +30,8 @@
 #include "Config/ConfigDataBars.hpp"
 #include "Config/ConfigHandler.hpp"
 #include "Config/ConfigDataBar.hpp"
+#include "Config/ConfigDataGroup.hpp"
+#include "Config/ConfigDataGroups.hpp"
 
 bool WindowManager::wm_detected_;
 WindowManager * WindowManager::instance_ = nullptr;
@@ -115,6 +117,11 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 	int gap = 5;
 	unsigned long inactiveColor = 0x00ff00;
 /** @todo create multiple groups from config, need a separate method */
+	auto configGroups = ConfigHandler::GetInstance().getConfigData<ConfigDataGroups>()->getGroups();
+	for (auto group: configGroups) {
+		int BorderSize = group.second->getGroupBorderWidth();
+		groups_.emplace_back(group.first, BorderSize, gap, BarHeight, LayoutType::TREE);
+	}
 	groups_.emplace_back("default", BorderSize, gap, BarHeight, LayoutType::TREE);
 	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);
 	for (unsigned int i = 0; i < num_top_level_windows; ++i) {

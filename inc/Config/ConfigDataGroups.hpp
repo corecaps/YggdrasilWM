@@ -46,5 +46,7 @@ public:
 private:
 	std::unordered_map<std::string, ConfigDataGroup *> groups_;
 	Json::Value root_;
+public:
+	const std::unordered_map<std::string, ConfigDataGroup *> &getGroups() const;
 };
 #endif //YGGDRASILWM_CONFIGDATAGROUPS_H
