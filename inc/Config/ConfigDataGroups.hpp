@@ -31,22 +31,22 @@
 #include "json/json.h"
 #include <string>
 #include <unordered_map>
-class ConfigDataGroup;
+#include <vector>
 
+class ConfigDataGroup;
 class ConfigDataGroups : public ConfigDataBase {
 public:
 	ConfigDataGroups();
 	~ConfigDataGroups() override;
 	void configInit(Json::Value& root_) override;
 	Json::Value configSave() override;
-	ConfigDataGroup * getGroup(const std::string& groupName);
-	void addGroup(const std::string& groupName, ConfigDataGroup * group);
-	void removeGroup(const std::string& groupName);
+	ConfigDataGroup * getGroup(int index);
+	void addGroup(ConfigDataGroup * group);
+	void removeGroup(ConfigDataGroup * group);
+	const std::vector<ConfigDataGroup *> &getGroups() const;
 
 private:
-	std::unordered_map<std::string, ConfigDataGroup *> groups_;
+	std::vector<ConfigDataGroup *> groups_;
 	Json::Value root_;
-public:
-	const std::unordered_map<std::string, ConfigDataGroup *> &getGroups() const;
 };
 #endif //YGGDRASILWM_CONFIGDATAGROUPS_H

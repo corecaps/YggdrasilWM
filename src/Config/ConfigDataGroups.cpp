@@ -30,30 +30,36 @@
 #include <strstream>
 
 ConfigDataGroups::ConfigDataGroups() : groups_(), root_() {}
-void ConfigDataGroups::configInit(Json::Value &root_) {
-	root_ = root_;
-	if (root_.empty() || !root_.isObject()) {
+void ConfigDataGroups::configInit(Json::Value &root) {
+	root_ = root;
+	if (root_.empty() || !root_.isArray()) {
 		throw std::runtime_error("Invalid configuration file");
 	}
-	for (auto const &groupName : root_.getMemberNames()) {
-		auto group = new ConfigDataGroup();
-		group->configInit(root_[groupName]);
-		groups_[groupName] = group;
-		Logger::GetInstance()->Log("=============================\t\tGroup [" + groupName + "] Configuration loaded ✓",L_INFO);
+	for (auto &group : root_) {
+		auto group_ = new ConfigDataGroup();
+		group_->configInit(group);
+		groups_.push_back(group_);
+		Logger::GetInstance()->Log("=============================\t\tGroup [" + group_->getGroupName() + "] Configuration loaded ✓",L_INFO);
 	}
 	Logger::GetInstance()->Log(std::to_string(groups_.size()) + " Groups configuration loaded [✓]",L_INFO);
 }
 Json::Value ConfigDataGroups::configSave() {
 	return Json::Value();
 }
-ConfigDataGroup *ConfigDataGroups::getGroup(const std::string &groupName) { return groups_[groupName]; }
-void ConfigDataGroups::addGroup(const std::string &groupName, ConfigDataGroup *group) { groups_[groupName] = group; }
-void ConfigDataGroups::removeGroup(const std::string &groupName) { groups_.erase(groupName); }
-const std::unordered_map<std::string, ConfigDataGroup *> &ConfigDataGroups::getGroups() const { return groups_;}
-
+ConfigDataGroup *ConfigDataGroups::getGroup(int index) { return groups_[index]; }
+void ConfigDataGroups::addGroup(ConfigDataGroup *group) { groups_.push_back(group); }
+void ConfigDataGroups::removeGroup(ConfigDataGroup *group) {
+	for (auto it = groups_.begin(); it != groups_.end(); ++it) {
+		if (*it == group) {
+			groups_.erase(it);
+			break;
+		}
+	}
+}
+const std::vector<ConfigDataGroup *> &ConfigDataGroups::getGroups() const { return groups_;}
 ConfigDataGroups::~ConfigDataGroups() {
-	for (auto const &group : groups_) {
-		delete group.second;
+	for (auto &group : groups_) {
+		delete group;
 	}
 	groups_.clear();
 }

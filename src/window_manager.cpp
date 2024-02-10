@@ -150,7 +150,7 @@ void WindowManager::getTopLevelWindows(std::stringstream &debug_stream) {
 void WindowManager::addGroupsFromConfig() {
 	auto configGroups = ConfigHandler::GetInstance().getConfigData<ConfigDataGroups>()->getGroups();
 	for (auto group: configGroups) {
-		Group *g = new Group(group.second);
+		Group *g = new Group(group);
 		Logger::GetInstance()->Log("Index:\t" + std::to_string(groups_.size()) +"\tName\t" +  g->GetName(), L_INFO);
 		groups_.push_back(g);
 	}

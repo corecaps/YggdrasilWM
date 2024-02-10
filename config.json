@@ -1,7 +1,7 @@
 {
   // Yggdrasil Window Manager Configuration
-  "Groups": {
-    "1" : {
+  "Groups": [
+    {
       "Name": "1",
       "Layout": "Tree",
       "Inactive_Color": "#FF0000",
@@ -9,7 +9,7 @@
       "Border_Size": 2,
       "Gap": 10
     },
-    "2" : {
+    {
       "Name": "2",
       "Layout": "Tree",
       "Inactive_Color": "#FF0000",
@@ -17,15 +17,14 @@
       "Border_Size": 2,
       "Gap": 10
     },
-    "3" : {
+    {
       "Name": "3",
       "Layout": "Tree",
       "Inactive_Color": "#FF0000",
       "Active_Color": "#00FF00",
       "Border_Size": 2,
       "Gap": 10
-    }
-  },
+    }],
   "Bars": {
     "1": {
       "Height": 30,
