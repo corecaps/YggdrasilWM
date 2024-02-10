@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataGroups.hpp
  * @brief ConfigDataGroups class header.
- * @date 2024-02-07
+ * @date 2024-02-10
  */
 
 #ifndef YGGDRASILWM_CONFIGDATAGROUPS_H

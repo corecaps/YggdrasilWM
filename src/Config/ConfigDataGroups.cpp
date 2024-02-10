@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataGroups.cpp
  * @brief ConfigDataGroups class implementation.
- * @date 2024-02-08
+ * @date 2024-02-10
  */
 #include "Config/ConfigDataGroups.hpp"
 #include "Config/ConfigDataGroup.hpp"

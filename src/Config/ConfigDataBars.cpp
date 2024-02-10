@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataBars.cpp
  * @brief ConfigDataBars class implementation.
- * @date 2024-02-08
+ * @date 2024-02-10
  */
 
 #include "Config/ConfigDataBars.hpp"
