@@ -4,7 +4,7 @@
 current_date=$(date +'%Y-%m-%d')
 
 # List files in specified directories
-files=$(find src/ inc/ test/ -type f)
+files=$(find ../src/ ../inc/ ../test/ -type f)
 
 # Loop through each file
 for file in $files; do
