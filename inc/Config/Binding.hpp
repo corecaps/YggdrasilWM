@@ -20,32 +20,31 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- * @file ConfigDataBindings.hpp
- * @brief ConfigDataBindings class header.
+ * @file Binding.hpp
+ * @brief Binding class header.
  * @date 2024-02-11
  */
-
-#ifndef YGGDRASILWM_CONFIGDATABINDINGS_H
-#define YGGDRASILWM_CONFIGDATABINDINGS_H
+#ifndef YGGDRASILWM_BINDING_H
+#define YGGDRASILWM_BINDING_H
 #include <string>
-#include <vector>
-extern "C" {
-#include <X11/Xlib.h>
-}
-#include "json/json.h"
-#include "ConfigDataBase.hpp"
-#include "Config/Binding.hpp"
+#include "Commands/CommandBase.hpp"
 
-class ConfigDataBindings : public ConfigDataBase {
+class Binding {
 public:
-	ConfigDataBindings();
-	~ConfigDataBindings() override = default;
-	void configInit(Json::Value& root_) override;
-	Json::Value configSave() override;
-	void grabKeys(Display *display, Window window);
-	void handleKeypressEvent(XKeyEvent *event);
+	Binding();
+	~Binding() = default;
+	void init(std::string Mod, std::string Key, std::string Command, std::string Args);
+	void execute();
+	const std::string &getMod() const;
+	const std::string &getKey() const;
+	const std::string &getCommandName() const;
+	const std::string &getArgs() const;
 
 private:
-	std::vector<Binding *> bindings_;
+	std::string mod_;
+	std::string key_;
+	std::string commandName_;
+	std::string args_;
+	CommandBase *command_;
 };
-#endif //YGGDRASILWM_CONFIGDATABINDINGS_H
+#endif //YGGDRASILWM_BINDING_H

@@ -20,32 +20,18 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- * @file ConfigDataBindings.hpp
- * @brief ConfigDataBindings class header.
+ * @file FocusGroup.cpp
+ * @brief FocusGroup class implementation.
  * @date 2024-02-11
  */
 
-#ifndef YGGDRASILWM_CONFIGDATABINDINGS_H
-#define YGGDRASILWM_CONFIGDATABINDINGS_H
-#include <string>
-#include <vector>
-extern "C" {
-#include <X11/Xlib.h>
+#include "Commands/FocusGroup.hpp"
+
+FocusGroup::FocusGroup() {
+
 }
-#include "json/json.h"
-#include "ConfigDataBase.hpp"
-#include "Config/Binding.hpp"
 
-class ConfigDataBindings : public ConfigDataBase {
-public:
-	ConfigDataBindings();
-	~ConfigDataBindings() override = default;
-	void configInit(Json::Value& root_) override;
-	Json::Value configSave() override;
-	void grabKeys(Display *display, Window window);
-	void handleKeypressEvent(XKeyEvent *event);
+void FocusGroup::execute(const std::string &args) {
 
-private:
-	std::vector<Binding *> bindings_;
-};
-#endif //YGGDRASILWM_CONFIGDATABINDINGS_H
+}
+

@@ -20,32 +20,18 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- * @file ConfigDataBindings.hpp
- * @brief ConfigDataBindings class header.
+ * @file Spawn.cpp
+ * @brief Spawn class implementation.
  * @date 2024-02-11
  */
 
-#ifndef YGGDRASILWM_CONFIGDATABINDINGS_H
-#define YGGDRASILWM_CONFIGDATABINDINGS_H
-#include <string>
-#include <vector>
-extern "C" {
-#include <X11/Xlib.h>
+#include "Commands/Spawn.hpp"
+
+Spawn::Spawn() {
+
 }
-#include "json/json.h"
-#include "ConfigDataBase.hpp"
-#include "Config/Binding.hpp"
 
-class ConfigDataBindings : public ConfigDataBase {
-public:
-	ConfigDataBindings();
-	~ConfigDataBindings() override = default;
-	void configInit(Json::Value& root_) override;
-	Json::Value configSave() override;
-	void grabKeys(Display *display, Window window);
-	void handleKeypressEvent(XKeyEvent *event);
+void Spawn::execute(const std::string &args) {
 
-private:
-	std::vector<Binding *> bindings_;
-};
-#endif //YGGDRASILWM_CONFIGDATABINDINGS_H
+}
+

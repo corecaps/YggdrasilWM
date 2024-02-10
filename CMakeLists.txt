@@ -84,12 +84,13 @@ include_directories(${googletest_SOURCE_DIR}/googlemock/include)
 # Add your source files
 set(SOURCES
         ${SOURCE_DIR}/window_manager.cpp
-
         ${SOURCE_DIR}/Logger.cpp
         ${SOURCE_DIR}/Client.cpp
         ${INCLUDE_DIR}/Client.hpp
         ${SOURCE_DIR}/EventHandler.cpp
         ${INCLUDE_DIR}/EventHandler.hpp
+        ${SOURCE_DIR}/Group.cpp
+        ${INCLUDE_DIR}/Group.hpp
         ${SOURCE_DIR}/Layouts/LayoutManager.cpp
         ${INCLUDE_DIR}/Layouts/LayoutManager.hpp
         ${SOURCE_DIR}/Layouts/TreeLayoutManager.cpp
@@ -110,8 +111,14 @@ set(SOURCES
         ${INCLUDE_DIR}/Config/ConfigDataBindings.hpp
         ${SOURCE_DIR}/Config/ConfigFileHandler.cpp
         ${INCLUDE_DIR}/Config/ConfigFileHandler.hpp
-        ${SOURCE_DIR}/Group.cpp
-        ${INCLUDE_DIR}/Group.hpp
+        ${SOURCE_DIR}/Config/Binding.cpp
+        ${INCLUDE_DIR}/Config/Binding.hpp
+        ${SOURCE_DIR}/Commands/CommandBase.cpp
+        ${INCLUDE_DIR}/Commands/CommandBase.hpp
+        ${SOURCE_DIR}/Commands/FocusGroup.cpp
+        ${INCLUDE_DIR}/Commands/FocusGroup.hpp
+        ${SOURCE_DIR}/Commands/Spawn.cpp
+        ${INCLUDE_DIR}/Commands/Spawn.hpp
 )
 
 # Create the executable
