@@ -25,8 +25,8 @@
       "Border_Size": 2,
       "Gap": 10
     }],
-  "Bars": {
-    "1": {
+  "Bars": [
+    {
       "Height": 30,
       "Font": "Arial",
       "Font_Size": 12,
@@ -35,7 +35,7 @@
       "Border_Size": 2,
       "Border_Color": "#000000"
     }
-  },
+  ],
   "Bindings": {
     "ModMask": "Mod4",
     "Move": "Mod1",

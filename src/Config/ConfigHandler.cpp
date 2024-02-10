@@ -79,7 +79,7 @@ void ConfigHandler::configInit() {
 	Json::Value Groups = root_["Groups"];
 	Json::Value Bars = root_["Bars"];
 	Json::Value Bindings = root_["Bindings"];
-	if (Groups.empty() || !Groups.isArray() || Bars.empty() || !Bars.isObject() || Bindings.empty() || !Bindings.isObject()){
+	if (Groups.empty() || !Groups.isArray() || Bars.empty() || !Bars.isArray() || Bindings.empty() || !Bindings.isObject()){
 		throw std::runtime_error("Config file is missing Groups, Bars or Bindings See Documentation for more information");
 	}
 	addConfigData(new ConfigDataGroups());

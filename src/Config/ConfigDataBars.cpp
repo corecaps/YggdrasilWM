@@ -32,7 +32,7 @@
 ConfigDataBars::ConfigDataBars() : bars_(), root_() {}
 void ConfigDataBars::configInit(Json::Value &root) {
 	root_ = root;
-	if (root.empty() || !root.isObject()) {
+	if (root.empty() || !root.isArray()) {
 		throw std::runtime_error("Invalid configuration file");
 	}
 	for (auto &bar : root) {
