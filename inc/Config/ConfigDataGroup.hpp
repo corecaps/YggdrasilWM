@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataGroup.hpp
  * @brief ConfigDataGroup class header.
- * @date 2024-02-07
+ * @date 2024-02-10
  */
 #ifndef YGGDRASILWM_CONFIGDATAGROUP_H
 #define YGGDRASILWM_CONFIGDATAGROUP_H
@@ -51,6 +51,4 @@ private:
 	int groupBorderSize_{};
 	int groupGap_{};
 };
-
-
 #endif //YGGDRASILWM_CONFIGDATAGROUP_H

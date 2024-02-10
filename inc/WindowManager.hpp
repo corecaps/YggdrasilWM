@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file WindowManager.hpp
  * @brief WindowManager class header.
- * @date 2024-02-07
+ * @date 2024-02-10
  */
 
 #ifndef WINDOW_MANAGER_HPP
@@ -43,7 +43,6 @@ extern "C" {
 #include <csignal>
 #include <mutex>
 #include "Group.hpp"
-using ConfigValue = std::variant<std::string, int, bool,unsigned long>;
 
 /**
  * @class WindowManager
@@ -62,8 +61,7 @@ public:
  * @brief Create a WindowManager object
  * @param display_str Optional X Display string if not set, the DISPLAY environment variable will be used
  */
-	static void Create(
-		const std::string &display_str = std::string());
+	static void Create( const std::string &display_str = std::string());
 /**
  * @brief Destroy the WindowManager object
  * i have yet to find a clean way to close the window manager
@@ -111,11 +109,6 @@ public:
  */
 	Client &getClientRef(Window window);
 /**
- * @fn bool WindowManager::isFrame(Window window)
- * @brief check if a window is a frame
- */
-	bool isFrame(Window window);
-/**
  * @fn Window WindowManager::getBar() const
  * @brief Get the Bar window
  */
@@ -144,9 +137,24 @@ public:
   @todo: implement a clean way to stop the window manager
  */
 	void Stop();
-
+/**
+ * @fn const std::vector<Group *> &WindowManager::getGroups() const
+ * @brief Get the Groups vector
+  this function returns the groups vector
+  the groups vector contains all the groups
+  the groups are the workspaces of the window manager
+  the active group is the one that is currently displayed
+  the groups are created from the config file
+  the active group is set to the first group in the vector
+  the active group can be changed by the user
+ * @return
+ */
 	const std::vector<Group *> &getGroups() const;
-
+/**
+ * @fn Group *WindowManager::getActiveGroup() const
+ * @brief get the current Active Group
+ * @return
+ */
 	Group *getActiveGroup() const;
 
 /**
@@ -163,8 +171,12 @@ public:
  * @return WindowManager* instance
  */
 	static WindowManager * getInstance();
+/**
+ * @fn void WindowManager::setActiveGroup(Group *activeGroup)
+ * @brief set the current active group
+ * @param activeGroup
+ */
 	void setActiveGroup(Group *activeGroup);
-
 /**
  * @fn static void WindowManager::Destroy()
  * @brief Destroy the WindowManager instance
@@ -174,7 +186,14 @@ public:
   this function should be called when the WindowManager is no longer needed
  */
 	static void Destroy();
+/**
+ * @fn void WindowManager::testRun()
+ * @brief test function
+  this function is used for testing purposes
+  it is not used in the normal operation of the window manager
+ */
 	void testRun();
+
 private:
 	Display									*display_;
 	static bool								wm_detected_;
@@ -222,9 +241,10 @@ private:
   only one window manager can run at a time
  */
 	static int OnWMDetected([[maybe_unused]] Display *display, XErrorEvent *e);
-
+/**
+ * @fn void WindowManager::addGroupsFromConfig()
+ * @brief add groups configured in the ConfigDataGroups to the groups vector
+ */
 	void addGroupsFromConfig();
-
-
 };
 #endif

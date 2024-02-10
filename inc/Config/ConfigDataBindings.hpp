@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataBindings.hpp
  * @brief ConfigDataBindings class header.
- * @date 2024-02-08
+ * @date 2024-02-10
  */
 
 #ifndef YGGDRASILWM_CONFIGDATABINDINGS_H
@@ -30,7 +30,9 @@
 #include "ConfigDataBase.hpp"
 #include "json/json.h"
 #include <string>
-
+extern "C" {
+#include <X11/Xlib.h>
+}
 class ConfigDataBindings : public ConfigDataBase {
 public:
 	ConfigDataBindings();
@@ -41,6 +43,8 @@ public:
 	const std::string &getBindingAction() const;
 	const std::string &getBindingKey() const;
 	const std::string &getBindingMod() const;
+	void grabKeys(Display *display, Window window);
+	void action(XKeyEvent *event);
 
 private:
 	std::string bindingName_;

@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Client.hpp
  * @brief  This class is responsible for managing the client windows.
- * @date 2024-02-05
+ * @date 2024-02-10
  *
  */
 #ifndef YGGDRASILWM_CLIENT_HPP
@@ -30,8 +30,8 @@
 extern "C" {
 #include <X11/Xlib.h>
 }
-
 #include <string>
+
 class Group;
 class LayoutManager;
 /**

@@ -22,10 +22,10 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file EventHandler.cpp
  * @brief EventHandler class implementation.
- * @date 2024-02-06
+ * @date 2024-02-10
  */
 #include "EventHandler.hpp"
-#include "Group.hpp"
+#include "Logger.hpp"
 #include <string>
 extern "C" {
 #include <X11/XKBlib.h>
@@ -139,7 +139,6 @@ void EventHandler::handleUnmapNotify(const XEvent &event) {
 		return;
 	}
 	try {
-/** @todo : handle when client is unmappad from group switch */
 		Client &client = WindowManager::getInstance()->getClientRef(e.window);
 		Logger::GetInstance()->Log("Unmapping window: " + client.getTitle(), L_INFO);
 		if (client.getFrame() != e.window) {
@@ -261,9 +260,7 @@ void EventHandler::handleFocusIn(const XEvent &event) {
 		return;
 	}
 	else {
-//		unsigned long ActiveColor = std::get<unsigned long>(WindowManager::getInstance()->getConfigHandler().getConfig("ActiveColor"));
-/// Temporary hardcoded value
-		unsigned long ActiveColor = 0xff0000;
+		unsigned long ActiveColor = client->getGroup()->getActiveColor();
 		Logger::GetInstance()->Log("Window focused: " + client->getTitle() , L_INFO);
 		XSetWindowBorder(WindowManager::getInstance()->getDisplay(), client->getFrame(), ActiveColor);
 		XFlush(WindowManager::getInstance()->getDisplay());
@@ -279,9 +276,7 @@ void EventHandler::handleFocusOut(const XEvent &event) {
 		return;
 	}
 	else {
-//		unsigned long InActiveColor = std::get<unsigned long>(WindowManager::getInstance()->getConfigHandler().getConfig("InActiveColor"));
-///Temporary hardcoded value
-		unsigned long InActiveColor = 0x00ff00;
+		unsigned long InActiveColor = client->getGroup()->getInactiveColor();
 		Logger::GetInstance()->Log("Window unfocused: " + client->getTitle() , L_INFO);
 		XSetWindowBorder(WindowManager::getInstance()->getDisplay(), client->getFrame(), InActiveColor);
 		XFlush(WindowManager::getInstance()->getDisplay());

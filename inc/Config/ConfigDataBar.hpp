@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataBar.hpp
  * @brief ConfigDataBar class header
- * @date 2024-02-08
+ * @date 2024-02-10
  */
 #ifndef YGGDRASILWM_CONFIGDATAGROUP_H
 #define YGGDRASILWM_CONFIGDATAGROUP_H
@@ -32,22 +32,68 @@
 
 /**
  * @class ConfigDataBar
- *
+ * @brief ConfigDataBar class
+ * Contains the configuration data for one bar in the window manager
+ * Inherits from ConfigDataBase class
+ * @see ConfigDataBase
  */
 class ConfigDataBar : public ConfigDataBase{
 public:
+/**
+ * @fn ConfigDataBar::ConfigDataBar()
+ * @brief ConfigDataBar class constructor
+ */
 	ConfigDataBar();
 	~ConfigDataBar() override = default;
+/**
+ * @fn void ConfigDataBar::configInit(Json::Value& root_)
+ * @brief Initializes the configuration data for the bar
+ * You must call configInit() in each ConfigDataBase Child class
+ * to load the data.
+ * @param root_ Json::Value& object containing the Bar configuration data
+ */
 	void configInit(Json::Value& root_) override;
+/**
+ * @fn Json::Value ConfigDataBar::configSave()
+ * @brief return a Json::Value object containing the Bar configuration data
+ */
 	Json::Value configSave() override;
+/**
+ * @fn int ConfigDataBar::getBarHeight() const
+ * @brief Get the Bar Heightb
+ * @return
+ */
 	int getBarHeight() const;
+/**
+ * @fn const std::string &ConfigDataBar::getBarFont() const
+ * @brief Get the Bar Font
+ */
 	const std::string &getBarFont() const;
+/**
+ * @fn unsigned int ConfigDataBar::getBarFontColor() const
+ * @brief Get the Bar Font Color
+ */
 	unsigned int getBarFontColor() const;
+/**
+ * @fn int ConfigDataBar::getBarFontSize() const
+ * @brief Get the Bar Font Size
+ */
 	int getBarFontSize() const;
+/**
+ * @fn unsigned int ConfigDataBar::getBarBackgroundColor() const
+ * @brief Get the Bar Background Color
+ */
 	unsigned int getBarBackgroundColor() const;
+/**
+ * @fn int ConfigDataBar::getBarBorderSize() const
+ * @brief Get the Bar Border Size
+ */
 	int getBarBorderSize() const;
+/**
+ * @fn unsigned int ConfigDataBar::getBarBorderColor() const
+ * @brief Get the Bar Border Color
+ */
 	unsigned int getBarBorderColor() const;
-
 private:
 	int barHeight_;
 	std::string barFont_;

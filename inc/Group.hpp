@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Group.hpp
  * @brief  Group class header.
- * @date 2024-02-06
+ * @date 2024-02-10
  *
  */
 
@@ -155,6 +155,30 @@ public:
  * @todo implementation
  */
 	void		switchFrom();
+/**
+ * @fn int Group::getBorderSize()
+ * @brief Get the border size of the group
+ * @return
+ */
+	int			getBorderSize() const;
+/**
+ * @fn int Group::getGap()
+ * @brief Get the gap of the group
+ * @return
+ */
+	int			getGap() const;
+/**
+ * @fn unsigned long Group::getInactiveColor()
+ * @brief Get the inactive color of the group
+ * @return
+ */
+	unsigned long	getInactiveColor() const;
+/**
+ * @fn unsigned long Group::getActiveColor()
+ * @brief Get the active color of the group
+ * @return
+ */
+	unsigned long	getActiveColor() const;
 
 private:
 	std::string								name_;
@@ -163,16 +187,6 @@ private:
 	int										borderSize_;
 	int										gap_;
 	unsigned long 							inactiveColor_;
-public:
-	int getBorderSize() const;
-
-	int getGap() const;
-
-	unsigned long getInactiveColor() const;
-
-	unsigned long getActiveColor() const;
-
-private:
 	unsigned long 							activeColor_;
 	int										barHeight_;
 	bool									active_{};

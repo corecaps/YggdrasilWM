@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataBars.hpp
  * @brief ConfigDataBars class header.
- * @date 2024-02-08
+ * @date 2024-02-10
  */
 #ifndef YGGDRASILWM_CONFIGDATABARS_H
 #define YGGDRASILWM_CONFIGDATABARS_H
@@ -33,21 +33,57 @@
 #include <vector>
 
 class ConfigDataBar;
-
+/**
+ * @class ConfigDataBars
+ * @brief ConfigDataBars class
+ */
 class ConfigDataBars : public ConfigDataBase {
 public:
+/**
+ * @fn ConfigDataBars::ConfigDataBars()
+ * @brief Construct a new ConfigDataBars object
+*/
 	ConfigDataBars();
+/**
+ * @fn ConfigDataBars::~ConfigDataBars()
+ * @brief Destroy the ConfigDataBars object
+ */
 	~ConfigDataBars() override;
+/**
+ * @fn void ConfigDataBars::configInit(Json::Value& root_)
+ * @brief Initialize the ConfigDataBars object
+ * You must call configInit() in each ConfigDataBase Child class
+ * to load the data.
+ * @param root_ Json::Value& object containing the Bar configuration data
+ */
 	void configInit(Json::Value& root_);
+/**
+ * @fn Json::Value ConfigDataBars::configSave()
+ * @brief return a Json::Value object containing the Bars configuration data
+ */
 	Json::Value configSave();
+/**
+ * @fn ConfigDataBar * ConfigDataBars::getBar(int index)
+ * @brief Get the Bar object at index
+ * @param index
+ */
 	ConfigDataBar * getBar(int index);
+/**
+ * @fn void ConfigDataBars::addBar(const std::string& barName, ConfigDataBar * bar)
+ * @brief Add a new Bar object to the ConfigDataBars object
+ */
 	void addBar(const std::string& barName, ConfigDataBar * bar);
+/**
+ * @fn void ConfigDataBars::removeBar(int index)
+ * @brief Remove the Bar object at index
+ * @param index
+ */
 	void removeBar(int index);
-
-private:
-public:
+/**
+ * @fn const std::vector<ConfigDataBar *> &ConfigDataBars::getBars() const
+ * @brief Get the Bars object
+ */
 	const std::vector<ConfigDataBar *> &getBars() const;
-
 private:
 	std::vector<ConfigDataBar *> bars_;
 	Json::Value root_;

@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file window_manager.cpp
  * @brief WindowManager class implementation.
- * @date 2024-02-06
+ * @date 2024-02-10
  *
  */
 #include "WindowManager.hpp"
@@ -249,13 +249,6 @@ void WindowManager::insertClient(Window window) {
 	debug_stream << "Inserting client in map: " << client->getTitle() << "\t[" << window << "]";
 	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);
 	clients_.insert({window, client});
-}
-bool WindowManager::isFrame(Window window) {
-	for (auto &client: clients_) {
-		if (client.second->getFrame() == window)
-			return true;
-	}
-	return false;
 }
 Window WindowManager::getBar() const { return bar_; }
 unsigned long WindowManager::getClientCount() { return clients_.size(); }

@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Client.cpp
  * @brief Client class implementation.
- * @date 2024-02-07
+ * @date 2024-02-10
  */
 
 #include <X11/keysym.h>
@@ -80,6 +80,8 @@ Client::~Client() {
 }
 Client_Err Client::frame() {
 	const unsigned long BG_COLOR = 0x000000;
+	border_width = group_->getBorderSize();
+	border_color = group_->getInactiveColor();
 	if (this->framed)
 		return(YGG_CLI_LOG_ALREADY_FRAMED);
 	XWindowAttributes x_window_attrs;
@@ -135,19 +137,9 @@ Client_Err Client::frame() {
 //			GrabModeAsync,
 //			None,
 //			None);
-	//   c. Kill windows with alt + f4.
 	XGrabKey(
 			display_,
 			XKeysymToKeycode(display_, XK_2),
-			Mod1Mask,
-			window_,
-			false,
-			GrabModeAsync,
-			GrabModeAsync);
-	//   d. Switch windows with alt + tab.
-	XGrabKey(
-			display_,
-			XKeysymToKeycode(display_, XK_Tab),
 			Mod1Mask,
 			window_,
 			false,

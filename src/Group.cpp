@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Group.cpp
  * @brief Group class implementation.
- * @date 2024-02-07
+ * @date 2024-02-10
  */
 #include "WindowManager.hpp"
 #include "Group.hpp"
