@@ -22,15 +22,12 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataBindings.cpp
  * @brief ConfigDataBindings class implementation.
- * @date 2024-02-08
+ * @date 2024-02-10
  */
 
 #include "Config/ConfigDataBindings.hpp"
 ConfigDataBindings::ConfigDataBindings() {
-	bindingName_ = "Default";
-	bindingAction_ = "None";
-	bindingKey_ = "None";
-	bindingMod_ = "None";
+
 }
 void ConfigDataBindings::configInit(Json::Value &root) {
 
@@ -38,7 +35,3 @@ void ConfigDataBindings::configInit(Json::Value &root) {
 Json::Value ConfigDataBindings::configSave() {
 	return Json::Value();
 }
-const std::string &ConfigDataBindings::getBindingName() const { return bindingName_; }
-const std::string &ConfigDataBindings::getBindingAction() const { return bindingAction_; }
-const std::string &ConfigDataBindings::getBindingKey() const { return bindingKey_; }
-const std::string &ConfigDataBindings::getBindingMod() const { return bindingMod_; }

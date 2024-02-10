@@ -47,10 +47,6 @@ public:
 	void action(XKeyEvent *event);
 
 private:
-	std::string bindingName_;
-	std::string bindingAction_;
-	std::string bindingKey_;
-	std::string bindingMod_;
-};
 
+};
 #endif //YGGDRASILWM_CONFIGDATABINDINGS_H

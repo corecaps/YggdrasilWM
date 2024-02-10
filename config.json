@@ -37,11 +37,27 @@
     }
   ],
   "Bindings": {
-    "ModMask": "Mod4",
-    "Move": "Mod1",
-    "Resize": "Mod3",
-    "Close": "Mod2",
-    "Next": "Tab",
-    "Terminal": "Return"
+    "Mod1": [
+      {
+        "Key" : "1",
+        "Action" : "FocusGroup",
+        "Argument" : "1"
+      },
+      {
+        "Key" : "2",
+        "Action" : "FocusGroup",
+        "Argument" : "2"
+      },
+      {
+        "Key" : "3",
+        "Action" : "FocusGroup",
+        "Argument" : "3"
+      },
+      {
+        "Key" : "Return",
+        "Action" : "Spawn",
+        "Argument" : "kitty"
+      }
+    ]
   }
 }
