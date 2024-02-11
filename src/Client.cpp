@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Client.cpp
  * @brief Client class implementation.
- * @date 2024-02-10
+ * @date 2024-02-11
  */
 
 #include <X11/keysym.h>
@@ -31,6 +31,7 @@
 #include "Client.hpp"
 #include "Layouts/LayoutManager.hpp"
 #include "Group.hpp"
+#include "Logger.hpp"
 
 Client::Client(Display *display,
 			   Window root,
@@ -50,7 +51,7 @@ Client::Client(Display *display,
 {
 	Atom wmClassAtom = XInternAtom(display, "WM_CLASS", False);
 	if (wmClassAtom == None) {
-		std::cerr << "Failed to intern WM_CLASS atom." << std::endl;
+		Logger::GetInstance()->Log("Failed to intern WM_CLASS atom.",L_ERROR);
 	}
 	Atom actualType;
 	int actualFormat;
@@ -58,7 +59,7 @@ Client::Client(Display *display,
 	unsigned char* propData;
 	if (XGetWindowProperty(display, window, wmClassAtom, 0, 1024, False, AnyPropertyType,
 						   &actualType, &actualFormat, &nItems, &bytesAfter, &propData) != Success) {
-		std::cerr << "Failed to get WM_CLASS property." << std::endl;
+		Logger::GetInstance()->Log("Failed to get WM_CLASS property.", L_ERROR);
 	}
 	Atom XA_STRING = XInternAtom(display, "STRING", False);
 	if (actualType == XA_STRING && actualFormat == 8 && nItems > 1) {
@@ -68,7 +69,7 @@ Client::Client(Display *display,
 		this->class_ = className;
 		this->title_ = instanceName;
 	} else {
-		std::cerr << "Unexpected format or size of WM_CLASS property." << std::endl;
+		Logger::GetInstance()->Log("Unexpected format or size of WM_CLASS property.",L_ERROR);
 	}
 	XFree(propData);
 }
@@ -76,7 +77,7 @@ Client::~Client() {
 	if (this->framed) {
 		XDestroyWindow(display_, frame_);
 	}
-	std::cerr << "Client destroyed :" << title_ << std::endl;
+	Logger::GetInstance()->Log("Client destroyed :" + title_, L_INFO);
 }
 Client_Err Client::frame() {
 	const unsigned long BG_COLOR = 0x000000;

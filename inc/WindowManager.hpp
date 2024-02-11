@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file WindowManager.hpp
  * @brief WindowManager class header.
- * @date 2024-02-10
+ * @date 2024-02-11
  */
 
 #ifndef WINDOW_MANAGER_HPP
@@ -221,7 +221,7 @@ private:
  * @fn void WindowManager::getTopLevelWindows(std::stringstream &debug_stream)
  * @brief look for existing top level windows and create clients for them
  */
-	void getTopLevelWindows(std::stringstream &debug_stream);
+	void getTopLevelWindows();
 /**
  * @fn void WindowManager::Bar()
  * @brief create the bar window

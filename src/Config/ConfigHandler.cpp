@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigHandler.cpp
  * @brief ConfigHandler class implementation.
- * @date 2024-02-10
+ * @date 2024-02-11
  *
  */
 
@@ -88,6 +88,7 @@ void ConfigHandler::configInit() {
 	getConfigData<ConfigDataGroups>()->configInit(Groups);
 	getConfigData<ConfigDataBars>()->configInit(Bars);
 	getConfigData<ConfigDataBindings>()->configInit(Bindings);
+	Logger::GetInstance()->Log("===================Succefully Loaded Config===================\n\n",L_INFO);
 }
 ConfigHandler::~ConfigHandler() {
 	for (auto it = configMap_.begin(); it != configMap_.end(); ++it) {

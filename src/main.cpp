@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file main.cpp
  * @brief Main file.
- * @date 2024-02-07
+ * @date 2024-02-11
  * YggdrasilWM is a tiny window manager for X11.
  */
 
@@ -110,7 +110,6 @@ int main(int argc, char** argv) {
 			Logger::GetInstance()->Log("Using default display", L_INFO);
 			WindowManager::Create();
 		}
-		Logger::GetInstance()->Log("Starting WindowManager.", L_INFO);
 	} catch (const std::exception &e) {
 		Logger::GetInstance()->Log(e.what(), L_ERROR);
 		return EXIT_FAILURE;

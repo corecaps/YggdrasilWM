@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file EventHandler.cpp
  * @brief EventHandler class implementation.
- * @date 2024-02-10
+ * @date 2024-02-11
  */
 #include "EventHandler.hpp"
 #include "Logger.hpp"
@@ -166,14 +166,6 @@ void EventHandler::handleConfigureRequest(const XEvent &event) {
 	changes.sibling = e.above;
 	changes.stack_mode = e.detail;
 	XConfigureWindow(WindowManager::getInstance()->getDisplay(),e.window,e.value_mask,&changes);
-	std::stringstream msg;
-	msg << "x:" << changes.x << " y:" << changes.y
-		<< "\twidth:" << changes.width << " height:" << changes.height
-		<< "\t sibling" << changes.sibling << " stack mode :" << changes.stack_mode
-		<< "\t value mask" << e.value_mask << std::endl;
-	Logger::GetInstance()->Log("Configure request for : "+ std::to_string(e.window), L_INFO);
-	Logger::GetInstance()->Log(msg.str(),L_INFO);
-
 }
 void EventHandler::handleConfigureNotify(const XEvent &event) {
 }
@@ -369,8 +361,6 @@ void EventHandler::handleMotionNotify(const XEvent &event) {
 //	}
 }
 void EventHandler::handleCreateNotify(const XEvent &event) {}
-void EventHandler::handleUnknown(const XEvent &event) {
-	Logger::GetInstance()->Log("Unknown event type: " + std::to_string(event.type), L_WARNING);
-}
+void EventHandler::handleUnknown(const XEvent &event) {}
 
 
