@@ -32,6 +32,8 @@
 #include "Layouts/LayoutManager.hpp"
 #include "Group.hpp"
 #include "Logger.hpp"
+#include "Config/ConfigHandler.hpp"
+#include "Config/ConfigDataBindings.hpp"
 
 Client::Client(Display *display,
 			   Window root,
@@ -138,21 +140,7 @@ Client_Err Client::frame() {
 //			GrabModeAsync,
 //			None,
 //			None);
-	XGrabKey(
-			display_,
-			XKeysymToKeycode(display_, XK_2),
-			Mod1Mask,
-			window_,
-			false,
-			GrabModeAsync,
-			GrabModeAsync);
-	XGrabKey(display_,
-			 XKeysymToKeycode(display_, XK_1),
-			 Mod1Mask ,
-			 window_,
-			 false,
-			 GrabModeAsync,
-			 GrabModeAsync);
+	ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->grabKeys(display_, window_);
 	this->framed = true;
 	this->group_->AddClient(window_,this);
 	return YGG_CLI_NO_ERROR;

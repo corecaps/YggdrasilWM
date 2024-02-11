@@ -30,6 +30,7 @@
 #include "Config/ConfigDataBars.hpp"
 #include "Config/ConfigHandler.hpp"
 #include "Config/ConfigDataGroups.hpp"
+#include "Config/ConfigDataBindings.hpp"
 
 bool WindowManager::wm_detected_;
 WindowManager * WindowManager::instance_ = nullptr;
@@ -70,6 +71,7 @@ WindowManager::~WindowManager() {
 }
 void WindowManager::Init() {
 	selectEventOnRoot();
+	ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->grabKeys(display_, root_);
 	if (wm_detected_) {
 		throw std::runtime_error("Another window manager is already running.");
 	}
@@ -87,20 +89,6 @@ void WindowManager::selectEventOnRoot() const {
 			root_,
 			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask);
 	XSetErrorHandler(&WindowManager::OnXError);
-	XGrabKey(display_,
-			 XKeysymToKeycode(display_, XK_1),
-			 Mod1Mask ,
-			 root_,
-			 false,
-			 GrabModeAsync,
-			 GrabModeAsync);
-	XGrabKey(display_,
-			 XKeysymToKeycode(display_, XK_2),
-			 Mod1Mask ,
-			 root_,
-			 false,
-			 GrabModeAsync,
-			 GrabModeAsync);
 	XSync(display_, false);
 }
 void WindowManager::getTopLevelWindows() {

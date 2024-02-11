@@ -29,13 +29,16 @@
 #include "Logger.hpp"
 #include "Commands/FocusGroup.hpp"
 #include "Commands/Spawn.hpp"
+extern "C" {
+#include <X11/Xlib.h>
+
+}
 
 void Binding::init(std::string Mod, std::string Key, std::string Command, std::string Args) {
 	mod_ = Mod;
 	key_ = Key;
 	commandName_ = Command;
 	args_ = Args;
-	Logger::GetInstance()->Log("New Binding registered.\n===============================\tModKey:[" + mod_ + "]\tKey [" + key_ + "]\tCommand Name [" + commandName_ + "]\tArguments:[" + args_  +"]", L_INFO);
 	if (commandName_ == "FocusGroup") {
 		command_ = new FocusGroup();
 	} else if (commandName_ == "Spawn") {
@@ -43,14 +46,30 @@ void Binding::init(std::string Mod, std::string Key, std::string Command, std::s
 	} else {
 		Logger::GetInstance()->Log("Unknown command : " + commandName_, L_WARNING);
 	}
+	if (mod_ == "Mod4") {
+		modMask_ = Mod4Mask;
+	} else if (mod_ == "Mod1") {
+		modMask_ = Mod1Mask;
+	} else {
+		Logger::GetInstance()->Log("Unknown mod : " + mod_, L_WARNING);
+	}
+	keyCode_ = XKeysymToKeycode(XOpenDisplay(NULL), XStringToKeysym(key_.c_str()));
+	Logger::GetInstance()->Log("New Binding registered.\n=======================\tModKey:[" + mod_ + "] Key [" + key_ + "] Command Name [" + commandName_ + "] Arguments:[" + args_  +"] ModMask ["+std::to_string(modMask_)+"] Keycode [" + std::to_string(keyCode_) + "]", L_INFO);
 }
 void Binding::execute() {
 	command_->execute(args_);
 }
-Binding::Binding() {
-
-}
+Binding::Binding() :
+	mod_(""),
+	modMask_(0),
+	key_(""),
+	keyCode_(0),
+	commandName_(""),
+	args_(""),
+	command_(nullptr) {}
 const std::string &Binding::getMod() const { return mod_; }
 const std::string &Binding::getKey() const { return key_; }
 const std::string &Binding::getCommandName() const { return commandName_; }
 const std::string &Binding::getArgs() const { return args_; }
+unsigned int Binding::getModMask() const { return modMask_; }
+int Binding::getKeyCode() const { return keyCode_; }

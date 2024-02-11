@@ -52,3 +52,10 @@ ConfigDataBindings::~ConfigDataBindings() {
 		delete binding;
 	}
 }
+
+void ConfigDataBindings::grabKeys(Display *display, Window window) {
+	for (auto &binding : bindings_) {
+		XGrabKey(display, binding->getKeyCode(), binding->getModMask(), window, true, GrabModeAsync, GrabModeAsync);
+	}
+	XFlush(display);
+}
