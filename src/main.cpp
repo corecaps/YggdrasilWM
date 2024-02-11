@@ -41,9 +41,9 @@
 
 int main(int argc, char** argv) {
 	std::cout << "    YggdrasilWM  Copyright (C) 2024  corecaps <corecaps@gmail.com> <jgarcia@student.42.fr>\n"
-				 "    This program comes with ABSOLUTELY NO WARRANTY.\n"
-				 "    This is free software, and you are welcome to redistribute it\n"
-				 "    under certain conditions." << std::endl;
+				 "    This program comes with ABSOLUTELY NO WARRANTY.This is free software, and you are welcome\n"
+				 "    to redistribute it under certain conditions.\n"
+				 "    See the LICENCE file for more informations" << std::endl;
 	cxxopts::Options options(PROGRAM_NAME, "YggdrasilWM by corecaps. https://github.com/corecaps/YggdrasilWM");
 	options.add_options()
 			("h,help", "Print help")

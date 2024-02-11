@@ -26,6 +26,8 @@
  */
 
 #include "Config/ConfigDataBindings.hpp"
+#include "Logger.hpp"
+
 ConfigDataBindings::ConfigDataBindings() : bindings_(){}
 void ConfigDataBindings::configInit(Json::Value &root) {
 	std::vector<std::string> modKeys = root.getMemberNames();
@@ -40,6 +42,7 @@ void ConfigDataBindings::configInit(Json::Value &root) {
 			bindings_.push_back(b);
 		}
 	}
+	Logger::GetInstance()->Log("Successfully added " + std::to_string(bindings_.size()) + " bindings", L_INFO);
 }
 Json::Value ConfigDataBindings::configSave() {
 	return Json::Value();
