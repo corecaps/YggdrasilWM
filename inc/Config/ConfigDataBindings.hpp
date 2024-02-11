@@ -39,7 +39,7 @@ extern "C" {
 class ConfigDataBindings : public ConfigDataBase {
 public:
 	ConfigDataBindings();
-	~ConfigDataBindings() override = default;
+	~ConfigDataBindings() override;
 	void configInit(Json::Value& root_) override;
 	Json::Value configSave() override;
 	void grabKeys(Display *display, Window window);

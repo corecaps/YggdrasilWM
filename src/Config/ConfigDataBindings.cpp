@@ -22,16 +22,30 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataBindings.cpp
  * @brief ConfigDataBindings class implementation.
- * @date 2024-02-10
+ * @date 2024-02-11
  */
 
 #include "Config/ConfigDataBindings.hpp"
-ConfigDataBindings::ConfigDataBindings() {
-
-}
+ConfigDataBindings::ConfigDataBindings() : bindings_(){}
 void ConfigDataBindings::configInit(Json::Value &root) {
-
+	std::vector<std::string> modKeys = root.getMemberNames();
+	for (auto &modKey : modKeys) {
+		Json::Value bindings = root[modKey];
+		for (auto &binding : bindings) {
+			std::string key = binding["Key"].asString();
+			std::string command = binding["Action"].asString();
+			std::string arg = binding["Argument"].asString();
+			auto b = new Binding();
+			b->init(modKey, key, command, arg);
+			bindings_.push_back(b);
+		}
+	}
 }
 Json::Value ConfigDataBindings::configSave() {
 	return Json::Value();
+}
+ConfigDataBindings::~ConfigDataBindings() {
+	for (auto &binding : bindings_) {
+		delete binding;
+	}
 }

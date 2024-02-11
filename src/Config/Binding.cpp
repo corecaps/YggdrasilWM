@@ -26,11 +26,23 @@
  */
 #include <string>
 #include "Config/Binding.hpp"
+#include "Logger.hpp"
+#include "Commands/FocusGroup.hpp"
+#include "Commands/Spawn.hpp"
+
 void Binding::init(std::string Mod, std::string Key, std::string Command, std::string Args) {
 	mod_ = Mod;
 	key_ = Key;
 	commandName_ = Command;
 	args_ = Args;
+	Logger::GetInstance()->Log("New Binding registered.\n===============================\tModKey:[" + mod_ + "]\tKey [" + key_ + "]\tCommand Name [" + commandName_ + "]\tArguments:[" + args_  +"]", L_INFO);
+	if (commandName_ == "FocusGroup") {
+		command_ = new FocusGroup();
+	} else if (commandName_ == "Spawn") {
+		command_ = new Spawn();
+	} else {
+		Logger::GetInstance()->Log("Unknown command : " + commandName_, L_WARNING);
+	}
 }
 void Binding::execute() {
 	command_->execute(args_);
