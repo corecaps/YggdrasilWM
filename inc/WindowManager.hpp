@@ -247,4 +247,5 @@ private:
  */
 	void addGroupsFromConfig();
 };
+void handleSIGHUP(int signal);
 #endif

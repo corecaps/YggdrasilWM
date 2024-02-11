@@ -33,7 +33,6 @@
 
 bool WindowManager::wm_detected_;
 WindowManager * WindowManager::instance_ = nullptr;
-
 void WindowManager::Create( const std::string &display_str) {
 	Logger::GetInstance()->Log("================ Yggdrasil Initialisation ================\n\n", L_INFO);
 	std::stringstream debug_stream;
@@ -57,9 +56,7 @@ WindowManager::WindowManager(Display *display)
 		  WM_DELETE_WINDOW(XInternAtom(display_, "WM_DELETE_WINDOW", false)),
 		  active_group_(nullptr),
 		  running(true),
-		  bar_(0){
-}
-bool WindowManager::getRunning() const { return running; }
+		  bar_(0){}
 WindowManager::~WindowManager() {
 	for (auto &client: clients_) {
 		delete client.second;
@@ -70,16 +67,6 @@ WindowManager::~WindowManager() {
 	}
 	groups_.clear();
 	XCloseDisplay(display_);
-}
-void handleSIGHUP(int signal) {
-	std::cout << "Caught signal " << signal << std::endl;
-	if (WindowManager::getInstance() != nullptr) {
-		WindowManager::getInstance()->Stop();
-	}
-}
-void WindowManager::Stop() {
-	this->running = false;
-	std::cout << "Stopping WindowManager" << std::endl;
 }
 void WindowManager::Init() {
 	selectEventOnRoot();
@@ -92,6 +79,29 @@ void WindowManager::Init() {
 	XFlush(display_);
 	Bar();
 	signal(SIGINT, handleSIGHUP);
+}
+void WindowManager::selectEventOnRoot() const {
+	XSetErrorHandler(&WindowManager::OnWMDetected);
+	XSelectInput(
+			display_,
+			root_,
+			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask);
+	XSetErrorHandler(&WindowManager::OnXError);
+	XGrabKey(display_,
+			 XKeysymToKeycode(display_, XK_1),
+			 Mod1Mask ,
+			 root_,
+			 false,
+			 GrabModeAsync,
+			 GrabModeAsync);
+	XGrabKey(display_,
+			 XKeysymToKeycode(display_, XK_2),
+			 Mod1Mask ,
+			 root_,
+			 false,
+			 GrabModeAsync,
+			 GrabModeAsync);
+	XSync(display_, false);
 }
 void WindowManager::getTopLevelWindows() {
 	Window returned_root, returned_parent;
@@ -113,7 +123,6 @@ void WindowManager::getTopLevelWindows() {
 		auto *newClient = new Client(display_, root_, top_level_windows[i], active_group_, active_group_->getInactiveColor(), active_group_->getBorderSize());
 		Client_Err err = newClient->frame();
 		setFocus(newClient);
-//		XMapWindow(display_, top_level_windows[i]);
 		if (err == YGG_CLI_ERR_RETRIEVE_ATTR) {
 			delete newClient;
 			Logger::GetInstance()->Log("Failed to frame client: " + std::to_string(top_level_windows[i]), L_ERROR);
@@ -142,30 +151,6 @@ void WindowManager::addGroupsFromConfig() {
 	active_group_ = groups_[0];
 	Logger::GetInstance()->Log("Active Group is [" + active_group_->GetName() + "]", L_INFO);
 }
-void WindowManager::selectEventOnRoot() const {
-	XSetErrorHandler(&WindowManager::OnWMDetected);
-	XSelectInput(
-			display_,
-			root_,
-			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask);
-	XSetErrorHandler(&WindowManager::OnXError);
-	XGrabKey(display_,
-			 XKeysymToKeycode(display_, XK_1),
-			 Mod1Mask ,
-			 root_,
-			 false,
-			 GrabModeAsync,
-			 GrabModeAsync);
-	XGrabKey(display_,
-			 XKeysymToKeycode(display_, XK_2),
-			 Mod1Mask ,
-			 root_,
-			 false,
-			 GrabModeAsync,
-			 GrabModeAsync);
-	XSync(display_, false);
-
-}
 void WindowManager::Run() {
 	Logger::GetInstance()->Log("================ Yggdrasil WM Running ================\n\n", L_INFO);
 	EventHandler::create();
@@ -175,7 +160,6 @@ void WindowManager::Run() {
 		XSync(display_, false);
 	}
 }
-
 void WindowManager::testRun() {
 	try {
 		EventHandler::getInstance();
@@ -187,42 +171,6 @@ void WindowManager::testRun() {
 	EventHandler::getInstance()->dispatchEvent(ev);
 	XSync(display_, false);
 }
-
-int WindowManager::OnXError(Display *display, XErrorEvent *e) {
-	const int MAX_ERROR_TEXT_LENGTH = 1024;
-	char error_text[MAX_ERROR_TEXT_LENGTH];
-	XGetErrorText(display, e->error_code, error_text, sizeof(error_text));
-	std::stringstream error_stream;
-	error_stream << "Received X error:\n"
-			  << "    Request: " << int(e->request_code)
-			  << "    Error code: " << int(e->error_code)
-			  << " - " << error_text << "\n"
-			  << "    Resource ID: " << e->resourceid;
-	Logger::GetInstance()->Log(error_stream.str(), L_ERROR);
-	// The return value is ignored.
-	return 0;
-}
-int WindowManager::OnWMDetected([[maybe_unused]] Display *display, XErrorEvent *e) {
-	if (static_cast<int>(e->error_code) == BadAccess)
-		wm_detected_ = true;
-	return 0;
-}
-Display *WindowManager::getDisplay() const { return display_; }
-std::unordered_map<Window, Client *> &WindowManager::getClients() { return clients_; }
-Client &WindowManager::getClientRef(Window window) { return *clients_.at(window); }
-Window WindowManager::getRoot() const { return root_; }
-Client *WindowManager::getClient(Window window) {
-	auto clientIter = clients_.find(window);
-	if (clientIter != clients_.end()) {
-		return clientIter->second;
-	}
-	for (const auto &client: clients_) {
-		if (client.second->getFrame() == window) {
-			return client.second;
-		}
-	}
-	return nullptr;
-}
 void WindowManager::insertClient(Window window) {
 	std::stringstream debug_stream;
 	int BorderSize = active_group_->getBorderSize();
@@ -231,13 +179,6 @@ void WindowManager::insertClient(Window window) {
 	debug_stream << "Inserting client in map: " << client->getTitle() << "\t[" << window << "]";
 	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);
 	clients_.insert({window, client});
-}
-Window WindowManager::getBar() const { return bar_; }
-unsigned long WindowManager::getClientCount() { return clients_.size(); }
-void WindowManager::setFocus(Client *client) {
-	if (client != nullptr) {
-		XSetInputFocus(display_, client->getWindow(), RevertToParent, CurrentTime);
-	}
 }
 void WindowManager::Bar() {
 	int screen = DefaultScreen(display_);
@@ -258,11 +199,9 @@ void WindowManager::Bar() {
 	XMapWindow(display_, bar_);
 	XFlush(display_);
 }
-WindowManager * WindowManager::getInstance() {
-	if (WindowManager::instance_ != nullptr) {
-		return WindowManager::instance_;
-	} else {
-		throw std::runtime_error("WindowManager instance not created");
+void WindowManager::setFocus(Client *client) {
+	if (client != nullptr) {
+		XSetInputFocus(display_, client->getWindow(), RevertToParent, CurrentTime);
 	}
 }
 void WindowManager::Destroy() {
@@ -271,14 +210,61 @@ void WindowManager::Destroy() {
 		WindowManager::instance_ = nullptr;
 	}
 }
-void WindowManager::setActiveGroup(Group *activeGroup) {
-	active_group_ = activeGroup;
+void handleSIGHUP(int signal) {
+	std::cout << "Caught signal " << signal << std::endl;
+	if (WindowManager::getInstance() != nullptr) {
+		WindowManager::getInstance()->Stop();
+	}
 }
-
-Group *WindowManager::getActiveGroup() const {
-	return active_group_;
+void WindowManager::Stop() {
+	this->running = false;
+	std::cout << "Stopping WindowManager" << std::endl;
 }
-
-const std::vector<Group *> &WindowManager::getGroups() const {
-	return groups_;
+WindowManager * WindowManager::getInstance() {
+	if (WindowManager::instance_ != nullptr) {
+		return WindowManager::instance_;
+	} else {
+		throw std::runtime_error("WindowManager instance not created");
+	}
+}
+Client *WindowManager::getClient(Window window) {
+	auto clientIter = clients_.find(window);
+	if (clientIter != clients_.end()) {
+		return clientIter->second;
+	}
+	for (const auto &client: clients_) {
+		if (client.second->getFrame() == window) {
+			return client.second;
+		}
+	}
+	return nullptr;
+}
+Display *WindowManager::getDisplay() const { return display_; }
+std::unordered_map<Window, Client *> &WindowManager::getClients() { return clients_; }
+Client &WindowManager::getClientRef(Window window) { return *clients_.at(window); }
+Window WindowManager::getRoot() const { return root_; }
+unsigned long WindowManager::getClientCount() { return clients_.size(); }
+Window WindowManager::getBar() const { return bar_; }
+void WindowManager::setActiveGroup(Group *activeGroup) { active_group_ = activeGroup; }
+Group *WindowManager::getActiveGroup() const { return active_group_; }
+const std::vector<Group *> &WindowManager::getGroups() const { return groups_; }
+bool WindowManager::getRunning() const { return running; }
+int WindowManager::OnXError(Display *display, XErrorEvent *e) {
+	const int MAX_ERROR_TEXT_LENGTH = 1024;
+	char error_text[MAX_ERROR_TEXT_LENGTH];
+	XGetErrorText(display, e->error_code, error_text, sizeof(error_text));
+	std::stringstream error_stream;
+	error_stream << "Received X error:\n"
+				 << "    Request: " << int(e->request_code)
+				 << "    Error code: " << int(e->error_code)
+				 << " - " << error_text << "\n"
+				 << "    Resource ID: " << e->resourceid;
+	Logger::GetInstance()->Log(error_stream.str(), L_ERROR);
+	// The return value is ignored.
+	return 0;
+}
+int WindowManager::OnWMDetected([[maybe_unused]] Display *display, XErrorEvent *e) {
+	if (static_cast<int>(e->error_code) == BadAccess)
+		wm_detected_ = true;
+	return 0;
 }

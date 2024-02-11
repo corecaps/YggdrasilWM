@@ -83,7 +83,7 @@ include_directories(${googletest_SOURCE_DIR}/googlemock/include)
 
 # Add your source files
 set(SOURCES
-        ${SOURCE_DIR}/window_manager.cpp
+        ${SOURCE_DIR}/WindowManager.cpp
         ${SOURCE_DIR}/Logger.cpp
         ${SOURCE_DIR}/Client.cpp
         ${INCLUDE_DIR}/Client.hpp
