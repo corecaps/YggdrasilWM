@@ -147,7 +147,7 @@ void EventHandler::handleUnmapNotify(const XEvent &event) {
 		}
 		else {
 			client.unframe();
-			client.getGroup()->RemoveClient(&client);
+			client.getGroup()->removeClient(&client);
 			WindowManager::getInstance()->getClients().erase(e.window);
 			delete &client;
 		}
@@ -264,7 +264,7 @@ void EventHandler::handleDestroyNotify(const XEvent &event) {
 		Logger::GetInstance()->Log("Destroying window: " + client.getTitle(), L_INFO);
 		client.unframe();
 		WindowManager::getInstance()->getClients().erase(e.window);
-		client.getGroup()->RemoveClient(&client);
+		client.getGroup()->removeClient(&client);
 		delete &client;
 	}
 	catch (std::out_of_range &err) {

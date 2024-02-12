@@ -27,16 +27,16 @@
 #include "Layouts/TreeLayoutManager.hpp"
 TreeLayoutManager::TreeLayoutManager(Display *display,
 									 Window root,
-									 int size_x,
-									 int size_y,
-									 int pos_x,
-									 int pos_y,
+									 int sizeX,
+									 int sizeY,
+									 int posX,
+									 int posY,
 									 int borderSize,
 									 int gap,
 									 int barHeight) :
-	LayoutManager(display, root, size_x, size_y, pos_x, pos_y, gap, borderSize, barHeight) {
-	Point pos(pos_x, pos_y + barHeight);
-	Point size(size_x - borderSize, size_y - barHeight - borderSize);
+	LayoutManager(display, root, sizeX, sizeY, posX, posY, gap, borderSize, barHeight) {
+	Point pos(posX, posY + barHeight);
+	Point size(sizeX - borderSize, sizeY - barHeight - borderSize);
 	this->rootSpace_ = new Space(pos, size, 0);
 }
 TreeLayoutManager::~TreeLayoutManager() { delete rootSpace_; }

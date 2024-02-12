@@ -43,26 +43,26 @@
 class TreeLayoutManager :public LayoutManager {
 public:
 /**
- * @fn TreeLayoutManager(Display* display, Window root,int size_x,int size_y,int pos_x,int pos_y)
+ * @fn TreeLayoutManager(Display* display, Window root,int sizeX,int sizeY,int posX,int posY)
  * @brief Construct a new Tree Layout Manager object
  * the size and position of the root space should take
  * account of the bar size and position and the border size
  * @param display
  * @param root
- * @param size_x
- * @param size_y
- * @param pos_x
- * @param pos_y
+ * @param sizeX
+ * @param sizeY
+ * @param posX
+ * @param posY
  * @param borderSize
  * @param gap
  * @param barHeight
  */
 	TreeLayoutManager(Display* display,
 					  Window root,
-					  int size_x,
-					  int size_y,
-					  int pos_x,
-					  int pos_y,
+					  int sizeX,
+					  int sizeY,
+					  int posX,
+					  int posY,
 					  int borderSize,
 					  int gap,
 					  int barHeight);

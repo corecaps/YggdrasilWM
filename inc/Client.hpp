@@ -58,21 +58,21 @@ enum Client_Err {
 class Client {
 public:
 /**
- * @fn Client(Display *display, Window root, Window window, TreeLayoutManager *layout_manager, unsigned long InActiveColor, int BorderSize)
+ * @fn Client(Display *display, Window root, Window window, TreeLayoutManager *layout_manager, unsigned long inActiveColor, int borderSize)
  * @brief Client constructor.get window class and title
  * @param display X11 display
  * @param root root window
  * @param window window to manage
  * @param layout_manager Reference to the layout manager
- * @param InActiveColor color of the border
- * @param BorderSize size of the border
+ * @param inActiveColor color of the border
+ * @param borderSize size of the border
  */
 	Client(Display *display,
 		   Window root,
 		   Window window,
 		   Group *group,
-		   unsigned long InActiveColor,
-		   int BorderSize);
+		   unsigned long inActiveColor,
+		   int borderSize);
 /**
  * @fn ~Client()
  * @brief Client destructor Destroy the Client object & the Frame Window it needed
@@ -95,13 +95,13 @@ public:
  * @brief Client::getWindow return the window attribute of the client
  * @return Window
  */
-	Window getWindow() const;
+	[[nodiscard]] Window getWindow() const;
 /**
  * @fn Group *Client::getGroup() const
  * @brief return the group of the client
  * @return
  */
-	Group *getGroup() const;
+	[[nodiscard]] Group *getGroup() const;
 /**
  * @fn static std::string Client::getError(Client_Err error)
  * @brief Client::getError Return a string from an error of Client_Err enum

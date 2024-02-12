@@ -62,16 +62,16 @@ public:
 	Logger(const Logger&) = delete;
 	Logger& operator=(const Logger&) = delete;
 /**
- * @fn static Logger* Logger::Create(const std::string& logFile, LogLevel logLevel)
- * @brief Create a Logger object that logs to a file
+ * @fn static Logger* Logger::create(const std::string& logFile, LogLevel logLevel)
+ * @brief create a Logger object that logs to a file
  * @param logFile
  * @param logLevel
  * @return
  */
 	static void Create(const std::string& logFile, LogLevel logLevel);
 /**
- * @fn static Logger* Logger::Create(std::ostream& output, LogLevel logLevel)
- * @brief Create a Logger object that logs to a stream
+ * @fn static Logger* Logger::create(std::ostream& output, LogLevel logLevel)
+ * @brief create a Logger object that logs to a stream
  * @param output
  * @param logLevel
  * @return

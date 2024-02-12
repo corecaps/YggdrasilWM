@@ -80,14 +80,14 @@ public:
 		configMap_[std::type_index(typeid(T))] = configData;
 	}
 /**
- * @fn static void ConfigHandler::Create(const std::string& configPath)
- * @brief Create a ConfigHandler object with a path
+ * @fn static void ConfigHandler::create(const std::string& configPath)
+ * @brief create a ConfigHandler object with a path
  * @param configPath path to the configuration file
  */
 	static void Create(const std::string& configPath);
 /**
- * @fn static void ConfigHandler::Create()
- * @brief Create a ConfigHandler object without a path
+ * @fn static void ConfigHandler::create()
+ * @brief create a ConfigHandler object without a path
  */
 	static void Create();
 /**

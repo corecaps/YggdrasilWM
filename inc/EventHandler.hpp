@@ -53,17 +53,17 @@ public:
 	EventHandler& operator=(const EventHandler&) = delete;
 /**
  * @fn static void EventHandler::create()
- * @brief Create the Event Handler:: Event Handler object
+ * @brief create the Event handler:: Event handler object
  */
 	static void create();
 /**
  * @fn EventHandler * EventHandler::getInstance()
- * @brief Get the Event Handler:: Event Handler object
+ * @brief Get the Event handler:: Event handler object
  */
 	static EventHandler * getInstance();
 /**
  * @fn ~EventHandler()
- * @brief Destroy the Event Handler:: Event Handler object
+ * @brief Destroy the Event handler:: Event handler object
  */
 	~EventHandler();
 /**
@@ -76,12 +76,12 @@ public:
  */
 	void dispatchEvent(const XEvent& event);
 private:
-	using Handler = void (EventHandler::*)(const XEvent&);
-	Handler eventHandlerArray[LASTEvent]{};
+	using handler = void (EventHandler::*)(const XEvent&);
+	handler eventHandlerArray[LASTEvent]{};
 	static EventHandler *					instance_;
 /**
  * @fn EventHandler(WindowManager &wm, const Logger &logger)
- * @brief Construct a new Event Handler:: Event Handler object
+ * @brief Construct a new Event handler:: Event handler object
  * @param wm Constant reference to the WindowManager object.
  * @param logger Constant reference to the Logger object.
  * @return EventHandler object.

@@ -47,14 +47,14 @@ int main(int argc, char** argv) {
 	cxxopts::Options options(PROGRAM_NAME, "YggdrasilWM by corecaps. https://github.com/corecaps/YggdrasilWM");
 	options.add_options()
 			("h,help", "Print help")
-			("v,version", "Display version", cxxopts::value<bool>())
+			("v,version", "display version", cxxopts::value<bool>())
 			("l,log", "Specify the log file path", cxxopts::value<std::string>())
 			("loglevel", "Specify the log level (0-2)", cxxopts::value<int>())
 			("c,config", "Specify the config file path", cxxopts::value<std::string>())
 			("d,display", "Specify the display to use", cxxopts::value<std::string>());
-	std::string LogFilePath;
-	std::string Display;
-	std::string ConfigFilePath;
+	std::string logFilePath;
+	std::string display;
+	std::string configFilePath;
 	int logLevel = 0;
 	try {
 		auto result = options.parse(argc, argv);
@@ -67,9 +67,9 @@ int main(int argc, char** argv) {
 			return EXIT_SUCCESS;
 		}
 		if (result.count("log")) {
-			LogFilePath = result["log"].as<std::string>();
+			logFilePath = result["log"].as<std::string>();
 		} else {
-			LogFilePath = "wm.log";
+			logFilePath = "wm.log";
 		}
 		if (result.count("loglevel")) {
 			logLevel = result["loglevel"].as<int>();
@@ -79,43 +79,43 @@ int main(int argc, char** argv) {
 			}
 		}
 		if (result.count("config")) {
-			ConfigFilePath = result["config"].as<std::string>();
+			configFilePath = result["config"].as<std::string>();
 		} else {
-			ConfigFilePath = "";
+			configFilePath = "";
 		}
 		if (result.count("display")) {
-			Display = result["display"].as<std::string>();
+			display = result["display"].as<std::string>();
 		} else {
-			Display = "";
+			display = "";
 		}
 	} catch (const cxxopts::OptionException &e) {
 		std::cerr << "Error parsing options: " << e.what() << std::endl;
 		std::cout << options.help() << std::endl;
 		return EXIT_FAILURE;
 	}
-	//	Logger::Create(LogFilePath, static_cast<LogLevel>(logLevel));
+	//	Logger::create(logFilePath, static_cast<LogLevel>(logLevel));
 	Logger::Create(std::cout, static_cast<LogLevel>(logLevel));
-	if (ConfigFilePath.empty()) {
+	if (configFilePath.empty()) {
 		ConfigHandler::Create();
 	} else {
-		ConfigHandler::Create(ConfigFilePath);
+		ConfigHandler::Create(configFilePath);
 	}
 	ConfigHandler::GetInstance().configInit();
 	Logger::GetInstance()->Log("Starting " + std::string(PROGRAM_NAME) + " " + std::string(PROGRAM_VERSION), L_INFO);
 	try {
-		if (!Display.empty()) {
-			Logger::GetInstance()->Log("Using display " + Display, L_INFO);
-			WindowManager::Create(Display);
+		if (!display.empty()) {
+			Logger::GetInstance()->Log("Using display " + display, L_INFO);
+			WindowManager::create(display);
 		} else {
 			Logger::GetInstance()->Log("Using default display", L_INFO);
-			WindowManager::Create();
+			WindowManager::create();
 		}
 	} catch (const std::exception &e) {
 		Logger::GetInstance()->Log(e.what(), L_ERROR);
 		return EXIT_FAILURE;
 	}
 	try {
-		WindowManager::getInstance()->Init();
+		WindowManager::getInstance()->init();
 	} catch (const std::exception &e) {
 		Logger::GetInstance()->Log(e.what(), L_ERROR);
 		return EXIT_FAILURE;

@@ -49,8 +49,8 @@ extern "C" {
  * @brief WindowManager class
  * This class is responsible for managing the windows.in an X11 session.
  * It is the main class of the project.
- * It should be instantiated only via the static Create function.
- * You must use the Init function to initialize the WindowManager.
+ * It should be instantiated only via the static create function.
+ * You must use the init function to initialize the WindowManager.
  * The Run function is the main loop of the WindowManager.
  */
 class WindowManager {
@@ -58,23 +58,23 @@ public:
 	WindowManager(const WindowManager&) = delete;
 	WindowManager& operator=(const WindowManager&) = delete;
 /**
- * @brief Create a WindowManager object
- * @param display_str Optional X Display string if not set, the DISPLAY environment variable will be used
+ * @brief create a WindowManager object
+ * @param displayStr Optional X Display string if not set, the DISPLAY environment variable will be used
  */
-	static void Create( const std::string &display_str = std::string());
+	static void create(const std::string &displayStr = std::string());
 /**
  * @brief Destroy the WindowManager object
  * i have yet to find a clean way to close the window manager
  */
 	~WindowManager();
 /**
- * @fn void WindowManager::Init()
+ * @fn void WindowManager::init()
  * @brief Initialize the WindowManager
  * set the event select mask on the root window
  * creates clients for the existing top level windows
  * and launch the bar window
  */
-	void Init();
+	void init();
 /**
  * @fn void WindowManager::Run()
  * @brief Run the window manager
@@ -196,7 +196,7 @@ public:
 
 private:
 	Display									*display_;
-	static bool								wm_detected_;
+	static bool								wmDetected;
 	const Window							root_;
 	Window 									bar_{};
 	std::vector<Group *>					groups_;
@@ -234,13 +234,13 @@ private:
  */
 	static int OnXError(Display *display, XErrorEvent *e);
 /**
- * @fn static int WindowManager::OnWMDetected(Display *display, XErrorEvent *e)
+ * @fn static int WindowManager::onWmDetected(Display *display, XErrorEvent *e)
  * @brief When selecting events on the root window, we may get a BadAccess error if another window manager is running
   this function is called when a BadAccess error is detected
-  it sets the wm_detected_ flag to true and stops the window manager
+  it sets the wmDetected flag to true and stops the window manager
   only one window manager can run at a time
  */
-	static int OnWMDetected([[maybe_unused]] Display *display, XErrorEvent *e);
+	static int onWmDetected([[maybe_unused]] Display *display, XErrorEvent *e);
 /**
  * @fn void WindowManager::addGroupsFromConfig()
  * @brief add groups configured in the ConfigDataGroups to the groups vector

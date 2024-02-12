@@ -68,31 +68,31 @@ public:
 	 * @param layoutType The layout type
 	 * @todo add the other layout types
 	 */
-	Group(ConfigDataGroup *config);
+	explicit Group(ConfigDataGroup *config);
 /**
  * @fn ~Group()
  * @brief Group destructor
  */
 	~Group();
 /**
- * @fn void Group::AddClient(Window window, Client *client)
+ * @fn void Group::addClient(Window window, Client *client)
  * @brief Add a client to the group
  * @param window
  * @param client
  */
-	void		AddClient(Window window, Client *client);
+	void		addClient(Window window, Client *client);
 /**
- * @fn void Group::RemoveClient(Window window)
+ * @fn void Group::removeClient(Window window)
  * @brief Definitely remove a client from the group
  * @param window
  */
-	void		RemoveClient(Window window);
+	void		removeClient(Window window);
 /**
- * @fn void Group::RemoveClient(Client *client)
+ * @fn void Group::removeClient(Client *client)
  * @brief Definitely remove a client from the group
  * @param client
  */
-	void		RemoveClient(Client *client);
+	void		removeClient(Client *client);
 /**
  * @fn void Group::moveClientToGroup(Window window, Group *group)
  * @brief Move a client to another group
@@ -101,45 +101,45 @@ public:
  */
 	void		moveClientToGroup(Window window, Group *group);
 /**
- * @fn void Group::SetActive(bool active)
+ * @fn void Group::setActive(bool active)
  * @brief Set the group as active
  * @param active
  */
-	void		SetActive(bool active);
+	void		setActive(bool active);
 /**
- * @fn bool Group::IsActive()
+ * @fn bool Group::isActive()
  * @brief Check if the group is active
  * @return bool
  */
-	bool		IsActive() const;
+	bool		isActive() const;
 /**
- * @fn void Group::SetName(std::string name)
+ * @fn void Group::setName(std::string name)
  * @brief Set the name of the group
  * @param name
  */
-	void		SetName(std::string name);
+	void		setName(std::string name);
 /**
- * @fn std::string Group::GetName()
+ * @fn std::string Group::getName()
  * @brief Get the name of the group
  * @return
  */
-	std::string	GetName();
+	std::string	getName();
 /**
- * @fn Client* Group::GetClient(Window window)
+ * @fn Client* Group::getClient(Window window)
  * @brief Get a client from the group
  * @param window
  */
-	Client *	GetClient(Window window);
+	Client *	getClient(Window window);
 /**
  * @fn std::unordered_map<Window, Client *> GetClients()
  * @brief Get the list of clients of the group
  */
 	std::unordered_map<Window, Client *> GetClients();
 /**
- * @fn LayoutManager* Group::GetLayoutManager()
+ * @fn LayoutManager* Group::getLayoutManager()
  * @brief Get the layout manager of the group
  */
-	LayoutManager*	GetLayoutManager();
+	LayoutManager*	getLayoutManager();
 /**
  * @fn void Group::switchTo()
  * @brief Switch to this group

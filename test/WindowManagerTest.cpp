@@ -106,18 +106,18 @@ protected:
 	}
 };
 TEST_F(WindowManagerTest, CreateWithValidDisplay) {
-	WindowManager::Create(":1");
+	WindowManager::create(":1");
 	ASSERT_TRUE(WindowManager::getInstance());
 	WindowManager::Destroy();
 }
 TEST_F(WindowManagerTest, CreateWithInvalidDisplay) {
-	EXPECT_THROW(WindowManager::Create("invalid_display"), std::runtime_error);
+	EXPECT_THROW(WindowManager::create("invalid_display"), std::runtime_error);
 	EXPECT_THROW(WindowManager::getInstance(), std::runtime_error);
 	WindowManager::Destroy();
 }
 TEST_F(WindowManagerTest, initWM) {
-	WindowManager::Create(":1");
-	WindowManager::getInstance()->Init();
+	WindowManager::create(":1");
+	WindowManager::getInstance()->init();
 	ASSERT_EQ(WindowManager::getInstance()->getRunning(), true);
 	ASSERT_GE(WindowManager::getInstance()->getClients().size(), 0);
 	std::cout << "Client size : " << WindowManager::getInstance()->getClients().size() << std::endl;
@@ -127,8 +127,8 @@ TEST_F(WindowManagerTest, initWM) {
 }
 
 TEST_F(WindowManagerTest, SwitchGroup) {
-	WindowManager::Create(":1");
-	WindowManager::getInstance()->Init();
+	WindowManager::create(":1");
+	WindowManager::getInstance()->init();
 	runXeyes();
 	WindowManager::getInstance()->testRun();
 	runXeyes();

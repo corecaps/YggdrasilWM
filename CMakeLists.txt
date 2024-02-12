@@ -121,7 +121,7 @@ set(SOURCES
         ${INCLUDE_DIR}/Commands/Spawn.hpp
 )
 
-# Create the executable
+# create the executable
 add_executable(${PROGRAM_NAME} ${SOURCES} ${SOURCE_DIR}/main.cpp)
 
 # Link against X11, cxxopts, GoogleTest, and GoogleMock libraries
@@ -148,7 +148,7 @@ enable_testing()
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 file(GLOB TEST_SOURCES ${TEST_DIR}/*.cpp)
 
-# Create the test executable
+# create the test executable
 add_executable(${PROGRAM_NAME}_tests ${SOURCES} ${TEST_SOURCES} )
 
 # Link against X11, cxxopts, GoogleTest, and GoogleMock libraries

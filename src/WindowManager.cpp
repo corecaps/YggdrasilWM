@@ -32,22 +32,21 @@
 #include "Config/ConfigDataGroups.hpp"
 #include "Config/ConfigDataBindings.hpp"
 
-bool WindowManager::wm_detected_;
+bool WindowManager::wmDetected;
 WindowManager * WindowManager::instance_ = nullptr;
-void WindowManager::Create( const std::string &display_str) {
+void WindowManager::create(const std::string &displayStr) {
 	Logger::GetInstance()->Log("================ Yggdrasil Initialisation ================\n\n", L_INFO);
-	std::stringstream debug_stream;
 	if (WindowManager::instance_ != nullptr) {
 		throw std::runtime_error("WindowManager instance already created");
 	}
-	const char *display_c_str =
-			display_str.empty() ? nullptr : display_str.c_str();
-	Display *display = XOpenDisplay(display_c_str);
+	const char *displayCStr =
+			displayStr.empty() ? nullptr : displayStr.c_str();
+	Display *display = XOpenDisplay(displayCStr);
 	if (display == nullptr) {
-		Logger::GetInstance()->Log("Failed to open X display " + std::string(XDisplayName(display_c_str)), L_ERROR);
+		Logger::GetInstance()->Log("Failed to open X display " + std::string(XDisplayName(displayCStr)), L_ERROR);
 		throw std::runtime_error("Failed to open X display");
 	}
-	Logger::GetInstance()->Log("Opened X Display:\t" + std::string(XDisplayName(display_c_str)), L_INFO);
+	Logger::GetInstance()->Log("Opened X Display:\t" + std::string(XDisplayName(displayCStr)), L_INFO);
 	WindowManager::instance_ = new WindowManager(display);
 }
 WindowManager::WindowManager(Display *display)
@@ -69,10 +68,10 @@ WindowManager::~WindowManager() {
 	groups_.clear();
 	XCloseDisplay(display_);
 }
-void WindowManager::Init() {
+void WindowManager::init() {
 	selectEventOnRoot();
 	ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->grabKeys(display_, root_);
-	if (wm_detected_) {
+	if (wmDetected) {
 		throw std::runtime_error("Another window manager is already running.");
 	}
 	XGrabServer(display_);
@@ -83,7 +82,7 @@ void WindowManager::Init() {
 	signal(SIGINT, handleSIGHUP);
 }
 void WindowManager::selectEventOnRoot() const {
-	XSetErrorHandler(&WindowManager::OnWMDetected);
+	XSetErrorHandler(&WindowManager::onWmDetected);
 	XSelectInput(
 			display_,
 			root_,
@@ -92,42 +91,42 @@ void WindowManager::selectEventOnRoot() const {
 	XSync(display_, false);
 }
 void WindowManager::getTopLevelWindows() {
-	Window returned_root, returned_parent;
-	Window *top_level_windows;
-	unsigned int num_top_level_windows;
+	Window returnedRoot, returnedParent;
+	Window *topLevelWindows;
+	unsigned int numTopLevelWindows;
 	XQueryTree(
 			display_,
 			root_,
-			&returned_root,
-			&returned_parent,
-			&top_level_windows,
-			&num_top_level_windows);
-	if (returned_root != root_) {
+			&returnedRoot,
+			&returnedParent,
+			&topLevelWindows,
+			&numTopLevelWindows);
+	if (returnedRoot != root_) {
 		throw std::runtime_error("Root window is not the same as the one returned by XQueryTree");
 	}
 	addGroupsFromConfig();
-	Logger::GetInstance()->Log("Found " + std::to_string(num_top_level_windows)+ " top level windows.\troot:" + std::to_string(root_), L_INFO);
-	for (unsigned int i = 0; i < num_top_level_windows; ++i) {
-		auto *newClient = new Client(display_, root_, top_level_windows[i], active_group_, active_group_->getInactiveColor(), active_group_->getBorderSize());
+	Logger::GetInstance()->Log("Found " + std::to_string(numTopLevelWindows) + " top level windows.\troot:" + std::to_string(root_), L_INFO);
+	for (unsigned int i = 0; i < numTopLevelWindows; ++i) {
+		auto *newClient = new Client(display_, root_, topLevelWindows[i], active_group_, active_group_->getInactiveColor(), active_group_->getBorderSize());
 		Client_Err err = newClient->frame();
 		setFocus(newClient);
 		if (err == YGG_CLI_ERR_RETRIEVE_ATTR) {
 			delete newClient;
-			Logger::GetInstance()->Log("Failed to frame client: " + std::to_string(top_level_windows[i]), L_ERROR);
+			Logger::GetInstance()->Log("Failed to frame client: " + std::to_string(topLevelWindows[i]), L_ERROR);
 			continue;
 		} else if (err == YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT)
 		{
 			delete newClient;
-			Logger::GetInstance()->Log("Ignoring override redirect window: " + std::to_string(top_level_windows[i]), L_WARNING);
+			Logger::GetInstance()->Log("Ignoring override redirect window: " + std::to_string(topLevelWindows[i]), L_WARNING);
 			continue;
 		} else if (err == YGG_CLI_LOG_ALREADY_FRAMED) {
 			delete newClient;
-			Logger::GetInstance()->Log("Client already framed: " + std::to_string(top_level_windows[i]), L_WARNING);
+			Logger::GetInstance()->Log("Client already framed: " + std::to_string(topLevelWindows[i]), L_WARNING);
 			continue;
 		}
 		clients_[newClient->getWindow()] = newClient;
 	}
-	XFree(top_level_windows);
+	XFree(topLevelWindows);
 }
 void WindowManager::addGroupsFromConfig() {
 	auto configGroups = ConfigHandler::GetInstance().getConfigData<ConfigDataGroups>()->getGroups();
@@ -135,9 +134,9 @@ void WindowManager::addGroupsFromConfig() {
 		Group *g = new Group(group);
 		groups_.push_back(g);
 	}
-	groups_[0]->SetActive(true);
+	groups_[0]->setActive(true);
 	active_group_ = groups_[0];
-	Logger::GetInstance()->Log("Active Group is [" + active_group_->GetName() + "]", L_INFO);
+	Logger::GetInstance()->Log("Active Group is [" + active_group_->getName() + "]", L_INFO);
 }
 void WindowManager::Run() {
 	Logger::GetInstance()->Log("================ Yggdrasil WM Running ================\n\n", L_INFO);
@@ -160,12 +159,10 @@ void WindowManager::testRun() {
 	XSync(display_, false);
 }
 void WindowManager::insertClient(Window window) {
-	std::stringstream debug_stream;
-	int BorderSize = active_group_->getBorderSize();
+	int borderSize = active_group_->getBorderSize();
 	unsigned long inactiveColor = active_group_->getInactiveColor();
-	auto *client = new Client(display_, root_, window, active_group_, inactiveColor, BorderSize);
-	debug_stream << "Inserting client in map: " << client->getTitle() << "\t[" << window << "]";
-	Logger::GetInstance()->Log(debug_stream.str(), L_INFO);
+	auto *client = new Client(display_, root_, window, active_group_, inactiveColor, borderSize);
+	Logger::GetInstance()->Log("Inserting client in map: " + client->getTitle() + "\t[" + std::to_string(window) + "]", L_INFO);
 	clients_.insert({window, client});
 }
 void WindowManager::Bar() {
@@ -239,20 +236,20 @@ const std::vector<Group *> &WindowManager::getGroups() const { return groups_; }
 bool WindowManager::getRunning() const { return running; }
 int WindowManager::OnXError(Display *display, XErrorEvent *e) {
 	const int MAX_ERROR_TEXT_LENGTH = 1024;
-	char error_text[MAX_ERROR_TEXT_LENGTH];
-	XGetErrorText(display, e->error_code, error_text, sizeof(error_text));
-	std::stringstream error_stream;
-	error_stream << "Received X error:\n"
-				 << "    Request: " << int(e->request_code)
-				 << "    Error code: " << int(e->error_code)
-				 << " - " << error_text << "\n"
-				 << "    Resource ID: " << e->resourceid;
-	Logger::GetInstance()->Log(error_stream.str(), L_ERROR);
+	char errorText[MAX_ERROR_TEXT_LENGTH];
+	XGetErrorText(display, e->error_code, errorText, sizeof(errorText));
+	std::stringstream errorStream;
+	errorStream << "Received X error:\n"
+				<< "    Request: " << int(e->request_code)
+				<< "    Error code: " << int(e->error_code)
+				<< " - " << errorText << "\n"
+				<< "    Resource ID: " << e->resourceid;
+	Logger::GetInstance()->Log(errorStream.str(), L_ERROR);
 	// The return value is ignored.
 	return 0;
 }
-int WindowManager::OnWMDetected([[maybe_unused]] Display *display, XErrorEvent *e) {
+int WindowManager::onWmDetected([[maybe_unused]] Display *display, XErrorEvent *e) {
 	if (static_cast<int>(e->error_code) == BadAccess)
-		wm_detected_ = true;
+		wmDetected = true;
 	return 0;
 }

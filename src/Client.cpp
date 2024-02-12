@@ -39,15 +39,15 @@ Client::Client(Display *display,
 			   Window root,
 			   Window window,
 			   Group *group,
-			   unsigned long InActiveColor,
-			   int BorderSize)
+			   unsigned long inActiveColor,
+			   int borderSize)
 		: display_(display),
 		  root_(root),
 		  group_(group),
 		  window_(window),
 		  frame_(0),
-		  border_width(BorderSize),
-		  border_color(InActiveColor),
+		  border_width(borderSize),
+		  border_color(inActiveColor),
 		  framed(false),
 		  mapped(false)
 {
@@ -142,7 +142,7 @@ Client_Err Client::frame() {
 //			None);
 	ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->grabKeys(display_, window_);
 	this->framed = true;
-	this->group_->AddClient(window_,this);
+	this->group_->addClient(window_, this);
 	return YGG_CLI_NO_ERROR;
 }
 void Client::restack() {

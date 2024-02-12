@@ -86,11 +86,11 @@ Group::Group(ConfigDataGroup *config) {
 Group::~Group() {
 	delete layoutManager_;
 }
-void Group::AddClient(Window window, Client *client) {
+void Group::addClient(Window window, Client *client) {
 	clients_[window] = client;
 	layoutManager_->addClient(client);
 }
-void Group::RemoveClient(Window window) {
+void Group::removeClient(Window window) {
 	clients_.erase(window);
 	try {
 		auto c = WindowManager::getInstance()->getClient(window);
@@ -99,16 +99,16 @@ void Group::RemoveClient(Window window) {
 		Logger::GetInstance()->Log(e.what(), L_ERROR);
 	}
 }
-void Group::RemoveClient(Client *client) {
+void Group::removeClient(Client *client) {
 	clients_.erase(client->getWindow());
 	layoutManager_->removeClient(client);
 }
-void Group::SetActive(bool active) { active_ = active; }
+void Group::setActive(bool active) { active_ = active; }
 void Group::moveClientToGroup(Window window, Group *group) {
 	clients_.erase(window);
 	try {
 		auto c = WindowManager::getInstance()->getClient(window);
-		group->AddClient(window, c);
+		group->addClient(window, c);
 	} catch (const std::exception &e) {
 		Logger::GetInstance()->Log(e.what(), L_ERROR);
 	}
@@ -133,14 +133,14 @@ void Group::switchFrom() {
 	}
 	this->active_ = false;
 }
-void Group::SetName(std::string name) {
+void Group::setName(std::string name) {
 	name_ = std::move(name);
 }
-bool Group::IsActive() const { return active_; }
-std::string Group::GetName() { return name_; }
-Client *Group::GetClient(Window window) { return clients_[window]; }
+bool Group::isActive() const { return active_; }
+std::string Group::getName() { return name_; }
+Client *Group::getClient(Window window) { return clients_[window]; }
 std::unordered_map<Window, Client *> Group::GetClients() { return clients_; }
-LayoutManager *Group::GetLayoutManager() { return layoutManager_; }
+LayoutManager *Group::getLayoutManager() { return layoutManager_; }
 int Group::getBorderSize() const { return borderSize_; }
 int Group::getGap() const { return gap_; }
 unsigned long Group::getInactiveColor() const { return inactiveColor_; }
