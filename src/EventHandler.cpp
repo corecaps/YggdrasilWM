@@ -26,6 +26,7 @@
  */
 #include "EventHandler.hpp"
 #include "Logger.hpp"
+#include "Config/ConfigDataBindings.hpp"
 #include <string>
 extern "C" {
 #include <X11/XKBlib.h>
@@ -195,33 +196,8 @@ void EventHandler::handleButtonPress(const XEvent &event) {
 }
 void EventHandler::handleButtonRelease(const XEvent &event) {}
 void EventHandler::handleKeyPress(const XEvent &event) {
-	auto e = event.xkey;
-	auto keyEvent = event.xkey;
-	auto display = WindowManager::getInstance()->getDisplay();
-	bool altPressed = keyEvent.state & Mod1Mask; // Mod1Mask is often the Alt key
-	KeySym keySym = XkbKeycodeToKeysym(display, keyEvent.keycode, 0, (altPressed ? 1 : 0));
-	std::string keySymbol = XKeysymToString(keySym);
-	Logger::GetInstance()->Log("Key pressed: " + keySymbol, L_INFO);
-	if ( keySymbol == "exclam" ) {
-		Logger::GetInstance()->Log("Current Active Group :" + WindowManager::getInstance()->getActiveGroup()->GetName(), L_INFO);
-		if (WindowManager::getInstance()->getActiveGroup() != WindowManager::getInstance()->getGroups()[0]) {
-			WindowManager::getInstance()->getActiveGroup()->switchFrom();
-			XSync(display, false);
-			WindowManager::getInstance()->getGroups()[0]->switchTo();
-			Logger::GetInstance()->Log("Active Group is [" + WindowManager::getInstance()->getActiveGroup()->GetName() + "]", L_INFO);
-			XSync(display, false);
-		}
-	}
-	else if (keySymbol == "at") {
-		Logger::GetInstance()->Log("Current Active Group :" + WindowManager::getInstance()->getActiveGroup()->GetName(), L_INFO);
-		if (WindowManager::getInstance()->getActiveGroup() != WindowManager::getInstance()->getGroups()[1]) {
-			WindowManager::getInstance()->getActiveGroup()->switchFrom();
-			XSync(display, false);
-			WindowManager::getInstance()->getGroups()[1]->switchTo();
-			XSync(display, false);
-
-		}
-	}
+	auto e = &event.xkey;
+	ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->handleKeypressEvent(e);
 }
 void EventHandler::handleKeyRelease(const XEvent &event) {}
 void EventHandler::handleEnterNotify(const XEvent &event) {}

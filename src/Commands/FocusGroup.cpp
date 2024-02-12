@@ -26,12 +26,30 @@
  */
 
 #include "Commands/FocusGroup.hpp"
+#include "WindowManager.hpp"
+#include "Group.hpp"
+#include "Logger.hpp"
 
 FocusGroup::FocusGroup() {
 
 }
 
 void FocusGroup::execute(const std::string &args) {
-
+	int index;
+	try {
+		index = std::stoi(args) - 1;
+	} catch ( const std::exception &e) {
+		Logger::GetInstance()->Log("Focus Group argument is not convertible to int",L_ERROR);
+	}
+	WindowManager *wm = WindowManager::getInstance();
+	if (index < 0)
+		index = 0;
+	if (index > wm->getGroups().size())
+		index = wm->getGroups().size();
+	if (wm->getActiveGroup() != wm->getGroups()[index]) {
+		wm->getActiveGroup()->switchFrom();
+		wm->getGroups()[index]->switchTo();
+		XSync(wm->getDisplay(),false);
+	}
 }
 

@@ -43,7 +43,7 @@ public:
 	void configInit(Json::Value& root_) override;
 	Json::Value configSave() override;
 	void grabKeys(Display *display, Window window);
-	void handleKeypressEvent(XKeyEvent *event);
+	void handleKeypressEvent(const XKeyEvent *event);
 
 private:
 	std::vector<Binding *> bindings_;

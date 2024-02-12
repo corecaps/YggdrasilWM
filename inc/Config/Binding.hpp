@@ -39,13 +39,8 @@ public:
 	const std::string &getKey() const;
 	const std::string &getCommandName() const;
 	const std::string &getArgs() const;
-
-private:
-public:
 	unsigned int getModMask() const;
-
 	int getKeyCode() const;
-
 private:
 	std::string mod_;
 	unsigned int modMask_;

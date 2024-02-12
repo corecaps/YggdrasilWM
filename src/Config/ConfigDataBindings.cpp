@@ -59,3 +59,14 @@ void ConfigDataBindings::grabKeys(Display *display, Window window) {
 	}
 	XFlush(display);
 }
+
+void ConfigDataBindings::handleKeypressEvent(const XKeyEvent *event) {
+	int keyCode = event->keycode;
+	bool modOk = false;
+	for (auto &binding : bindings_) {
+		modOk = event->state & binding->getModMask();
+		if (binding->getKeyCode() == keyCode && modOk) {
+			binding->execute();
+		}
+	}
+}
