@@ -26,12 +26,43 @@
  */
 
 #include "Commands/Spawn.hpp"
+#include <unistd.h>
+#include <sys/wait.h>
+#include <stdexcept>
+#include <cstring>
+#include <vector>
+#include "Logger.hpp"
 
-Spawn::Spawn() {
-
-}
-
+Spawn::Spawn() = default;
 void Spawn::execute(const std::string &args) {
-
+	std::istringstream iss(args);
+	std::string command;
+	iss >> command;
+	std::vector<const char*> argv;
+	argv.push_back(command.c_str());
+	std::string arg;
+	while (iss >> arg) {
+		argv.push_back(arg.c_str());
+	}
+	argv.push_back(nullptr);
+	pid_t pid = fork();
+	if (pid < 0) {
+		throw std::runtime_error("Fork failed: " + std::string(strerror(errno)));
+	} else if (pid == 0) {
+		pid_t pid_inner = fork();
+		if (pid_inner < 0) {
+			exit(EXIT_FAILURE);
+		} else if (pid_inner == 0) {
+			execvp(command.c_str(), const_cast<char* const*>(argv.data()));
+			Logger::GetInstance()->Log("Failed to execute command \""
+										+ command
+										+ "\": "
+										+ strerror(errno),L_ERROR);
+			exit(EXIT_FAILURE);
+		}
+		exit(EXIT_SUCCESS);
+	} else {
+		waitpid(pid, nullptr, 0);
+	}
+	Logger::GetInstance()->Log("Succefully launched " + args,L_INFO);
 }
-

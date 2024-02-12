@@ -67,6 +67,15 @@ void ConfigDataBindings::handleKeypressEvent(const XKeyEvent *event) {
 		modOk = event->state & binding->getModMask();
 		if (binding->getKeyCode() == keyCode && modOk) {
 			binding->execute();
+			Logger::GetInstance()->Log("[" +
+										binding->getMod()
+										+ "+"
+										+ binding->getKey()
+										+"] ->\t"
+										+ binding->getCommandName()
+										+ " ["
+										+ binding->getArgs()
+										+ "]",L_INFO);
 		}
 	}
 }

@@ -198,6 +198,7 @@ void EventHandler::handleButtonRelease(const XEvent &event) {}
 void EventHandler::handleKeyPress(const XEvent &event) {
 	auto e = &event.xkey;
 	ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->handleKeypressEvent(e);
+	XSync(WindowManager::getInstance()->getDisplay(),false);
 }
 void EventHandler::handleKeyRelease(const XEvent &event) {}
 void EventHandler::handleEnterNotify(const XEvent &event) {}
