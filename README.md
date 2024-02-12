@@ -57,6 +57,8 @@ The program will look for a file named config.json in this order :
 - The current directory
 - $HOME/.config/yggdrasilwm/config.json
 - /etc/yggdrasilwm/config.json
+
+ *Note that the use of jsoncpp library let you use C comment in json even if it's not recognized in the json standard*
 ```json
 {
   // Yggdrasil Window Manager Configuration
@@ -106,6 +108,7 @@ The program will look for a file named config.json in this order :
       // Key: Keysyms string there is a script in util_scripts to extracts strings from your X11 includes in markdown format
       // Action: At the moment only action supported are FocusGroup and Spawn
       // Args: arguments passed to the command object
+      // Note that each bindings is grabbed from each managed window watch out for conflicts 
       {
         // Argument to FocusGroup is the group index (starting from 1) not the group name
         "Key" : "1",
