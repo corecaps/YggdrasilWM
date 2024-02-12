@@ -25,8 +25,8 @@
  * @date 2024-02-12
  */
 
-#ifndef YGGDRASILWM_CONFIGDATAGROUPS_H
-#define YGGDRASILWM_CONFIGDATAGROUPS_H
+#ifndef YGGDRASILWM_CONFIGDATAGROUPS_HPP
+#define YGGDRASILWM_CONFIGDATAGROUPS_HPP
 #include "ConfigDataBase.hpp"
 #include "json/json.h"
 #include <string>
@@ -53,10 +53,10 @@ public:
 	ConfigDataGroup * getGroup(int index);
 	void addGroup(ConfigDataGroup * group);
 	void removeGroup(ConfigDataGroup * group);
-	const std::vector<ConfigDataGroup *> &getGroups() const;
+	[[nodiscard]] const std::vector<ConfigDataGroup *> &getGroups() const;
 
 private:
 	std::vector<ConfigDataGroup *> groups_;
 	Json::Value root_;
 };
-#endif //YGGDRASILWM_CONFIGDATAGROUPS_H
+#endif //YGGDRASILWM_CONFIGDATAGROUPS_HPP

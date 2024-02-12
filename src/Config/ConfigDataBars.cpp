@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataBars.cpp
  * @brief ConfigDataBars class implementation.
- * @date 2024-02-10
+ * @date 2024-02-12
  */
 
 #include "Config/ConfigDataBars.hpp"
@@ -36,7 +36,7 @@ void ConfigDataBars::configInit(Json::Value &root) {
 		throw std::runtime_error("Invalid configuration file");
 	}
 	for (auto &bar : root) {
-		ConfigDataBar *barData = new ConfigDataBar();
+		auto *barData = new ConfigDataBar();
 		barData->configInit(bar);
 		size_t newIndex = bars_.size();
 		bars_.emplace_back(barData);

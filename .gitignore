@@ -25,5 +25,5 @@ CMakeScripts/
 cmake_install.cmake
 
 .gdb_history
-
+massif.out.*
 vgcore.*

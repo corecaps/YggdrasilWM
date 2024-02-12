@@ -22,10 +22,10 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataBars.hpp
  * @brief ConfigDataBars class header.
- * @date 2024-02-10
+ * @date 2024-02-12
  */
-#ifndef YGGDRASILWM_CONFIGDATABARS_H
-#define YGGDRASILWM_CONFIGDATABARS_H
+#ifndef YGGDRASILWM_CONFIGDATABARS_HPP
+#define YGGDRASILWM_CONFIGDATABARS_HPP
 
 #include "ConfigDataBase.hpp"
 #include "json/json.h"
@@ -56,12 +56,12 @@ public:
  * to load the data.
  * @param root_ Json::Value& object containing the Bar configuration data
  */
-	void configInit(Json::Value& root_);
+	void configInit(Json::Value& root_) override;
 /**
  * @fn Json::Value ConfigDataBars::configSave()
  * @brief return a Json::Value object containing the Bars configuration data
  */
-	Json::Value configSave();
+	Json::Value configSave() override;
 /**
  * @fn ConfigDataBar * ConfigDataBars::getBar(int index)
  * @brief Get the Bar object at index
@@ -83,10 +83,10 @@ public:
  * @fn const std::vector<ConfigDataBar *> &ConfigDataBars::getBars() const
  * @brief Get the Bars object
  */
-	const std::vector<ConfigDataBar *> &getBars() const;
+	[[nodiscard]] const std::vector<ConfigDataBar *> &getBars() const;
 private:
 	std::vector<ConfigDataBar *> bars_;
 	Json::Value root_;
 };
 
-#endif //YGGDRASILWM_CONFIGDATABARS_H
+#endif //YGGDRASILWM_CONFIGDATABARS_HPP

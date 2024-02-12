@@ -136,7 +136,7 @@ The program will look for a file named config.json in this order :
 }
 ```
 
-i am still working on the configuration file, so it is not yet fully implemented, and not all options are used. i will update this section when the configuration file is fully implemented.
+I am still working on the configuration file, so it is not yet fully implemented, and not all options are used. I will update this section when the configuration file is fully implemented.
 ## Testing using Xephyr
 YggdrasilWM is not yet ready to be used as a daily driver, but you can test it using Xephyr.
 Xephyr is a nested X server that runs inside your current X server. It is used to test window managers and other X11 programs.
@@ -162,7 +162,7 @@ DISPLAY=:1 ; xterm &
 ---
 ## TODO:
 ### Tiling Layouts
-For the moments only one layout is implemented, the biggest space occupied is splitted along his longest side. The layout is splitted recursively.
+For the moments only one layout is implemented, the biggest space occupied is split along his longest side. The layout is split recursively.
 
 ## Documentation
 The documentation is generated using Doxygen. Run 

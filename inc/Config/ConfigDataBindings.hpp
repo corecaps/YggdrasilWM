@@ -25,8 +25,8 @@
  * @date 2024-02-12
  */
 
-#ifndef YGGDRASILWM_CONFIGDATABINDINGS_H
-#define YGGDRASILWM_CONFIGDATABINDINGS_H
+#ifndef YGGDRASILWM_CONFIGDATABINDINGS_HPP
+#define YGGDRASILWM_CONFIGDATABINDINGS_HPP
 #include <string>
 #include <vector>
 extern "C" {
@@ -76,4 +76,4 @@ public:
 private:
 	std::vector<Binding *> bindings_;
 };
-#endif //YGGDRASILWM_CONFIGDATABINDINGS_H
+#endif //YGGDRASILWM_CONFIGDATABINDINGS_HPP

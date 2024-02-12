@@ -24,8 +24,8 @@
  * @brief ConfigDataGroup class header.
  * @date 2024-02-12
  */
-#ifndef YGGDRASILWM_CONFIGDATAGROUP_H
-#define YGGDRASILWM_CONFIGDATAGROUP_H
+#ifndef YGGDRASILWM_CONFIGDATAGROUP_HPP
+#define YGGDRASILWM_CONFIGDATAGROUP_HPP
 #include "ConfigDataBase.hpp"
 #include "json/json.h"
 #include <string>
@@ -50,12 +50,12 @@ public:
  */
 	void configInit(Json::Value& root_) override;
 	Json::Value configSave() override;
-	const std::string &getGroupName() const;
-	const std::string &getGroupLayout() const;
-	unsigned long getGroupInactiveColor() const;
-	unsigned long getGroupActiveColor() const;
-	int getGroupBorderWidth() const;
-	int getGroupGap() const;
+	[[nodiscard]] const std::string &getGroupName() const;
+	[[nodiscard]] const std::string &getGroupLayout() const;
+	[[nodiscard]] unsigned long getGroupInactiveColor() const;
+	[[nodiscard]] unsigned long getGroupActiveColor() const;
+	[[nodiscard]] int getGroupBorderWidth() const;
+	[[nodiscard]] int getGroupGap() const;
 
 private:
 	Json::Value root_;
@@ -66,4 +66,4 @@ private:
 	int groupBorderSize_{};
 	int groupGap_{};
 };
-#endif //YGGDRASILWM_CONFIGDATAGROUP_H
+#endif //YGGDRASILWM_CONFIGDATAGROUP_HPP

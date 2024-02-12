@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Group.cpp
  * @brief Group class implementation.
- * @date 2024-02-10
+ * @date 2024-02-12
  */
 #include "WindowManager.hpp"
 #include "Group.hpp"
@@ -47,6 +47,8 @@ Group::Group(ConfigDataGroup *config) {
 	}
 	borderSize_ = config->getGroupBorderWidth();
 	gap_ = config->getGroupGap();
+	inactiveColor_ = config->getGroupInactiveColor();
+	activeColor_ = config->getGroupActiveColor();
 	barHeight_ = 30;
 	active_ = false;
 	Logger::GetInstance()->Log("Group Created [" + name_ + "]", L_INFO);

@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataBar.cpp
  * @brief ConfigDataBar class implementation.
- * @date 2024-02-08
+ * @date 2024-02-12
  */
 
 #include "Config/ConfigDataBar.hpp"
@@ -40,47 +40,47 @@ ConfigDataBar::ConfigDataBar() :
 		barBorderColor_(0x00ff00) {
 
 }
-void ConfigDataBar::configInit(Json::Value &root_) {
-	if (root_.empty() || !root_.isObject()) {
+void ConfigDataBar::configInit(Json::Value &root) {
+	if (root.empty() || !root.isObject()) {
 		throw std::runtime_error("Invalid configuration file");
 	}
-	if (root_["Height"].empty() || !root_["Height"].isInt()) {
+	if (root["Height"].empty() || !root["Height"].isInt()) {
 		Logger::GetInstance()->Log("ConfigDataBar::Height is empty or not an integer",L_ERROR);
 	} else {
-		barHeight_ = root_["Height"].asInt();
+		barHeight_ = root["Height"].asInt();
 	}
-	if (root_["Font"].empty() || !root_["Font"].isString()) {
+	if (root["Font"].empty() || !root["Font"].isString()) {
 		Logger::GetInstance()->Log("ConfigDataBar::Font is empty or not a string", L_ERROR);
 	} else {
-		barFont_ = root_["Font"].asString();
+		barFont_ = root["Font"].asString();
 	}
-	if (root_["Font_Color"].empty() || !root_["Font_Color"].isString()) {
+	if (root["Font_Color"].empty() || !root["Font_Color"].isString()) {
 		Logger::GetInstance()->Log("ConfigDataBar::Font_Color is empty or not a string",L_ERROR);
 	} else
 	{
-		barFontColor_ = ConfigHandler::colorCodeToULong(root_["Font_Color"].asString());
+		barFontColor_ = ConfigHandler::colorCodeToULong(root["Font_Color"].asString());
 	}
-	if (root_["Background_Color"].empty() || !root_["Background_Color"].isString()) {
+	if (root["Background_Color"].empty() || !root["Background_Color"].isString()) {
 		Logger::GetInstance()->Log("ConfigDataBar::Background_Color is empty or not a string",L_ERROR);
 	} else
 	{
-		barBackgroundColor_ = ConfigHandler::colorCodeToULong(root_["Background_Color"].asString());
+		barBackgroundColor_ = ConfigHandler::colorCodeToULong(root["Background_Color"].asString());
 	}
-	if (root_["Border_Color"].empty() || !root_["Border_Color"].isString()) {
+	if (root["Border_Color"].empty() || !root["Border_Color"].isString()) {
 		Logger::GetInstance()->Log("ConfigDataBar::Border_Color is empty or not a string",L_ERROR);
 	} else
 	{
-		barBorderColor_ = ConfigHandler::colorCodeToULong(root_["Border_Color"].asString());
+		barBorderColor_ = ConfigHandler::colorCodeToULong(root["Border_Color"].asString());
 	}
-	if (root_["Font_Size"].empty() || !root_["Font_Size"].isInt()) {
+	if (root["Font_Size"].empty() || !root["Font_Size"].isInt()) {
 		Logger::GetInstance()->Log("ConfigDataBar::Font_Size is empty or not an integer",L_ERROR);
 	} else {
-		barFontSize_ = root_["Font_Size"].asInt();
+		barFontSize_ = root["Font_Size"].asInt();
 	}
-	if (root_["Border_Size"].empty() || !root_["Border_Size"].isInt()) {
+	if (root["Border_Size"].empty() || !root["Border_Size"].isInt()) {
 		Logger::GetInstance()->Log("ConfigDataBar::Border_Size is empty or not an integer",L_ERROR);
 	} else {
-		barBorderSize_ = root_["Border_Size"].asInt();
+		barBorderSize_ = root["Border_Size"].asInt();
 	}
 	std::stringstream msg;
 	msg << "Bar :\t Height [" << barHeight_ << "] Font [" << barFont_ << "] FontSize [" << barFontSize_ << "] BorderSize [" << barBorderSize_ << "]";

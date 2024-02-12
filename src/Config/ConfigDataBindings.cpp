@@ -61,7 +61,7 @@ void ConfigDataBindings::grabKeys(Display *display, Window window) {
 }
 
 void ConfigDataBindings::handleKeypressEvent(const XKeyEvent *event) {
-	int keyCode = event->keycode;
+	unsigned int keyCode = event->keycode;
 	bool modOk = false;
 	for (auto &binding : bindings_) {
 		modOk = event->state & binding->getModMask();
