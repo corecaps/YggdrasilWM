@@ -6,7 +6,7 @@
 ## Documentation
 Full Documentation for the project is available [HERE !](https://corecaps.github.io/YggdrasilWM/doc/html/index.html)
 ## What is YggdrasilWM?
-YggdrasilWM is a tiling window manager for X11. It is written in C++ and uses the Xlib library. It is inspired by dwm and xmonad.
+YggdrasilWM is an automatic tiling window manager for X11. It is written in C++ and uses the Xlib library. It is inspired by dwm and xmonad.
 
 YggdrasilWM is a **learning project** for me, so it is **not intended to be used as a daily driver**.
 
@@ -57,12 +57,83 @@ The program will look for a file named config.json in this order :
 - The current directory
 - $HOME/.config/yggdrasilwm/config.json
 - /etc/yggdrasilwm/config.json
-A sample configuration file is provided in the root directory.
+```json
+{
+  // Yggdrasil Window Manager Configuration
+  "Groups": [
+    // You can put as many groups as wanted but you need at least one
+    {
+      // Each Group has it's own layout
+      "Name": "1",
+      "Layout": "Tree",
+      "Inactive_Color": "#FF0000",
+      "Active_Color": "#00FF00",
+      "Border_Size": 2,
+      "Gap": 10
+    },
+    {
+      "Name": "2",
+      "Layout": "Tree",
+      "Inactive_Color": "#FF0000",
+      "Active_Color": "#00FF00",
+      "Border_Size": 2,
+      "Gap": 10
+    },
+    {
+      "Name": "3",
+      "Layout": "Tree",
+      "Inactive_Color": "#FF0000",
+      "Active_Color": "#00FF00",
+      "Border_Size": 2,
+      "Gap": 10
+    }],
+  "Bars": [
+    // For the moment the bar is not fully implemented
+    {
+      "Height": 30,
+      "Font": "Arial",
+      "Font_Size": 12,
+      "Font_Color": "#000000",
+      "Background_Color": "#FFFFFF",
+      "Border_Size": 2,
+      "Border_Color": "#000000"
+    }
+  ],
+  "Bindings": {
+    // Bindings are groupped by Modifiers
+    "Mod1": [
+      // Each Bindings must have : 
+      // Key: Keysyms string there is a script in util_scripts to extracts strings from your X11 includes in markdown format
+      // Action: At the moment only action supported are FocusGroup and Spawn
+      // Args: arguments passed to the command object
+      {
+        // Argument to FocusGroup is the group index (starting from 1) not the group name
+        "Key" : "1",
+        "Action" : "FocusGroup",
+        "Argument" : "1"
+      },
+      {
+        "Key" : "2",
+        "Action" : "FocusGroup",
+        "Argument" : "2"
+      },
+      {
+        "Key" : "3",
+        "Action" : "FocusGroup",
+        "Argument" : "3"
+      },
+      // Spawn command object will pass to execvp the first word as the binary and the rest will be build as an argv array
+      {
+        "Key" : "Return",
+        "Action" : "Spawn",
+        "Argument" : "kitty"
+      }
+    ]
+  }
+}
+```
 
 i am still working on the configuration file, so it is not yet fully implemented, and not all options are used. i will update this section when the configuration file is fully implemented.
-## Default Keybindings
-** Keybindings are not yet implemented, so the only way to interact with the windows is using the mouse.**
-- **Mod1 + Left Mouse Button** - Change Focus to the clicked window
 ## Testing using Xephyr
 YggdrasilWM is not yet ready to be used as a daily driver, but you can test it using Xephyr.
 Xephyr is a nested X server that runs inside your current X server. It is used to test window managers and other X11 programs.
@@ -89,12 +160,6 @@ DISPLAY=:1 ; xterm &
 ## TODO:
 ### Tiling Layouts
 For the moments only one layout is implemented, the biggest space occupied is splitted along his longest side. The layout is splitted recursively.
-
-### Keybindings 
-Keybindings are yet to be implemented.
-
-### Groups 
-Groups are yet to be implemented.
 
 ## Documentation
 The documentation is generated using Doxygen. Run 
