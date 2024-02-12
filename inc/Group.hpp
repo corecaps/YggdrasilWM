@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Group.hpp
  * @brief  Group class header.
- * @date 2024-02-10
+ * @date 2024-02-12
  *
  */
 
@@ -72,7 +72,6 @@ public:
 /**
  * @fn ~Group()
  * @brief Group destructor
- * @todo implementation
  */
 	~Group();
 /**
@@ -145,14 +144,12 @@ public:
  * @fn void Group::switchTo()
  * @brief Switch to this group
  * Set this group as active, switch the layout manager and map the clients
- * @todo implementation
  */
 	void		switchTo();
 /**
  * @fn void Group::switchFrom()
  * @brief Switch from this group
  * Set this group as inactive, switch the layout manager and unmap the clients
- * @todo implementation
  */
 	void		switchFrom();
 /**

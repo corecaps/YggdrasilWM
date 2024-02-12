@@ -22,17 +22,32 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataGroup.hpp
  * @brief ConfigDataGroup class header.
- * @date 2024-02-10
+ * @date 2024-02-12
  */
 #ifndef YGGDRASILWM_CONFIGDATAGROUP_H
 #define YGGDRASILWM_CONFIGDATAGROUP_H
 #include "ConfigDataBase.hpp"
 #include "json/json.h"
 #include <string>
+/**
+ * @class ConfigDataGroup
+ * @brief ConfigDataGroup class
+ * Store the configuration for a group from the config file.
+ * the logic of groups is handled by the Group class
+ * the logic of the layout of a group is handled in
+ * a sub class of LayoutManager class e.g. TreeLayoutManager
+ */
 class ConfigDataGroup : public ConfigDataBase {
 public:
 	ConfigDataGroup();
 	~ConfigDataGroup() override = default;
+/**
+ * @fn void ConfigDataGroup::configInit(Json::Value& root_)
+ * @brief Initialize the configuration for a group from the config file.
+ * must be called after instanciating the object.
+ * Parse the Json::Value root_ and store the values in the object.
+ * @param root_
+ */
 	void configInit(Json::Value& root_) override;
 	Json::Value configSave() override;
 	const std::string &getGroupName() const;

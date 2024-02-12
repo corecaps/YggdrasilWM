@@ -22,15 +22,28 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Spawn.hpp
  * @brief Spawn class header.
- * @date 2024-02-11
+ * @date 2024-02-12
  */
 #ifndef YGGDRASILWM_SPAWN_HPP
 #define YGGDRASILWM_SPAWN_HPP
 #include "Commands/CommandBase.hpp"
+/**
+ * @class Spawn
+ * @brief Implement the mecanism to spawn a program
+ */
 class Spawn : public CommandBase {
 public:
 	Spawn();
 	~Spawn() override = default;
+/**
+ * @fn void Spawn::execute(const std::string &args)
+ * @brief Spawn a program using the command arguments
+ * Double fork to avoid zombie processes
+ * Parse the command arguments to get the program name and its arguments
+ * use of execvp to execute the command so it will search the bin using PATH
+ * throw an exception if the command fails
+ * @param args the first word separated by a space is the binary name, the rest is the arguments
+ */
 	void execute(const std::string &args) override;
 };
 #endif //YGGDRASILWM_SPAWN_HPP

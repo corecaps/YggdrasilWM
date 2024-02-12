@@ -22,16 +22,24 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file FocusGroup.hpp
  * @brief FocusGroup class header.
- * @date 2024-02-11
+ * @date 2024-02-12
  */
 #ifndef YGGDRASILWM_FOCUSGROUP_HPP
 #define YGGDRASILWM_FOCUSGROUP_HPP
 #include "Commands/CommandBase.hpp"
-
+/**
+ * @class FocusGroup
+ * @brief FocusGroup implement the mecanism to switch between group
+ */
 class FocusGroup : public CommandBase {
 public:
 	FocusGroup();
 	~FocusGroup() override = default;
+/**
+ * @fn void FocusGroup::execute(const std::string &args)
+ * @brief switch from the current active group to the group index passed as argument
+ * @param args the string will be parsed to an integer to switch to the group index
+ */
 	void execute(const std::string &args) override;
 };
 #endif //YGGDRASILWM_FOCUSGROUP_HPP

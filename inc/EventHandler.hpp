@@ -25,7 +25,7 @@
  * this class dispatches the XEvents to the appropriate handler function.
  * it is also responsible for handling the bars drawing.
   * The event handlers functions are private and are called by the dispatchEvent function.
- * @date 2024-02-10
+ * @date 2024-02-12
  * @see WindowManager
  * @see Client
  * @see Logger
@@ -116,7 +116,6 @@ private:
 /**
  * @fn void EventHandler::handleConfigureNotify(const XEvent& event)
  * @brief Handles the ConfigureNotify event.
- * @todo : implement the handleConfigureNotify function
  * @param event
  */
 	void handleConfigureNotify(const XEvent& event);
@@ -131,35 +130,32 @@ private:
 /**
  * @fn void EventHandler::handleButtonRelease(const XEvent& event)
  * @brief Handles the ButtonRelease event.
- * @todo : implement the handleButtonRelease function
  * @param event
  */
 	void handleButtonRelease(const XEvent& event);
 /**
  * @fn void EventHandler::handleKeyPress(const XEvent& event)
  * @brief Handles the KeyPress event.
- * @todo : implement the handleKeyPress function
+ * the handling of KeyPress event is delegated to the ConfigDataBindings object
+ * to avoid dependencies to the Binding class and the Command class.
  * @param event
  */
 	void handleKeyPress(const XEvent& event);
 /**
  * @fn void EventHandler::handleKeyRelease(const XEvent& event)
  * @brief Handles the KeyRelease event.
- * @todo : implement the handleKeyRelease function
  * @param event
  */
 	void handleKeyRelease(const XEvent& event);
 /**
  * @fn void EventHandler::handleEnterNotify(const XEvent& event)
  * @brief Handles the EnterNotify event.
- * @todo : implement the handleEnterNotify function
  * @param event
  */
 	void handleEnterNotify(const XEvent& event);
 /**
  * @fn void EventHandler::handleLeaveNotify(const XEvent& event)
  * @brief Handles the LeaveNotify event.
- * @todo : implement the handleLeaveNotify function
  * @param event
  */
 	void handleLeaveNotify(const XEvent& event);
@@ -183,28 +179,24 @@ private:
 /**
  * @fn void EventHandler::handlePropertyNotify(const XEvent& event)
  * @brief Handles the PropertyNotify event.
- * @todo : implement the handlePropertyNotify function
  * @param event
  */
 	void handlePropertyNotify(const XEvent& event);
 /**
  * @fn void EventHandler::handleClientMessage(const XEvent& event)
  * @brief Handles the ClientMessage event.
- * @todo : implement the handleClientMessage function
  * @param event
  */
 	void handleClientMessage(const XEvent& event);
 /**
  * @fn void EventHandler::handleDestroyNotify(const XEvent& event)
  * @brief Handles the DestroyNotify event.
- * @todo : implement the handleDestroyNotify function
  * @param event
  */
 	void handleDestroyNotify(const XEvent& event);
 /**
  * @fn void EventHandler::handleReparentNotify(const XEvent& event)
  * @brief Handles the ReparentNotify event.
- * @todo : implement the handleReparentNotify function
  * @param event
  */
 	void handleReparentNotify(const XEvent& event);
@@ -233,7 +225,6 @@ private:
 /**
  * @fn void EventHandler::handleCreateNotify(const XEvent& event)
  * @brief Handles the CreateNotify event.
- * @todo : implement the handleCreateNotify function
  * @param event
  */
 	void handleCreateNotify(const XEvent &event);

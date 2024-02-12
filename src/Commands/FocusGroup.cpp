@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file FocusGroup.cpp
  * @brief FocusGroup class implementation.
- * @date 2024-02-11
+ * @date 2024-02-12
  */
 
 #include "Commands/FocusGroup.hpp"

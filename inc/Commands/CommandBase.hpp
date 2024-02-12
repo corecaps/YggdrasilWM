@@ -22,16 +22,25 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file CommandBase.hpp
  * @brief CommandBase class header.
- * @date 2024-02-11
+ * @date 2024-02-12
  */
 #ifndef YGGDRASILWM_COMMANDBASE_HPP
 #define YGGDRASILWM_COMMANDBASE_HPP
 #include <string>
 
+/**
+ * @class CommandBase
+ * @Brief it's the Abstract Class for command Classes
+ */
 class CommandBase {
 public:
 	CommandBase() = default;
 	virtual ~CommandBase() = default;
+/**
+ * @fn virtual void CommandBase::execute(const std::string &args)
+ * @brief Each child class must implement this interface
+ * @param args arguments to the command
+ */
 	virtual void execute(const std::string &args) = 0;
 };
 

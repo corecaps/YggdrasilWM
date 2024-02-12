@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file ConfigDataGroups.hpp
  * @brief ConfigDataGroups class header.
- * @date 2024-02-10
+ * @date 2024-02-12
  */
 
 #ifndef YGGDRASILWM_CONFIGDATAGROUPS_H
@@ -32,12 +32,22 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-
+/**
+ * @class ConfigDataGroups
+ * @brief ConfigDataGroups class.
+ * stores an array of ConfigDataGroup created from the config file.
+ */
 class ConfigDataGroup;
 class ConfigDataGroups : public ConfigDataBase {
 public:
 	ConfigDataGroups();
 	~ConfigDataGroups() override;
+/**
+ * @fn void ConfigDataGroups::configInit(Json::Value& root_)
+ * @brief Must be called after instanciation to load the config file.
+ * Parses the json root_ and creates ConfigDataGroup objects.
+ * @param root_
+ */
 	void configInit(Json::Value& root_) override;
 	Json::Value configSave() override;
 	ConfigDataGroup * getGroup(int index);

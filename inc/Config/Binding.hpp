@@ -22,18 +22,35 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Binding.hpp
  * @brief Binding class header.
- * @date 2024-02-11
+ * @date 2024-02-12
  */
 #ifndef YGGDRASILWM_BINDING_H
 #define YGGDRASILWM_BINDING_H
 #include <string>
 #include "Commands/CommandBase.hpp"
 
+/**
+ * @class Binding
+ * @brief Binding store a binding to a command object
+ */
 class Binding {
 public:
 	Binding();
 	~Binding() = default;
+/**
+ * @fn void Binding::init(std::string Mod, std::string Key, std::string Command, std::string Args)
+ * @brief Initialize a binding
+ * all the parameters are read from the Json::Value from the configuration file
+ * Mod is parsed to store the proper modMask
+ * Key is parsed to store the proper keyCode using XStringToKeysym
+ * Command is parsed to link the proper command object
+ */
 	void init(std::string Mod, std::string Key, std::string Command, std::string Args);
+/**
+ * @fn void Binding::execute()
+ * @brief Execute the command linked to the binding
+ * The arguments passed to the command are the one stored in the binding
+ */
 	void execute();
 	const std::string &getMod() const;
 	const std::string &getKey() const;
