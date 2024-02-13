@@ -53,8 +53,10 @@ void Binding::init(std::string Mod, std::string Key, std::string Command, std::s
 	} else {
 		throw std::runtime_error("Unknown mod : " + mod_);
 	}
-	keyCode_ = XKeysymToKeycode(XOpenDisplay(NULL), XStringToKeysym(key_.c_str()));
+	Display *display = XOpenDisplay(NULL);
+	keyCode_ = XKeysymToKeycode(display, XStringToKeysym(key_.c_str()));
 	Logger::GetInstance()->Log("New Binding registered.\n=======================\tModKey:[" + mod_ + "] Key [" + key_ + "] Command Name [" + commandName_ + "] Arguments:[" + args_  +"] ModMask ["+std::to_string(modMask_)+"] Keycode [" + std::to_string(keyCode_) + "]", L_INFO);
+	XCloseDisplay(display);
 }
 void Binding::execute() {
 	if (command_ != nullptr)
