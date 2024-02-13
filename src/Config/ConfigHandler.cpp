@@ -97,12 +97,12 @@ ConfigHandler::~ConfigHandler() {
 };
 unsigned long ConfigHandler::colorCodeToULong(const std::string& colorCode) {
 	if (colorCode.size() != 7 || colorCode[0] != '#' || !isxdigit(colorCode[1])) {
-		return 0x000000;
+		throw std::runtime_error("Invalid color code");
 	}
 	std::istringstream iss(colorCode.substr(1));
 	unsigned long colorValue;
 	iss >> std::hex >> colorValue;
-	if (iss.fail()) { return 0x000000; }
+	if (iss.fail()) { throw std::runtime_error("Invalid color code");}
 	return colorValue;
 }
 
