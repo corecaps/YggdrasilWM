@@ -30,6 +30,7 @@
 #include <gmock/gmock.h>
 #include "Config/Binding.hpp"
 #include "Logger.hpp"
+#include <sstream>
 extern "C" {
 #include <X11/Xlib.h>
 }
@@ -37,13 +38,14 @@ extern "C" {
 class BindingTest : public ::testing::Test
 {
 protected:
+	static std::ostringstream oss;
 	BindingTest() {}
 	~BindingTest() override {}
 	static void SetUpTestSuite() {
 		std::cout << " =================================================================================== " << std::endl;
 		std::cout << " ============================= Binding SetUpTestSuite ============================== " << std::endl;
 		std::cout << " =================================================================================== " << std::endl;
-		Logger::Create(std::cout,L_INFO);
+		Logger::Create(BindingTest::oss,L_INFO);
 	}
 	void SetUp() override {}
 	void TearDown() override {}
@@ -51,7 +53,7 @@ protected:
 		Logger::Destroy();
 	}
 };
-
+std::ostringstream BindingTest::oss = std::ostringstream ();
 TEST_F(BindingTest, constructor) {
 	Binding binding;
 	EXPECT_EQ(binding.getMod(), "");

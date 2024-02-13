@@ -30,7 +30,10 @@
 #include "Config/ConfigDataBar.hpp"
 #include "json/json.h"
 #include "Logger.hpp"
+#include <sstream>
 class ConfigDataBarTest : public ::testing::Test {
+public:
+	static std::ostringstream oss;
 protected:
 	static void SetUpTestSuite() {
 		std::cout << " =================================================================================== " << std::endl;
@@ -38,12 +41,13 @@ protected:
 		std::cout << " =================================================================================== " << std::endl;
 	}
 	void SetUp() override {
-		Logger::Create(std::cout, L_INFO);
+		Logger::Create(ConfigDataBarTest::oss, L_INFO);
 	}
 	void TearDown() override {
 		Logger::Destroy();
 	}
 };
+std::ostringstream ConfigDataBarTest::oss = std::ostringstream();
 TEST_F(ConfigDataBarTest, Initialization) {
 	ConfigDataBar bar;
 	EXPECT_NE(&bar, nullptr);

@@ -27,6 +27,7 @@
  */
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <sstream>
 #include "WindowManager.hpp"
 #include "Logger.hpp"
 #include <cstdlib>
@@ -74,11 +75,10 @@ void killXeyes() {
 	}
 }
 void killXephyr() { kill(xephyrPid,SIGKILL); }
-class MockLogger : public Logger {
-public:
-	MOCK_METHOD(void, Log, (const std::string& message, LogLevel logLevel), (const));
-};
+
 class WindowManagerTest : public ::testing::Test {
+public:
+	static std::ostringstream oss;
 protected:
 	static void SetUpTestSuite() {
 		std::cout << " =================================================================================== " << std::endl;
@@ -86,8 +86,7 @@ protected:
 		std::cout << " =================================================================================== " << std::endl;
 		runXephyr();
 		sleep(3);
-
-		MockLogger::Create(std::cout, L_INFO);
+		Logger::Create(WindowManagerTest::oss, L_INFO);
 		ConfigHandler::Create();
 		ConfigHandler::GetInstance().configInit();
 	}
@@ -98,13 +97,14 @@ protected:
 	static void TearDownTestSuite() {
 
 		killXephyr();
-		MockLogger::Destroy();
+		Logger::Destroy();
 		ConfigHandler::Destroy();
 	}
 	void TearDown() override {
 		killXeyes();
 	}
 };
+std::ostringstream WindowManagerTest::oss = std::ostringstream();
 TEST_F(WindowManagerTest, CreateWithValidDisplay) {
 	WindowManager::create(":1");
 	ASSERT_TRUE(WindowManager::getInstance());
