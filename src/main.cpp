@@ -121,5 +121,8 @@ int main(int argc, char** argv) {
 		return EXIT_FAILURE;
 	}
 	WindowManager::getInstance()->Run();
+	WindowManager::Destroy();
+	Logger::Destroy();
+	ConfigHandler::Destroy();
 	return (EXIT_SUCCESS);
 }

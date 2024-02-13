@@ -51,7 +51,7 @@ ConfigFileHandler::ConfigFileHandler(const std::string& configPath) : configPath
 	}
 	Logger::GetInstance()->Log("Using Config file : " + this->configPath_,L_INFO );
 }
-ConfigFileHandler::~ConfigFileHandler() = default;
+ConfigFileHandler::~ConfigFileHandler() {}
 bool ConfigFileHandler::fileExists(const std::string& path) {
 	std::ifstream f(path.c_str());
 	return f.good();

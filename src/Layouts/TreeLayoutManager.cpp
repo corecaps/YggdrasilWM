@@ -39,7 +39,18 @@ TreeLayoutManager::TreeLayoutManager(Display *display,
 	Point size(sizeX - borderSize, sizeY - barHeight - borderSize);
 	this->rootSpace_ = new Space(pos, size, 0);
 }
-TreeLayoutManager::~TreeLayoutManager() { delete rootSpace_; }
+void deleteSpace(LayoutManager::Space *space) {
+	if (space->getLeft() != nullptr) {
+		deleteSpace(space->getLeft().get());
+	}
+	if (space->getRight() != nullptr) {
+		deleteSpace(space->getRight().get());
+	}
+	delete space;
+}
+TreeLayoutManager::~TreeLayoutManager() {
+	deleteSpace(rootSpace_);
+}
 void TreeLayoutManager::updateGeometry() {  }
 LayoutManager::Space * TreeLayoutManager::findSpaceRecursive(Client *client, LayoutManager::Space * space) {
 	if (space->getClient() == client) {

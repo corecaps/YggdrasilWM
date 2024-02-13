@@ -29,9 +29,8 @@
 #include "Config/ConfigDataBar.hpp"
 #include "Logger.hpp"
 
-ConfigDataBars::ConfigDataBars() : bars_(), root_() {}
+ConfigDataBars::ConfigDataBars() : bars_() {}
 void ConfigDataBars::configInit(Json::Value &root) {
-	root_ = root;
 	if (root.empty() || !root.isArray()) {
 		throw std::runtime_error("Invalid configuration file");
 	}

@@ -119,6 +119,8 @@ set(SOURCES
         ${INCLUDE_DIR}/Commands/FocusGroup.hpp
         ${SOURCE_DIR}/Commands/Spawn.cpp
         ${INCLUDE_DIR}/Commands/Spawn.hpp
+        ${SOURCE_DIR}/Commands/Quit.cpp
+        ${INCLUDE_DIR}/Commands/Quit.hpp
 )
 
 # create the executable

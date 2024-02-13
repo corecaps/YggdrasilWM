@@ -29,13 +29,12 @@
 #include "Logger.hpp"
 #include <strstream>
 
-ConfigDataGroups::ConfigDataGroups() : groups_(), root_() {}
+ConfigDataGroups::ConfigDataGroups() : groups_() {}
 void ConfigDataGroups::configInit(Json::Value &root) {
-	root_ = root;
-	if (root_.empty() || !root_.isArray()) {
+	if (root.empty() || !root.isArray()) {
 		throw std::runtime_error("Invalid configuration file");
 	}
-	for (auto &group : root_) {
+	for (auto &group : root) {
 		auto group_ = new ConfigDataGroup();
 		group_->configInit(group);
 		groups_.push_back(group_);

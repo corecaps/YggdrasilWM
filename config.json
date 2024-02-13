@@ -57,6 +57,11 @@
         "Key" : "Return",
         "Action" : "Spawn",
         "Argument" : "kitty"
+      },
+      {
+        "Key" : "q",
+        "Action" : "Quit",
+        "Argument" : ""
       }
     ]
   }

@@ -42,13 +42,13 @@ public:
 	ConfigDataGroup();
 	~ConfigDataGroup() override = default;
 /**
- * @fn void ConfigDataGroup::configInit(Json::Value& root_)
+ * @fn void ConfigDataGroup::configInit(Json::Value& root)
  * @brief Initialize the configuration for a group from the config file.
  * must be called after instanciating the object.
- * Parse the Json::Value root_ and store the values in the object.
- * @param root_
+ * Parse the Json::Value root and store the values in the object.
+ * @param root
  */
-	void configInit(Json::Value& root_) override;
+	void configInit(Json::Value& root) override;
 	Json::Value configSave() override;
 	[[nodiscard]] const std::string &getGroupName() const;
 	[[nodiscard]] const std::string &getGroupLayout() const;
@@ -58,7 +58,6 @@ public:
 	[[nodiscard]] int getGroupGap() const;
 
 private:
-	Json::Value root_;
 	std::string groupName_;
 	std::string groupLayout_;
 	unsigned long groupInactiveColor_{};

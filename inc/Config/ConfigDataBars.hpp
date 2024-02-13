@@ -86,7 +86,6 @@ public:
 	[[nodiscard]] const std::vector<ConfigDataBar *> &getBars() const;
 private:
 	std::vector<ConfigDataBar *> bars_;
-	Json::Value root_;
 };
 
 #endif //YGGDRASILWM_CONFIGDATABARS_HPP

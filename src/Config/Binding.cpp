@@ -29,6 +29,7 @@
 #include "Logger.hpp"
 #include "Commands/FocusGroup.hpp"
 #include "Commands/Spawn.hpp"
+#include "Commands/Quit.hpp"
 extern "C" {
 #include <X11/Xlib.h>
 
@@ -43,6 +44,8 @@ void Binding::init(std::string Mod, std::string Key, std::string Command, std::s
 		command_ = new FocusGroup();
 	} else if (commandName_ == "Spawn") {
 		command_ = new Spawn();
+	} else if (commandName_== "Quit") {
+		command_ = new Quit();
 	} else {
 		throw std::runtime_error("Unknown command: " + commandName_);
 	}

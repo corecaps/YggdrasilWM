@@ -38,42 +38,41 @@ ConfigDataGroup::ConfigDataGroup() {
 	groupBorderSize_ = 0;
 	groupGap_ = 10;
 }
-void ConfigDataGroup::configInit(Json::Value &root_) {
-	root_ = root_;
-	if (root_.empty() || !root_.isObject()) {
+void ConfigDataGroup::configInit(Json::Value &root) {
+	if (root.empty() || !root.isObject()) {
 		throw std::runtime_error("ConfigDataGroup::configInit root is empty or not an object");
 	}
-	if (root_["Name"].empty() || !root_["Name"].isString()) {
+	if (root["Name"].empty() || !root["Name"].isString()) {
 		Logger::GetInstance()->Log("ConfigDataGroup::configInit Name is empty or not a string",L_ERROR);
 	} else {
-		groupName_ = root_["Name"].asString();
+		groupName_ = root["Name"].asString();
 	}
-	if (root_["Layout"].empty() || !root_["Layout"].isString()) {
+	if (root["Layout"].empty() || !root["Layout"].isString()) {
 		Logger::GetInstance()->Log("ConfigDataGroup::configInit Layout is empty or not a string",L_ERROR);
 	} else {
-		groupLayout_ = root_["Layout"].asString();
+		groupLayout_ = root["Layout"].asString();
 	}
-	if (root_["Inactive_Color"].empty() || !root_["Inactive_Color"].isString()) {
+	if (root["Inactive_Color"].empty() || !root["Inactive_Color"].isString()) {
 		Logger::GetInstance()->Log("ConfigDataGroup::configInit Inactive_Color is empty or not a string",L_ERROR);
 	} else
 	{
-		groupInactiveColor_ = ConfigHandler::colorCodeToULong(root_["Inactive_Color"].asString());
+		groupInactiveColor_ = ConfigHandler::colorCodeToULong(root["Inactive_Color"].asString());
 	}
-	if (root_["Active_Color"].empty() || !root_["Active_Color"].isString()) {
+	if (root["Active_Color"].empty() || !root["Active_Color"].isString()) {
 		Logger::GetInstance()->Log("ConfigDataGroup::configInit Active_Color is empty or not a string",L_ERROR);
 	} else
 	{
-		groupActiveColor_ = ConfigHandler::colorCodeToULong(root_["Active_Color"].asString());
+		groupActiveColor_ = ConfigHandler::colorCodeToULong(root["Active_Color"].asString());
 	}
-	if (root_["Border_Size"].empty() || !root_["Border_Size"].isInt()) {
+	if (root["Border_Size"].empty() || !root["Border_Size"].isInt()) {
 		Logger::GetInstance()->Log("ConfigDataGroup::configInit Border_Size is empty or not an int",L_ERROR);
 	} else {
-		groupBorderSize_ = root_["Border_Size"].asInt();
+		groupBorderSize_ = root["Border_Size"].asInt();
 	}
-	if (root_["Gap"].empty() || !root_["Gap"].isInt()) {
+	if (root["Gap"].empty() || !root["Gap"].isInt()) {
 		Logger::GetInstance()->Log("ConfigDataGroup::configInit Gap is empty or not an int",L_ERROR);
 	} else {
-		groupGap_ = root_["Gap"].asInt();
+		groupGap_ = root["Gap"].asInt();
 	}
 	std::ostringstream msg;
 	msg << "Group[" << groupName_ << "]"

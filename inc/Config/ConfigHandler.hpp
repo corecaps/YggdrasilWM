@@ -126,7 +126,6 @@ private:
 	std::string configPath_;
 	std::unique_ptr<ConfigFileHandler> configFileHandler_;
 	static ConfigHandler* instance_;
-	Json::Value root_;
 	std::unordered_map<std::type_index, ConfigDataBase * > configMap_;
 /**
  * @fn ConfigHandler()

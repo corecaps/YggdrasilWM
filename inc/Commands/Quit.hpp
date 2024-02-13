@@ -20,42 +20,22 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- * @file ConfigDataGroups.hpp
- * @brief ConfigDataGroups class header.
+ * @file Quit.hpp
+ * @brief Quit class header.
  * @date 2024-02-12
  */
 
-#ifndef YGGDRASILWM_CONFIGDATAGROUPS_HPP
-#define YGGDRASILWM_CONFIGDATAGROUPS_HPP
-#include "ConfigDataBase.hpp"
-#include "json/json.h"
-#include <string>
-#include <unordered_map>
-#include <vector>
+#ifndef YGGDRASILWM_QUIT_HPP
+#define YGGDRASILWM_QUIT_HPP
+#include "Commands/CommandBase.hpp"
 /**
- * @class ConfigDataGroups
- * @brief ConfigDataGroups class.
- * stores an array of ConfigDataGroup created from the config file.
+ * @class Quit
+ * @brief Quit implement the mecanism to quit the window manager
  */
-class ConfigDataGroup;
-class ConfigDataGroups : public ConfigDataBase {
+class Quit : public CommandBase {
 public:
-	ConfigDataGroups();
-	~ConfigDataGroups() override;
-/**
- * @fn void ConfigDataGroups::configInit(Json::Value& root)
- * @brief Must be called after instanciation to load the config file.
- * Parses the json root and creates ConfigDataGroup objects.
- * @param root
- */
-	void configInit(Json::Value& root) override;
-	Json::Value configSave() override;
-	ConfigDataGroup * getGroup(int index);
-	void addGroup(ConfigDataGroup * group);
-	void removeGroup(ConfigDataGroup * group);
-	[[nodiscard]] const std::vector<ConfigDataGroup *> &getGroups() const;
-
-private:
-	std::vector<ConfigDataGroup *> groups_;
+	Quit();
+	~Quit() override = default;
+	void execute(const std::string &args) override;
 };
-#endif //YGGDRASILWM_CONFIGDATAGROUPS_HPP
+#endif //YGGDRASILWM_QUIT_HPP

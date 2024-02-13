@@ -67,6 +67,7 @@ WindowManager::~WindowManager() {
 	}
 	groups_.clear();
 	XCloseDisplay(display_);
+	Logger::GetInstance()->Log("WindowManager destroyed", L_INFO);
 }
 void WindowManager::init() {
 	selectEventOnRoot();
@@ -203,6 +204,15 @@ void handleSIGHUP(int signal) {
 }
 void WindowManager::Stop() {
 	this->running = false;
+	XClientMessageEvent ev;
+	memset(&ev, 0, sizeof(ev));
+	ev.type = ClientMessage;
+	ev.window = root_;
+	ev.message_type = XInternAtom(display_, "WM_PROTOCOLS", False);
+	ev.format = 32;
+	ev.data.l[0] = XInternAtom(display_, "WM_DELETE_WINDOW", False);
+	XSendEvent(display_, root_, False, NoEventMask, (XEvent *)&ev);
+	XFlush(display_); // Ensure the event is sent immediately
 	std::cout << "Stopping WindowManager" << std::endl;
 }
 WindowManager * WindowManager::getInstance() {
