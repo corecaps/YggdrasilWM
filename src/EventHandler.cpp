@@ -136,6 +136,7 @@ void EventHandler::handleMapNotify(const XEvent &event) {
 void EventHandler::handleUnmapNotify(const XEvent &event) {
 	auto e = event.xunmap;
 	if (e.event == WindowManager::getInstance()->getRoot()) {
+		ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->grabKeys(WindowManager::getInstance()->getDisplay(),WindowManager::getInstance()->getRoot());
 		Logger::GetInstance()->Log("Ignoring unmap for root window", L_INFO);
 		return;
 	}
@@ -266,8 +267,18 @@ void EventHandler::handleDestroyNotify(const XEvent &event) {
 		WindowManager::getInstance()->getClients().erase(e.window);
 		client.getGroup()->removeClient(&client);
 		delete &client;
-	}
-	catch (std::out_of_range &err) {
+		auto clients = WindowManager::getInstance()->getActiveGroup()->getClients();
+		if (!clients.empty()) {
+			Client *dclient = clients.begin()->second;
+			if (dclient != nullptr) {
+				WindowManager::getInstance()->setFocus(dclient);
+				return;
+			}
+		}
+		XSetInputFocus(WindowManager::getInstance()->getDisplay(),
+					   WindowManager::getInstance()->getRoot(),
+					   RevertToParent, CurrentTime);
+	} catch (std::out_of_range &err) {
 		Logger::GetInstance()->Log("Destroying unknown window: " + std::to_string(e.window), L_WARNING);
 	}
 }

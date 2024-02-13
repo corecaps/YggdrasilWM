@@ -30,6 +30,7 @@
 #include <utility>
 #include "Client.hpp"
 #include "Layouts/LayoutManager.hpp"
+#include "Config/ConfigDataBindings.hpp"
 
 Group::Group(ConfigDataGroup *config) {
 	name_ = config->getGroupName();
@@ -139,7 +140,7 @@ void Group::setName(std::string name) {
 bool Group::isActive() const { return active_; }
 std::string Group::getName() { return name_; }
 Client *Group::getClient(Window window) { return clients_[window]; }
-std::unordered_map<Window, Client *> Group::GetClients() { return clients_; }
+std::unordered_map<Window, Client *> Group::getClients() { return clients_; }
 LayoutManager *Group::getLayoutManager() { return layoutManager_; }
 int Group::getBorderSize() const { return borderSize_; }
 int Group::getGap() const { return gap_; }

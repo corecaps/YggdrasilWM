@@ -131,10 +131,10 @@ public:
  */
 	Client *	getClient(Window window);
 /**
- * @fn std::unordered_map<Window, Client *> GetClients()
+ * @fn std::unordered_map<Window, Client *> getClients()
  * @brief Get the list of clients of the group
  */
-	std::unordered_map<Window, Client *> GetClients();
+	std::unordered_map<Window, Client *> getClients();
 /**
  * @fn LayoutManager* Group::getLayoutManager()
  * @brief Get the layout manager of the group
