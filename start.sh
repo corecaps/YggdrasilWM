@@ -42,5 +42,47 @@ cd build
 echo "Running make"
 make
 cd ..
-xinit ./xinitrc -- /usr/bin/Xephyr :1 -ac -screen 800x600 -host-cursor
+# Function to run the application with Valgrind
+run_with_valgrind() {
+    tool=$1
+    case $tool in
+        memcheck)
+            export valgrind_cmd="valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes"
+            ;;
+        massif)
+            export valgrind_cmd="valgrind --tool=massif --xtree-memory=full --time-unit=ms "
+            ;;
+        *)
+            echo "Unknown Valgrind tool: $tool"
+            exit 1
+            ;;
+    esac
+    xinit ./xinitrc_valgrind -- /usr/bin/Xephyr :1 -ac -screen 800x600 -host-cursor
+}
+
+# Function to run the application normally
+run_normally() {
+    xinit ./xinitrc -- /usr/bin/Xephyr :1 -ac -screen 800x600 -host-cursor
+}
+
+# Check command-line arguments
+if [ "$#" -eq 0 ]; then
+    run_normally
+else
+    case $1 in
+        --valgrind-memcheck)
+            run_with_valgrind memcheck
+            ;;
+        --valgrind-massif)
+            run_with_valgrind massif
+            ;;
+        *)
+            echo "Usage: $0 [--valgrind-memcheck | --valgrind-massif]"
+            exit 1
+            ;;
+    esac
+fi
+
+# Display logs
 cat logs/std-logs.txt
+

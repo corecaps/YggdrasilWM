@@ -28,5 +28,4 @@ xeyes &
 
 sleep 4 && xclock &
 sleep 6 && kitty &
-exec ./build/bin/YggdrasilWM -d :1 --log="${log_file}" --loglevel=0 >> logs/std-logs.txt 2>&1 
-#exec valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./build/bin/YggdrasilWM -d :1 --log="${log_file}" --loglevel=0 >> logs/std-logs.txt 2>&1
+exec $valgrind_cmd ./build/bin/YggdrasilWM -d :1 --log="${log_file}" --loglevel=0 >> logs/std-logs.txt 2>&1

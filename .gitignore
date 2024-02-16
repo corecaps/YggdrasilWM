@@ -23,7 +23,13 @@ CMakeFiles/
 CMakeCache.txt
 CMakeScripts/
 cmake_install.cmake
-
+#Debugging files
 .gdb_history
 massif.out.*
+massif.out
+callgrind.out.*
 vgcore.*
+temp.sh
+#Ignore the generated documentation
+doc/*
+
