@@ -121,6 +121,15 @@ set(SOURCES
         ${INCLUDE_DIR}/Commands/Spawn.hpp
         ${SOURCE_DIR}/Commands/Quit.cpp
         ${INCLUDE_DIR}/Commands/Quit.hpp
+        ${SOURCE_DIR}/Bars/Bars.cpp
+        ${INCLUDE_DIR}/Bars/Bars.hpp
+        ${SOURCE_DIR}/Bars/Bar.cpp
+        ${INCLUDE_DIR}/Bars/Bar.hpp
+        ${SOURCE_DIR}/Bars/GroupWidget.cpp
+        ${INCLUDE_DIR}/Bars/GroupWidget.hpp
+        ${SOURCE_DIR}/Bars/TSBarsData.cpp
+        ${INCLUDE_DIR}/Bars/TSBarsData.hpp
+        ${INCLUDE_DIR}/Bars/Widget.hpp
 )
 
 # create the executable
