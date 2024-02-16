@@ -33,7 +33,26 @@
       "Font_Color": "#000000",
       "Background_Color": "#FFFFFF",
       "Border_Size": 2,
-      "Border_Color": "#000000"
+      "Border_Color": "#000000",
+      "Position": "Top",
+      "Widgets": [
+        {
+          "Type": "Group",
+          "Position": "10",
+          "Size": "80",
+          "Color": "#FF0000",
+          "Background_Color": "#FFFFFF",
+          "Arguments": ""
+        },
+        {
+          "Type": "Clock",
+          "Position": "90",
+          "Size": "10",
+          "Color": "#000000",
+          "Background_Color": "#FFFFFF",
+          "Arguments": ""
+        }
+      ]
     }
   ],
   "Bindings": {
