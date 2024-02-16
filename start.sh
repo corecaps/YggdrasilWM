@@ -50,7 +50,10 @@ run_with_valgrind() {
             export valgrind_cmd="valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes"
             ;;
         massif)
-            export valgrind_cmd="valgrind --tool=massif --xtree-memory=full --time-unit=ms "
+            export valgrind_cmd="valgrind --tool=massif --time-unit=ms "
+            ;;
+        massiftree)
+            export valgrind_cmd="valgrind --tool=massif --time-unit=ms --xtree-memory=full"
             ;;
         *)
             echo "Unknown Valgrind tool: $tool"
@@ -75,6 +78,9 @@ else
             ;;
         --valgrind-massif)
             run_with_valgrind massif
+            ;;
+        --massif-tree)
+            run_with_valgrind massiftree
             ;;
         *)
             echo "Usage: $0 [--valgrind-memcheck | --valgrind-massif]"
