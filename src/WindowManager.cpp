@@ -31,6 +31,8 @@
 #include "Config/ConfigHandler.hpp"
 #include "Config/ConfigDataGroups.hpp"
 #include "Config/ConfigDataBindings.hpp"
+#include "Bars/Bars.hpp"
+#include "Bars/TSBarsData.hpp"
 
 bool WindowManager::wmDetected;
 WindowManager * WindowManager::instance_ = nullptr;
@@ -79,6 +81,9 @@ void WindowManager::init() {
 	getTopLevelWindows();
 	XUngrabServer(display_);
 	XFlush(display_);
+	TSBarsData *tsData = new TSBarsData();
+	Bars::createInstance();
+	Bars::getInstance().init(ConfigHandler::GetInstance().getConfigData<ConfigDataBars>(), tsData, display_, root_);
 	Bar();
 	signal(SIGINT, handleSIGHUP);
 }

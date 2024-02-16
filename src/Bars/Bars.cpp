@@ -27,24 +27,56 @@
 #include "Config/ConfigDataBars.hpp"
 #include "Bars/TSBarsData.hpp"
 Bars * Bars::instance = nullptr;
-void Bars::createInstance() {
-	Bars::instance = new Bars();
+void Bars::init(ConfigDataBars *config,
+				TSBarsData *data,
+				Display *disp,
+				Window r) {
+	this->configData = config;
+	this->tsData = data;
+	this->display = disp;
+	this->root = r;
+	for (auto &bar : this->configData->getBars()) {
+		std::unique_ptr<Bar> newBar = std::make_unique<Bar>();
+		newBar->init(bar, this->tsData);
+		this->bars.push_back(std::move(newBar));
+	}
 }
+void Bars::run() {
 
-Bars &Bars::getInstance() {
-	if (Bars::instance == nullptr)
-		Bars::createInstance();
-	return *Bars::instance;
 }
+void Bars::selectEvents() {
 
-void Bars::destroy() {
-	if (Bars::instance != nullptr)
-		delete Bars::instance;
 }
-Bars::Bars() {}
+void Bars::redraw() {
+
+}
+Bars::Bars() : spaceN(0),
+			   spaceS(0),
+			   spaceE(0),
+			   spaceW(0),
+			   configData(nullptr),
+			   tsData(nullptr)
+				{}
 Bars::~Bars() {
 	if (this->configData != nullptr)
 		delete this->configData;
 	if (this->tsData != nullptr)
 		delete this->tsData;
 }
+void Bars::createInstance() {
+	if (Bars::instance == nullptr)
+		Bars::instance = new Bars();
+}
+Bars &Bars::getInstance() {
+	if (Bars::instance == nullptr)
+		Bars::createInstance();
+	return *Bars::instance;
+}
+void Bars::destroy() {
+	if (Bars::instance != nullptr)
+		delete Bars::instance;
+}
+unsigned int Bars::getSpaceN() const { return this->spaceN; }
+unsigned int Bars::getSpaceS() const { return this->spaceS; }
+unsigned int Bars::getSpaceE() const { return this->spaceE; }
+unsigned int Bars::getSpaceW() const { return this->spaceW; }
