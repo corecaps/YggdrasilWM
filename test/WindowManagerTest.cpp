@@ -33,6 +33,7 @@
 #include <cstdlib>
 #include <unistd.h>
 #include "Config/ConfigHandler.hpp"
+#include "Group.hpp"
 std::vector<pid_t> xeyesPid;
 pid_t xephyrPid;
 void runXephyr () {

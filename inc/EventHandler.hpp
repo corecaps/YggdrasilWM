@@ -36,6 +36,7 @@ extern "C" {
 #include <X11/Xutil.h>
 }
 #include "WindowManager.hpp"
+#include "Bars/Bars.hpp"
 /**
  * @class EventHandler
  * @brief EventHandler class.

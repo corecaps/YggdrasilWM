@@ -40,13 +40,16 @@ public:
 	void init(ConfigDataBar *configData, TSBarsData *tsData);
 	void draw();
 
+	Window getWindow() const;
+	unsigned int getSizeX() const;
+	unsigned int getSizeY() const;
 private:
 	ConfigDataBar *configData;
 	std::vector<Widget*> widgets;
 	TSBarsData *tsData;
 	Display *display;
-	Window *window;
-	Window *root;
+	Window window;
+	Window root;
 	unsigned int sizeX;
 	unsigned int sizeY;
 	int pos;
@@ -55,5 +58,7 @@ private:
 	unsigned long borderColor;
 	unsigned int borderSize;
 	std::string font;
+
+
 };
 #endif // BAR_HPP

@@ -42,7 +42,7 @@ extern "C" {
 #include <algorithm>
 #include <csignal>
 #include <mutex>
-#include "Group.hpp"
+class Group;
 
 /**
  * @class WindowManager

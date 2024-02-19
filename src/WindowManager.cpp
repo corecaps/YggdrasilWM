@@ -33,6 +33,7 @@
 #include "Config/ConfigDataBindings.hpp"
 #include "Bars/Bars.hpp"
 #include "Bars/TSBarsData.hpp"
+#include "Group.hpp"
 
 bool WindowManager::wmDetected;
 WindowManager * WindowManager::instance_ = nullptr;
@@ -84,7 +85,9 @@ void WindowManager::init() {
 	TSBarsData *tsData = new TSBarsData();
 	Bars::createInstance();
 	Bars::getInstance().init(ConfigHandler::GetInstance().getConfigData<ConfigDataBars>(), tsData, display_, root_);
-	Bar();
+//	Bar();
+	Bars::getInstance().start_thread();
+	tsData->addData("test", "test");
 	signal(SIGINT, handleSIGHUP);
 }
 void WindowManager::selectEventOnRoot() const {

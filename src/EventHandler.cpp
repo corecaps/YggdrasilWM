@@ -27,6 +27,7 @@
 #include "EventHandler.hpp"
 #include "Logger.hpp"
 #include "Config/ConfigDataBindings.hpp"
+#include "Group.hpp"
 #include <string>
 extern "C" {
 #include <X11/XKBlib.h>
@@ -206,18 +207,12 @@ void EventHandler::handleEnterNotify(const XEvent &event) {}
 void EventHandler::handleLeaveNotify(const XEvent &event) {}
 void EventHandler::handleExpose(const XEvent &event) {
 	auto e = event.xexpose;
-	auto bar = WindowManager::getInstance()->getBar();
-	if (e.window == bar) {
-		auto display_ = WindowManager::getInstance()->getDisplay();
-		auto screen = DefaultScreen(display_);
-		std::stringstream message;
-		auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-		std::tm localTime{};
-		localtime_r(&now, &localTime);
-		message << PROGRAM_NAME << " " << PROGRAM_VERSION << " " << WindowManager::getInstance()->getClientCount() << " clients" << " " << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S") ;
-		XClearWindow(display_, bar);
-		XDrawString(WindowManager::getInstance()->getDisplay(), WindowManager::getInstance()->getBar(), DefaultGC(display_, screen), 300, 15, message.str().c_str(), message.str().size());
-		XFlush(display_);
+	const std::vector<Window> &windows = Bars::getInstance().getWindows();
+	for (auto window : windows) {
+		if (window == e.window) {
+			Bars::getInstance().redraw();
+			return;
+		}
 	}
 }
 void EventHandler::handleFocusIn(const XEvent &event) {

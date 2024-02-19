@@ -27,6 +27,8 @@
 #define BARS_HPP
 #include <vector>
 #include <memory>
+#include <unordered_map>
+#include <string>
 extern "C" {
 #include <X11/Xlib.h>
 }
@@ -89,6 +91,7 @@ public:
  * @note all data must be passed through the TSBarsData class
  */
 	void run();
+	void start_thread();
 /**
  * @fn unsigned int Bars::getSpaceN() const
  * @brief Get the spaceN value
@@ -113,11 +116,20 @@ public:
  * used to calculate the space left for the Layout Manager.
  */
 	[[nodiscard]] unsigned int getSpaceW() const;
+	const std::vector<Window> &getWindows() const;
+	const std::unordered_map<std::string, std::string> &getData() const;
+/**
+ * @fn void Bars::redraw()
+ * @brief Redraw the bars by calling the draw method of each bar
+ */
+	void redraw();
 private:
 	static Bars* instance;
 	std::vector<std::unique_ptr<Bar>> bars;
+	std::vector<Window> windows;
 	ConfigDataBars *configData;
 	TSBarsData* tsData;
+	std::unordered_map<std::string, std::string> data;
 	Display* display;
 	Window root;
 	unsigned int spaceN;
@@ -131,10 +143,6 @@ private:
  * @brief Select the events for the bars
  */
 	void selectEvents();
-/**
- * @fn void Bars::redraw()
- * @brief Redraw the bars by calling the draw method of each bar
- */
-	void redraw();
+
 };
 #endif // BARS_HPP

@@ -26,6 +26,9 @@
 #include "Bars/Bar.hpp"
 #include "Config/ConfigDataBars.hpp"
 #include "Bars/TSBarsData.hpp"
+#include "WindowManager.hpp"
+#include <string>
+#include <thread>
 Bars * Bars::instance = nullptr;
 void Bars::init(ConfigDataBars *config,
 				TSBarsData *data,
@@ -38,24 +41,42 @@ void Bars::init(ConfigDataBars *config,
 	for (auto &bar : this->configData->getBars()) {
 		std::unique_ptr<Bar> newBar = std::make_unique<Bar>();
 		newBar->init(bar, this->tsData);
+		Logger::GetInstance()->Log("Bar [" + std::to_string(this->bars.size()) + "] on window [" + std::to_string(newBar->getWindow()) + "] initialized",L_INFO);
 		this->bars.push_back(std::move(newBar));
 	}
 }
+void Bars::start_thread() {
+	std::thread([this] { this->run(); }).detach();
+}
 void Bars::run() {
-
+	while (WindowManager::getInstance()->getRunning()){
+		if (tsData->wait()) {
+			std::unordered_map<std::string,std::string>updated = tsData->getData();
+			for (const auto &pair: updated) {
+				Logger::GetInstance()->Log("Updating data [" + pair.first + "] with value [" + pair.second + "]",L_INFO);
+				this->data[pair.first] = pair.second;
+			}
+			this->redraw();
+		}
+	}
 }
 void Bars::selectEvents() {
 
 }
 void Bars::redraw() {
-
+	for (auto &bar : this->bars) {
+		bar->draw();
+	}
 }
 Bars::Bars() : spaceN(0),
 			   spaceS(0),
 			   spaceE(0),
 			   spaceW(0),
 			   configData(nullptr),
-			   tsData(nullptr)
+			   tsData(nullptr),
+			   data(),
+			   display(nullptr),
+			   root(0)
 				{}
 Bars::~Bars() {
 	if (this->configData != nullptr)
@@ -80,3 +101,8 @@ unsigned int Bars::getSpaceN() const { return this->spaceN; }
 unsigned int Bars::getSpaceS() const { return this->spaceS; }
 unsigned int Bars::getSpaceE() const { return this->spaceE; }
 unsigned int Bars::getSpaceW() const { return this->spaceW; }
+const std::unordered_map<std::string, std::string> &Bars::getData() const { return data; }
+
+const std::vector<Window> &Bars::getWindows() const {
+	return windows;
+}

@@ -23,7 +23,9 @@
  */
 
 #include "Bars/Bar.hpp"
-
+#include "Config/ConfigDataBar.hpp"
+#include "WindowManager.hpp"
+#include <thread>
 Bar::Bar() {
 
 }
@@ -32,10 +34,44 @@ Bar::~Bar() {
 
 }
 
-void Bar::init(ConfigDataBar *configData, TSBarsData *tsData) {
-
+void Bar::init(ConfigDataBar *config, TSBarsData *ts) {
+	configData = config;
+	tsData = ts;
+	display = WindowManager::getInstance()->getDisplay();
+	int screen = DefaultScreen(display);
+	root = RootWindow(display, screen);
+	unsigned int size_x = DisplayWidth(display, screen);
+	unsigned int size_y = configData->getBarHeight();
+	unsigned int bg = configData->getBarBackgroundColor();
+	unsigned int fg = configData->getBarFontColor();
+	unsigned int border = configData->getBarBorderColor();
+	unsigned int borderSize = configData->getBarBorderSize();
+	window = XCreateSimpleWindow(display, root, 0, 0,size_x, size_y, borderSize, 0, bg);
+	XSelectInput(display, window, ExposureMask | KeyPressMask);
+	XMapWindow(display, window);
+	this->draw();
 }
 
 void Bar::draw() {
+	int screen = DefaultScreen(display);
+	std::stringstream message;
+	auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+	std::tm localTime{};
+	localtime_r(&now, &localTime);
+	message << PROGRAM_NAME << " " << PROGRAM_VERSION << " " << WindowManager::getInstance()->getClientCount() << " clients" << " " << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S") ;
+	XClearWindow(display, window);
+	XDrawString(display, window, DefaultGC(display, screen), 300, 15, message.str().c_str(), message.str().size());
+	XFlush(display);
+}
 
+Window Bar::getWindow() const {
+	return window;
+}
+
+unsigned int Bar::getSizeX() const {
+	return sizeX;
+}
+
+unsigned int Bar::getSizeY() const {
+	return sizeY;
 }
