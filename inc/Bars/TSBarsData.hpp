@@ -23,10 +23,26 @@
  */
 #ifndef TSBARSDATA_HPP
 #define TSBARSDATA_HPP
+#include <mutex>
+#include <condition_variable>
+#include <unordered_map>
+#include <string>
+#include <set>
 class TSBarsData
 {
 public:
 	TSBarsData();
 	~TSBarsData();
+	void addData(std::string key, std::string value);
+	std::unordered_map<std::string,std::string> getData();
+	void removeData(std::string key);
+	void modifyData(std::string key, std::string value);
+	bool wait();
+private:
+	std::mutex mutex;
+	std::condition_variable cv;
+	std::unordered_map<std::string, std::string> data;
+	std::set<std::string> modifiedKeys;
+	bool dataChanged = false;
 };
 #endif // TSBARSDATA_HPP
