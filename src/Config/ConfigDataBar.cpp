@@ -31,7 +31,7 @@
 #include <sstream>
 
 ConfigDataBar::ConfigDataBar() :
-		barHeight_(20),
+		barSize_(20),
 		barFont_("Arial"),
 		barFontColor_(0x00ff00),
 		barFontSize_(12),
@@ -44,10 +44,10 @@ void ConfigDataBar::configInit(const Json::Value &root) {
 	if (root.empty() || !root.isObject()) {
 		throw std::runtime_error("Invalid configuration file");
 	}
-	if (root["Height"].empty() || !root["Height"].isInt()) {
-		Logger::GetInstance()->Log("ConfigDataBar::Height is empty or not an integer",L_ERROR);
+	if (root["Bar_Size"].empty() || !root["Bar_Size"].isInt()) {
+		Logger::GetInstance()->Log("ConfigDataBar::Bar_Size is empty or not an integer",L_ERROR);
 	} else {
-		barHeight_ = root["Height"].asInt();
+		barSize_ = root["Bar_Size"].asInt();
 	}
 	if (root["Font"].empty() || !root["Font"].isString()) {
 		Logger::GetInstance()->Log("ConfigDataBar::Font is empty or not a string", L_ERROR);
@@ -82,17 +82,23 @@ void ConfigDataBar::configInit(const Json::Value &root) {
 	} else {
 		barBorderSize_ = root["Border_Size"].asInt();
 	}
+	if (root["Position"].empty() || !root["Position"].isString()) {
+		Logger::GetInstance()->Log("ConfigDataBar::Position is empty or not a string",L_ERROR);
+	} else {
+		barPosition_ = root["Position"].asString();
+	}
 	std::stringstream msg;
-	msg << "Bar :\t Height [" << barHeight_ << "] Font [" << barFont_ << "] FontSize [" << barFontSize_ << "] BorderSize [" << barBorderSize_ << "]";
+	msg << "Bar :\t Height [" << barSize_ << "] Font [" << barFont_ << "] FontSize [" << barFontSize_ << "] BorderSize [" << barBorderSize_ << "]";
 	Logger::GetInstance()->Log(msg.str(),L_INFO);
 }
 Json::Value ConfigDataBar::configSave() {
 	return Json::Value();
 }
-int ConfigDataBar::getBarHeight() const { return barHeight_; }
+int ConfigDataBar::getBarSize() const { return barSize_; }
 const std::string &ConfigDataBar::getBarFont() const {  return barFont_; }
 unsigned int ConfigDataBar::getBarFontColor() const { return barFontColor_; }
 int ConfigDataBar::getBarFontSize() const { return barFontSize_; }
 unsigned int ConfigDataBar::getBarBackgroundColor() const { return barBackgroundColor_; }
 int ConfigDataBar::getBarBorderSize() const { return barBorderSize_; }
 unsigned int ConfigDataBar::getBarBorderColor() const { return barBorderColor_; }
+const std::string &ConfigDataBar::getBarPosition() const { return barPosition_; }

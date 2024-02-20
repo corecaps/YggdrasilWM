@@ -73,7 +73,7 @@ TEST_F(ConfigDataBarsTest, configInit) {
 	root.append(bar1);
 	cdb->configInit(root);
 	ASSERT_EQ(cdb->getBars().size(), 1);
-	ASSERT_EQ(cdb->getBars()[0]->getBarHeight(), 20);
+	ASSERT_EQ(cdb->getBars()[0]->getBarSize(), 20);
 	ASSERT_EQ(cdb->getBars()[0]->getBarFont(), "monospace");
 	ASSERT_EQ(cdb->getBars()[0]->getBarFontSize(), 12);
 	ASSERT_EQ(cdb->getBars()[0]->getBarFontColor(), 0xffffff);

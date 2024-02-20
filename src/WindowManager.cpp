@@ -79,14 +79,18 @@ void WindowManager::init() {
 		throw std::runtime_error("Another window manager is already running.");
 	}
 	XGrabServer(display_);
-	getTopLevelWindows();
-	XUngrabServer(display_);
-	XFlush(display_);
 	TSBarsData *tsData = new TSBarsData();
 	Bars::createInstance();
+	getTopLevelWindows();
 	Bars::getInstance().init(ConfigHandler::GetInstance().getConfigData<ConfigDataBars>(), tsData, display_, root_);
-//	Bar();
 	Bars::getInstance().start_thread();
+	int sizeX = DisplayWidth(display_, DefaultScreen(display_)) - Bars::getInstance().getSpaceN() - Bars::getInstance().getSpaceS() - active_group_->getBorderSize() * 2;
+	int sizeY = DisplayHeight(display_, DefaultScreen(display_)) - Bars::getInstance().getSpaceE() - Bars::getInstance().getSpaceW() - active_group_->getBorderSize() * 2;
+	int posX = Bars::getInstance().getSpaceN();
+	int posY = Bars::getInstance().getSpaceW();
+	active_group_->resize(sizeX,sizeY,posX,posY);
+	XUngrabServer(display_);
+	XFlush(display_);
 	tsData->addData("test", "test");
 	signal(SIGINT, handleSIGHUP);
 }
@@ -176,7 +180,7 @@ void WindowManager::insertClient(Window window) {
 }
 void WindowManager::Bar() {
 	int screen = DefaultScreen(display_);
-//	int barHeight = ConfigHandler::GetInstance().getConfigData<ConfigDataBars>()->getBar(0)->getBarHeight();
+//	int barHeight = ConfigHandler::GetInstance().getConfigData<ConfigDataBars>()->getBar(0)->getBarSize();
 	int barHeight = 30;
 	bar_ = XCreateSimpleWindow(
 			display_,

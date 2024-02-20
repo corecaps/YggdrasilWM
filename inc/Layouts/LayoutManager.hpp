@@ -103,6 +103,7 @@ public:
  * @brief Set the size of the space
  * @param size
  */
+
 		void setSize(const Point &size);
 /**
  * @fn int LayoutManager::Space::getSubspaceCount()
@@ -204,15 +205,16 @@ public:
 				  int pos_x,
 				  int pos_y,
 				  int gap,
-				  int border_size,
-				  int bar_height);
+				  int border_size);
 	virtual ~LayoutManager() = default;
 /**
  * @fn virtual void LayoutManager::updateGeometry()
  * @brief updateGeometry this method is a residual from the old implementation.
  * it should be removed in the future.
  */
-	virtual void	updateGeometry() = 0;
+	virtual void	updateGeometry(int sizeX, int sizeY, int posX, int posY) = 0;
+	virtual void reSize(const Point &size, const Point &pos) = 0;
+	virtual void recursiveResize(const Point &size, const Point &pos, Space *space) = 0;
 /**
  * @fn virtual Space * LayoutManager::findSpace(Client *client)
  * @brief find the space that contains the client
@@ -245,7 +247,6 @@ protected:
 	int		screen_height_;
 	int		gap_;
 	int		border_size_;
-	int		bar_height_;
 	int		space_count_;
 	Display	*display_;
 	Window	rootWindow_;

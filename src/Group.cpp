@@ -146,3 +146,7 @@ int Group::getBorderSize() const { return borderSize_; }
 int Group::getGap() const { return gap_; }
 unsigned long Group::getInactiveColor() const { return inactiveColor_; }
 unsigned long Group::getActiveColor() const { return activeColor_; }
+
+void Group::resize(int sizeX, int sizeY, int posX, int posY) {
+	layoutManager_->updateGeometry(sizeX, sizeY, posX, posY);
+}

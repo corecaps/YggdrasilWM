@@ -27,14 +27,14 @@
     }],
   "Bars": [
     {
-      "Height": 30,
+      "Bar_Size": 30,
       "Font": "Arial",
       "Font_Size": 12,
       "Font_Color": "#000000",
       "Background_Color": "#FFFFFF",
       "Border_Size": 2,
       "Border_Color": "#000000",
-      "Position": "Top",
+      "Position": "top",
       "Widgets": [
         {
           "Type": "Group",
@@ -53,6 +53,34 @@
           "Arguments": ""
         }
       ]
+    },
+    {
+        "Bar_Size": 30,
+        "Font": "Arial",
+        "Font_Size": 12,
+        "Font_Color": "#000000",
+        "Background_Color": "#FFFFFF",
+        "Border_Size": 2,
+        "Border_Color": "#000000",
+        "Position": "bottom",
+        "Widgets": [
+            {
+            "Type": "Group",
+            "Position": "10",
+            "Size": "80",
+            "Color": "#FF0000",
+            "Background_Color": "#FFFFFF",
+            "Arguments": ""
+            },
+            {
+            "Type": "Clock",
+            "Position": "90",
+            "Size": "10",
+            "Color": "#000000",
+            "Background_Color": "#FFFFFF",
+            "Arguments": ""
+            }
+        ]
     }
   ],
   "Bindings": {

@@ -59,11 +59,11 @@ public:
  */
 	Json::Value configSave() override;
 /**
- * @fn int ConfigDataBar::getBarHeight() const
+ * @fn int ConfigDataBar::getBarSize() const
  * @brief Get the Bar Heightb
  * @return
  */
-	[[nodiscard]] int getBarHeight() const;
+	[[nodiscard]] int getBarSize() const;
 /**
  * @fn const std::string &ConfigDataBar::getBarFont() const
  * @brief Get the Bar Font
@@ -95,8 +95,13 @@ public:
  */
 	[[nodiscard]] unsigned int getBarBorderColor() const;
 private:
-	int barHeight_;
+public:
+	const std::string &getBarPosition() const;
+
+private:
+	int barSize_;
 	std::string barFont_;
+	std::string barPosition_;
 	unsigned int barFontColor_;
 	int barFontSize_;
 	unsigned int barBackgroundColor_;

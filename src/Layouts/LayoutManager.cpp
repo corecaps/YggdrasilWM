@@ -33,14 +33,12 @@ LayoutManager::LayoutManager(Display *display,
 							 int pos_x,
 							 int pos_y,
 							 int borderSize,
-							 int gap,
-							 int barHeight) :
+							 int gap) :
 	display_(display),
 	rootWindow_(root),
 	space_count_(0),
 	border_size_(borderSize),
 	gap_(gap),
-	bar_height_(barHeight),
 	rootSpace_(nullptr),
 	screen_height_(0),
 	screen_width_(0) {}
@@ -78,3 +76,4 @@ void LayoutManager::Space::setLeft( std::unique_ptr<Space> left) { this->left_ =
 Client *LayoutManager::Space::getClient() const { return client_; }
 void LayoutManager::Space::setClient(Client *client) { Space::client_ = client; }
 int LayoutManager::Space::getSubspaceCount() const {return subspace_count_; }
+

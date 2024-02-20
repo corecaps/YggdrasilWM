@@ -40,13 +40,34 @@ void Bar::init(ConfigDataBar *config, TSBarsData *ts) {
 	display = WindowManager::getInstance()->getDisplay();
 	int screen = DefaultScreen(display);
 	root = RootWindow(display, screen);
-	unsigned int size_x = DisplayWidth(display, screen);
-	unsigned int size_y = configData->getBarHeight();
+	int posX = 0;
+	int posY = 0;
+	if (configData->getBarPosition() == "top") {
+		sizeY = configData->getBarSize();
+		sizeX = DisplayWidth(display, screen);
+		posX = 0;
+		posY = 0;
+	} else if (configData->getBarPosition() == "bottom") {
+		sizeY = configData->getBarSize();
+		sizeX = DisplayWidth(display, screen);
+		posX = 0;
+		posY = DisplayHeight(display, screen) - sizeY;
+	} else if (configData->getBarPosition() == "left") {
+		sizeY = DisplayHeight(display, screen);
+		sizeX = configData->getBarSize();
+		posX = 0;
+		posY = 0;
+	} else if (configData->getBarPosition() == "right") {
+		sizeY = DisplayHeight(display, screen);
+		sizeX = configData->getBarSize();
+		posX = DisplayWidth(display, screen) - sizeX;
+		posY = 0;
+	}
 	unsigned int bg = configData->getBarBackgroundColor();
 	unsigned int fg = configData->getBarFontColor();
 	unsigned int border = configData->getBarBorderColor();
 	unsigned int borderSize = configData->getBarBorderSize();
-	window = XCreateSimpleWindow(display, root, 0, 0,size_x, size_y, borderSize, 0, bg);
+	window = XCreateSimpleWindow(display, root, posX, posY,sizeX, sizeY, borderSize, 0, bg);
 	XSelectInput(display, window, ExposureMask | KeyPressMask);
 	XMapWindow(display, window);
 	this->draw();

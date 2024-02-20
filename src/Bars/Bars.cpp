@@ -25,6 +25,7 @@
 #include "Bars/Bars.hpp"
 #include "Bars/Bar.hpp"
 #include "Config/ConfigDataBars.hpp"
+#include "Config/ConfigDataBar.hpp"
 #include "Bars/TSBarsData.hpp"
 #include "WindowManager.hpp"
 #include <string>
@@ -41,7 +42,25 @@ void Bars::init(ConfigDataBars *config,
 	for (auto &bar : this->configData->getBars()) {
 		std::unique_ptr<Bar> newBar = std::make_unique<Bar>();
 		newBar->init(bar, this->tsData);
-		Logger::GetInstance()->Log("Bar [" + std::to_string(this->bars.size()) + "] on window [" + std::to_string(newBar->getWindow()) + "] initialized",L_INFO);
+		if (bar->getBarPosition() == "top") {
+			this->spaceN += bar->getBarSize();
+		} else if (bar->getBarPosition() == "bottom") {
+			this->spaceS += bar->getBarSize();
+		} else if (bar->getBarPosition() == "left") {
+			this->spaceW += bar->getBarSize();
+		} else if (bar->getBarPosition() == "right") {
+			this->spaceE += bar->getBarSize();
+		}
+		Logger::GetInstance()->Log("Bar ["
+									+ std::to_string(this->bars.size())
+									+ "] on window ["
+									+ std::to_string(newBar->getWindow())
+									+ "] initialized\t"
+									+ bar->getBarPosition()
+									+ " "
+									+ std::to_string(newBar->getSizeX())
+									+ " x "
+									+ std::to_string(newBar->getSizeY()),L_INFO);
 		this->bars.push_back(std::move(newBar));
 	}
 }

@@ -176,6 +176,7 @@ public:
  * @return
  */
 	unsigned long	getActiveColor() const;
+	void resize (int sizeX, int sizeY, int posX, int posY);
 
 private:
 	std::string								name_;

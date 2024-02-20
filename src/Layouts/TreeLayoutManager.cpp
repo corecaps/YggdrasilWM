@@ -25,6 +25,7 @@
  * @date 2024-02-07
  */
 #include "Layouts/TreeLayoutManager.hpp"
+#include "Logger.hpp"
 TreeLayoutManager::TreeLayoutManager(Display *display,
 									 Window root,
 									 int sizeX,
@@ -34,9 +35,9 @@ TreeLayoutManager::TreeLayoutManager(Display *display,
 									 int borderSize,
 									 int gap,
 									 int barHeight) :
-	LayoutManager(display, root, sizeX, sizeY, posX, posY, gap, borderSize, barHeight) {
-	Point pos(posX, posY + barHeight);
-	Point size(sizeX - borderSize, sizeY - barHeight - borderSize);
+	LayoutManager(display, root, sizeX, sizeY, posX, posY, gap, borderSize) {
+	Point pos(posX, posY);
+	Point size(sizeX - borderSize, sizeY - borderSize);
 	this->rootSpace_ = new Space(pos, size, 0);
 }
 void deleteSpace(LayoutManager::Space *space) {
@@ -51,7 +52,9 @@ void deleteSpace(LayoutManager::Space *space) {
 TreeLayoutManager::~TreeLayoutManager() {
 	deleteSpace(rootSpace_);
 }
-void TreeLayoutManager::updateGeometry() {  }
+void TreeLayoutManager::updateGeometry(int sizeX, int sizeY, int posX, int posY) {
+	reSize(Point(sizeX,sizeY),Point(posX,posY));
+}
 LayoutManager::Space * TreeLayoutManager::findSpaceRecursive(Client *client, LayoutManager::Space * space) {
 	if (space->getClient() == client) {
 		return space;
@@ -128,10 +131,20 @@ void TreeLayoutManager::addClientRecursive(Client* client, Space* space) {
 	}
 }
 void TreeLayoutManager::placeClientInSpace(Client* client, Space* space) {
+	Logger::GetInstance()->Log("Placing client in space ["
+							   + std::to_string(space->getSize().x)
+							   + " x "
+							   + std::to_string(space->getSize().y)
+							   + "] Pos ["
+							   + std::to_string(space->getPos().x)
+							   + " x"
+							   + std::to_string(space->getPos().y)
+							   + "]", L_INFO);
 	client->move(space->getPos().x + border_size_ + gap_ / 2, space->getPos().y + border_size_ + gap_ / 2);
 	client->resize(space->getSize().x - (border_size_ * 2)- gap_, space->getSize().y - (border_size_ * 2) - gap_);
 	client->restack();
-	space->setClient(client);
+	if (space->getClient() != client)
+		space->setClient(client);
 }
 void TreeLayoutManager::splitSpace(Client* client, Space* space, bool splitAlongX) {
 	Point sizeLeft, sizeRight;
@@ -176,5 +189,49 @@ void TreeLayoutManager::growSpaceX(Client *client) {
 
 		}
 		space->getParent()->getRight()->setSize(Point(space->getParent()->getRight()->getSize().x - 1, space->getParent()->getRight()->getSize().y));
+	}
+}
+
+void TreeLayoutManager::reSize(const LayoutManager::Point &size, const LayoutManager::Point &pos) {
+	if (rootSpace_->getSize().x == size.x && rootSpace_->getSize().y == size.y) {
+		return;
+	}
+	Logger::GetInstance()->Log("Resizing to [" + std::to_string(size.x) + "x" + std::to_string(size.y) + "]", L_INFO);
+	recursiveResize(size, pos,rootSpace_);
+}
+
+void TreeLayoutManager::recursiveResize(const LayoutManager::Point &size, const LayoutManager::Point &pos,LayoutManager::Space * space) {
+	LayoutManager::Point oldSize = space->getSize();
+	LayoutManager::Point oldPos = space->getPos();
+	space->setSize(size);
+	space->setPos(pos);
+	Logger::GetInstance()->Log("Resizing subspace from "
+							+ std::to_string(oldSize.x)
+							+ " x "
+							+ std::to_string(oldSize.y)
+							+ " to "
+							+ std::to_string(space->getSize().x)
+							+ " x "
+							+ std::to_string(space->getSize().y), L_INFO);
+	if (space->getClient() != nullptr) {
+		Logger::GetInstance()->Log("Replacing client in space", L_INFO);
+		placeClientInSpace(space->getClient(), space);
+	}
+	if (space->getLeft() != nullptr) {
+		Point leftPos = pos;
+		Point leftSize = size;
+		Point rightPos = pos;
+		Point rightSize = size;
+		if (space->getLeft()->getSize().x == oldSize.x) {
+			leftSize.y = size.y / 2;
+			rightSize.y = size.y - leftSize.y;
+			rightPos.y = pos.y + leftSize.y;
+		} else {
+			leftSize.x = size.x / 2;
+			rightSize.x = size.x - leftSize.x;
+			rightPos.x = pos.x + leftSize.x;
+		}
+		recursiveResize(leftSize, leftPos, space->getLeft().get());
+		recursiveResize(rightSize, rightPos, space->getRight().get());
 	}
 }

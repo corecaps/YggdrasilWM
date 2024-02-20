@@ -51,7 +51,7 @@ std::ostringstream ConfigDataBarTest::oss = std::ostringstream();
 TEST_F(ConfigDataBarTest, Initialization) {
 	ConfigDataBar bar;
 	EXPECT_NE(&bar, nullptr);
-	EXPECT_EQ(bar.getBarHeight(), 20);
+	EXPECT_EQ(bar.getBarSize(), 20);
 	EXPECT_EQ(bar.getBarFont(), "Arial");
 	EXPECT_EQ(bar.getBarFontSize(), 12);
 	EXPECT_EQ(bar.getBarFontColor(), 0x00ff00);
@@ -69,7 +69,7 @@ TEST_F(ConfigDataBarTest, ConfigInitialization) {
 	root["Border_Color"] = "#0000ff";
 	ConfigDataBar bar;
 	bar.configInit(root);
-	EXPECT_EQ(bar.getBarHeight(), 20);
+	EXPECT_EQ(bar.getBarSize(), 20);
 	EXPECT_EQ(bar.getBarFont(), "Arial");
 	EXPECT_EQ(bar.getBarFontSize(), 12);
 	EXPECT_EQ(bar.getBarFontColor(), 0x00ff00);
