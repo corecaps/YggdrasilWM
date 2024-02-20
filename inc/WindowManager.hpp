@@ -109,11 +109,6 @@ public:
  */
 	Client &getClientRef(Window window);
 /**
- * @fn Window WindowManager::getBar() const
- * @brief Get the Bar window
- */
-	Window getBar() const;
-/**
  * @fn unsigned long WindowManager::getClientCount()
  * @brief Get the number of clients
  */
@@ -198,7 +193,6 @@ private:
 	Display									*display_;
 	static bool								wmDetected;
 	const Window							root_;
-	Window 									bar_{};
 	std::vector<Group *>					groups_;
 	Group *									active_group_{};
 	const Atom								WM_PROTOCOLS;
@@ -222,11 +216,6 @@ private:
  * @brief look for existing top level windows and create clients for them
  */
 	void getTopLevelWindows();
-/**
- * @fn void WindowManager::Bar()
- * @brief create the bar window
- */
-	void Bar();
 // Error Management
 /**
  * @fn static int WindowManager::OnXError(Display *display, XErrorEvent *e)

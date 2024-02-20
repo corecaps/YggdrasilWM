@@ -58,8 +58,7 @@ WindowManager::WindowManager(Display *display)
 		  WM_PROTOCOLS(XInternAtom(display_, "WM_PROTOCOLS", false)),
 		  WM_DELETE_WINDOW(XInternAtom(display_, "WM_DELETE_WINDOW", false)),
 		  active_group_(nullptr),
-		  running(true),
-		  bar_(0){}
+		  running(true){}
 WindowManager::~WindowManager() {
 	for (auto &client: clients_) {
 		delete client.second;
@@ -180,25 +179,6 @@ void WindowManager::insertClient(Window window) {
 	Logger::GetInstance()->Log("Inserting client in map: " + client->getTitle() + "\t[" + std::to_string(window) + "]", L_INFO);
 	clients_.insert({window, client});
 }
-void WindowManager::Bar() {
-	int screen = DefaultScreen(display_);
-//	int barHeight = ConfigHandler::GetInstance().getConfigData<ConfigDataBars>()->getBar(0)->getBarSize();
-	int barHeight = 30;
-	bar_ = XCreateSimpleWindow(
-			display_,
-			root_,
-			0,
-			0,
-			DisplayWidth(display_, screen),
-			barHeight,
-			0,
-			BlackPixel(display_, screen),
-			WhitePixel(display_, screen));
-	Logger::GetInstance()->Log("Bar created", L_INFO);
-	XSelectInput(display_, bar_, ExposureMask | KeyPressMask);
-	XMapWindow(display_, bar_);
-	XFlush(display_);
-}
 void WindowManager::setFocus(Client *client) {
 	if (client != nullptr) {
 		XSetInputFocus(display_, client->getWindow(), RevertToParent, CurrentTime);
@@ -253,7 +233,6 @@ std::unordered_map<Window, Client *> &WindowManager::getClients() { return clien
 Client &WindowManager::getClientRef(Window window) { return *clients_.at(window); }
 Window WindowManager::getRoot() const { return root_; }
 unsigned long WindowManager::getClientCount() { return clients_.size(); }
-Window WindowManager::getBar() const { return bar_; }
 void WindowManager::setActiveGroup(Group *activeGroup) { active_group_ = activeGroup; }
 Group *WindowManager::getActiveGroup() const { return active_group_; }
 const std::vector<Group *> &WindowManager::getGroups() const { return groups_; }
