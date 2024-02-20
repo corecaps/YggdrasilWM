@@ -30,6 +30,7 @@ massif.out
 callgrind.out.*
 vgcore.*
 temp.sh
+xtmemory.kcg.*
 #Ignore the generated documentation
 doc/*
 
