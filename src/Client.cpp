@@ -106,7 +106,7 @@ Client_Err Client::frame() {
 		XSelectInput(
 			display_,
 			this->frame_,
-			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask);
+			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask | ClientMessage);
 	XAddToSaveSet(display_,window_);
 	XReparentWindow(
 			display_,
@@ -115,7 +115,6 @@ Client_Err Client::frame() {
 			0,0
 			);
 	XMapWindow(display_,frame_);
-	// 9. Grab universal window management actions on client window.
 	//   a. Move windows with alt + left button.
 	XGrabButton(
 			display_,
@@ -128,18 +127,6 @@ Client_Err Client::frame() {
 			GrabModeAsync,
 			None,
 			None);
-	//   b. Resize windows with alt + right button.
-//	XGrabButton(
-//			display_,
-//			Button3,
-//			Mod1Mask,
-//			window_,
-//			false,
-//			ButtonPressMask | ButtonReleaseMask | ButtonMotionMask,
-//			GrabModeAsync,
-//			GrabModeAsync,
-//			None,
-//			None);
 	ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->grabKeys(display_, window_);
 	this->framed = true;
 	this->group_->addClient(window_, this);

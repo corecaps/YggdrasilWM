@@ -235,6 +235,7 @@ private:
  * @brief add groups configured in the ConfigDataGroups to the groups vector
  */
 	void addGroupsFromConfig();
+	void ewmhSupportInit();
 };
 void handleSIGHUP(int signal);
 #endif

@@ -25,6 +25,10 @@
  * @date 2024-02-11
  *
  */
+extern "C" {
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+}
 #include "WindowManager.hpp"
 #include "EventHandler.hpp"
 #include "Config/ConfigDataBars.hpp"
@@ -80,6 +84,7 @@ void WindowManager::init() {
 	XGrabServer(display_);
 	TSBarsData *tsData = new TSBarsData();
 	Bars::createInstance();
+	ewmhSupportInit();
 	getTopLevelWindows();
 	Bars::getInstance().init(ConfigHandler::GetInstance().getConfigData<ConfigDataBars>(), tsData, display_, root_);
 	Bars::getInstance().start_thread();
@@ -100,7 +105,7 @@ void WindowManager::selectEventOnRoot() const {
 	XSelectInput(
 			display_,
 			root_,
-			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask);
+			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask | ClientMessage);
 	XSetErrorHandler(&WindowManager::OnXError);
 	XSync(display_, false);
 }
@@ -255,4 +260,30 @@ int WindowManager::onWmDetected([[maybe_unused]] Display *display, XErrorEvent *
 	if (static_cast<int>(e->error_code) == BadAccess)
 		wmDetected = true;
 	return 0;
+}
+
+void WindowManager::ewmhSupportInit() {
+	Atom netSupported = XInternAtom(display_, "_NET_SUPPORTED", False);
+	std::vector<Atom> supportedAtoms = {
+			XInternAtom(display_, "_NET_WM_NAME", False),
+			XInternAtom(display_, "_NET_WM_DESKTOP", False),
+			XInternAtom(display_, "_NET_ACTIVE_WINDOW",False),
+			XInternAtom(display_, "_NET_NUMBER_OF_DESKTOPS",False),
+			XInternAtom(display_, "_NET_WM_STATE",False)
+			// Add other supported atoms here
+	};
+
+	// Register _NET_SUPPORTED property
+	XChangeProperty(
+			display_,                        // Display
+			root_,                           // Root window
+			netSupported,                    // Property to change
+			XA_ATOM,                         // Type of property
+			32,                              // Format of the property (32-bit)
+			PropModeReplace,                 // Replace existing property
+			reinterpret_cast<unsigned char*>(supportedAtoms.data()), // New value
+			supportedAtoms.size()            // Number of elements in the new value
+	);
+
+	XFlush(display_);
 }
