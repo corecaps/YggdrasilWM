@@ -29,7 +29,7 @@
 #include "Logger.hpp"
 
 ConfigDataBindings::ConfigDataBindings() : bindings_(){}
-void ConfigDataBindings::configInit(Json::Value &root) {
+void ConfigDataBindings::configInit(const Json::Value &root) {
 	std::vector<std::string> modKeys = root.getMemberNames();
 	for (auto &modKey : modKeys) {
 		Json::Value bindings = root[modKey];

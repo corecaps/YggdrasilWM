@@ -56,19 +56,23 @@ void ConfigHandler::Destroy() {
 	}
 }
 ConfigHandler::ConfigHandler() :
-	configPath_(),
-	configFileHandler_(std::make_unique<ConfigFileHandler>(ConfigFileHandler())){
+	configPath_(){
 }
 ConfigHandler::ConfigHandler(const std::string& configPath) :
-	configPath_(configPath),
-	configFileHandler_(std::make_unique<ConfigFileHandler>(ConfigFileHandler(configPath))){
+	configPath_(configPath){
 }
 
 void ConfigHandler::configInit() {
+	std::unique_ptr<ConfigFileHandler> configFileHandler_;
+	if (configPath_.empty()) {
+		configFileHandler_ = std::make_unique<ConfigFileHandler>(ConfigFileHandler());
+	} else {
+		configFileHandler_ = std::make_unique<ConfigFileHandler>(ConfigFileHandler(configPath_));
+	}
 	Logger::GetInstance()->Log("===================Loading Config===================",L_INFO);
 	configFileHandler_->readConfig();
 	configPath_ = configFileHandler_->getConfigPath();
-	Json::Value root_ = configFileHandler_->getRoot();
+	const Json::Value &root_ = configFileHandler_->getRoot();
 	if (root_.empty() || !root_.isObject()) {
 		throw std::runtime_error("Config file is empty or not an object");
 	}

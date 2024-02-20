@@ -52,7 +52,7 @@ public:
  * Instanciate the bindings in a vector
  * @param root_ the Json::Value object containing the bindings
  */
-	void configInit(Json::Value& root_) override;
+	void configInit(const Json::Value& root_) override;
 	Json::Value configSave() override;
 /**
  * @fn void ConfigDataBindings::grabKeys(Display *display, Window window)

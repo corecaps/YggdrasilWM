@@ -98,7 +98,7 @@ void ConfigFileHandler::writeConfig(const Json::Value& root) {
 		Logger::GetInstance()->Log("Failed to write config file: " + std::string(e.what()),L_ERROR);
 	}
 }
-Json::Value ConfigFileHandler::getRoot() { return root_; }
+const Json::Value &ConfigFileHandler::getRoot() { return root_; }
 
 std::string ConfigFileHandler::getConfigPath() {
 	return configPath_;

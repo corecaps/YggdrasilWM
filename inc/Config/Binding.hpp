@@ -52,12 +52,12 @@ public:
  * The arguments passed to the command are the one stored in the binding
  */
 	void execute();
-	const std::string &getMod() const;
-	const std::string &getKey() const;
-	const std::string &getCommandName() const;
-	const std::string &getArgs() const;
-	unsigned int getModMask() const;
-	int getKeyCode() const;
+	[[nodiscard]] const std::string &getMod() const;
+	[[nodiscard]] const std::string &getKey() const;
+	[[nodiscard]] const std::string &getCommandName() const;
+	[[nodiscard]] const std::string &getArgs() const;
+	[[nodiscard]] unsigned int getModMask() const;
+	[[nodiscard]] int getKeyCode() const;
 private:
 	std::string mod_;
 	unsigned int modMask_;

@@ -48,7 +48,7 @@ public:
  * Parses the json root and creates ConfigDataGroup objects.
  * @param root
  */
-	void configInit(Json::Value& root) override;
+	void configInit(const Json::Value& root) override;
 	Json::Value configSave() override;
 	ConfigDataGroup * getGroup(int index);
 	void addGroup(ConfigDataGroup * group);

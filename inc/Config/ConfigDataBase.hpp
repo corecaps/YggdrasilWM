@@ -44,7 +44,7 @@ public:
  * @brief Initialize the configuration
  * @param root_
  */
-	virtual void configInit(Json::Value& root_) = 0;
+	virtual void configInit(const Json::Value& root_) = 0;
 /**
  * @fn virtual Json::Value ConfigDataBase::configSave()
  * @brief Build a Json::Value object with the configuration

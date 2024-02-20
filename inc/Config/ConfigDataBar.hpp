@@ -52,7 +52,7 @@ public:
  * to load the data.
  * @param root Json::Value& object containing the Bar configuration data
  */
-	void configInit(Json::Value& root) override;
+	void configInit(const Json::Value& root) override;
 /**
  * @fn Json::Value ConfigDataBar::configSave()
  * @brief return a Json::Value object containing the Bar configuration data

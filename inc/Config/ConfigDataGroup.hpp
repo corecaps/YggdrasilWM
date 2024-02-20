@@ -48,7 +48,7 @@ public:
  * Parse the Json::Value root and store the values in the object.
  * @param root
  */
-	void configInit(Json::Value& root) override;
+	void configInit(const Json::Value& root) override;
 	Json::Value configSave() override;
 	[[nodiscard]] const std::string &getGroupName() const;
 	[[nodiscard]] const std::string &getGroupLayout() const;

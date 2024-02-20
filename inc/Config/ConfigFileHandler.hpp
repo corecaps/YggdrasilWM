@@ -73,7 +73,7 @@ public:
  * @brief Get the root JSON object
  * @return Json::Value The root JSON object
  */
-	Json::Value getRoot();
+	const Json::Value &getRoot();
 	std::string getConfigPath();
 private:
 	static const std::vector<std::string> defaultPaths;

@@ -30,7 +30,7 @@
 #include "Logger.hpp"
 
 ConfigDataBars::ConfigDataBars() : bars_() {}
-void ConfigDataBars::configInit(Json::Value &root) {
+void ConfigDataBars::configInit(const Json::Value &root) {
 	if (root.empty() || !root.isArray()) {
 		throw std::runtime_error("Invalid configuration file");
 	}

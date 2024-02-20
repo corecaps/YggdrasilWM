@@ -40,7 +40,7 @@ ConfigDataBar::ConfigDataBar() :
 		barBorderColor_(0x00ff00) {
 
 }
-void ConfigDataBar::configInit(Json::Value &root) {
+void ConfigDataBar::configInit(const Json::Value &root) {
 	if (root.empty() || !root.isObject()) {
 		throw std::runtime_error("Invalid configuration file");
 	}

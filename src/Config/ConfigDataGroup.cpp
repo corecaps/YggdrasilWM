@@ -38,7 +38,7 @@ ConfigDataGroup::ConfigDataGroup() {
 	groupBorderSize_ = 0;
 	groupGap_ = 10;
 }
-void ConfigDataGroup::configInit(Json::Value &root) {
+void ConfigDataGroup::configInit(const Json::Value &root) {
 	if (root.empty() || !root.isObject()) {
 		throw std::runtime_error("ConfigDataGroup::configInit root is empty or not an object");
 	}
