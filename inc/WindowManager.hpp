@@ -43,6 +43,7 @@ extern "C" {
 #include <csignal>
 #include <mutex>
 class Group;
+class TSBarsData;
 
 /**
  * @class WindowManager
@@ -200,6 +201,7 @@ private:
 	bool									running;
 	std::unordered_map<Window, Client*>		clients_;
 	static WindowManager *					instance_;
+	TSBarsData *							tsData;
 // Initialisation
 /**
  * @fn WindowManager::WindowManager(Display *display, const Logger &logger,ConfigHandler &configHandler)
@@ -236,6 +238,7 @@ private:
  */
 	void addGroupsFromConfig();
 	void ewmhSupportInit();
+	void createBars();
 };
 void handleSIGHUP(int signal);
 #endif

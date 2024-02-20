@@ -150,7 +150,7 @@ add_definitions(
         -DPROGRAM_VERSION="${PROGRAM_VERSION}"
 )
 # Set C++ standard
-set_property(TARGET ${PROGRAM_NAME} PROPERTY CXX_STANDARD 17)
+set_property(TARGET ${PROGRAM_NAME} PROPERTY CXX_STANDARD 11)
 
 # Enable testing
 enable_testing()

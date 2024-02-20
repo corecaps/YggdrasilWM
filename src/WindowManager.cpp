@@ -62,7 +62,8 @@ WindowManager::WindowManager(Display *display)
 		  WM_PROTOCOLS(XInternAtom(display_, "WM_PROTOCOLS", false)),
 		  WM_DELETE_WINDOW(XInternAtom(display_, "WM_DELETE_WINDOW", false)),
 		  active_group_(nullptr),
-		  running(true){}
+		  running(true),
+		  tsData(nullptr){}
 WindowManager::~WindowManager() {
 	for (auto &client: clients_) {
 		delete client.second;
@@ -82,19 +83,10 @@ void WindowManager::init() {
 		throw std::runtime_error("Another window manager is already running.");
 	}
 	XGrabServer(display_);
-	TSBarsData *tsData = new TSBarsData();
-	Bars::createInstance();
 	ewmhSupportInit();
+	tsData = new TSBarsData();
 	getTopLevelWindows();
-	Bars::getInstance().init(ConfigHandler::GetInstance().getConfigData<ConfigDataBars>(), tsData, display_, root_);
-	Bars::getInstance().start_thread();
-	int sizeX = DisplayWidth(display_, DefaultScreen(display_)) - Bars::getInstance().getSpaceE() - Bars::getInstance().getSpaceW() - active_group_->getBorderSize() * 2;
-	int sizeY = DisplayHeight(display_, DefaultScreen(display_)) - Bars::getInstance().getSpaceN() - Bars::getInstance().getSpaceS() - active_group_->getBorderSize() * 2;
-	int posX = Bars::getInstance().getSpaceW();
-	int posY = Bars::getInstance().getSpaceN();
-	for (auto g:groups_) {
-		g->resize(sizeX,sizeY,posX,posY);
-	}
+	createBars();
 	XUngrabServer(display_);
 	XFlush(display_);
 	tsData->addData("test", "test");
@@ -146,6 +138,18 @@ void WindowManager::getTopLevelWindows() {
 		clients_[newClient->getWindow()] = newClient;
 	}
 	XFree(topLevelWindows);
+}
+void WindowManager::createBars() {
+	Bars::createInstance();
+	Bars::getInstance().init(ConfigHandler::GetInstance().getConfigData<ConfigDataBars>(), tsData, display_, root_);
+	Bars::getInstance().start_thread();
+	int sizeX = DisplayWidth(display_, DefaultScreen(display_)) - Bars::getInstance().getSpaceE() - Bars::getInstance().getSpaceW() - active_group_->getBorderSize() * 2;
+	int sizeY = DisplayHeight(display_, DefaultScreen(display_)) - Bars::getInstance().getSpaceN() - Bars::getInstance().getSpaceS() - active_group_->getBorderSize() * 2;
+	int posX = Bars::getInstance().getSpaceW();
+	int posY = Bars::getInstance().getSpaceN();
+	for (auto g:groups_) {
+		g->resize(sizeX,sizeY,posX,posY);
+	}
 }
 void WindowManager::addGroupsFromConfig() {
 	auto configGroups = ConfigHandler::GetInstance().getConfigData<ConfigDataGroups>()->getGroups();
