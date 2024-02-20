@@ -25,7 +25,6 @@
  * @date 2024-02-07
  */
 #include "Layouts/TreeLayoutManager.hpp"
-#include "Logger.hpp"
 TreeLayoutManager::TreeLayoutManager(Display *display,
 									 Window root,
 									 int sizeX,
@@ -131,15 +130,6 @@ void TreeLayoutManager::addClientRecursive(Client* client, Space* space) {
 	}
 }
 void TreeLayoutManager::placeClientInSpace(Client* client, Space* space) {
-	Logger::GetInstance()->Log("Placing client in space ["
-							   + std::to_string(space->getSize().x)
-							   + " x "
-							   + std::to_string(space->getSize().y)
-							   + "] Pos ["
-							   + std::to_string(space->getPos().x)
-							   + " x"
-							   + std::to_string(space->getPos().y)
-							   + "]", L_INFO);
 	client->move(space->getPos().x + border_size_ + gap_ / 2, space->getPos().y + border_size_ + gap_ / 2);
 	client->resize(space->getSize().x - (border_size_ * 2)- gap_, space->getSize().y - (border_size_ * 2) - gap_);
 	client->restack();
@@ -196,7 +186,6 @@ void TreeLayoutManager::reSize(const LayoutManager::Point &size, const LayoutMan
 	if (rootSpace_->getSize().x == size.x && rootSpace_->getSize().y == size.y) {
 		return;
 	}
-	Logger::GetInstance()->Log("Resizing to [" + std::to_string(size.x) + "x" + std::to_string(size.y) + "]", L_INFO);
 	recursiveResize(size, pos,rootSpace_);
 }
 
@@ -205,16 +194,7 @@ void TreeLayoutManager::recursiveResize(const LayoutManager::Point &size, const 
 	LayoutManager::Point oldPos = space->getPos();
 	space->setSize(size);
 	space->setPos(pos);
-	Logger::GetInstance()->Log("Resizing subspace from "
-							+ std::to_string(oldSize.x)
-							+ " x "
-							+ std::to_string(oldSize.y)
-							+ " to "
-							+ std::to_string(space->getSize().x)
-							+ " x "
-							+ std::to_string(space->getSize().y), L_INFO);
 	if (space->getClient() != nullptr) {
-		Logger::GetInstance()->Log("Replacing client in space", L_INFO);
 		placeClientInSpace(space->getClient(), space);
 	}
 	if (space->getLeft() != nullptr) {

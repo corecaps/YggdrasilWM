@@ -84,11 +84,13 @@ void WindowManager::init() {
 	getTopLevelWindows();
 	Bars::getInstance().init(ConfigHandler::GetInstance().getConfigData<ConfigDataBars>(), tsData, display_, root_);
 	Bars::getInstance().start_thread();
-	int sizeX = DisplayWidth(display_, DefaultScreen(display_)) - Bars::getInstance().getSpaceN() - Bars::getInstance().getSpaceS() - active_group_->getBorderSize() * 2;
-	int sizeY = DisplayHeight(display_, DefaultScreen(display_)) - Bars::getInstance().getSpaceE() - Bars::getInstance().getSpaceW() - active_group_->getBorderSize() * 2;
-	int posX = Bars::getInstance().getSpaceN();
-	int posY = Bars::getInstance().getSpaceW();
-	active_group_->resize(sizeX,sizeY,posX,posY);
+	int sizeX = DisplayWidth(display_, DefaultScreen(display_)) - Bars::getInstance().getSpaceE() - Bars::getInstance().getSpaceW() - active_group_->getBorderSize() * 2;
+	int sizeY = DisplayHeight(display_, DefaultScreen(display_)) - Bars::getInstance().getSpaceN() - Bars::getInstance().getSpaceS() - active_group_->getBorderSize() * 2;
+	int posX = Bars::getInstance().getSpaceW();
+	int posY = Bars::getInstance().getSpaceN();
+	for (auto g:groups_) {
+		g->resize(sizeX,sizeY,posX,posY);
+	}
 	XUngrabServer(display_);
 	XFlush(display_);
 	tsData->addData("test", "test");
