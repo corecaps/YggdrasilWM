@@ -25,6 +25,10 @@
  * @date 2024-02-11
  *
  */
+extern "C" {
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+}
 #include "WindowManager.hpp"
 #include "EventHandler.hpp"
 #include "Config/ConfigDataBars.hpp"
@@ -34,6 +38,7 @@
 #include "Bars/Bars.hpp"
 #include "Bars/TSBarsData.hpp"
 #include "Group.hpp"
+#include "Ewmh.hpp"
 
 bool WindowManager::wmDetected;
 WindowManager * WindowManager::instance_ = nullptr;
@@ -58,7 +63,11 @@ WindowManager::WindowManager(Display *display)
 		  WM_PROTOCOLS(XInternAtom(display_, "WM_PROTOCOLS", false)),
 		  WM_DELETE_WINDOW(XInternAtom(display_, "WM_DELETE_WINDOW", false)),
 		  active_group_(nullptr),
-		  running(true){}
+		  running(true),
+		  tsData(nullptr),
+		  geometryX(0),
+		  geometryY(0),
+		  activeWindow(0){}
 WindowManager::~WindowManager() {
 	for (auto &client: clients_) {
 		delete client.second;
@@ -73,24 +82,19 @@ WindowManager::~WindowManager() {
 }
 void WindowManager::init() {
 	selectEventOnRoot();
-	ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->grabKeys(display_, root_);
 	if (wmDetected) {
 		throw std::runtime_error("Another window manager is already running.");
 	}
+	ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->grabKeys(display_, root_);
+	geometryX = DisplayWidth(display_, DefaultScreen(display_));
+	geometryY = DisplayHeight(display_, DefaultScreen(display_));
 	XGrabServer(display_);
-	TSBarsData *tsData = new TSBarsData();
-	Bars::createInstance();
+	ewmh::initEwmh(display_,root_);
+	tsData = new TSBarsData();
 	getTopLevelWindows();
-	Bars::getInstance().init(ConfigHandler::GetInstance().getConfigData<ConfigDataBars>(), tsData, display_, root_);
-	Bars::getInstance().start_thread();
-	int sizeX = DisplayWidth(display_, DefaultScreen(display_)) - Bars::getInstance().getSpaceE() - Bars::getInstance().getSpaceW() - active_group_->getBorderSize() * 2;
-	int sizeY = DisplayHeight(display_, DefaultScreen(display_)) - Bars::getInstance().getSpaceN() - Bars::getInstance().getSpaceS() - active_group_->getBorderSize() * 2;
-	int posX = Bars::getInstance().getSpaceW();
-	int posY = Bars::getInstance().getSpaceN();
-	for (auto g:groups_) {
-		g->resize(sizeX,sizeY,posX,posY);
-	}
+	createBars();
 	XUngrabServer(display_);
+	ewmh::updateWmProperties(display_, root_);
 	XFlush(display_);
 	tsData->addData("test", "test");
 	signal(SIGINT, handleSIGHUP);
@@ -100,7 +104,7 @@ void WindowManager::selectEventOnRoot() const {
 	XSelectInput(
 			display_,
 			root_,
-			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask);
+			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask | ClientMessage);
 	XSetErrorHandler(&WindowManager::OnXError);
 	XSync(display_, false);
 }
@@ -141,6 +145,18 @@ void WindowManager::getTopLevelWindows() {
 		clients_[newClient->getWindow()] = newClient;
 	}
 	XFree(topLevelWindows);
+}
+void WindowManager::createBars() {
+	Bars::createInstance();
+	Bars::getInstance().init(ConfigHandler::GetInstance().getConfigData<ConfigDataBars>(), tsData, display_, root_);
+	Bars::getInstance().start_thread();
+	int sizeX = geometryX- Bars::getInstance().getSpaceE() - Bars::getInstance().getSpaceW() - active_group_->getBorderSize() * 2;
+	int sizeY = geometryY - Bars::getInstance().getSpaceN() - Bars::getInstance().getSpaceS() - active_group_->getBorderSize() * 2;
+	int posX = Bars::getInstance().getSpaceW();
+	int posY = Bars::getInstance().getSpaceN();
+	for (auto g:groups_) {
+		g->resize(sizeX,sizeY,posX,posY);
+	}
 }
 void WindowManager::addGroupsFromConfig() {
 	auto configGroups = ConfigHandler::GetInstance().getConfigData<ConfigDataGroups>()->getGroups();
@@ -237,6 +253,10 @@ void WindowManager::setActiveGroup(Group *activeGroup) { active_group_ = activeG
 Group *WindowManager::getActiveGroup() const { return active_group_; }
 const std::vector<Group *> &WindowManager::getGroups() const { return groups_; }
 bool WindowManager::getRunning() const { return running; }
+unsigned int WindowManager::getGeometryX() const { return geometryX; }
+unsigned int WindowManager::getGeometryY() const { return geometryY; }
+Window WindowManager::getActiveWindow() const { return activeWindow; }
+void WindowManager::setActiveWindow(Window activeWindow) { WindowManager::activeWindow = activeWindow; }
 int WindowManager::OnXError(Display *display, XErrorEvent *e) {
 	const int MAX_ERROR_TEXT_LENGTH = 1024;
 	char errorText[MAX_ERROR_TEXT_LENGTH];
@@ -256,3 +276,5 @@ int WindowManager::onWmDetected([[maybe_unused]] Display *display, XErrorEvent *
 		wmDetected = true;
 	return 0;
 }
+
+

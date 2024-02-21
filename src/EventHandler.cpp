@@ -31,7 +31,9 @@
 #include <string>
 extern "C" {
 #include <X11/XKBlib.h>
+#include <X11/Xlib.h>
 };
+#include "Ewmh.hpp"
 
 std::string GetEventTypeName(int eventType) {
 	std::string name;
@@ -217,6 +219,8 @@ void EventHandler::handleExpose(const XEvent &event) {
 }
 void EventHandler::handleFocusIn(const XEvent &event) {
 	auto e = event.xfocus;
+	WindowManager::getInstance()->setActiveWindow(e.window);
+	ewmh::updateActiveWindow(WindowManager::getInstance()->getDisplay(), WindowManager::getInstance()->getRoot(), e.window);
 	if (e.window == WindowManager::getInstance()->getRoot()) {
 		return;
 	}
@@ -233,6 +237,10 @@ void EventHandler::handleFocusIn(const XEvent &event) {
 }
 void EventHandler::handleFocusOut(const XEvent &event) {
 	auto e = event.xfocus;
+	if (WindowManager::getInstance()->getActiveWindow() == e.window) {
+		WindowManager::getInstance()->setActiveWindow(0);
+		ewmh::updateActiveWindow(WindowManager::getInstance()->getDisplay(), WindowManager::getInstance()->getRoot(), None);
+	}
 	if (e.window == WindowManager::getInstance()->getRoot()) {
 		return;
 	}
@@ -247,8 +255,16 @@ void EventHandler::handleFocusOut(const XEvent &event) {
 		XFlush(WindowManager::getInstance()->getDisplay());
 	}
 }
-void EventHandler::handlePropertyNotify(const XEvent &event) {}
-void EventHandler::handleClientMessage(const XEvent &event) {}
+void EventHandler::handlePropertyNotify(const XEvent &event) {
+	XPropertyEvent e = event.xproperty;
+	Logger::GetInstance()->Log("PropertyNotify: " + std::to_string(e.atom), L_INFO);
+}
+void EventHandler::handleClientMessage(const XEvent &event) {
+	XClientMessageEvent e = event.xclient;
+	Display * display = WindowManager::getInstance()->getDisplay();
+	Window root = WindowManager::getInstance()->getRoot();
+	ewmh::handleMessage(&e, display, root);
+}
 void EventHandler::handleDestroyNotify(const XEvent &event) {
 	auto e = event.xdestroywindow;
 	if (e.window == WindowManager::getInstance()->getRoot()) {
