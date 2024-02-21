@@ -91,6 +91,8 @@ set(SOURCES
         ${INCLUDE_DIR}/EventHandler.hpp
         ${SOURCE_DIR}/Group.cpp
         ${INCLUDE_DIR}/Group.hpp
+        ${SOURCE_DIR}/Ewmh.cpp
+        ${INCLUDE_DIR}/Ewmh.hpp
         ${SOURCE_DIR}/Layouts/LayoutManager.cpp
         ${INCLUDE_DIR}/Layouts/LayoutManager.hpp
         ${SOURCE_DIR}/Layouts/TreeLayoutManager.cpp

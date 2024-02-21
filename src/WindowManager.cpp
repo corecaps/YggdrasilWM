@@ -38,6 +38,7 @@ extern "C" {
 #include "Bars/Bars.hpp"
 #include "Bars/TSBarsData.hpp"
 #include "Group.hpp"
+#include "Ewmh.hpp"
 
 bool WindowManager::wmDetected;
 WindowManager * WindowManager::instance_ = nullptr;
@@ -83,7 +84,7 @@ void WindowManager::init() {
 		throw std::runtime_error("Another window manager is already running.");
 	}
 	XGrabServer(display_);
-	ewmhSupportInit();
+	ewmh::initEwmh(display_,root_);
 	tsData = new TSBarsData();
 	getTopLevelWindows();
 	createBars();
@@ -264,30 +265,4 @@ int WindowManager::onWmDetected([[maybe_unused]] Display *display, XErrorEvent *
 	if (static_cast<int>(e->error_code) == BadAccess)
 		wmDetected = true;
 	return 0;
-}
-
-void WindowManager::ewmhSupportInit() {
-	Atom netSupported = XInternAtom(display_, "_NET_SUPPORTED", False);
-	std::vector<Atom> supportedAtoms = {
-			XInternAtom(display_, "_NET_WM_NAME", False),
-			XInternAtom(display_, "_NET_WM_DESKTOP", False),
-			XInternAtom(display_, "_NET_ACTIVE_WINDOW",False),
-			XInternAtom(display_, "_NET_NUMBER_OF_DESKTOPS",False),
-			XInternAtom(display_, "_NET_WM_STATE",False)
-			// Add other supported atoms here
-	};
-
-	// Register _NET_SUPPORTED property
-	XChangeProperty(
-			display_,                        // Display
-			root_,                           // Root window
-			netSupported,                    // Property to change
-			XA_ATOM,                         // Type of property
-			32,                              // Format of the property (32-bit)
-			PropModeReplace,                 // Replace existing property
-			reinterpret_cast<unsigned char*>(supportedAtoms.data()), // New value
-			supportedAtoms.size()            // Number of elements in the new value
-	);
-
-	XFlush(display_);
 }
