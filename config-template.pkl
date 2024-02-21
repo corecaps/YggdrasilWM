@@ -1,0 +1,39 @@
+module YggdrasilConfigTemplate
+
+class group {
+  name: String
+  Layout: String
+  Inactive_Color: String
+  Active_Color: String
+  Border_Size: Int
+  Gap: Int
+}
+class widget {
+  Type: String
+  Position: Int
+  Size: Int
+  Color: String
+  Background_Color: String
+  Arguments: String
+}
+class bar {
+  Bar_Size: Int
+  Font: String
+  Font_Size: Int
+  Font_Color: String
+  Background_Color: String
+  Border_Size: Int
+  Border_Color: String
+  Position: String
+  Widgets: Listing<widget>
+}
+class binding {
+  Key: String
+  Action: String
+  Arguments: String
+}
+class config {
+  Groups: Listing<group>
+  Bars: Listing<bar>
+  Bindings: Listing<binding>
+}
