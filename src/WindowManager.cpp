@@ -89,6 +89,7 @@ void WindowManager::init() {
 	getTopLevelWindows();
 	createBars();
 	XUngrabServer(display_);
+	ewmh::updateWmProperties(display_, root_);
 	XFlush(display_);
 	tsData->addData("test", "test");
 	signal(SIGINT, handleSIGHUP);

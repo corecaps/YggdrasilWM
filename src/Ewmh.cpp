@@ -54,7 +54,6 @@ namespace ewmh {
 		);
 		XFlush(display);
 		Logger::GetInstance()->Log("EWMH atoms registered", L_INFO);
-		updateWmProperties(display, root);
 	}
 
 	void handleMessage(XClientMessageEvent *event, Display *display, Window root) {
