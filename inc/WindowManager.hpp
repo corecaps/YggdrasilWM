@@ -190,6 +190,10 @@ public:
  */
 	void testRun();
 
+	unsigned int getGeometryX() const;
+
+	unsigned int getGeometryY() const;
+
 private:
 	Display									*display_;
 	static bool								wmDetected;
@@ -198,10 +202,19 @@ private:
 	Group *									active_group_{};
 	const Atom								WM_PROTOCOLS;
 	const Atom								WM_DELETE_WINDOW;
+	unsigned int							geometryX{};
+	unsigned int							geometryY{};
 	bool									running;
 	std::unordered_map<Window, Client*>		clients_;
 	static WindowManager *					instance_;
 	TSBarsData *							tsData;
+	Window									activeWindow;
+public:
+	Window getActiveWindow() const;
+
+	void setActiveWindow(Window activeWindow);
+
+private:
 // Initialisation
 /**
  * @fn WindowManager::WindowManager(Display *display, const Logger &logger,ConfigHandler &configHandler)
@@ -240,4 +253,7 @@ private:
 	void createBars();
 };
 void handleSIGHUP(int signal);
+
+
+
 #endif

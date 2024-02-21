@@ -48,6 +48,8 @@ namespace ewmh {
 	void	handleMessage(XClientMessageEvent *event, Display *display, Window root);
 	void	updateNumberOfDesktops(Display *display, Window root);
 	void	updateWmProperties(Display *display, Window root);
+	void	updateDesktopGeometry(Display *display, Window root);
+	void	updateActiveWindow(Display *display, Window root, Window activeWindow);
 };
 
 #endif //WINDOW_MANAGER_EWMH_HPP

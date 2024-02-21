@@ -219,6 +219,8 @@ void EventHandler::handleExpose(const XEvent &event) {
 }
 void EventHandler::handleFocusIn(const XEvent &event) {
 	auto e = event.xfocus;
+	WindowManager::getInstance()->setActiveWindow(e.window);
+	ewmh::updateActiveWindow(WindowManager::getInstance()->getDisplay(), WindowManager::getInstance()->getRoot(), e.window);
 	if (e.window == WindowManager::getInstance()->getRoot()) {
 		return;
 	}
@@ -235,6 +237,10 @@ void EventHandler::handleFocusIn(const XEvent &event) {
 }
 void EventHandler::handleFocusOut(const XEvent &event) {
 	auto e = event.xfocus;
+	if (WindowManager::getInstance()->getActiveWindow() == e.window) {
+		WindowManager::getInstance()->setActiveWindow(0);
+		ewmh::updateActiveWindow(WindowManager::getInstance()->getDisplay(), WindowManager::getInstance()->getRoot(), None);
+	}
 	if (e.window == WindowManager::getInstance()->getRoot()) {
 		return;
 	}
