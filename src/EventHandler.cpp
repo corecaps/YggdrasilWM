@@ -33,6 +33,7 @@ extern "C" {
 #include <X11/XKBlib.h>
 #include <X11/Xlib.h>
 };
+#include "Ewmh.hpp"
 
 std::string GetEventTypeName(int eventType) {
 	std::string name;
@@ -248,29 +249,15 @@ void EventHandler::handleFocusOut(const XEvent &event) {
 		XFlush(WindowManager::getInstance()->getDisplay());
 	}
 }
-void EventHandler::handlePropertyNotify(const XEvent &event) {}
+void EventHandler::handlePropertyNotify(const XEvent &event) {
+	XPropertyEvent e = event.xproperty;
+	Logger::GetInstance()->Log("PropertyNotify: " + std::to_string(e.atom), L_INFO);
+}
 void EventHandler::handleClientMessage(const XEvent &event) {
 	XClientMessageEvent e = event.xclient;
 	Display * display = WindowManager::getInstance()->getDisplay();
-	Atom netWmState = XInternAtom(display, "_NET_WM_STATE", False);
-	Atom netActiveWindow = XInternAtom(display, "_NET_ACTIVE_WINDOW", False);
-	Logger::GetInstance()->Log("Event received " + std::to_string(e.message_type),L_INFO);
-	if (e.message_type == netWmState) {
-		if (e.data.l[1] == netActiveWindow) {
-			Client * client = WindowManager::getInstance()->getClient(e.window);
-			if (client == nullptr) {
-				Logger::GetInstance()->Log("Ignoring client message for unknown window: " + std::to_string(e.window), L_INFO);
-				return;
-			}
-			else {
-				Logger::GetInstance()->Log("Window activated: " + client->getTitle() , L_INFO);
-				client->getGroup()->switchTo();
-			}
-		}
-	} else {
-		Logger::GetInstance()->Log("Ignoring client message: " + std::to_string(e.message_type), L_INFO);
-
-	}
+	Window root = WindowManager::getInstance()->getRoot();
+	ewmh::handleMessage(&e, display, root);
 }
 void EventHandler::handleDestroyNotify(const XEvent &event) {
 	auto e = event.xdestroywindow;

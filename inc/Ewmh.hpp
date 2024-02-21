@@ -31,9 +31,23 @@ extern "C" {
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 };
-
+#include <string>
+/**
+ * @namespace ewmh
+ * @brief ewmh namespace
+ * This namespace contains the EWMH related functions.
+ */
 namespace ewmh {
-	void initEwmh(Display *display, Window root);
+/**
+ * @fn void initEwmh(Display *display, Window root)
+ * @brief register the supported EWMH atoms.
+ * @param display must be opened before call to this function.
+ * @param root root window the wm is managing (usually the default root window)
+ */
+	void	initEwmh(Display *display, Window root);
+	void	handleMessage(XClientMessageEvent *event, Display *display, Window root);
+	void	updateNumberOfDesktops(Display *display, Window root);
+	void	updateWmProperties(Display *display, Window root);
 };
 
 #endif //WINDOW_MANAGER_EWMH_HPP
