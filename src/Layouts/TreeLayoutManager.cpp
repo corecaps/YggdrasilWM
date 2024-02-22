@@ -169,17 +169,41 @@ void TreeLayoutManager::growSpaceX(Client *client) {
 		return;
 	}
 	if (space->getParent()->getLeft().get() == space) {
-		space->setSize(Point(space->getSize().x + 1, space->getSize().y));
-		space->getClient()->resize(space->getSize().x + 1, space->getSize().y);
-		if (space->getParent()->getRight()->getClient() != nullptr) {
-			space->getParent()->getRight()->setSize(Point(space->getParent()->getRight()->getSize().x - 1, space->getParent()->getRight()->getSize().y));
-			space->getParent()->getRight()->getClient()->resize(space->getParent()->getRight()->getSize().x - 1, space->getParent()->getRight()->getSize().y);
-			space->getParent()->getRight()->getClient()->move(space->getParent()->getRight()->getPos().x + 1, space->getParent()->getRight()->getPos().y);
-		} else {
-			space->getParent()->getRight()->setSize(Point(space->getParent()->getRight()->getSize().x - 1, space->getParent()->getRight()->getSize().y));
-
+		space->setSize(Point(space->getSize().x + 2, space->getSize().y));
+		if (space->getClient() != nullptr) {
+			placeClientInSpace(space->getClient(), space);
 		}
-		space->getParent()->getRight()->setSize(Point(space->getParent()->getRight()->getSize().x - 1, space->getParent()->getRight()->getSize().y));
+		else {
+			Space *leftChild = space->getLeft().get();
+			Space *rightChild = space->getRight().get();
+			while (leftChild != nullptr) {
+				leftChild->setSize(Point(leftChild->getSize().x + 1, leftChild->getSize().y));
+				leftChild = leftChild->getLeft().get();
+			}
+			while (rightChild != nullptr) {
+				rightChild->setSize(Point(rightChild->getSize().x + 1, rightChild->getSize().y));
+				rightChild = rightChild->getRight().get();
+			}
+		}
+		if (space->getParent()->getRight() != nullptr) {
+			space->getParent()->getRight()->setSize(
+						Point(space->getParent()->getRight()->getSize().x - 2,
+							  space->getParent()->getRight()->getSize().y));
+			if (space->getParent()->getRight()->getClient() != nullptr) {
+				placeClientInSpace(space->getParent()->getRight()->getClient(), space->getParent()->getRight().get());
+			} else {
+				Space *leftChild = space->getParent()->getRight()->getLeft().get();
+				Space *rightChild = space->getParent()->getRight()->getRight().get();
+				while (leftChild != nullptr) {
+					leftChild->setSize(Point(leftChild->getSize().x - 1, leftChild->getSize().y));
+					leftChild = leftChild->getLeft().get();
+				}
+				while (rightChild != nullptr) {
+					rightChild->setSize(Point(rightChild->getSize().x - 1, rightChild->getSize().y));
+					rightChild = rightChild->getRight().get();
+				}
+			}
+		}
 	}
 }
 
