@@ -1,10 +1,10 @@
 #include "gmock/gmock.h"
-#include "X11warper/baseX11Warper.hpp"
+#include "X11wrapper/baseX11Wrapper.hpp"
 
-class mockX11Warper : public BaseX11Warper {
+class mockX11Wrapper : public BaseX11Wrapper {
 public:
-	mockX11Warper() = default;
-	~mockX11Warper() = default;
+	mockX11Wrapper() = default;
+	~mockX11Wrapper() = default;
 	MOCK_METHOD(Display *, openDisplay, (), (override));
 	MOCK_METHOD(Display *, openDisplay, (const char *), (override));
 	MOCK_METHOD(void, closeDisplay, (Display *), (override));
@@ -51,5 +51,5 @@ public:
 	MOCK_METHOD(Window, createWindow, (Display *, Window, int, int, unsigned int, unsigned int, unsigned int, int, unsigned int, Visual *, unsigned long, XSetWindowAttributes *), (override));
 	MOCK_METHOD(int, clearWindow, (Display *, Window), (override));
 	MOCK_METHOD(int, drawString, (Display *, Window, GC, int, int, const char *, int), (override));
-	MOCK_METHOD(int, createSimpleWindow, (Display *, Window, int, int, unsigned int, unsigned int, unsigned int, unsigned long, unsigned long), (override));
+	MOCK_METHOD(Window, createSimpleWindow, (Display *, Window, int, int, unsigned int, unsigned int, unsigned int, unsigned long, unsigned long), (override));
 };

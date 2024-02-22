@@ -20,13 +20,13 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- * @file BaseX11Warper.hpp
- * @brief warp X11 functions, abstract class.
+ * @file BaseX11Wrapper.hpp
+ * @brief wrap X11 functions, abstract class.
  * @date 2024-02-11
  */
 
-#ifndef BASE_X11_WARPER_HPP
-#define BASE_X11_WARPER_HPP
+#ifndef BASE_X11_WRAPPER_HPP
+#define BASE_X11_WRAPPER_HPP
 extern "C" {
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -34,9 +34,9 @@ extern "C" {
 #include <memory>
 #include <string>
 
-class BaseX11Warper {
+class BaseX11Wrapper {
 public:
-	virtual ~BaseX11Warper() = default;
+	virtual ~BaseX11Wrapper() = default;
 	virtual Display * openDisplay() = 0;
 	virtual Display * openDisplay(const char * display_name) = 0;
 	virtual void closeDisplay(Display * display) = 0;
@@ -83,8 +83,8 @@ public:
 	virtual Window createWindow(Display * display, Window parent, int x, int y, unsigned int width, unsigned int height, unsigned int border_width, int depth, unsigned int _class, Visual * visual, unsigned long valuemask, XSetWindowAttributes * attributes) = 0;
 	virtual int clearWindow(Display * display, Window window) = 0;
 	virtual int drawString(Display * display, Window window, GC gc, int x, int y, const char * string, int length) = 0;
-	virtual int createSimpleWindow(Display * display, Window parent, int x, int y, unsigned int width, unsigned int height, unsigned int border_width, unsigned long border, unsigned long background) = 0;
+	virtual Window createSimpleWindow(Display * display, Window parent, int x, int y, unsigned int width, unsigned int height, unsigned int border_width, unsigned long border, unsigned long background) = 0;
 
 };
 
-#endif // BASE_X11_WARPER_HPP
+#endif

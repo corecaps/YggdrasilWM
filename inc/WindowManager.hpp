@@ -42,8 +42,10 @@ extern "C" {
 #include <algorithm>
 #include <csignal>
 #include <mutex>
+#include <memory>
 class Group;
 class TSBarsData;
+class BaseX11Wrapper;
 
 /**
  * @class WindowManager
@@ -62,7 +64,7 @@ public:
  * @brief create a WindowManager object
  * @param displayStr Optional X Display string if not set, the DISPLAY environment variable will be used
  */
-	static void create(const std::string &displayStr = std::string());
+	static void create(std::shared_ptr<BaseX11Wrapper> wrapper,const std::string &displayStr = std::string());
 /**
  * @brief Destroy the WindowManager object
  * i have yet to find a clean way to close the window manager
@@ -209,6 +211,7 @@ private:
 	static WindowManager *					instance_;
 	TSBarsData *							tsData;
 	Window									activeWindow;
+	std::shared_ptr<BaseX11Wrapper>			x11Wrapper;
 public:
 	Window getActiveWindow() const;
 
@@ -220,7 +223,7 @@ private:
  * @fn WindowManager::WindowManager(Display *display, const Logger &logger,ConfigHandler &configHandler)
  * @brief Construct a new WindowManager object
  */
-	WindowManager(Display *display);
+	WindowManager(Display *display, std::shared_ptr<BaseX11Wrapper> wrapper);
 /**
  * @fn void WindowManager::selectEventOnRoot() const
  * @brief set the event mask on the root window and register as the window manager for the X session
@@ -245,6 +248,11 @@ private:
   only one window manager can run at a time
  */
 	static int onWmDetected([[maybe_unused]] Display *display, XErrorEvent *e);
+
+public:
+	const std::shared_ptr<BaseX11Wrapper> &getX11Wrapper() const;
+
+private:
 /**
  * @fn void WindowManager::addGroupsFromConfig()
  * @brief add groups configured in the ConfigDataGroups to the groups vector

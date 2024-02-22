@@ -26,7 +26,7 @@
  */
 #include "WindowManager.hpp"
 #include "Group.hpp"
-
+#include "X11wrapper/baseX11Wrapper.hpp"
 #include <utility>
 #include "Client.hpp"
 #include "Layouts/LayoutManager.hpp"
@@ -46,6 +46,7 @@ Group::Group(ConfigDataGroup *config) {
 	} else {
 		layoutType = TREE;
 	}
+	wrapper = WindowManager::getInstance()->getX11Wrapper();
 	borderSize_ = config->getGroupBorderWidth();
 	gap_ = config->getGroupGap();
 	inactiveColor_ = config->getGroupInactiveColor();
@@ -54,8 +55,8 @@ Group::Group(ConfigDataGroup *config) {
 	active_ = false;
 	Logger::GetInstance()->Log("Group Created [" + name_ + "]", L_INFO);
 	Display *display = WindowManager::getInstance()->getDisplay();
-	int size_x = DisplayWidth(display, DefaultScreen(display));
-	int size_y = DisplayHeight(display, DefaultScreen(display));
+	int size_x = wrapper->displayWidth(display, wrapper->defaultScreen(display));
+	int size_y = wrapper->displayHeight(display, wrapper->defaultScreen(display));
 	switch (layoutType) {
 		case TREE:
 			layoutManager_ = new TreeLayoutManager(display,
@@ -118,7 +119,7 @@ void Group::switchTo() {
 	Logger::GetInstance()->Log("Group switched to [" + name_ + "]", L_INFO);
 	for (auto &client: WindowManager::getInstance()->getClients()) {
 		if (client.second->getGroup() == this) {
-			XMapWindow(WindowManager::getInstance()->getDisplay(), client.second->getFrame());
+			wrapper->mapWindow(WindowManager::getInstance()->getDisplay(), client.second->getFrame());
 		}
 	}
 	this->active_= true;
@@ -129,7 +130,7 @@ void Group::switchFrom() {
 	for (auto &client: WindowManager::getInstance()->getClients()) {
 		if (client.second->getGroup() == this) {
 //			client.second->unframe();
-			XUnmapWindow(WindowManager::getInstance()->getDisplay(), client.second->getFrame());
+			wrapper->unmapWindow(WindowManager::getInstance()->getDisplay(), client.second->getFrame());
 		}
 	}
 	this->active_ = false;
@@ -147,6 +148,6 @@ int Group::getGap() const { return gap_; }
 unsigned long Group::getInactiveColor() const { return inactiveColor_; }
 unsigned long Group::getActiveColor() const { return activeColor_; }
 
-void Group::resize(int sizeX, int sizeY, int posX, int posY) {
+void Group::resize(unsigned int sizeX, unsigned int sizeY, unsigned int posX, unsigned int posY) {
 	layoutManager_->updateGeometry(sizeX, sizeY, posX, posY);
 }

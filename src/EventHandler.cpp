@@ -34,6 +34,7 @@ extern "C" {
 #include <X11/Xlib.h>
 };
 #include "Ewmh.hpp"
+#include "X11wrapper/baseX11Wrapper.hpp"
 
 std::string GetEventTypeName(int eventType) {
 	std::string name;
@@ -112,6 +113,7 @@ EventHandler::EventHandler() {
 	eventHandlerArray[ReparentNotify] = &EventHandler::handleReparentNotify;
 	eventHandlerArray[MapRequest] = &EventHandler::handleMapRequest;
 	eventHandlerArray[MotionNotify] = &EventHandler::handleMotionNotify;
+	wrapper = WindowManager::getInstance()->getX11Wrapper();
 }
 EventHandler::~EventHandler() = default;
 void EventHandler::dispatchEvent(const XEvent &event) {
@@ -170,7 +172,7 @@ void EventHandler::handleConfigureRequest(const XEvent &event) {
 	changes.border_width = e.border_width;
 	changes.sibling = e.above;
 	changes.stack_mode = e.detail;
-	XConfigureWindow(WindowManager::getInstance()->getDisplay(),e.window,e.value_mask,&changes);
+	wrapper->configureWindow(WindowManager::getInstance()->getDisplay(),e.window,e.value_mask,&changes);
 }
 void EventHandler::handleConfigureNotify(const XEvent &event) {
 }
@@ -178,7 +180,7 @@ void EventHandler::handleButtonPress(const XEvent &event) {
 	auto e = event.xbutton;
 	const Window frame = WindowManager::getInstance()->getClient(event.xbutton.window)->getFrame();
 	// give focus to the window
-	XSetInputFocus(WindowManager::getInstance()->getDisplay(), frame, RevertToParent, CurrentTime);
+	wrapper->setInputFocus(WindowManager::getInstance()->getDisplay(), frame, RevertToParent, CurrentTime);
 	// 1. Save initial cursor position.
 //	drag_start_pos_ = Position<int>(e.x_root, e.y_root);
 //	// 2. Save initial window info.
@@ -196,13 +198,13 @@ void EventHandler::handleButtonPress(const XEvent &event) {
 //	drag_start_frame_pos_ = Position<int>(x, y);
 //	drag_start_frame_size_ = Size<int>(width, height);
 	// 3. Raise clicked window to top.
-	XRaiseWindow(WindowManager::getInstance()->getDisplay(),frame);
+	wrapper->raiseWindow(WindowManager::getInstance()->getDisplay(),frame);
 }
 void EventHandler::handleButtonRelease(const XEvent &event) {}
 void EventHandler::handleKeyPress(const XEvent &event) {
 	auto e = &event.xkey;
 	ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->handleKeypressEvent(e);
-	XSync(WindowManager::getInstance()->getDisplay(),false);
+	wrapper->sync(WindowManager::getInstance()->getDisplay(),false);
 }
 void EventHandler::handleKeyRelease(const XEvent &event) {}
 void EventHandler::handleEnterNotify(const XEvent &event) {}
@@ -231,8 +233,8 @@ void EventHandler::handleFocusIn(const XEvent &event) {
 	else {
 		unsigned long ActiveColor = client->getGroup()->getActiveColor();
 		Logger::GetInstance()->Log("Window focused: " + client->getTitle() , L_INFO);
-		XSetWindowBorder(WindowManager::getInstance()->getDisplay(), client->getFrame(), ActiveColor);
-		XFlush(WindowManager::getInstance()->getDisplay());
+		wrapper->setWindowBorder(WindowManager::getInstance()->getDisplay(), client->getFrame(), ActiveColor);
+		wrapper->flush(WindowManager::getInstance()->getDisplay());
 	}
 }
 void EventHandler::handleFocusOut(const XEvent &event) {
@@ -251,8 +253,8 @@ void EventHandler::handleFocusOut(const XEvent &event) {
 	else {
 		unsigned long InActiveColor = client->getGroup()->getInactiveColor();
 		Logger::GetInstance()->Log("Window unfocused: " + client->getTitle() , L_INFO);
-		XSetWindowBorder(WindowManager::getInstance()->getDisplay(), client->getFrame(), InActiveColor);
-		XFlush(WindowManager::getInstance()->getDisplay());
+		wrapper->setWindowBorder(WindowManager::getInstance()->getDisplay(), client->getFrame(), InActiveColor);
+		wrapper->flush(WindowManager::getInstance()->getDisplay());
 	}
 }
 void EventHandler::handlePropertyNotify(const XEvent &event) {
@@ -286,7 +288,7 @@ void EventHandler::handleDestroyNotify(const XEvent &event) {
 				return;
 			}
 		}
-		XSetInputFocus(WindowManager::getInstance()->getDisplay(),
+		wrapper->setInputFocus(WindowManager::getInstance()->getDisplay(),
 					   WindowManager::getInstance()->getRoot(),
 					   RevertToParent, CurrentTime);
 	} catch (std::out_of_range &err) {
@@ -325,7 +327,7 @@ void EventHandler::handleMapRequest(const XEvent &event) {
 		if (WindowManager::getInstance()->getClientRef(e.window).frame() != YGG_CLI_NO_ERROR)
 			Logger::GetInstance()->Log("Failed to frame window: " + std::to_string(e.window), L_ERROR);
 	}
-	XMapWindow(WindowManager::getInstance()->getDisplay(), e.window);
+	wrapper->mapWindow(WindowManager::getInstance()->getDisplay(), e.window);
 }
 void EventHandler::handleMotionNotify(const XEvent &event) {
 	auto e = event.xmotion;

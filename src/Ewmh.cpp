@@ -98,20 +98,28 @@ namespace ewmh {
 	}
 	void updateDesktopGeometry(Display *display, Window root) {
 		Atom desktopGeometry = XInternAtom(display, "_NET_DESKTOP_GEOMETRY", False);
-		uint16_t size[2] = {static_cast<uint16_t>(WindowManager::getInstance()->getGeometryX()),
-								static_cast<uint16_t>(WindowManager::getInstance()->getGeometryY())};
+		uint32_t size[2] = {static_cast<uint32_t>(WindowManager::getInstance()->getGeometryX()),
+								static_cast<uint32_t>(WindowManager::getInstance()->getGeometryY())};
 		Logger::GetInstance()->Log("Size registered :\t" + std::to_string(size[0]) + " x " + std::to_string(size[1]), L_INFO);
 		XChangeProperty(display,
 						root,
 						desktopGeometry,
 						XA_CARDINAL,
-						16,
+						32,
 						PropModeReplace,
-						reinterpret_cast<unsigned char*>(size), 2);
+						(unsigned char*)(size),
+						2);
 	}
 	void updateActiveWindow(Display *display, Window root, Window activeWindow) {
 		Atom activeWindowAtom = XInternAtom(display, "_NET_ACTIVE_WINDOW",False);
-		XChangeProperty(display, root, activeWindowAtom, XA_WINDOW, 32, PropModeReplace, (unsigned char*)&activeWindow, 1);
+		XChangeProperty(display,
+						root,
+						activeWindowAtom,
+						XA_WINDOW,
+						32,
+						PropModeReplace,
+						(unsigned char*)&activeWindow,
+						1);
 	}
 	void updateWmProperties(Display *display, Window root) {
 		updateNumberOfDesktops(display, root);

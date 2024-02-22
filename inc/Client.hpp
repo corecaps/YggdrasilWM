@@ -31,9 +31,11 @@ extern "C" {
 #include <X11/Xlib.h>
 }
 #include <string>
+#include <memory>
 
 class Group;
 class LayoutManager;
+class BaseX11Wrapper;
 /**
  * @enum Client_Err
  * @brief Client_Err enum to handle the error of the Client class
@@ -177,6 +179,7 @@ private:
 	std::string title_;
 	std::string class_;
 	Group *group_;
+	std::shared_ptr<BaseX11Wrapper> wrapper;
 };
 
 #endif //YGGDRASILWM_CLIENT_HPP

@@ -37,6 +37,7 @@ extern "C" {
 }
 #include "WindowManager.hpp"
 #include "Bars/Bars.hpp"
+#include <memory>
 /**
  * @class EventHandler
  * @brief EventHandler class.
@@ -48,6 +49,7 @@ extern "C" {
  * @see Client
  * @see Logger
  */
+class BaseX11Wrapper;
 class EventHandler {
 public:
 	EventHandler(const EventHandler&) = delete;
@@ -80,6 +82,7 @@ private:
 	using handler = void (EventHandler::*)(const XEvent&);
 	handler eventHandlerArray[LASTEvent]{};
 	static EventHandler *					instance_;
+	std::shared_ptr<BaseX11Wrapper>			wrapper;
 /**
  * @fn EventHandler(WindowManager &wm, const Logger &logger)
  * @brief Construct a new Event handler:: Event handler object

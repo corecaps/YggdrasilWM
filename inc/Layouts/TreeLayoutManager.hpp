@@ -74,7 +74,7 @@ public:
  * @fn void TreeLayoutManager::updateGeometry()
  * @brief this method is an old implementation and should be removed
 */
-	void	updateGeometry(int sizeX, int sizeY, int posX, int posY) override;
+	void	updateGeometry(unsigned int sizeX, unsigned int sizeY, unsigned int posX, unsigned int posY) override;
 	void reSize(const Point &size, const Point &pos) override;
 	void recursiveResize(const Point &size, const Point &pos, Space *space) override;
 /**

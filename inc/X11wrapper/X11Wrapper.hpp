@@ -20,14 +20,14 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
- * @file X11Warper.hpp
- * @brief warp X11 functions.
+ * @file X11Wrapper.hpp
+ * @brief wrap X11 functions.
  * @date 2024-02-11
  */
 
-#ifndef X11_WARPER_HPP
-#define X11_WARPER_HPP
-#include "X11warper/baseX11Warper.hpp"
+#ifndef X11_WRAPPER_HPP
+#define X11_WRAPPER_HPP
+#include "X11wrapper/baseX11Wrapper.hpp"
 extern "C" {
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -35,10 +35,10 @@ extern "C" {
 #include <memory>
 #include <string>
 
-class X11Warper : public BaseX11Warper {
+class X11Wrapper : public BaseX11Wrapper {
 public:
-	X11Warper() = default;
-	~X11Warper() = default;
+	X11Wrapper() = default;
+	~X11Wrapper() = default;
 	Display * openDisplay() override;
 	Display * openDisplay(const char * displayName) override;
 	void closeDisplay(Display * display) override;
@@ -85,7 +85,7 @@ public:
 	Window createWindow(Display * display, Window parent, int x, int y, unsigned int width, unsigned int height, unsigned int border_width, int depth, unsigned int _class, Visual * visual, unsigned long valuemask, XSetWindowAttributes * attributes) override;
 	int clearWindow(Display * display, Window window) override;
 	int drawString(Display * display, Window window, GC gc, int x, int y, const char * string, int length) override;
-	int createSimpleWindow(Display * display, Window parent, int x, int y, unsigned int width, unsigned int height, unsigned int border_width, unsigned long border, unsigned long background) override;
+	Window createSimpleWindow(Display * display, Window parent, int x, int y, unsigned int width, unsigned int height, unsigned int border_width, unsigned long border, unsigned long background) override;
 };
 
-#endif //X11_WARPER_HPP
+#endif //X11_WRAPPER_HPP

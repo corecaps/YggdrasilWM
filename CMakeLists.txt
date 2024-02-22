@@ -132,6 +132,9 @@ set(SOURCES
         ${SOURCE_DIR}/Bars/TSBarsData.cpp
         ${INCLUDE_DIR}/Bars/TSBarsData.hpp
         ${INCLUDE_DIR}/Bars/Widget.hpp
+        ${INCLUDE_DIR}/X11wrapper/baseX11Wrapper.hpp
+        ${SOURCE_DIR}/X11wrapper/X11Wrapper.cpp
+        ${INCLUDE_DIR}/X11wrapper/X11Wrapper.hpp
 )
 
 # create the executable
@@ -162,7 +165,7 @@ set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 file(GLOB TEST_SOURCES ${TEST_DIR}/*.cpp)
 
 # create the test executable
-add_executable(${PROGRAM_NAME}_tests ${SOURCES} ${TEST_SOURCES} )
+add_executable(${PROGRAM_NAME}_tests ${SOURCES} ${INCLUDE_DIR}/X11wrapper/mockX11Wrapper.hpp ${TEST_SOURCES} )
 
 # Link against X11, cxxopts, GoogleTest, and GoogleMock libraries
 target_link_libraries(${PROGRAM_NAME}_tests

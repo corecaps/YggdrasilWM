@@ -34,6 +34,8 @@
 #include <unistd.h>
 #include "Config/ConfigHandler.hpp"
 #include "Group.hpp"
+#include "X11wrapper/mockX11Wrapper.hpp"
+#include "X11wrapper/X11Wrapper.hpp"
 std::vector<pid_t> xeyesPid;
 pid_t xephyrPid;
 void runXephyr () {
@@ -80,7 +82,11 @@ void killXephyr() { kill(xephyrPid,SIGKILL); }
 class WindowManagerTest : public ::testing::Test {
 public:
 	static std::ostringstream oss;
+	std::shared_ptr<BaseX11Wrapper> wrapper;
 protected:
+	WindowManagerTest() {
+		wrapper = std::make_shared<X11Wrapper>();
+	}
 	static void SetUpTestSuite() {
 		std::cout << " =================================================================================== " << std::endl;
 		std::cout << " ======================== WindowManagerTest SetUpTestSuite ========================= " << std::endl;
@@ -107,17 +113,17 @@ protected:
 };
 std::ostringstream WindowManagerTest::oss = std::ostringstream();
 TEST_F(WindowManagerTest, CreateWithValidDisplay) {
-	WindowManager::create(":1");
+	WindowManager::create(this->wrapper,":1");
 	ASSERT_TRUE(WindowManager::getInstance());
 	WindowManager::Destroy();
 }
 TEST_F(WindowManagerTest, CreateWithInvalidDisplay) {
-	EXPECT_THROW(WindowManager::create("invalid_display"), std::runtime_error);
+	EXPECT_THROW(WindowManager::create(this->wrapper,"invalid_display"), std::runtime_error);
 	EXPECT_THROW(WindowManager::getInstance(), std::runtime_error);
 	WindowManager::Destroy();
 }
 TEST_F(WindowManagerTest, initWM) {
-	WindowManager::create(":1");
+	WindowManager::create(this->wrapper,":1");
 	WindowManager::getInstance()->init();
 	ASSERT_EQ(WindowManager::getInstance()->getRunning(), true);
 	ASSERT_GE(WindowManager::getInstance()->getClients().size(), 0);
@@ -128,7 +134,7 @@ TEST_F(WindowManagerTest, initWM) {
 }
 
 TEST_F(WindowManagerTest, SwitchGroup) {
-	WindowManager::create(":1");
+	WindowManager::create(this->wrapper,":1");
 	WindowManager::getInstance()->init();
 	runXeyes();
 	WindowManager::getInstance()->testRun();

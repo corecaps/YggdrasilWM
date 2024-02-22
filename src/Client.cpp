@@ -51,6 +51,7 @@ Client::Client(Display *display,
 		  framed(false),
 		  mapped(false)
 {
+	
 	Atom wmClassAtom = XInternAtom(display, "WM_CLASS", False);
 	if (wmClassAtom == None) {
 		Logger::GetInstance()->Log("Failed to intern WM_CLASS atom.",L_ERROR);

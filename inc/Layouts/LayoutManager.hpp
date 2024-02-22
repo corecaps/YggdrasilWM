@@ -48,10 +48,10 @@ public:
  * This struct represents a 2D point
  */
 	struct Point {
-		int	x;
-		int	y;
+		unsigned int	x;
+		unsigned int	y;
 
-		Point(int x, int y) : x(x), y(y) {}
+		Point(unsigned int x, unsigned int y) : x(x), y(y) {}
 		Point() : x(0), y(0) {}
 	};
 /**
@@ -212,7 +212,7 @@ public:
  * @brief updateGeometry this method is a residual from the old implementation.
  * it should be removed in the future.
  */
-	virtual void	updateGeometry(int sizeX, int sizeY, int posX, int posY) = 0;
+	virtual void	updateGeometry(unsigned int sizeX, unsigned int sizeY, unsigned int posX, unsigned int posY) = 0;
 	virtual void reSize(const Point &size, const Point &pos) = 0;
 	virtual void recursiveResize(const Point &size, const Point &pos, Space *space) = 0;
 /**

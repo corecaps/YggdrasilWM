@@ -27,11 +27,13 @@
  */
 
 #include <cstdlib>
+#include <memory>
+#include <cxxopts.hpp>
 #include "WindowManager.hpp"
 #include "Logger.hpp"
-#include <cxxopts.hpp>
 #include "Config/ConfigHandler.hpp"
-
+#include "X11wrapper/baseX11Wrapper.hpp"
+#include "X11wrapper/X11Wrapper.hpp"
 /**
  * @fn int main(int argc, char** argv)
  * @brief YggdrasilWM
@@ -93,6 +95,7 @@ int main(int argc, char** argv) {
 		std::cout << options.help() << std::endl;
 		return EXIT_FAILURE;
 	}
+	std::shared_ptr<BaseX11Wrapper> x11Wrapper = std::make_shared<X11Wrapper>();
 	//	Logger::create(logFilePath, static_cast<LogLevel>(logLevel));
 	Logger::Create(std::cout, static_cast<LogLevel>(logLevel));
 	if (configFilePath.empty()) {
@@ -105,10 +108,10 @@ int main(int argc, char** argv) {
 	try {
 		if (!display.empty()) {
 			Logger::GetInstance()->Log("Using display " + display, L_INFO);
-			WindowManager::create(display);
+			WindowManager::create(x11Wrapper,display);
 		} else {
 			Logger::GetInstance()->Log("Using default display", L_INFO);
-			WindowManager::create();
+			WindowManager::create(x11Wrapper);
 		}
 	} catch (const std::exception &e) {
 		Logger::GetInstance()->Log(e.what(), L_ERROR);

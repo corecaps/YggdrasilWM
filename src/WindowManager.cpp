@@ -39,10 +39,11 @@ extern "C" {
 #include "Bars/TSBarsData.hpp"
 #include "Group.hpp"
 #include "Ewmh.hpp"
+#include "X11wrapper/baseX11Wrapper.hpp"
 
 bool WindowManager::wmDetected;
 WindowManager * WindowManager::instance_ = nullptr;
-void WindowManager::create(const std::string &displayStr) {
+void WindowManager::create(std::shared_ptr<BaseX11Wrapper> wrapper,const std::string &displayStr) {
 	Logger::GetInstance()->Log("================ Yggdrasil Initialisation ================\n\n", L_INFO);
 	if (WindowManager::instance_ != nullptr) {
 		throw std::runtime_error("WindowManager instance already created");
@@ -55,19 +56,20 @@ void WindowManager::create(const std::string &displayStr) {
 		throw std::runtime_error("Failed to open X display");
 	}
 	Logger::GetInstance()->Log("Opened X Display:\t" + std::string(XDisplayName(displayCStr)), L_INFO);
-	WindowManager::instance_ = new WindowManager(display);
+	WindowManager::instance_ = new WindowManager(display,wrapper);
 }
-WindowManager::WindowManager(Display *display)
+WindowManager::WindowManager(Display *display, std::shared_ptr<BaseX11Wrapper> wrapper)
 		: display_(display),
 		  root_(DefaultRootWindow(display)),
-		  WM_PROTOCOLS(XInternAtom(display_, "WM_PROTOCOLS", false)),
-		  WM_DELETE_WINDOW(XInternAtom(display_, "WM_DELETE_WINDOW", false)),
+		  WM_PROTOCOLS( wrapper->internAtom(display_, "WM_PROTOCOLS", false)),
+		  WM_DELETE_WINDOW(wrapper->internAtom(display_, "WM_DELETE_WINDOW", false)),
 		  active_group_(nullptr),
 		  running(true),
 		  tsData(nullptr),
 		  geometryX(0),
 		  geometryY(0),
-		  activeWindow(0){}
+		  activeWindow(0),
+		  x11Wrapper(wrapper){}
 WindowManager::~WindowManager() {
 	for (auto &client: clients_) {
 		delete client.second;
@@ -77,7 +79,7 @@ WindowManager::~WindowManager() {
 		delete group;
 	}
 	groups_.clear();
-	XCloseDisplay(display_);
+	x11Wrapper->closeDisplay(display_);
 	Logger::GetInstance()->Log("WindowManager destroyed", L_INFO);
 }
 void WindowManager::init() {
@@ -86,33 +88,33 @@ void WindowManager::init() {
 		throw std::runtime_error("Another window manager is already running.");
 	}
 	ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->grabKeys(display_, root_);
-	geometryX = DisplayWidth(display_, DefaultScreen(display_));
-	geometryY = DisplayHeight(display_, DefaultScreen(display_));
-	XGrabServer(display_);
+	geometryX = x11Wrapper->displayWidth(display_, x11Wrapper->defaultScreen(display_));
+	geometryY = x11Wrapper->displayHeight(display_, x11Wrapper->defaultScreen(display_));
+	x11Wrapper->grabServer(display_);
 	ewmh::initEwmh(display_,root_);
 	tsData = new TSBarsData();
 	getTopLevelWindows();
 	createBars();
-	XUngrabServer(display_);
+	x11Wrapper->ungrabServer(display_);
 	ewmh::updateWmProperties(display_, root_);
-	XFlush(display_);
+	x11Wrapper->flush(display_);
 	tsData->addData("test", "test");
 	signal(SIGINT, handleSIGHUP);
 }
 void WindowManager::selectEventOnRoot() const {
-	XSetErrorHandler(&WindowManager::onWmDetected);
-	XSelectInput(
+	x11Wrapper->setErrorHandler(&WindowManager::onWmDetected);
+	x11Wrapper->selectInput(
 			display_,
 			root_,
 			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask | ClientMessage);
-	XSetErrorHandler(&WindowManager::OnXError);
-	XSync(display_, false);
+	x11Wrapper->setErrorHandler(&WindowManager::OnXError);
+	x11Wrapper->sync(display_, false);
 }
 void WindowManager::getTopLevelWindows() {
 	Window returnedRoot, returnedParent;
 	Window *topLevelWindows;
 	unsigned int numTopLevelWindows;
-	XQueryTree(
+	x11Wrapper->queryTree(
 			display_,
 			root_,
 			&returnedRoot,
@@ -144,16 +146,16 @@ void WindowManager::getTopLevelWindows() {
 		}
 		clients_[newClient->getWindow()] = newClient;
 	}
-	XFree(topLevelWindows);
+	x11Wrapper->freeX(topLevelWindows);
 }
 void WindowManager::createBars() {
 	Bars::createInstance();
 	Bars::getInstance().init(ConfigHandler::GetInstance().getConfigData<ConfigDataBars>(), tsData, display_, root_);
 	Bars::getInstance().start_thread();
-	int sizeX = geometryX- Bars::getInstance().getSpaceE() - Bars::getInstance().getSpaceW() - active_group_->getBorderSize() * 2;
-	int sizeY = geometryY - Bars::getInstance().getSpaceN() - Bars::getInstance().getSpaceS() - active_group_->getBorderSize() * 2;
-	int posX = Bars::getInstance().getSpaceW();
-	int posY = Bars::getInstance().getSpaceN();
+	unsigned int sizeX = geometryX- Bars::getInstance().getSpaceE() - Bars::getInstance().getSpaceW() - active_group_->getBorderSize() * 2;
+	unsigned int sizeY = geometryY - Bars::getInstance().getSpaceN() - Bars::getInstance().getSpaceS() - active_group_->getBorderSize() * 2;
+	unsigned int posX = Bars::getInstance().getSpaceW();
+	unsigned int posY = Bars::getInstance().getSpaceN();
 	for (auto g:groups_) {
 		g->resize(sizeX,sizeY,posX,posY);
 	}
@@ -172,9 +174,9 @@ void WindowManager::Run() {
 	Logger::GetInstance()->Log("================ Yggdrasil WM Running ================\n\n", L_INFO);
 	EventHandler::create();
 	XEvent e;
-	while (running && !XNextEvent(display_, &e)) {
+	while (running && !x11Wrapper->nextEvent(display_, &e)) {
 		EventHandler::getInstance()->dispatchEvent(e);
-		XSync(display_, false);
+		x11Wrapper->sync(display_, false);
 	}
 }
 void WindowManager::testRun() {
@@ -185,8 +187,9 @@ void WindowManager::testRun() {
 	}
 	XSync(display_, false);
 	XEvent ev;
+	x11Wrapper->nextEvent(display_, &ev);
 	EventHandler::getInstance()->dispatchEvent(ev);
-	XSync(display_, false);
+	x11Wrapper->sync(display_, false);
 }
 void WindowManager::insertClient(Window window) {
 	int borderSize = active_group_->getBorderSize();
@@ -197,7 +200,7 @@ void WindowManager::insertClient(Window window) {
 }
 void WindowManager::setFocus(Client *client) {
 	if (client != nullptr) {
-		XSetInputFocus(display_, client->getWindow(), RevertToParent, CurrentTime);
+		x11Wrapper->setInputFocus(display_, client->getWindow(), RevertToParent, CurrentTime);
 	}
 }
 void WindowManager::Destroy() {
@@ -221,8 +224,8 @@ void WindowManager::Stop() {
 	ev.message_type = XInternAtom(display_, "WM_PROTOCOLS", False);
 	ev.format = 32;
 	ev.data.l[0] = XInternAtom(display_, "WM_DELETE_WINDOW", False);
-	XSendEvent(display_, root_, False, NoEventMask, (XEvent *)&ev);
-	XFlush(display_); // Ensure the event is sent immediately
+	x11Wrapper->sendEvent(display_, root_, False, NoEventMask, (XEvent *)&ev);
+	x11Wrapper->flush(display_); // Ensure the event is sent immediately
 	std::cout << "Stopping WindowManager" << std::endl;
 }
 WindowManager * WindowManager::getInstance() {
@@ -256,11 +259,12 @@ bool WindowManager::getRunning() const { return running; }
 unsigned int WindowManager::getGeometryX() const { return geometryX; }
 unsigned int WindowManager::getGeometryY() const { return geometryY; }
 Window WindowManager::getActiveWindow() const { return activeWindow; }
-void WindowManager::setActiveWindow(Window activeWindow) { WindowManager::activeWindow = activeWindow; }
+const std::shared_ptr<BaseX11Wrapper> &WindowManager::getX11Wrapper() const { return x11Wrapper; }
+void WindowManager::setActiveWindow(Window aWindow) { WindowManager::activeWindow = aWindow; }
 int WindowManager::OnXError(Display *display, XErrorEvent *e) {
 	const int MAX_ERROR_TEXT_LENGTH = 1024;
 	char errorText[MAX_ERROR_TEXT_LENGTH];
-	XGetErrorText(display, e->error_code, errorText, sizeof(errorText));
+	WindowManager::getInstance()->getX11Wrapper()->getErrorText(display, e->error_code, errorText, sizeof(errorText));
 	std::stringstream errorStream;
 	errorStream << "Received X error:\n"
 				<< "    Request: " << int(e->request_code)
@@ -276,5 +280,7 @@ int WindowManager::onWmDetected([[maybe_unused]] Display *display, XErrorEvent *
 		wmDetected = true;
 	return 0;
 }
+
+
 
 

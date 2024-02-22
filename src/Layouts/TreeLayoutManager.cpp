@@ -51,7 +51,7 @@ void deleteSpace(LayoutManager::Space *space) {
 TreeLayoutManager::~TreeLayoutManager() {
 	deleteSpace(rootSpace_);
 }
-void TreeLayoutManager::updateGeometry(int sizeX, int sizeY, int posX, int posY) {
+void TreeLayoutManager::updateGeometry(unsigned int sizeX, unsigned int sizeY, unsigned int posX, unsigned int posY) {
 	reSize(Point(sizeX,sizeY),Point(posX,posY));
 }
 LayoutManager::Space * TreeLayoutManager::findSpaceRecursive(Client *client, LayoutManager::Space * space) {
@@ -130,7 +130,7 @@ void TreeLayoutManager::addClientRecursive(Client* client, Space* space) {
 	}
 }
 void TreeLayoutManager::placeClientInSpace(Client* client, Space* space) {
-	client->move(space->getPos().x + border_size_ + gap_ / 2, space->getPos().y + border_size_ + gap_ / 2);
+	client->move(static_cast<int>(space->getPos().x) + border_size_ + gap_ / 2,static_cast<int>(space->getPos().y) + border_size_ + gap_ / 2);
 	client->resize(space->getSize().x - (border_size_ * 2)- gap_, space->getSize().y - (border_size_ * 2) - gap_);
 	client->restack();
 	if (space->getClient() != client)

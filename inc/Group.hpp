@@ -37,6 +37,7 @@ extern "C" {
 class LayoutManager;
 class Client;
 class WindowManager;
+class BaseX11Wrapper;
 /**
  * @enum LayoutType
  * @brief LayoutType enum
@@ -176,7 +177,7 @@ public:
  * @return
  */
 	unsigned long	getActiveColor() const;
-	void resize (int sizeX, int sizeY, int posX, int posY);
+	void resize (unsigned int sizeX, unsigned int sizeY, unsigned int posX, unsigned int posY);
 
 private:
 	std::string								name_;
@@ -188,5 +189,6 @@ private:
 	unsigned long 							activeColor_;
 	int										barHeight_;
 	bool									active_{};
+	std::shared_ptr<BaseX11Wrapper>			wrapper;
 };
 #endif //YGGDRASILWM_GROUP_H
