@@ -207,7 +207,16 @@ void EventHandler::handleKeyPress(const XEvent &event) {
 	wrapper->sync(WindowManager::getInstance()->getDisplay(),false);
 }
 void EventHandler::handleKeyRelease(const XEvent &event) {}
-void EventHandler::handleEnterNotify(const XEvent &event) {}
+void EventHandler::handleEnterNotify(const XEvent &event) {
+	auto e = event.xcrossing;
+	const std::vector<Window> &windows = Bars::getInstance().getWindows();
+	for (auto window : windows) {
+		if (window == e.window) {
+			Bars::getInstance().redraw();
+			return;
+		}
+	}
+}
 void EventHandler::handleLeaveNotify(const XEvent &event) {}
 void EventHandler::handleExpose(const XEvent &event) {
 	auto e = event.xexpose;
@@ -363,5 +372,3 @@ void EventHandler::handleMotionNotify(const XEvent &event) {
 }
 void EventHandler::handleCreateNotify(const XEvent &event) {}
 void EventHandler::handleUnknown(const XEvent &event) {}
-
-

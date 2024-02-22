@@ -83,6 +83,7 @@ void Bar::draw() {
 	XClearWindow(display, window);
 	XDrawString(display, window, DefaultGC(display, screen), 300, 15, message.str().c_str(), message.str().size());
 	XFlush(display);
+	Logger::GetInstance()->Log("Bar [" + std::to_string(window) + "] redrawn", L_INFO);
 }
 
 Window Bar::getWindow() const {
