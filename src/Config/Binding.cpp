@@ -30,6 +30,8 @@
 #include "Commands/FocusGroup.hpp"
 #include "Commands/Spawn.hpp"
 #include "Commands/Quit.hpp"
+#include "WindowManager.hpp"
+#include "X11wrapper/baseX11Wrapper.hpp"
 extern "C" {
 #include <X11/Xlib.h>
 
@@ -56,10 +58,6 @@ void Binding::init(std::string Mod, std::string Key, std::string Command, std::s
 	} else {
 		throw std::runtime_error("Unknown mod : " + mod_);
 	}
-	Display *display = XOpenDisplay(NULL);
-	keyCode_ = XKeysymToKeycode(display, XStringToKeysym(key_.c_str()));
-	Logger::GetInstance()->Log("New Binding registered.\n=======================\tModKey:[" + mod_ + "] Key [" + key_ + "] Command Name [" + commandName_ + "] Arguments:[" + args_  +"] ModMask ["+std::to_string(modMask_)+"] Keycode [" + std::to_string(keyCode_) + "]", L_INFO);
-	XCloseDisplay(display);
 }
 void Binding::execute() {
 	if (command_ != nullptr)
@@ -81,3 +79,9 @@ const std::string &Binding::getCommandName() const { return commandName_; }
 const std::string &Binding::getArgs() const { return args_; }
 unsigned int Binding::getModMask() const { return modMask_; }
 int Binding::getKeyCode() const { return keyCode_; }
+
+void Binding::init_keycode(Display *display) {
+	keyCode_ = WindowManager::getInstance()->getX11Wrapper()
+			->keysymToKeycode(display, WindowManager::getInstance()
+					->getX11Wrapper()->stringToKeysym(key_.c_str()));
+}

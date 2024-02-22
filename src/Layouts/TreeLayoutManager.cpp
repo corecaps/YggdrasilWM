@@ -25,6 +25,7 @@
  * @date 2024-02-07
  */
 #include "Layouts/TreeLayoutManager.hpp"
+
 TreeLayoutManager::TreeLayoutManager(Display *display,
 									 Window root,
 									 int sizeX,

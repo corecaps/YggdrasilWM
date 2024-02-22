@@ -53,7 +53,8 @@ public:
  * @param root_ the Json::Value object containing the bindings
  */
 	void configInit(const Json::Value& root_) override;
-	Json::Value configSave() override;
+	void initKeycodes(Display *display);
+	[[nodiscard]] Json::Value configSave() override;
 /**
  * @fn void ConfigDataBindings::grabKeys(Display *display, Window window)
  * @brief Grab the keys from the bindings

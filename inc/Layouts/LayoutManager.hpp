@@ -32,7 +32,7 @@
 #include <memory>
 #include <stdexcept>
 #include "Client.hpp"
-
+class BaseX11Wrapper;
 /**
  * @class LayoutManager
  * @brief LayoutManager class
@@ -242,13 +242,13 @@ public:
  */
 	virtual void removeClient(Client* client) = 0;
 protected:
-	Space*	rootSpace_;
-	int		screen_width_;
-	int		screen_height_;
-	int		gap_;
-	int		border_size_;
-	int		space_count_;
-	Display	*display_;
-	Window	rootWindow_;
+	Space*							rootSpace_;
+	int								screen_width_;
+	int								screen_height_;
+	int								gap_;
+	int								border_size_;
+	int								space_count_;
+	Display							*display_;
+	Window							rootWindow_;
 };
 #endif //YGGDRASILWM_LAYOUTMANAGER_HPP

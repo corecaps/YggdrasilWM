@@ -34,7 +34,8 @@
 #include "Logger.hpp"
 #include "Config/ConfigHandler.hpp"
 #include "Config/ConfigDataBindings.hpp"
-
+#include "WindowManager.hpp"
+#include "X11wrapper/baseX11Wrapper.hpp"
 Client::Client(Display *display,
 			   Window root,
 			   Window window,
@@ -51,8 +52,8 @@ Client::Client(Display *display,
 		  framed(false),
 		  mapped(false)
 {
-	
-	Atom wmClassAtom = XInternAtom(display, "WM_CLASS", False);
+	wrapper = WindowManager::getInstance()->getX11Wrapper();
+	Atom wmClassAtom = wrapper->internAtom(display, "WM_CLASS", False);
 	if (wmClassAtom == None) {
 		Logger::GetInstance()->Log("Failed to intern WM_CLASS atom.",L_ERROR);
 	}
@@ -60,11 +61,11 @@ Client::Client(Display *display,
 	int actualFormat;
 	unsigned long nItems, bytesAfter;
 	unsigned char* propData;
-	if (XGetWindowProperty(display, window, wmClassAtom, 0, 1024, False, AnyPropertyType,
+	if (wrapper->getWindowProperty(display, window, wmClassAtom, 0, 1024, False, AnyPropertyType,
 						   &actualType, &actualFormat, &nItems, &bytesAfter, &propData) != Success) {
 		Logger::GetInstance()->Log("Failed to get WM_CLASS property.", L_ERROR);
 	}
-	Atom XA_STRING = XInternAtom(display, "STRING", False);
+//	Atom XA_STRING = XInternAtom(display, "STRING", False);
 	if (actualType == XA_STRING && actualFormat == 8 && nItems > 1) {
 		// The WM_CLASS property contains two null-terminated strings.
 		char* instanceName = reinterpret_cast<char*>(propData);
@@ -74,11 +75,11 @@ Client::Client(Display *display,
 	} else {
 		Logger::GetInstance()->Log("Unexpected format or size of WM_CLASS property.",L_ERROR);
 	}
-	XFree(propData);
+	wrapper->freeX(propData);
 }
 Client::~Client() {
 	if (this->framed) {
-		XDestroyWindow(display_, frame_);
+		wrapper->destroyWindow(display_, frame_);
 	}
 	Logger::GetInstance()->Log("Client destroyed :" + title_, L_INFO);
 }
@@ -89,11 +90,11 @@ Client_Err Client::frame() {
 	if (this->framed)
 		return(YGG_CLI_LOG_ALREADY_FRAMED);
 	XWindowAttributes x_window_attrs;
-	if (XGetWindowAttributes(display_, window_, &x_window_attrs) == 0)
+	if (wrapper->getWindowAttributes(display_, window_, &x_window_attrs) == 0)
 		return (YGG_CLI_ERR_RETRIEVE_ATTR);
 	if (x_window_attrs.override_redirect)
 		return(YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT);
-	this->frame_ = XCreateSimpleWindow(
+	this->frame_ = wrapper->createSimpleWindow(
 			display_,
 			root_,
 			x_window_attrs.x,
@@ -104,20 +105,20 @@ Client_Err Client::frame() {
 			border_color,
 			BG_COLOR
 			);
-		XSelectInput(
+		wrapper->selectInput(
 			display_,
 			this->frame_,
 			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask | ClientMessage);
-	XAddToSaveSet(display_,window_);
-	XReparentWindow(
+	wrapper->addToSaveSet(display_,window_);
+	wrapper->reparentWindow(
 			display_,
 			window_,
 			frame_,
 			0,0
 			);
-	XMapWindow(display_,frame_);
+	wrapper->mapWindow(display_,frame_);
 	//   a. Move windows with alt + left button.
-	XGrabButton(
+	wrapper->grabButton(
 			display_,
 			Button1,
 			Mod1Mask,
@@ -135,14 +136,14 @@ Client_Err Client::frame() {
 }
 void Client::restack() {
 	if (this->framed) {
-		XRaiseWindow(display_, frame_);
+		wrapper->raiseWindow(display_, frame_);
 	}
-	XRaiseWindow(display_, window_);
+	wrapper->raiseWindow(display_, window_);
 }
 Client_Err Client::unframe() {
 	if (!this->framed)
 		return(YGG_CLI_LOG_IGNORE_NOT_FRAMED);
-	XDestroyWindow(display_,frame_);
+	wrapper->destroyWindow(display_,frame_);
 	this->framed = false;
 	this->frame_ = 0;
 	return YGG_CLI_NO_ERROR;
@@ -152,17 +153,17 @@ Window Client::getWindow() const {
 }
 void Client::move(int x, int y) {
 	if (this->framed) {
-		XMoveWindow(display_, frame_, x, y);
+		wrapper->moveWindow(display_, frame_, x, y);
 	}
 	else {
-		XMoveWindow(display_, window_, x + (int)border_width / 2, y + (int)border_width / 2);
+		wrapper->moveWindow(display_, window_, x + (int)border_width / 2, y + (int)border_width / 2);
 	}
 }
 void Client::resize(unsigned int width,unsigned int height) {
 	if (this->framed) {
-		XResizeWindow(display_, frame_, width, height);
+		wrapper->resizeWindow(display_, frame_, width, height);
 	}
-	XResizeWindow(display_, window_, width - border_width , height - border_width);
+	wrapper->resizeWindow(display_, window_, width - border_width , height - border_width);
 }
 std::string Client::getError(Client_Err error) {
 	switch (error) {

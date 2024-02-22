@@ -84,6 +84,7 @@ WindowManager::~WindowManager() {
 }
 void WindowManager::init() {
 	selectEventOnRoot();
+	ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->initKeycodes(display_);
 	if (wmDetected) {
 		throw std::runtime_error("Another window manager is already running.");
 	}

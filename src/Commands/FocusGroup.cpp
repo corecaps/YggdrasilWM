@@ -49,7 +49,6 @@ void FocusGroup::execute(const std::string &args) {
 	if (wm->getActiveGroup() != wm->getGroups()[index]) {
 		wm->getActiveGroup()->switchFrom();
 		wm->getGroups()[index]->switchTo();
-		XSync(wm->getDisplay(),false);
 	}
 }
 

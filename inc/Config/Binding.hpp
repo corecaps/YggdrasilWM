@@ -28,7 +28,9 @@
 #define YGGDRASILWM_BINDING_H
 #include <string>
 #include "Commands/CommandBase.hpp"
-
+extern "C" {
+#include <X11/Xlib.h>
+}
 /**
  * @class Binding
  * @brief Binding store a binding to a command object
@@ -46,6 +48,13 @@ public:
  * Command is parsed to link the proper command object
  */
 	void init(std::string Mod, std::string Key, std::string Command, std::string Args);
+/**
+ * @fn void Binding::init_keycode(Display *display)
+ * @brief Initialize the keycode of the binding
+ * had to be initialized after the display is opened
+ * @param display
+ */
+	void init_keycode(Display *display);
 /**
  * @fn void Binding::execute()
  * @brief Execute the command linked to the binding
