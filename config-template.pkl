@@ -1,39 +1,164 @@
 module YggdrasilConfigTemplate
+//This is a template for the Yggdrasil configuration file
+//use pkl to generate the actual json file from this template
+// pkl eval config-template.pkl -f json > config.json
 
+//class are used to type check the data
 class group {
-  name: String
+  // name is not the index of the group
+  Name: String
+  // Layout can be "Tree", "Max"
   Layout: String
+  // Inactive and active colors are used for the border of managed windows
   Inactive_Color: String
   Active_Color: String
+  // Border_Size is the size of the border of managed windows
   Border_Size: Int
+  // Gap is the space between the windows
   Gap: Int
 }
 class widget {
+  // Type can be "Group", "Clock", "WindowTitle"
   Type: String
+  // Position is relative to the top left corner of the bar
   Position: Int
+  // size is the width of the widget
   Size: Int
+  // Color is the color of the text
   Color: String
+  // Background_Color is the color of the background
   Background_Color: String
+  // Arguments is the arguments of the widget
   Arguments: String
 }
 class bar {
+  // Bar_Size is the height of the bar if top or bottom,
+  // the width if left or right
   Bar_Size: Int
+  // Font is the font of the text
   Font: String
+  // Font_Size is the size of the text
   Font_Size: Int
+  // Font_Color is the color of the text
   Font_Color: String
+  // Background_Color is the color of the background
   Background_Color: String
+  // Border_Size is the size of the border of the bar
   Border_Size: Int
+  // Border_Color is the color of the border of the bar
   Border_Color: String
+  // Position can be "Top", "Bottom", "Left", "Right"
   Position: String
+  // List of widgets in this bar
   Widgets: Listing<widget>
 }
 class binding {
+  // Key is the key to bind the action to
+  // name of the key can be found in /usr/include/X11/keysymdef.h
   Key: String
+  // Action can be "FocusGroup", "Spawn"
   Action: String
-  Arguments: String
+  // Arguments is the arguments of the action
+  Argument: String
 }
-class config {
-  Groups: Listing<group>
-  Bars: Listing<bar>
-  Bindings: Listing<binding>
+// here we generate the groups by iterating over the list of group names
+// using common parameters for the rest of group config parameters
+local group_name = List("1","2","3")
+Groups = new Listing<group> {
+  for (_name in group_name) {
+    new {
+      Name = _name
+      Layout = "Tree"
+      Inactive_Color = "#FF0000"
+      Active_Color = "#00FF00"
+      Border_Size = 1
+      Gap = 10
+    }
+  }
+}
+// you must define objects local to avoid polluting the final json
+local w1 : widget = new {
+  Type = "Group"
+  Position = 10
+  Size = 80
+  Color = "#FF0000"
+  Background_Color = "#FFFFFF"
+  Arguments = ""
+}
+local w2 : widget = new {
+  Type = "Clock"
+  Position = 90
+  Size = 10
+  Color = "#000000"
+  Background_Color = "#FFFFFF"
+  Arguments = ""
+}
+local b1 : bar = new {
+  Bar_Size = 30
+  Font = "Arial"
+  Font_Size = 12
+  Font_Color = "#000000"
+  Background_Color = "#FFFFFF"
+  Border_Size = 2
+  Border_Color = "#000000"
+  Position = "top"
+  Widgets = new Listing<widget> {
+    w1
+    w2
+  }
+}
+local b2 : bar = new {
+  Bar_Size = 30
+  Font = "Arial"
+  Font_Size = 12
+  Font_Color = "#000000"
+  Background_Color = "#FFFFFF"
+  Border_Size = 2
+  Border_Color = "#000000"
+  Position = "bottom"
+  Widgets = new Listing<widget> {
+    w1
+    w2
+  }
+}
+// here Bars is not local because we want to use it in the final json
+Bars = new Listing<bar> {
+  b1
+  b2
+}
+local k1 : binding = new {
+  Key = "1"
+  Action = "FocusGroup"
+  Argument = "1"
+}
+local k2 : binding = new {
+  Key = "2"
+  Action = "FocusGroup"
+  Argument = "2"
+}
+local k3 : binding = new {
+  Key = "3"
+  Action = "FocusGroup"
+  Argument = "3"
+}
+local kEnter : binding = new {
+  Key = "Return"
+  Action = "Spawn"
+  Argument = "kitty"
+}
+local kQ : binding = new {
+  Key = "Q"
+  Action = "Quit"
+  Argument = ""
+}
+// Bindings are grouped by modKey
+// you can create as many modKeys as you need
+Bindings  {
+  Mod1 = new Listing<binding> {
+    k1
+    k2
+    k3
+    kEnter
+    kQ
+  }
 }

@@ -84,4 +84,15 @@ void Binding::init_keycode(Display *display) {
 	keyCode_ = WindowManager::getInstance()->getX11Wrapper()
 			->keysymToKeycode(display, WindowManager::getInstance()
 					->getX11Wrapper()->stringToKeysym(key_.c_str()));
+	Logger::GetInstance()->Log("Binding registered : ["
+								+ mod_
+								+ " + "
+								+key_
+								+"] Command: "
+								+ commandName_
+								+ " Args: "
+								+ args_
+								+ " keycode: ["
+								+ std::to_string(keyCode_)
+								+"]", L_INFO);
 }

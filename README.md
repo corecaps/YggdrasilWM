@@ -3,30 +3,32 @@
 ---
 # YggdrasilWM 
 **Version 0.1.1**
-## Documentation
-Full Documentation for the project is available [HERE !](https://corecaps.github.io/YggdrasilWM/doc/html/index.html)
+
 ## What is YggdrasilWM?
 YggdrasilWM is an automatic tiling window manager for X11. It is written in C++ and uses the Xlib library. It is inspired by dwm and xmonad.
-
+EWMH compliance is currently in development, so it is not yet fully implemented.
 YggdrasilWM is a **learning project** for me, so it is **not intended to be used as a daily driver**.
 
 ## License
 YggdrasilWM is licensed under the GNU General Public License v3. The full GPL license is available in the LICENSE file.
 
 ## Dependencies
-- C++17 
-- cmake https://cmake.org/
-- Xlib https://www.x.org/releases/current/doc/libX11/libX11/libX11.html
+![C++ Badge](https://img.shields.io/badge/C%2B%2B-00599C?logo=cplusplus&logoColor=fff&style=flat) ![CMake Badge](https://img.shields.io/badge/CMake-064F8C?logo=cmake&logoColor=fff&style=flat) 
+- C++11 
+- cmake https://cmake.org/ 
+- Xlib https://www.x.org/releases/current/doc/libX11/libX11/libX11.html 
 - cxxopts https://github.com/jarro2783/cxxopts
-- jsoncpp https://github.com/open-source-parsers/jsoncpp
+- jsoncpp https://github.com/open-source-parsers/jsoncpp 
 
 ### Optional
-used for testing :  
+#### used for configuration :
+- pkl https://pkl-lang.org/
+#### used for testing :  
 - Xephyr https://www.freedesktop.org/wiki/Software/Xephyr/
 - xinit 
 - xterm https://invisible-island.net/xterm/
 - xev 
-used for documentation :
+#### used for documentation :
 - doxygen https://www.doxygen.nl/index.html
 
 ## Build
@@ -51,92 +53,25 @@ Usage: YggdrasilWM [options...]
   -c,--config <config>        Config file
 ```
 ## Configuration
-The configuration file is a JSON file.
+### Writing the configuration file
+You have two option to configure YggdrasilWM :
+#### Apple pkl
+Apple pkl (https://pkl-lang.org/) : type check the configuration let you build using loops and conditions
+this is the default configuration file format. To generate the final configuration file you need to run the pkl script in the root directory.
+```
+pkl eval config-template.pkl -f json > config.json
+```
+the config-template.pkl is heavily commented and should be easy to understand.
+#### JSON
+You can also write the configuration file directly in JSON format. a default configuration file is provided in the root directory.
+
+### Configuration file location
 The program will look for a file named config.json in this order :
 - The file specified with the -c option
 - The current directory
 - $HOME/.config/yggdrasilwm/config.json
 - /etc/yggdrasilwm/config.json
 
- *Note that the use of jsoncpp library let you use C comment in json even if it's not recognized in the json standard*
-```json
-{
-  // Yggdrasil Window Manager Configuration
-  "Groups": [
-    // You can put as many groups as wanted but you need at least one
-    {
-      // Each Group has it's own layout
-      "Name": "1",
-      "Layout": "Tree",
-      "Inactive_Color": "#FF0000",
-      "Active_Color": "#00FF00",
-      "Border_Size": 2,
-      "Gap": 10
-    },
-    {
-      "Name": "2",
-      "Layout": "Tree",
-      "Inactive_Color": "#FF0000",
-      "Active_Color": "#00FF00",
-      "Border_Size": 2,
-      "Gap": 10
-    },
-    {
-      "Name": "3",
-      "Layout": "Tree",
-      "Inactive_Color": "#FF0000",
-      "Active_Color": "#00FF00",
-      "Border_Size": 2,
-      "Gap": 10
-    }],
-  "Bars": [
-    // For the moment the bar is not fully implemented
-    {
-      "Height": 30,
-      "Font": "Arial",
-      "Font_Size": 12,
-      "Font_Color": "#000000",
-      "Background_Color": "#FFFFFF",
-      "Border_Size": 2,
-      "Border_Color": "#000000"
-    }
-  ],
-  "Bindings": {
-    // Bindings are groupped by Modifiers
-    "Mod1": [
-      // Each Bindings must have : 
-      // Key: Keysyms string there is a script in util_scripts to extracts strings from your X11 includes in markdown format
-      // Action: At the moment only action supported are FocusGroup and Spawn
-      // Args: arguments passed to the command object
-      // Note that each bindings is grabbed from each managed window watch out for conflicts 
-      {
-        // Argument to FocusGroup is the group index (starting from 1) not the group name
-        "Key" : "1",
-        "Action" : "FocusGroup",
-        "Argument" : "1"
-      },
-      {
-        "Key" : "2",
-        "Action" : "FocusGroup",
-        "Argument" : "2"
-      },
-      {
-        "Key" : "3",
-        "Action" : "FocusGroup",
-        "Argument" : "3"
-      },
-      // Spawn command object will pass to execvp the first word as the binary and the rest will be build as an argv array
-      {
-        "Key" : "Return",
-        "Action" : "Spawn",
-        "Argument" : "kitty"
-      }
-    ]
-  }
-}
-```
-
-I am still working on the configuration file, so it is not yet fully implemented, and not all options are used. I will update this section when the configuration file is fully implemented.
 ## Testing using Xephyr
 YggdrasilWM is not yet ready to be used as a daily driver, but you can test it using Xephyr.
 Xephyr is a nested X server that runs inside your current X server. It is used to test window managers and other X11 programs.

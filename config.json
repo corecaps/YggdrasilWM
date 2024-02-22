@@ -1,12 +1,11 @@
 {
-  // Yggdrasil Window Manager Configuration
   "Groups": [
     {
       "Name": "1",
       "Layout": "Tree",
       "Inactive_Color": "#FF0000",
       "Active_Color": "#00FF00",
-      "Border_Size": 2,
+      "Border_Size": 1,
       "Gap": 10
     },
     {
@@ -14,7 +13,7 @@
       "Layout": "Tree",
       "Inactive_Color": "#FF0000",
       "Active_Color": "#00FF00",
-      "Border_Size": 2,
+      "Border_Size": 1,
       "Gap": 10
     },
     {
@@ -22,9 +21,10 @@
       "Layout": "Tree",
       "Inactive_Color": "#FF0000",
       "Active_Color": "#00FF00",
-      "Border_Size": 2,
+      "Border_Size": 1,
       "Gap": 10
-    }],
+    }
+  ],
   "Bars": [
     {
       "Bar_Size": 30,
@@ -38,16 +38,16 @@
       "Widgets": [
         {
           "Type": "Group",
-          "Position": "10",
-          "Size": "80",
+          "Position": 10,
+          "Size": 80,
           "Color": "#FF0000",
           "Background_Color": "#FFFFFF",
           "Arguments": ""
         },
         {
           "Type": "Clock",
-          "Position": "90",
-          "Size": "10",
+          "Position": 90,
+          "Size": 10,
           "Color": "#000000",
           "Background_Color": "#FFFFFF",
           "Arguments": ""
@@ -55,60 +55,60 @@
       ]
     },
     {
-        "Bar_Size": 30,
-        "Font": "Arial",
-        "Font_Size": 12,
-        "Font_Color": "#000000",
-        "Background_Color": "#FFFFFF",
-        "Border_Size": 2,
-        "Border_Color": "#000000",
-        "Position": "bottom",
-        "Widgets": [
-            {
-            "Type": "Group",
-            "Position": "10",
-            "Size": "80",
-            "Color": "#FF0000",
-            "Background_Color": "#FFFFFF",
-            "Arguments": ""
-            },
-            {
-            "Type": "Clock",
-            "Position": "90",
-            "Size": "10",
-            "Color": "#000000",
-            "Background_Color": "#FFFFFF",
-            "Arguments": ""
-            }
-        ]
+      "Bar_Size": 30,
+      "Font": "Arial",
+      "Font_Size": 12,
+      "Font_Color": "#000000",
+      "Background_Color": "#FFFFFF",
+      "Border_Size": 2,
+      "Border_Color": "#000000",
+      "Position": "bottom",
+      "Widgets": [
+        {
+          "Type": "Group",
+          "Position": 10,
+          "Size": 80,
+          "Color": "#FF0000",
+          "Background_Color": "#FFFFFF",
+          "Arguments": ""
+        },
+        {
+          "Type": "Clock",
+          "Position": 90,
+          "Size": 10,
+          "Color": "#000000",
+          "Background_Color": "#FFFFFF",
+          "Arguments": ""
+        }
+      ]
     }
   ],
   "Bindings": {
     "Mod1": [
       {
-        "Key" : "1",
-        "Action" : "FocusGroup",
-        "Argument" : "1"
+        "Key": "1",
+        "Action": "FocusGroup",
+        "Argument": "1"
       },
       {
-        "Key" : "2",
-        "Action" : "FocusGroup",
-        "Argument" : "2"
+        "Key": "2",
+        "Action": "FocusGroup",
+        "Argument": "2"
       },
       {
-        "Key" : "3",
-        "Action" : "FocusGroup",
-        "Argument" : "3"
+        "Key": "3",
+        "Action": "FocusGroup",
+        "Argument": "3"
       },
       {
-        "Key" : "Return",
-        "Action" : "Spawn",
-        "Argument" : "kitty"
+        "Key": "Return",
+        "Action": "Spawn",
+        "Argument": "kitty"
       },
       {
-        "Key" : "q",
-        "Action" : "Quit",
-        "Argument" : ""
+        "Key": "Q",
+        "Action": "Quit",
+        "Argument": ""
       }
     ]
   }
