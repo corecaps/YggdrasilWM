@@ -42,6 +42,12 @@ cd build
 echo "Running make"
 make
 cd ..
+# generating config if config-template.pkl has been modified
+if [ "config-template.pkl" -nt "config.json" ]; then
+  echo "generating config file"
+  pkl eval config-template.pkl -f json > config.json
+fi
+
 # Function to run the application with Valgrind
 run_with_valgrind() {
     tool=$1

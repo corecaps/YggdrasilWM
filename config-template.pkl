@@ -3,7 +3,7 @@ module YggdrasilConfigTemplate
 //use pkl to generate the actual json file from this template
 // pkl eval config-template.pkl -f json > config.json
 
-//class are used to type check the data
+//classes are used to type check the data
 class group {
   // name is not the index of the group
   Name: String
