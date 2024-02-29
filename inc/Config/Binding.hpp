@@ -31,6 +31,7 @@
 extern "C" {
 #include <X11/Xlib.h>
 }
+class BaseX11Wrapper;
 /**
  * @class Binding
  * @brief Binding store a binding to a command object
@@ -54,7 +55,7 @@ public:
  * had to be initialized after the display is opened
  * @param display
  */
-	void init_keycode(Display *display);
+	void init_keycode(Display *display, BaseX11Wrapper *x11Wrapper);
 /**
  * @fn void Binding::execute()
  * @brief Execute the command linked to the binding

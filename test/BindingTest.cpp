@@ -31,6 +31,8 @@
 #include "Config/Binding.hpp"
 #include "Logger.hpp"
 #include <sstream>
+#include "X11wrapper/baseX11Wrapper.hpp"
+#include "X11wrapper/mockX11Wrapper.hpp"
 extern "C" {
 #include <X11/Xlib.h>
 }
@@ -66,17 +68,21 @@ TEST_F(BindingTest, constructor) {
 
 TEST_F(BindingTest, init) {
 	Binding binding;
+	BaseX11Wrapper *x11Wrapper = new mockX11Wrapper();
 	std::string mod = "Mod4";
 	std::string key = "Return";
 	std::string command = "FocusGroup";
 	std::string args = "1";
+	Display *display = XOpenDisplay(NULL);
 	binding.init(mod, key, command, args);
+	binding.init_keycode(display, x11Wrapper);
 	EXPECT_EQ(binding.getMod(), mod);
 	EXPECT_EQ(binding.getKey(), key);
 	EXPECT_EQ(binding.getCommandName(), command);
 	EXPECT_EQ(binding.getArgs(), args);
 	EXPECT_EQ(binding.getModMask(), Mod4Mask);
-	EXPECT_EQ(binding.getKeyCode(), XKeysymToKeycode(XOpenDisplay(NULL), XStringToKeysym(key.c_str())));
+	EXPECT_EQ(binding.getKeyCode(), XKeysymToKeycode(display, XStringToKeysym(key.c_str())));
+	delete x11Wrapper;
 }
 
 TEST_F(BindingTest, wrongInit) {
