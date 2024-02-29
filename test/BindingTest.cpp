@@ -36,20 +36,33 @@
 extern "C" {
 #include <X11/Xlib.h>
 }
+using ::testing::Return;
+using ::testing::_;
 
 class BindingTest : public ::testing::Test
 {
 protected:
 	static std::ostringstream oss;
-	BindingTest() {}
-	~BindingTest() override {}
+	mockX11Wrapper* x11WrapperMock;
+	Display* displayMock;
+
+	BindingTest() {
+		x11WrapperMock = new mockX11Wrapper();
+		displayMock = nullptr;
+	}
+	~BindingTest() override {
+		delete x11WrapperMock;
+	}
 	static void SetUpTestSuite() {
 		std::cout << " =================================================================================== " << std::endl;
 		std::cout << " ============================= Binding SetUpTestSuite ============================== " << std::endl;
 		std::cout << " =================================================================================== " << std::endl;
-		Logger::Create(BindingTest::oss,L_INFO);
+//		Logger::Create(BindingTest::oss,L_INFO);
+		Logger::Create(std::cout,L_INFO);
 	}
-	void SetUp() override {}
+	void SetUp() override {
+
+	}
 	void TearDown() override {}
 	static void TearDownTestSuite() {
 		Logger::Destroy();
@@ -67,22 +80,27 @@ TEST_F(BindingTest, constructor) {
 }
 
 TEST_F(BindingTest, init) {
+
 	Binding binding;
-	BaseX11Wrapper *x11Wrapper = new mockX11Wrapper();
 	std::string mod = "Mod4";
 	std::string key = "Return";
 	std::string command = "FocusGroup";
 	std::string args = "1";
-	Display *display = XOpenDisplay(NULL);
+
+	EXPECT_CALL(*this->x11WrapperMock, keysymToKeycode(displayMock, _))
+			.Times(1)
+			.WillOnce(Return(1));
+	EXPECT_CALL(*this->x11WrapperMock, stringToKeysym(_))
+			.Times(1)
+			.WillOnce(Return(1));
 	binding.init(mod, key, command, args);
-	binding.init_keycode(display, x11Wrapper);
+	binding.init_keycode(nullptr, this->x11WrapperMock);
 	EXPECT_EQ(binding.getMod(), mod);
 	EXPECT_EQ(binding.getKey(), key);
 	EXPECT_EQ(binding.getCommandName(), command);
 	EXPECT_EQ(binding.getArgs(), args);
 	EXPECT_EQ(binding.getModMask(), Mod4Mask);
-	EXPECT_EQ(binding.getKeyCode(), XKeysymToKeycode(display, XStringToKeysym(key.c_str())));
-	delete x11Wrapper;
+	EXPECT_EQ(binding.getKeyCode(), 1);
 }
 
 TEST_F(BindingTest, wrongInit) {
