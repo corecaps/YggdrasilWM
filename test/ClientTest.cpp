@@ -82,7 +82,7 @@ protected:
 										  group,
 										  inActiveColor,
 										  borderSize,
-										  x11WrapperMock);
+										  x11WrapperMock.get());
 	}
 
 	void TearDown() override {}
