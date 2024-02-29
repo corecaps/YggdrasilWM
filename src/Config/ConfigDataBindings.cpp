@@ -82,6 +82,6 @@ void ConfigDataBindings::handleKeypressEvent(const XKeyEvent *event) {
 
 void ConfigDataBindings::initKeycodes(Display *display, BaseX11Wrapper *x11Wrapper) {
 	for (auto &binding : bindings_) {
-		binding->init_keycode(display);
+		binding->init_keycode(display,x11Wrapper);
 	}
 }
