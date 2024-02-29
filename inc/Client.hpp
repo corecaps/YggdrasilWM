@@ -74,7 +74,8 @@ public:
 		   Window window,
 		   Group *group,
 		   unsigned long inActiveColor,
-		   int borderSize);
+		   int borderSize,
+		   BaseX11Wrapper *wrapper);
 /**
  * @fn ~Client()
  * @brief Client destructor Destroy the Client object & the Frame Window it needed

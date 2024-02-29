@@ -31,7 +31,6 @@
 #include "Config/Binding.hpp"
 #include "Logger.hpp"
 #include <sstream>
-#include "X11wrapper/baseX11Wrapper.hpp"
 #include "X11wrapper/mockX11Wrapper.hpp"
 extern "C" {
 #include <X11/Xlib.h>
@@ -57,8 +56,7 @@ protected:
 		std::cout << " =================================================================================== " << std::endl;
 		std::cout << " ============================= Binding SetUpTestSuite ============================== " << std::endl;
 		std::cout << " =================================================================================== " << std::endl;
-//		Logger::Create(BindingTest::oss,L_INFO);
-		Logger::Create(std::cout,L_INFO);
+		Logger::Create(BindingTest::oss,L_INFO);
 	}
 	void SetUp() override {
 
@@ -78,9 +76,7 @@ TEST_F(BindingTest, constructor) {
 	EXPECT_EQ(binding.getModMask(), 0);
 	EXPECT_EQ(binding.getKeyCode(), 0);
 }
-
 TEST_F(BindingTest, init) {
-
 	Binding binding;
 	std::string mod = "Mod4";
 	std::string key = "Return";
@@ -89,10 +85,10 @@ TEST_F(BindingTest, init) {
 
 	EXPECT_CALL(*this->x11WrapperMock, keysymToKeycode(displayMock, _))
 			.Times(1)
-			.WillOnce(Return(1));
+			.WillOnce(Return(42));
 	EXPECT_CALL(*this->x11WrapperMock, stringToKeysym(_))
 			.Times(1)
-			.WillOnce(Return(1));
+			.WillOnce(Return(42));
 	binding.init(mod, key, command, args);
 	binding.init_keycode(nullptr, this->x11WrapperMock);
 	EXPECT_EQ(binding.getMod(), mod);
@@ -100,9 +96,8 @@ TEST_F(BindingTest, init) {
 	EXPECT_EQ(binding.getCommandName(), command);
 	EXPECT_EQ(binding.getArgs(), args);
 	EXPECT_EQ(binding.getModMask(), Mod4Mask);
-	EXPECT_EQ(binding.getKeyCode(), 1);
+	EXPECT_EQ(binding.getKeyCode(), 42);
 }
-
 TEST_F(BindingTest, wrongInit) {
 	Binding binding1;
 	std::string mod = "InvalidMod";

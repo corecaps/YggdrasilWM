@@ -27,3 +27,81 @@
  */
 
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
+#include "Client.hpp"
+#include "X11wrapper/mockX11Wrapper.hpp" // Assume you have a mock for BaseX11Wrapper
+#include "Logger.hpp"
+#include <memory>
+
+using ::testing::_;
+using ::testing::Return;
+using ::testing::AtLeast;
+
+class ClientTest : public ::testing::Test {
+protected:
+	static std::ostringstream oss;
+	Display* display;
+	Window rootWindow;
+	Window clientWindow;
+	std::shared_ptr<mockX11Wrapper> x11WrapperMock;
+	std::unique_ptr<Client> client;
+	unsigned long inActiveColor = 0x000000; // Example color
+	int borderSize = 1; // Example border size
+	static void SetUpTestSuite() {
+		std::cout << " =================================================================================== " << std::endl;
+		std::cout << " ============================= Client SetUpTestSuite ============================== " << std::endl;
+		std::cout << " =================================================================================== " << std::endl;
+		Logger::Create(ClientTest::oss,L_INFO);
+	}
+
+	ClientTest() : display(nullptr),
+				   rootWindow(0),
+				   clientWindow(0),
+				   client(nullptr) {}
+
+	void SetUp() override {
+		display = nullptr;
+		rootWindow = 42;
+		clientWindow = 4242;
+
+		x11WrapperMock = std::make_shared<mockX11Wrapper>();
+		Group* group = nullptr;
+		Atom mockAtom = 42;
+		EXPECT_CALL(*x11WrapperMock,internAtom(display,_,_))
+				.Times(AtLeast(1))
+				.WillRepeatedly(Return(mockAtom)); // Adjust as necessary
+		EXPECT_CALL(*x11WrapperMock,getWindowProperty(_,_,_,_,_,_,_,_,_,_,_,_))
+				.Times(AtLeast(1))
+				.WillRepeatedly(Return(Success));
+//		EXPECT_CALL(*x11WrapperMock,freeX(_))
+//				.Times(AtLeast(1))
+//				.WillRepeatedly(Return(Success));
+		client = std::make_unique<Client>(display,
+										  rootWindow,
+										  clientWindow,
+										  group,
+										  inActiveColor,
+										  borderSize,
+										  x11WrapperMock);
+	}
+
+	void TearDown() override {}
+};
+std::ostringstream ClientTest::oss = std::ostringstream ();
+
+TEST_F(ClientTest, FrameUnframe) {
+	// Example to test frame and unframe functionality
+	EXPECT_EQ(1,1);
+	//	EXPECT_CALL(*x11WrapperMock, createSimpleWindow(_, _, _, _, _, _, _, _, _))
+//			.Times(1)
+//			.WillOnce(Return(clientWindow)); // Adjust as necessary
+//
+//	EXPECT_EQ(client->frame(), YGG_CLI_NO_ERROR);
+//	EXPECT_TRUE(client->isFramed());
+//
+//	EXPECT_EQ(client->unframe(), YGG_CLI_NO_ERROR);
+//	EXPECT_FALSE(client->isFramed());
+}
+
+// Add more tests for move, resize, restack, etc.
+

@@ -41,7 +41,8 @@ Client::Client(Display *display,
 			   Window window,
 			   Group *group,
 			   unsigned long inActiveColor,
-			   int borderSize)
+			   int borderSize,
+			   BaseX11Wrapper *x11Wrapper)
 		: display_(display),
 		  root_(root),
 		  group_(group),
@@ -50,9 +51,9 @@ Client::Client(Display *display,
 		  border_width(borderSize),
 		  border_color(inActiveColor),
 		  framed(false),
-		  mapped(false)
+		  mapped(false),
+		  wrapper(x11Wrapper)
 {
-	wrapper = WindowManager::getInstance()->getX11Wrapper();
 	Atom wmClassAtom = wrapper->internAtom(display, "WM_CLASS", False);
 	if (wmClassAtom == None) {
 		Logger::GetInstance()->Log("Failed to intern WM_CLASS atom.",L_ERROR);
@@ -61,8 +62,18 @@ Client::Client(Display *display,
 	int actualFormat;
 	unsigned long nItems, bytesAfter;
 	unsigned char* propData;
-	if (wrapper->getWindowProperty(display, window, wmClassAtom, 0, 1024, False, AnyPropertyType,
-						   &actualType, &actualFormat, &nItems, &bytesAfter, &propData) != Success) {
+	if (wrapper->getWindowProperty(display,
+								   window,
+								   wmClassAtom,
+								   0,
+								   1024,
+								   False,
+								   AnyPropertyType,
+								   &actualType,
+								   &actualFormat,
+								   &nItems,
+								   &bytesAfter,
+								   &propData) != Success) {
 		Logger::GetInstance()->Log("Failed to get WM_CLASS property.", L_ERROR);
 	}
 //	Atom XA_STRING = XInternAtom(display, "STRING", False);

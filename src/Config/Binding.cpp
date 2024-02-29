@@ -81,7 +81,7 @@ unsigned int Binding::getModMask() const { return modMask_; }
 int Binding::getKeyCode() const { return keyCode_; }
 
 void Binding::init_keycode(Display *display, BaseX11Wrapper *x11Wrapper) {
-	x11Wrapper->keysymToKeycode(display, (int)x11Wrapper->stringToKeysym(key_.c_str()));
+	keyCode_ = x11Wrapper->keysymToKeycode(display, (int)x11Wrapper->stringToKeysym(key_.c_str()));
 	Logger::GetInstance()->Log("Binding registered : ["
 								+ mod_
 								+ " + "

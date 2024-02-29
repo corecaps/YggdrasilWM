@@ -128,7 +128,7 @@ void WindowManager::getTopLevelWindows() {
 	addGroupsFromConfig();
 	Logger::GetInstance()->Log("Found " + std::to_string(numTopLevelWindows) + " top level windows.\troot:" + std::to_string(root_), L_INFO);
 	for (unsigned int i = 0; i < numTopLevelWindows; ++i) {
-		auto *newClient = new Client(display_, root_, topLevelWindows[i], active_group_, active_group_->getInactiveColor(), active_group_->getBorderSize());
+		auto *newClient = new Client(display_, root_, topLevelWindows[i], active_group_, active_group_->getInactiveColor(), active_group_->getBorderSize(), x11Wrapper.get());
 		Client_Err err = newClient->frame();
 		setFocus(newClient);
 		if (err == YGG_CLI_ERR_RETRIEVE_ATTR) {
@@ -195,7 +195,7 @@ void WindowManager::testRun() {
 void WindowManager::insertClient(Window window) {
 	int borderSize = active_group_->getBorderSize();
 	unsigned long inactiveColor = active_group_->getInactiveColor();
-	auto *client = new Client(display_, root_, window, active_group_, inactiveColor, borderSize);
+	auto *client = new Client(display_, root_, window, active_group_, inactiveColor, borderSize, x11Wrapper.get());
 	Logger::GetInstance()->Log("Inserting client in map: " + client->getTitle() + "\t[" + std::to_string(window) + "]", L_INFO);
 	clients_.insert({window, client});
 }
