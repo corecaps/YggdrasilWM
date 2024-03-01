@@ -71,7 +71,7 @@ protected:
 		display = nullptr;
 		rootWindow = 42;
 		clientWindow = 4242;
-		x11WrapperMock = std::make_shared<mockX11Wrapper>();
+		x11WrapperMock = std::make_shared<::testing::NiceMock<mockX11Wrapper>>();
 		Atom mockAtom = 42;
 		Json::Value root;
 		root["group"] = "group";
@@ -178,4 +178,5 @@ TEST_F(ClientTest, FrameOverideRedirect) {
 				return 1; // Assume '1' indicates success
 			}));
 	EXPECT_EQ(client->frame(), YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT);
+	EXPECT_EQ(client->getFrame(), 0);
 }
