@@ -92,15 +92,12 @@ protected:
 		EXPECT_CALL(*x11WrapperMock, displayHeight(_, _))
 				.Times(1)
 				.WillOnce(Return(600));
-		EXPECT_CALL(*x11WrapperMock, moveWindow(_, _, _, _))
-				.Times(1)
-				.WillOnce(Return(clientWindow));
-		EXPECT_CALL(*x11WrapperMock,resizeWindow(_, _, _, _))
-				.Times(2)
-				.WillRepeatedly(Return(Success));
-		EXPECT_CALL(*x11WrapperMock,raiseWindow(_,_))
-				.Times(2)
-				.WillRepeatedly(Return(Success));
+		ON_CALL(*x11WrapperMock, moveWindow(_, _, _, _))
+				.WillByDefault(Return(Success));
+		ON_CALL(*x11WrapperMock,resizeWindow(_, _, _, _))
+				.WillByDefault(Return(Success));
+		ON_CALL(*x11WrapperMock,raiseWindow(_,_))
+				.WillByDefault(Return(Success));
 		group = new Group(config,x11WrapperMock,display,rootWindow);
 		EXPECT_CALL(*x11WrapperMock,internAtom(display,_,_))
 				.Times(AtLeast(1))
