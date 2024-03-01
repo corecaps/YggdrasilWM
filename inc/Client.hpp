@@ -75,7 +75,7 @@ public:
 		   Group *group,
 		   unsigned long inActiveColor,
 		   int borderSize,
-		   BaseX11Wrapper *wrapper);
+		   std::shared_ptr<BaseX11Wrapper> wrapper);
 /**
  * @fn ~Client()
  * @brief Client destructor Destroy the Client object & the Frame Window it needed

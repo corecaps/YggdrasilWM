@@ -32,7 +32,9 @@
 #include "Layouts/LayoutManager.hpp"
 #include "Config/ConfigDataBindings.hpp"
 
-Group::Group(ConfigDataGroup *config) {
+Group::Group(ConfigDataGroup *config,
+			 std::shared_ptr<BaseX11Wrapper> x11Wrapper,
+			 Display *display,Window root) {
 	name_ = config->getGroupName();
 	LayoutType layoutType;
 	if (config->getGroupLayout() == "Tree") {
@@ -46,7 +48,7 @@ Group::Group(ConfigDataGroup *config) {
 	} else {
 		layoutType = TREE;
 	}
-	wrapper = WindowManager::getInstance()->getX11Wrapper();
+	wrapper = x11Wrapper;
 	borderSize_ = config->getGroupBorderWidth();
 	gap_ = config->getGroupGap();
 	inactiveColor_ = config->getGroupInactiveColor();
@@ -54,13 +56,12 @@ Group::Group(ConfigDataGroup *config) {
 	barHeight_ = 30;
 	active_ = false;
 	Logger::GetInstance()->Log("Group Created [" + name_ + "]", L_INFO);
-	Display *display = WindowManager::getInstance()->getDisplay();
 	int size_x = wrapper->displayWidth(display, wrapper->defaultScreen(display));
 	int size_y = wrapper->displayHeight(display, wrapper->defaultScreen(display));
 	switch (layoutType) {
 		case TREE:
 			layoutManager_ = new TreeLayoutManager(display,
-												   WindowManager::getInstance()->getRoot(),
+												   root,
 												   size_x,
 												   size_y,
 												   0,
@@ -74,7 +75,7 @@ Group::Group(ConfigDataGroup *config) {
 		case HORIZONTAL:
 		default:
 			layoutManager_ = new TreeLayoutManager(display,
-												   WindowManager::getInstance()->getRoot(),
+												   root,
 												   size_x,
 												   size_y,
 												   0,

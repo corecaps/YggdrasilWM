@@ -69,7 +69,7 @@ public:
 	 * @param layoutType The layout type
 	 * @todo add the other layout types
 	 */
-	explicit Group(ConfigDataGroup *config);
+	explicit Group(ConfigDataGroup *config, std::shared_ptr<BaseX11Wrapper> x11Wrapper, Display *display,Window root);
 /**
  * @fn ~Group()
  * @brief Group destructor

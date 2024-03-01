@@ -32,10 +32,14 @@
 #include "X11wrapper/mockX11Wrapper.hpp" // Assume you have a mock for BaseX11Wrapper
 #include "Logger.hpp"
 #include <memory>
+#include "Config/ConfigDataGroup.hpp"
+#include "json/json.h"
+#include "Group.hpp"
 
 using ::testing::_;
 using ::testing::Return;
 using ::testing::AtLeast;
+using ::testing::Invoke;
 
 class ClientTest : public ::testing::Test {
 protected:
@@ -63,42 +67,61 @@ protected:
 		display = nullptr;
 		rootWindow = 42;
 		clientWindow = 4242;
-
 		x11WrapperMock = std::make_shared<mockX11Wrapper>();
-		Group* group = nullptr;
 		Atom mockAtom = 42;
+		Json::Value root;
+		root["group"] = "group";
+		root["layout"] = "tree";
+		root["borderWidth"] = 1;
+		root["gap"] = 1;
+		root["inactiveColor"] = "#000000";
+		root["activeColor"] = "#000000";
+		root["barHeight"] = 30;
+		ConfigDataGroup config = ConfigDataGroup();
+		config.configInit(root);
+		Group group(&config,x11WrapperMock,display,rootWindow);
 		EXPECT_CALL(*x11WrapperMock,internAtom(display,_,_))
 				.Times(AtLeast(1))
 				.WillRepeatedly(Return(mockAtom)); // Adjust as necessary
 		EXPECT_CALL(*x11WrapperMock,getWindowProperty(_,_,_,_,_,_,_,_,_,_,_,_))
 				.Times(AtLeast(1))
 				.WillRepeatedly(Return(Success));
-//		EXPECT_CALL(*x11WrapperMock,freeX(_))
-//				.Times(AtLeast(1))
-//				.WillRepeatedly(Return(Success));
+		EXPECT_CALL(*x11WrapperMock,freeX(_))
+				.Times(AtLeast(1))
+				.WillRepeatedly(Return(Success));
 		client = std::make_unique<Client>(display,
 										  rootWindow,
 										  clientWindow,
-										  group,
+										  &group,
 										  inActiveColor,
 										  borderSize,
-										  x11WrapperMock.get());
+										  x11WrapperMock);
 	}
 
 	void TearDown() override {}
 };
 std::ostringstream ClientTest::oss = std::ostringstream ();
 
+void SetMockWindowAttributes(XWindowAttributes* attrs) {
+	attrs->width = 800;  // Example width
+	attrs->height = 600; // Example height
+	attrs->x = 0;
+	attrs->y = 0;
+	attrs->override_redirect = 0;
+}
+
 TEST_F(ClientTest, FrameUnframe) {
-	// Example to test frame and unframe functionality
-	EXPECT_EQ(1,1);
-	//	EXPECT_CALL(*x11WrapperMock, createSimpleWindow(_, _, _, _, _, _, _, _, _))
-//			.Times(1)
-//			.WillOnce(Return(clientWindow)); // Adjust as necessary
-//
-//	EXPECT_EQ(client->frame(), YGG_CLI_NO_ERROR);
-//	EXPECT_TRUE(client->isFramed());
-//
+	EXPECT_CALL(*x11WrapperMock, createSimpleWindow(_, _, _, _, _, _, _, _, _))
+				.Times(1)
+				.WillOnce(Return(clientWindow));
+	EXPECT_CALL(*x11WrapperMock, getWindowAttributes(_, _, _))
+				.WillOnce(Invoke([](Display* display, Window w, XWindowAttributes* attrs) -> int {
+					SetMockWindowAttributes(attrs);
+					return 1; // Assume '1' indicates success
+				}));
+	EXPECT_EQ(client->frame(), YGG_CLI_NO_ERROR);
+	EXPECT_TRUE(client->isFramed());
+
 //	EXPECT_EQ(client->unframe(), YGG_CLI_NO_ERROR);
 //	EXPECT_FALSE(client->isFramed());
 }

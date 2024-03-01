@@ -25,7 +25,6 @@
  * @date 2024-02-11
  */
 
-#include <X11/keysym.h>
 #include <iostream>
 #include <cstring>
 #include "Client.hpp"
@@ -34,7 +33,6 @@
 #include "Logger.hpp"
 #include "Config/ConfigHandler.hpp"
 #include "Config/ConfigDataBindings.hpp"
-#include "WindowManager.hpp"
 #include "X11wrapper/baseX11Wrapper.hpp"
 Client::Client(Display *display,
 			   Window root,
@@ -42,7 +40,7 @@ Client::Client(Display *display,
 			   Group *group,
 			   unsigned long inActiveColor,
 			   int borderSize,
-			   BaseX11Wrapper *x11Wrapper)
+			   std::shared_ptr<BaseX11Wrapper> x11Wrapper)
 		: display_(display),
 		  root_(root),
 		  group_(group),
@@ -140,7 +138,11 @@ Client_Err Client::frame() {
 			GrabModeAsync,
 			None,
 			None);
-	ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->grabKeys(display_, window_);
+	try {
+		ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->grabKeys(display_, window_);
+	} catch (const std::exception &e) {
+		Logger::GetInstance()->Log(e.what(), L_ERROR);
+	}
 	this->framed = true;
 	this->group_->addClient(window_, this);
 	return YGG_CLI_NO_ERROR;
