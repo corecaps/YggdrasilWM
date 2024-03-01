@@ -114,7 +114,7 @@ Client_Err Client::frame() {
 			border_color,
 			BG_COLOR
 			);
-		wrapper->selectInput(
+	wrapper->selectInput(
 			display_,
 			this->frame_,
 			SubstructureRedirectMask | SubstructureNotifyMask | FocusChangeMask | ClientMessage);

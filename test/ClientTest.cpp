@@ -49,6 +49,8 @@ protected:
 	Window clientWindow;
 	std::shared_ptr<mockX11Wrapper> x11WrapperMock;
 	std::unique_ptr<Client> client;
+	ConfigDataGroup * config;
+	Group * group;
 	unsigned long inActiveColor = 0x000000; // Example color
 	int borderSize = 1; // Example border size
 	static void SetUpTestSuite() {
@@ -61,7 +63,9 @@ protected:
 	ClientTest() : display(nullptr),
 				   rootWindow(0),
 				   clientWindow(0),
-				   client(nullptr) {}
+				   client(nullptr),
+				   group(nullptr),
+				   config(nullptr){}
 
 	void SetUp() override {
 		display = nullptr;
@@ -77,9 +81,27 @@ protected:
 		root["inactiveColor"] = "#000000";
 		root["activeColor"] = "#000000";
 		root["barHeight"] = 30;
-		ConfigDataGroup config = ConfigDataGroup();
-		config.configInit(root);
-		Group group(&config,x11WrapperMock,display,rootWindow);
+		config = new ConfigDataGroup();
+		config->configInit(root);
+		EXPECT_CALL(*x11WrapperMock, defaultScreen(_))
+				.Times(2)
+				.WillRepeatedly(Return(Success));
+		EXPECT_CALL(*x11WrapperMock, displayWidth(_, _))
+				.Times(1)
+				.WillOnce(Return(800));
+		EXPECT_CALL(*x11WrapperMock, displayHeight(_, _))
+				.Times(1)
+				.WillOnce(Return(600));
+		EXPECT_CALL(*x11WrapperMock, moveWindow(_, _, _, _))
+				.Times(1)
+				.WillOnce(Return(clientWindow));
+		EXPECT_CALL(*x11WrapperMock,resizeWindow(_, _, _, _))
+				.Times(2)
+				.WillRepeatedly(Return(Success));
+		EXPECT_CALL(*x11WrapperMock,raiseWindow(_,_))
+				.Times(2)
+				.WillRepeatedly(Return(Success));
+		group = new Group(config,x11WrapperMock,display,rootWindow);
 		EXPECT_CALL(*x11WrapperMock,internAtom(display,_,_))
 				.Times(AtLeast(1))
 				.WillRepeatedly(Return(mockAtom)); // Adjust as necessary
@@ -92,13 +114,16 @@ protected:
 		client = std::make_unique<Client>(display,
 										  rootWindow,
 										  clientWindow,
-										  &group,
+										  group,
 										  inActiveColor,
 										  borderSize,
 										  x11WrapperMock);
 	}
 
-	void TearDown() override {}
+	void TearDown() override {
+		delete config;
+		delete group;
+	}
 };
 std::ostringstream ClientTest::oss = std::ostringstream ();
 
@@ -110,21 +135,50 @@ void SetMockWindowAttributes(XWindowAttributes* attrs) {
 	attrs->override_redirect = 0;
 }
 
-TEST_F(ClientTest, FrameUnframe) {
-	EXPECT_CALL(*x11WrapperMock, createSimpleWindow(_, _, _, _, _, _, _, _, _))
-				.Times(1)
-				.WillOnce(Return(clientWindow));
+TEST_F(ClientTest, Frame) {
 	EXPECT_CALL(*x11WrapperMock, getWindowAttributes(_, _, _))
 				.WillOnce(Invoke([](Display* display, Window w, XWindowAttributes* attrs) -> int {
 					SetMockWindowAttributes(attrs);
 					return 1; // Assume '1' indicates success
 				}));
+	EXPECT_CALL(*x11WrapperMock, createSimpleWindow(_, _, _, _, _, _, _, _, _))
+			.Times(1)
+			.WillOnce(Return(clientWindow));
+	EXPECT_CALL(*x11WrapperMock, selectInput(_,_,SubstructureNotifyMask | SubstructureRedirectMask | FocusChangeMask | ClientMessage))
+				.Times(1)
+				.WillOnce(Return(Success));
+	EXPECT_CALL(*x11WrapperMock, addToSaveSet(_, _))
+				.Times(1)
+				.WillOnce(Return(Success));
+	EXPECT_CALL(*x11WrapperMock, reparentWindow(_,_,_,_,_))
+				.Times(1)
+				.WillOnce(Return(Success));
+	EXPECT_CALL(*x11WrapperMock, mapWindow(_, _))
+				.Times(1)
+				.WillOnce(Return(Success));
+	EXPECT_CALL(*x11WrapperMock, grabButton(_,_,_,_,_,_,_,_,_,_))
+				.Times(1)
+				.WillOnce(Return(Success));
 	EXPECT_EQ(client->frame(), YGG_CLI_NO_ERROR);
+	EXPECT_EQ(client->getFrame(), clientWindow);
 	EXPECT_TRUE(client->isFramed());
-
-//	EXPECT_EQ(client->unframe(), YGG_CLI_NO_ERROR);
-//	EXPECT_FALSE(client->isFramed());
+	EXPECT_EQ(client->frame(), YGG_CLI_LOG_ALREADY_FRAMED);
+	EXPECT_CALL(*x11WrapperMock, destroyWindow(_, clientWindow))
+				.Times(1)
+				.WillOnce(Return(Success));
 }
-
-// Add more tests for move, resize, restack, etc.
-
+void SetMockWindowAttributesOverrideRedirect(XWindowAttributes* attrs) {
+	attrs->width = 800;
+	attrs->height = 600;
+	attrs->x = 0;
+	attrs->y = 0;
+	attrs->override_redirect = 1;
+}
+TEST_F(ClientTest, FrameOverideRedirect) {
+	EXPECT_CALL(*x11WrapperMock, getWindowAttributes(_, _, _))
+			.WillOnce(Invoke([](Display *display, Window w, XWindowAttributes *attrs) -> int {
+				SetMockWindowAttributesOverrideRedirect(attrs);
+				return 1; // Assume '1' indicates success
+			}));
+	EXPECT_EQ(client->frame(), YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT);
+}
