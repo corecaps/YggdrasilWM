@@ -135,6 +135,7 @@ set(SOURCES
         ${INCLUDE_DIR}/X11wrapper/baseX11Wrapper.hpp
         ${SOURCE_DIR}/X11wrapper/X11Wrapper.cpp
         ${INCLUDE_DIR}/X11wrapper/X11Wrapper.hpp
+        ${INCLUDE_DIR}/YggdrasilExceptions.hpp
 )
 
 # create the executable
