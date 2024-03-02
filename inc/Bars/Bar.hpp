@@ -26,6 +26,8 @@
 #define BAR_HPP
 #include <vector>
 #include <string>
+#include <memory>
+
 extern "C" {
 #include <X11/Xlib.h>
 }
@@ -37,7 +39,7 @@ class Bar
 public:
 	Bar();
 	~Bar();
-	void init(ConfigDataBar *configData, TSBarsData *tsData);
+	void init(ConfigDataBar *configData, std::shared_ptr<TSBarsData> tsData);
 	void draw();
 
 	Window getWindow() const;
@@ -46,7 +48,7 @@ public:
 private:
 	ConfigDataBar *configData;
 	std::vector<Widget*> widgets;
-	TSBarsData *tsData;
+	std::shared_ptr<TSBarsData> tsData;
 	Display *display;
 	Window window;
 	Window root;

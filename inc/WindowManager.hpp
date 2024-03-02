@@ -98,7 +98,7 @@ public:
  * @fn std::unordered_map<Window, Client *> &WindowManager::getClients()
  * @brief Get the Clients map
  */
-	std::unordered_map<Window, Client *> &getClients();
+	std::unordered_map<Window, std::shared_ptr<Client>> & getClients();
 /**
  * @fn Client *WindowManager::getClient(Window window)
  * @brief Get the Client by window ptr or frame ptr
@@ -147,7 +147,7 @@ public:
   the active group can be changed by the user
  * @return
  */
-	const std::vector<Group *> &getGroups() const;
+	const std::vector<std::shared_ptr<Group>> & getGroups() const;
 /**
  * @fn Group *WindowManager::getActiveGroup() const
  * @brief get the current Active Group
@@ -200,16 +200,16 @@ private:
 	Display									*display_;
 	static bool								wmDetected;
 	const Window							root_;
-	std::vector<Group *>					groups_;
+	std::vector<std::shared_ptr<Group>>		groups_;
 	Group *									active_group_{};
 	const Atom								WM_PROTOCOLS;
 	const Atom								WM_DELETE_WINDOW;
 	unsigned int							geometryX{};
 	unsigned int							geometryY{};
 	bool									running;
-	std::unordered_map<Window, Client*>		clients_;
+	std::unordered_map<Window, std::shared_ptr<Client>>		clients_;
 	static WindowManager *					instance_;
-	TSBarsData *							tsData;
+	std::shared_ptr<TSBarsData>					tsData;
 	Window									activeWindow;
 	std::shared_ptr<BaseX11Wrapper>			x11Wrapper;
 public:
@@ -223,7 +223,7 @@ private:
  * @fn WindowManager::WindowManager(Display *display, const Logger &logger,ConfigHandler &configHandler)
  * @brief Construct a new WindowManager object
  */
-	WindowManager(Display *display, std::shared_ptr<BaseX11Wrapper> wrapper);
+	WindowManager(Display *display, const std::shared_ptr<BaseX11Wrapper>& wrapper);
 /**
  * @fn void WindowManager::selectEventOnRoot() const
  * @brief set the event mask on the root window and register as the window manager for the X session

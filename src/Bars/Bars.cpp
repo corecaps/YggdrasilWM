@@ -31,13 +31,13 @@
 #include <string>
 #include <thread>
 Bars * Bars::instance = nullptr;
-void Bars::init(ConfigDataBars *config,
-				TSBarsData *data,
-				Display *disp,
+void Bars::init(ConfigDataBars *configD,
+				std::shared_ptr<TSBarsData> tsD,
+				Display *dspl,
 				Window r) {
-	this->configData = config;
-	this->tsData = data;
-	this->display = disp;
+	this->configData = configD;
+	this->tsData =std::move(tsD);
+	this->display = dspl;
 	this->root = r;
 	for (auto &bar : this->configData->getBars()) {
 		std::unique_ptr<Bar> newBar = std::make_unique<Bar>();
@@ -100,8 +100,6 @@ Bars::Bars() : spaceN(0),
 Bars::~Bars() {
 	if (this->configData != nullptr)
 		delete this->configData;
-	if (this->tsData != nullptr)
-		delete this->tsData;
 }
 void Bars::createInstance() {
 	if (Bars::instance == nullptr)

@@ -57,7 +57,7 @@ void WindowManager::create(std::shared_ptr<BaseX11Wrapper> wrapper,const std::st
 	Logger::GetInstance()->Log("Opened X Display:\t" + std::string(XDisplayName(displayCStr)), L_INFO);
 	WindowManager::instance_ = new WindowManager(display,wrapper);
 }
-WindowManager::WindowManager(Display *display, std::shared_ptr<BaseX11Wrapper> wrapper)
+WindowManager::WindowManager(Display *display, const std::shared_ptr<BaseX11Wrapper>& wrapper)
 		: display_(display),
 		  root_(DefaultRootWindow(display)),
 		  WM_PROTOCOLS( wrapper->internAtom(display_, "WM_PROTOCOLS", false)),
@@ -70,15 +70,13 @@ WindowManager::WindowManager(Display *display, std::shared_ptr<BaseX11Wrapper> w
 		  activeWindow(0),
 		  x11Wrapper(wrapper){}
 WindowManager::~WindowManager() {
-	for (auto &client: clients_) {
-		delete client.second;
-	}
 	clients_.clear();
-	for (auto &group: groups_) {
-		delete group;
-	}
 	groups_.clear();
-	x11Wrapper->closeDisplay(display_);
+	try {
+		x11Wrapper->closeDisplay(display_);
+	} catch (const YggdrasilException &e) {
+		Logger::GetInstance()->Log(e.what(), L_ERROR);
+	}
 	Logger::GetInstance()->Log("WindowManager destroyed", L_INFO);
 }
 void WindowManager::init() {
@@ -92,7 +90,7 @@ void WindowManager::init() {
 	geometryY = x11Wrapper->displayHeight(display_, x11Wrapper->defaultScreen(display_));
 	x11Wrapper->grabServer(display_);
 	ewmh::initEwmh(display_,root_);
-	tsData = new TSBarsData();
+	tsData = std::make_shared<TSBarsData>();
 	getTopLevelWindows();
 	createBars();
 	x11Wrapper->ungrabServer(display_);
@@ -151,18 +149,18 @@ void WindowManager::createBars() {
 	unsigned int sizeY = geometryY - Bars::getInstance().getSpaceN() - Bars::getInstance().getSpaceS() - active_group_->getBorderSize() * 2;
 	unsigned int posX = Bars::getInstance().getSpaceW();
 	unsigned int posY = Bars::getInstance().getSpaceN();
-	for (auto g:groups_) {
+	for (auto &g:groups_) {
 		g->resize(sizeX,sizeY,posX,posY);
 	}
 }
 void WindowManager::addGroupsFromConfig() {
 	auto configGroups = ConfigHandler::GetInstance().getConfigData<ConfigDataGroups>()->getGroups();
 	for (auto group: configGroups) {
-		Group *g = new Group(group, x11Wrapper,display_,root_);
+		std::shared_ptr<Group> g = std::make_shared<Group>(group, x11Wrapper,display_,root_);
 		groups_.push_back(g);
 	}
 	groups_[0]->setActive(true);
-	active_group_ = groups_[0];
+	active_group_ = groups_[0].get();
 	Logger::GetInstance()->Log("Active Group is [" + active_group_->getName() + "]", L_INFO);
 }
 void WindowManager::Run() {
@@ -224,9 +222,13 @@ void WindowManager::Stop() {
 	ev.window = root_;
 	ev.message_type = XInternAtom(display_, "WM_PROTOCOLS", False);
 	ev.format = 32;
-	ev.data.l[0] = XInternAtom(display_, "WM_DELETE_WINDOW", False);
-	x11Wrapper->sendEvent(display_, root_, False, NoEventMask, (XEvent *)&ev);
-	x11Wrapper->flush(display_); // Ensure the event is sent immediately
+	ev.data.l[0] = static_cast<long>(XInternAtom(display_, "WM_DELETE_WINDOW", False));
+	try {
+		x11Wrapper->sendEvent(display_, root_, False, NoEventMask, (XEvent *) &ev);
+		x11Wrapper->flush(display_); // Ensure the event is sent immediately
+	} catch (const YggdrasilException &e) {
+		std::cerr << e.what();
+	}
 	std::cout << "Stopping WindowManager" << std::endl;
 }
 WindowManager * WindowManager::getInstance() {
@@ -239,23 +241,23 @@ WindowManager * WindowManager::getInstance() {
 Client *WindowManager::getClient(Window window) {
 	auto clientIter = clients_.find(window);
 	if (clientIter != clients_.end()) {
-		return clientIter->second;
+		return clientIter->second.get();
 	}
 	for (const auto &client: clients_) {
 		if (client.second->getFrame() == window) {
-			return client.second;
+			return client.second.get();
 		}
 	}
 	return nullptr;
 }
 Display *WindowManager::getDisplay() const { return display_; }
-std::unordered_map<Window, Client *> &WindowManager::getClients() { return clients_; }
+std::unordered_map<Window, std::shared_ptr<Client>> & WindowManager::getClients() { return clients_; }
 Client &WindowManager::getClientRef(Window window) { return *clients_.at(window); }
 Window WindowManager::getRoot() const { return root_; }
 unsigned long WindowManager::getClientCount() { return clients_.size(); }
 void WindowManager::setActiveGroup(Group *activeGroup) { active_group_ = activeGroup; }
 Group *WindowManager::getActiveGroup() const { return active_group_; }
-const std::vector<Group *> &WindowManager::getGroups() const { return groups_; }
+const std::vector<std::shared_ptr<Group>> & WindowManager::getGroups() const { return groups_; }
 bool WindowManager::getRunning() const { return running; }
 unsigned int WindowManager::getGeometryX() const { return geometryX; }
 unsigned int WindowManager::getGeometryY() const { return geometryY; }

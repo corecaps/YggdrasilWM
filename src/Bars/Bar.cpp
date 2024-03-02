@@ -34,9 +34,9 @@ Bar::~Bar() {
 
 }
 
-void Bar::init(ConfigDataBar *config, TSBarsData *ts) {
+void Bar::init(ConfigDataBar *config, std::shared_ptr<TSBarsData> ts) {
 	configData = config;
-	tsData = ts;
+	tsData = std::move(ts);
 	display = WindowManager::getInstance()->getDisplay();
 	int screen = DefaultScreen(display);
 	root = RootWindow(display, screen);

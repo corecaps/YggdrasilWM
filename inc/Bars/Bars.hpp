@@ -82,7 +82,7 @@ public:
  * @param root to limit calls to WindowManager::getRoot
  */
 	void init(ConfigDataBars *configData,
-			  TSBarsData *tsData,
+			  std::shared_ptr<TSBarsData> tsData,
 			  Display *display,
 			  Window root);
 /**
@@ -128,7 +128,7 @@ private:
 	std::vector<std::unique_ptr<Bar>> bars;
 	std::vector<Window> windows;
 	ConfigDataBars *configData;
-	TSBarsData* tsData;
+	std::shared_ptr<TSBarsData> tsData;
 	std::unordered_map<std::string, std::string> data;
 	Display* display;
 	Window root;

@@ -323,9 +323,12 @@ void EventHandler::handleMapRequest(const XEvent &event) {
 		}
 		else {
 			Logger::GetInstance()->Log("Framing window: " + client.getTitle(), L_INFO);
-			if (client.frame() != YGG_CLI_NO_ERROR)
-				Logger::GetInstance()->Log("Failed to frame window: " + std::to_string(e.window), L_ERROR);
-			WindowManager::getInstance()->setFocus(&client);
+			try {
+				client.frame();
+				WindowManager::getInstance()->setFocus(&client);
+			} catch (const std::exception &ex) {
+				Logger::GetInstance()->Log(ex.what(), L_ERROR);
+			}
 		}
 		Logger::GetInstance()->Log("Window already mapped: " + std::to_string(e.window), L_INFO);
 		return;
@@ -333,8 +336,11 @@ void EventHandler::handleMapRequest(const XEvent &event) {
 	catch (std::out_of_range &err) {
 		Logger::GetInstance()->Log("Creating new client for window: " + std::to_string(e.window), L_INFO);
 		WindowManager::getInstance()->insertClient(e.window);
-		if (WindowManager::getInstance()->getClientRef(e.window).frame() != YGG_CLI_NO_ERROR)
-			Logger::GetInstance()->Log("Failed to frame window: " + std::to_string(e.window), L_ERROR);
+		try {
+			WindowManager::getInstance()->getClientRef(e.window).frame();
+		} catch (const std::exception &ex) {
+			Logger::GetInstance()->Log(ex.what(), L_ERROR);
+		}
 	}
 	wrapper->mapWindow(WindowManager::getInstance()->getDisplay(), e.window);
 }

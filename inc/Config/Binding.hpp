@@ -39,7 +39,7 @@ class BaseX11Wrapper;
 class Binding {
 public:
 	Binding();
-	~Binding() = default;
+	~Binding();
 /**
  * @fn void Binding::init(std::string Mod, std::string Key, std::string Command, std::string Args)
  * @brief Initialize a binding

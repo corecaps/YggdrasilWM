@@ -94,3 +94,7 @@ void Binding::init_keycode(Display *display, BaseX11Wrapper *x11Wrapper) {
 								+ std::to_string(keyCode_)
 								+"]", L_INFO);
 }
+
+Binding::~Binding() {
+	delete command_;
+}
