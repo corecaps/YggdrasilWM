@@ -85,7 +85,7 @@ TEST_F(BindingTest, init) {
 
 	EXPECT_CALL(*this->x11WrapperMock, keysymToKeycode(displayMock, _))
 			.Times(1)
-			.WillOnce(Return(42));
+			.WillOnce(Return(43));
 	EXPECT_CALL(*this->x11WrapperMock, stringToKeysym(_))
 			.Times(1)
 			.WillOnce(Return(42));
@@ -96,7 +96,7 @@ TEST_F(BindingTest, init) {
 	EXPECT_EQ(binding.getCommandName(), command);
 	EXPECT_EQ(binding.getArgs(), args);
 	EXPECT_EQ(binding.getModMask(), Mod4Mask);
-	EXPECT_EQ(binding.getKeyCode(), 42);
+	EXPECT_EQ(binding.getKeyCode(), 43);
 }
 TEST_F(BindingTest, wrongInit) {
 	Binding binding1;

@@ -33,8 +33,8 @@
 #include "Logger.hpp"
 #include <memory>
 #include "Config/ConfigDataGroup.hpp"
-#include "json/json.h"
 #include "Group.hpp"
+#include "YggdrasilExceptions.hpp"
 
 using ::testing::_;
 using ::testing::Return;
@@ -124,18 +124,18 @@ protected:
 };
 std::ostringstream ClientTest::oss = std::ostringstream ();
 
-void SetMockWindowAttributes(XWindowAttributes* attrs) {
+void SetMockWindowAttributes(XWindowAttributes* attrs, int ovrd) {
 	attrs->width = 800;  // Example width
 	attrs->height = 600; // Example height
 	attrs->x = 0;
 	attrs->y = 0;
-	attrs->override_redirect = 0;
+	attrs->override_redirect = ovrd;
 }
 
 TEST_F(ClientTest, Frame) {
 	EXPECT_CALL(*x11WrapperMock, getWindowAttributes(_, _, _))
 				.WillOnce(Invoke([](Display* display, Window w, XWindowAttributes* attrs) -> int {
-					SetMockWindowAttributes(attrs);
+					SetMockWindowAttributes(attrs,0);
 					return 1; // Assume '1' indicates success
 				}));
 	EXPECT_CALL(*x11WrapperMock, createSimpleWindow(_, _, _, _, _, _, _, _, _))
@@ -156,27 +156,20 @@ TEST_F(ClientTest, Frame) {
 	EXPECT_CALL(*x11WrapperMock, grabButton(_,_,_,_,_,_,_,_,_,_))
 				.Times(1)
 				.WillOnce(Return(Success));
-	EXPECT_EQ(client->frame(), YGG_CLI_NO_ERROR);
+	client->frame();
 	EXPECT_EQ(client->getFrame(), clientWindow);
 	EXPECT_TRUE(client->isFramed());
-	EXPECT_EQ(client->frame(), YGG_CLI_LOG_ALREADY_FRAMED);
+	EXPECT_THROW(client->frame(), YggdrasilException);
 	EXPECT_CALL(*x11WrapperMock, destroyWindow(_, clientWindow))
 				.Times(1)
 				.WillOnce(Return(Success));
 }
-void SetMockWindowAttributesOverrideRedirect(XWindowAttributes* attrs) {
-	attrs->width = 800;
-	attrs->height = 600;
-	attrs->x = 0;
-	attrs->y = 0;
-	attrs->override_redirect = 1;
-}
 TEST_F(ClientTest, FrameOverideRedirect) {
 	EXPECT_CALL(*x11WrapperMock, getWindowAttributes(_, _, _))
 			.WillOnce(Invoke([](Display *display, Window w, XWindowAttributes *attrs) -> int {
-				SetMockWindowAttributesOverrideRedirect(attrs);
-				return 1; // Assume '1' indicates success
+				SetMockWindowAttributes(attrs,1);
+				return 1;
 			}));
-	EXPECT_EQ(client->frame(), YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT);
+	EXPECT_THROW(client->frame(),YggdrasilException);
 	EXPECT_EQ(client->getFrame(), 0);
 }
