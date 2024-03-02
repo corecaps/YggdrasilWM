@@ -34,8 +34,8 @@
  */
 class Quit : public CommandBase {
 public:
-	Quit();
-	~Quit() override = default;
-	void execute(const std::string &args) override;
+			Quit();
+			~Quit() override = default;
+	void	execute(const std::string &args) override;
 };
 #endif //YGGDRASILWM_QUIT_HPP

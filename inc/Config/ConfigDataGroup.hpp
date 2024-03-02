@@ -39,8 +39,8 @@
  */
 class ConfigDataGroup : public ConfigDataBase {
 public:
-	ConfigDataGroup();
-	~ConfigDataGroup() override = default;
+			ConfigDataGroup();
+			~ConfigDataGroup() override = default;
 /**
  * @fn void ConfigDataGroup::configInit(Json::Value& root)
  * @brief Initialize the configuration for a group from the config file.
@@ -48,21 +48,21 @@ public:
  * Parse the Json::Value root and store the values in the object.
  * @param root
  */
-	void configInit(const Json::Value& root) override;
-	Json::Value configSave() override;
-	[[nodiscard]] const std::string &getGroupName() const;
-	[[nodiscard]] const std::string &getGroupLayout() const;
-	[[nodiscard]] unsigned long getGroupInactiveColor() const;
-	[[nodiscard]] unsigned long getGroupActiveColor() const;
-	[[nodiscard]] int getGroupBorderWidth() const;
-	[[nodiscard]] int getGroupGap() const;
+	void	configInit(const Json::Value& root) override;
+	Json::Value							configSave() override;
+	[[nodiscard]] const std::string &	getGroupName() const;
+	[[nodiscard]] const std::string &	getGroupLayout() const;
+	[[nodiscard]] unsigned long			getGroupInactiveColor() const;
+	[[nodiscard]] unsigned long			getGroupActiveColor() const;
+	[[nodiscard]] int					getGroupBorderWidth() const;
+	[[nodiscard]] int					getGroupGap() const;
 
 private:
-	std::string groupName_;
-	std::string groupLayout_;
-	unsigned long groupInactiveColor_{};
-	unsigned long groupActiveColor_{};
-	int groupBorderSize_{};
-	int groupGap_{};
+	std::string		groupName_;
+	std::string		groupLayout_;
+	unsigned long	groupInactiveColor_{};
+	unsigned long	groupActiveColor_{};
+	int				groupBorderSize_{};
+	int				groupGap_{};
 };
 #endif //YGGDRASILWM_CONFIGDATAGROUP_HPP

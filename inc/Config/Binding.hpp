@@ -38,8 +38,8 @@ class BaseX11Wrapper;
  */
 class Binding {
 public:
-	Binding();
-	~Binding();
+			Binding();
+			~Binding();
 /**
  * @fn void Binding::init(std::string Mod, std::string Key, std::string Command, std::string Args)
  * @brief Initialize a binding
@@ -48,33 +48,33 @@ public:
  * Key is parsed to store the proper keyCode using XStringToKeysym
  * Command is parsed to link the proper command object
  */
-	void init(std::string Mod, std::string Key, std::string Command, std::string Args);
+	void	init(std::string Mod, std::string Key, std::string Command, std::string Args);
 /**
  * @fn void Binding::init_keycode(Display *display)
  * @brief Initialize the keycode of the binding
  * had to be initialized after the display is opened
  * @param display
  */
-	void init_keycode(Display *display, BaseX11Wrapper *x11Wrapper);
+	void	init_keycode(Display *display, BaseX11Wrapper *x11Wrapper);
 /**
  * @fn void Binding::execute()
  * @brief Execute the command linked to the binding
  * The arguments passed to the command are the one stored in the binding
  */
 	void execute();
-	[[nodiscard]] const std::string &getMod() const;
-	[[nodiscard]] const std::string &getKey() const;
-	[[nodiscard]] const std::string &getCommandName() const;
-	[[nodiscard]] const std::string &getArgs() const;
-	[[nodiscard]] unsigned int getModMask() const;
-	[[nodiscard]] int getKeyCode() const;
+	[[nodiscard]] const std::string &	getMod() const;
+	[[nodiscard]] const std::string &	getKey() const;
+	[[nodiscard]] const std::string &	getCommandName() const;
+	[[nodiscard]] const std::string &	getArgs() const;
+	[[nodiscard]] unsigned int			getModMask() const;
+	[[nodiscard]] int					getKeyCode() const;
 private:
-	std::string mod_;
-	unsigned int modMask_;
-	std::string key_;
-	int keyCode_;
-	std::string commandName_;
-	std::string args_;
-	CommandBase *command_;
+	std::string		mod_;
+	unsigned int	modMask_;
+	std::string		key_;
+	int				keyCode_;
+	std::string		commandName_;
+	std::string		args_;
+	CommandBase*	command_;
 };
 #endif //YGGDRASILWM_BINDING_H

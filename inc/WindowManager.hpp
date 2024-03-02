@@ -77,23 +77,23 @@ public:
  * creates clients for the existing top level windows
  * and launch the bar window
  */
-	void init();
+	void			init();
 /**
  * @fn void WindowManager::Run()
  * @brief Run the window manager
  */
-	void Run();
+	void			Run();
 // Getters
 /**
  * @fn Display *WindowManager::getDisplay() const
  * @brief Get the Display object
  */
-	Display *getDisplay() const;
+	Display			*getDisplay() const;
 /**
  * @fn Window WindowManager::getRoot() const
  * @brief Get the Root Window pointer
  */
-	Window getRoot() const;
+	Window			getRoot() const;
 /**
  * @fn std::unordered_map<Window, Client *> &WindowManager::getClients()
  * @brief Get the Clients map
@@ -105,36 +105,36 @@ public:
  * @param window
  * @return nullptr if not found
  */
-	Client * getClient(Window window);
+	Client *		getClient(Window window);
 /**
  * @fn Client &WindowManager::getClientRef(Window window)
  * @brief Get a ref to the Client by window ptr does not look for frames and throws if not found
  */
-	Client &getClientRef(Window window);
+	Client &		getClientRef(Window window);
 /**
  * @fn unsigned long WindowManager::getClientCount()
  * @brief Get the number of clients
  */
-	unsigned long getClientCount();
+	unsigned long	getClientCount();
 // Setters
 /**
  * @fn void WindowManager::setFocus(Client *client)
  * @brief Set the focus to a client
  */
-	void setFocus(Client *client);
+	void		setFocus(Client *client);
 /**
  * @fn void WindowManager::insertClient(Window window)
  * @brief Insert a client in the clients map
  * @param window
  */
-	void insertClient(Window window);
+	void		insertClient(Window window);
 // Running control
 /**
  * @fn void WindowManager::Stop()
  * @brief Stop the window manager
   @todo: implement a clean way to stop the window manager
  */
-	void Stop();
+	void		Stop();
 /**
  * @fn const std::vector<Group *> &WindowManager::getGroups() const
  * @brief Get the Groups vector
@@ -147,19 +147,19 @@ public:
   the active group can be changed by the user
  * @return
  */
-	const std::vector<std::shared_ptr<Group>> & getGroups() const;
+	const std::vector<std::shared_ptr<Group>> &	getGroups() const;
 /**
  * @fn Group *WindowManager::getActiveGroup() const
  * @brief get the current Active Group
  * @return
  */
-	Group *getActiveGroup() const;
+	Group					*getActiveGroup() const;
 
 /**
  * @fn bool WindowManager::getRunning() const
  * @brief Get the Running status
  */
-	bool getRunning() const;
+	bool					getRunning() const;
 /**
  * @fn WindowManager *WindowManager::getInstance()
  * @brief Get the WindowManager instance
@@ -168,13 +168,13 @@ public:
   if it does not exist, it creates it
  * @return WindowManager* instance
  */
-	static WindowManager * getInstance();
+	static WindowManager *	getInstance();
 /**
  * @fn void WindowManager::setActiveGroup(Group *activeGroup)
  * @brief set the current active group
  * @param activeGroup
  */
-	void setActiveGroup(Group *activeGroup);
+	void			setActiveGroup(Group *activeGroup);
 /**
  * @fn static void WindowManager::Destroy()
  * @brief Destroy the WindowManager instance
@@ -183,18 +183,20 @@ public:
   this is a singleton class
   this function should be called when the WindowManager is no longer needed
  */
-	static void Destroy();
+	static void		Destroy();
 /**
  * @fn void WindowManager::testRun()
  * @brief test function
   this function is used for testing purposes
   it is not used in the normal operation of the window manager
  */
-	void testRun();
+	void									testRun();
+	unsigned int							getGeometryX() const;
+	unsigned int							getGeometryY() const;
+	Window									getActiveWindow() const;
+	void									setActiveWindow(Window activeWindow);
+	const std::shared_ptr<BaseX11Wrapper> &	getX11Wrapper() const;
 
-	unsigned int getGeometryX() const;
-
-	unsigned int getGeometryY() const;
 
 private:
 	Display									*display_;
@@ -212,34 +214,28 @@ private:
 	std::shared_ptr<TSBarsData>					tsData;
 	Window									activeWindow;
 	std::shared_ptr<BaseX11Wrapper>			x11Wrapper;
-public:
-	Window getActiveWindow() const;
-
-	void setActiveWindow(Window activeWindow);
-
-private:
 // Initialisation
 /**
  * @fn WindowManager::WindowManager(Display *display, const Logger &logger,ConfigHandler &configHandler)
  * @brief Construct a new WindowManager object
  */
-	WindowManager(Display *display, const std::shared_ptr<BaseX11Wrapper>& wrapper);
+				WindowManager(Display *display, const std::shared_ptr<BaseX11Wrapper>& wrapper);
 /**
  * @fn void WindowManager::selectEventOnRoot() const
  * @brief set the event mask on the root window and register as the window manager for the X session
  */
-	void selectEventOnRoot() const;
+	void		selectEventOnRoot() const;
 /**
  * @fn void WindowManager::getTopLevelWindows(std::stringstream &debug_stream)
  * @brief look for existing top level windows and create clients for them
  */
-	void getTopLevelWindows();
+	void		getTopLevelWindows();
 // Error Management
 /**
  * @fn static int WindowManager::OnXError(Display *display, XErrorEvent *e)
  * @brief X11 Error handler
  */
-	static int OnXError(Display *display, XErrorEvent *e);
+	static int	OnXError(Display *display, XErrorEvent *e);
 /**
  * @fn static int WindowManager::onWmDetected(Display *display, XErrorEvent *e)
  * @brief When selecting events on the root window, we may get a BadAccess error if another window manager is running
@@ -247,21 +243,14 @@ private:
   it sets the wmDetected flag to true and stops the window manager
   only one window manager can run at a time
  */
-	static int onWmDetected([[maybe_unused]] Display *display, XErrorEvent *e);
-
-public:
-	const std::shared_ptr<BaseX11Wrapper> &getX11Wrapper() const;
-
-private:
+	static int	onWmDetected([[maybe_unused]] Display *display, XErrorEvent *e);
 /**
  * @fn void WindowManager::addGroupsFromConfig()
  * @brief add groups configured in the ConfigDataGroups to the groups vector
  */
-	void addGroupsFromConfig();
-	void createBars();
+	void		addGroupsFromConfig();
+	void		createBars();
 };
+
 void handleSIGHUP(int signal);
-
-
-
-#endif
+#endif //WINDOW_MANAGER_HPP

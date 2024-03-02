@@ -40,22 +40,22 @@
 class ConfigDataGroup;
 class ConfigDataGroups : public ConfigDataBase {
 public:
-	ConfigDataGroups();
-	~ConfigDataGroups() override;
+						ConfigDataGroups();
+						~ConfigDataGroups() override;
 /**
  * @fn void ConfigDataGroups::configInit(Json::Value& root)
  * @brief Must be called after instanciation to load the config file.
  * Parses the json root and creates ConfigDataGroup objects.
  * @param root
  */
-	void configInit(const Json::Value& root) override;
-	Json::Value configSave() override;
-	ConfigDataGroup * getGroup(int index);
-	void addGroup(ConfigDataGroup * group);
-	void removeGroup(ConfigDataGroup * group);
-	[[nodiscard]] const std::vector<ConfigDataGroup *> &getGroups() const;
+	void				configInit(const Json::Value& root) override;
+	Json::Value			configSave() override;
+	void				addGroup(ConfigDataGroup * group);
+	void				removeGroup(ConfigDataGroup * group);
+	ConfigDataGroup *										getGroup(int index);
+	[[nodiscard]] const std::vector<ConfigDataGroup *> &	getGroups() const;
 
 private:
-	std::vector<ConfigDataGroup *> groups_;
+	std::vector<ConfigDataGroup *>	groups_;
 };
 #endif //YGGDRASILWM_CONFIGDATAGROUPS_HPP

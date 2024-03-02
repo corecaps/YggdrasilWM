@@ -124,18 +124,18 @@ public:
  */
 	void redraw();
 private:
-	static Bars* instance;
-	std::vector<std::unique_ptr<Bar>> bars;
-	std::vector<Window> windows;
-	ConfigDataBars *configData;
-	std::shared_ptr<TSBarsData> tsData;
-	std::unordered_map<std::string, std::string> data;
-	Display* display;
-	Window root;
-	unsigned int spaceN;
-	unsigned int spaceS;
-	unsigned int spaceE;
-	unsigned int spaceW;
+	static Bars*									instance;
+	std::vector<std::unique_ptr<Bar>>				bars;
+	std::vector<Window>								windows;
+	ConfigDataBars *								configData;
+	std::shared_ptr<TSBarsData>						tsData;
+	std::unordered_map<std::string, std::string>	data;
+	Display*										display;
+	Window											root;
+	unsigned int									spaceN;
+	unsigned int									spaceS;
+	unsigned int									spaceE;
+	unsigned int									spaceW;
 
 	Bars();
 /**
@@ -143,6 +143,5 @@ private:
  * @brief Select the events for the bars
  */
 	void selectEvents();
-
 };
 #endif // BARS_HPP

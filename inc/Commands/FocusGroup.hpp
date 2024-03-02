@@ -33,13 +33,13 @@
  */
 class FocusGroup : public CommandBase {
 public:
-	FocusGroup();
-	~FocusGroup() override = default;
+			FocusGroup();
+			~FocusGroup() override = default;
 /**
  * @fn void FocusGroup::execute(const std::string &args)
  * @brief switch from the current active group to the group index passed as argument
  * @param args the string will be parsed to an integer to switch to the group index
  */
-	void execute(const std::string &args) override;
+	void	execute(const std::string &args) override;
 };
 #endif //YGGDRASILWM_FOCUSGROUP_HPP

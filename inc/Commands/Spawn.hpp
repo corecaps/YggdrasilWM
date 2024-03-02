@@ -33,8 +33,8 @@
  */
 class Spawn : public CommandBase {
 public:
-	Spawn();
-	~Spawn() override = default;
+			Spawn();
+			~Spawn() override = default;
 /**
  * @fn void Spawn::execute(const std::string &args)
  * @brief Spawn a program using the command arguments
@@ -44,6 +44,6 @@ public:
  * throw an exception if the command fails
  * @param args the first word separated by a space is the binary name, the rest is the arguments
  */
-	void execute(const std::string &args) override;
+	void	execute(const std::string &args) override;
 };
 #endif //YGGDRASILWM_SPAWN_HPP

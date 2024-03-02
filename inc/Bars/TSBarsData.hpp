@@ -39,10 +39,10 @@ public:
 	void modifyData(std::string key, std::string value);
 	bool wait();
 private:
-	std::mutex mutex;
-	std::condition_variable cv;
-	std::unordered_map<std::string, std::string> data;
-	std::set<std::string> modifiedKeys;
+	std::mutex										mutex;
+	std::condition_variable							cv;
+	std::unordered_map<std::string, std::string>	data;
+	std::set<std::string>							modifiedKeys;
 	bool dataChanged = false;
 };
 #endif // TSBARSDATA_HPP

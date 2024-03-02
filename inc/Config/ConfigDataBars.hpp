@@ -85,7 +85,7 @@ public:
  */
 	[[nodiscard]] const std::vector<ConfigDataBar *> &getBars() const;
 private:
-	std::vector<ConfigDataBar *> bars_;
+	std::vector<ConfigDataBar *>	bars_;
 };
 
 #endif //YGGDRASILWM_CONFIGDATABARS_HPP

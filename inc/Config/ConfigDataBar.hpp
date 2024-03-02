@@ -94,19 +94,17 @@ public:
  * @brief Get the Bar Border Color
  */
 	[[nodiscard]] unsigned int getBarBorderColor() const;
-private:
-public:
 	const std::string &getBarPosition() const;
 
 private:
-	int barSize_;
-	std::string barFont_;
-	std::string barPosition_;
-	unsigned int barFontColor_;
-	int barFontSize_;
-	unsigned int barBackgroundColor_;
-	int barBorderSize_;
-	unsigned int barBorderColor_;
+	int				barSize_;
+	std::string		barFont_;
+	std::string		barPosition_;
+	unsigned int	barFontColor_;
+	int				barFontSize_;
+	unsigned int	barBackgroundColor_;
+	int				barBorderSize_;
+	unsigned int	barBorderColor_;
 };
 
 #endif //YGGDRASILWM_CONFIGDATAGROUP_HPP

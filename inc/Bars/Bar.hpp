@@ -27,24 +27,25 @@
 #include <vector>
 #include <string>
 #include <memory>
-
 extern "C" {
 #include <X11/Xlib.h>
 }
+
 class ConfigDataBar;
 class Widget;
 class TSBarsData;
+
 class Bar
 {
 public:
-	Bar();
-	~Bar();
-	void init(ConfigDataBar *configData, std::shared_ptr<TSBarsData> tsData);
-	void draw();
+					Bar();
+					~Bar();
+	void			init(ConfigDataBar *configData, std::shared_ptr<TSBarsData> tsData);
+	void			draw();
+	Window			getWindow() const;
+	unsigned int	getSizeX() const;
+	unsigned int	getSizeY() const;
 
-	Window getWindow() const;
-	unsigned int getSizeX() const;
-	unsigned int getSizeY() const;
 private:
 	ConfigDataBar *configData;
 	std::vector<Widget*> widgets;
@@ -60,7 +61,5 @@ private:
 	unsigned long borderColor;
 	unsigned int borderSize;
 	std::string font;
-
-
 };
 #endif // BAR_HPP
