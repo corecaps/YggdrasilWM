@@ -36,20 +36,7 @@ extern "C" {
 class Group;
 class LayoutManager;
 class BaseX11Wrapper;
-/**
- * @enum Client_Err
- * @brief Client_Err enum to handle the error of the Client class
- */
-enum Client_Err {
-	YGG_CLI_NO_ERROR,
-	YGG_CLI_LOG,
-	YGG_CLI_LOG_ALREADY_FRAMED,
-	YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT,
-	YGG_CLI_LOG_IGNORE_NOT_FRAMED,
-	YGG_CLI_WARNING,
-	YGG_CLI_ERROR,
-	YGG_CLI_ERR_RETRIEVE_ATTR,
-};
+
 /**
  * @class Client
  * @brief The Client class is responsible for managing the client windows.
@@ -86,13 +73,13 @@ public:
  * @brief Client::frame create a frame around the client window, Map the frame,
  * Add the window to the save set Reparent it, grab the buttons
  */
-	Client_Err frame();
+	void frame();
 /**
  * @fn Client_Err Client::unframe()
  * @brief Client::unframe unframe the client window by removing the frame and reparenting the window to the root window
  * @return Client_Err error code from the Client_Err enum
  */
-	Client_Err unframe();
+	void unframe();
 /**
  * @fn Window Client::getWindow() const
  * @brief Client::getWindow return the window attribute of the client
@@ -105,13 +92,6 @@ public:
  * @return
  */
 	[[nodiscard]] Group *getGroup() const;
-/**
- * @fn static std::string Client::getError(Client_Err error)
- * @brief Client::getError Return a string from an error of Client_Err enum
- * @param error error code from the Client_Err enum
- * @return String of error
- */
-	static std::string getError(Client_Err error);
 /**
  * @fn void Client::move(int x, int y)
  * @brief: Client::move move the client window to the given position

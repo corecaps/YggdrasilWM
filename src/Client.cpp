@@ -25,8 +25,8 @@
  * @date 2024-02-11
  */
 
-#include <iostream>
 #include <cstring>
+#include <utility>
 #include "Client.hpp"
 #include "Layouts/LayoutManager.hpp"
 #include "Group.hpp"
@@ -34,6 +34,8 @@
 #include "Config/ConfigHandler.hpp"
 #include "Config/ConfigDataBindings.hpp"
 #include "X11wrapper/baseX11Wrapper.hpp"
+#include "YggdrasilExceptions.hpp"
+
 Client::Client(Display *display,
 			   Window root,
 			   Window window,
@@ -50,17 +52,14 @@ Client::Client(Display *display,
 		  border_color(inActiveColor),
 		  framed(false),
 		  mapped(false),
-		  wrapper(x11Wrapper)
+		  wrapper(std::move(x11Wrapper))
 {
 	Atom wmClassAtom = wrapper->internAtom(display, "WM_CLASS", False);
-	if (wmClassAtom == None) {
-		Logger::GetInstance()->Log("Failed to intern WM_CLASS atom.",L_ERROR);
-	}
 	Atom actualType;
 	int actualFormat;
 	unsigned long nItems, bytesAfter;
 	unsigned char* propData;
-	if (wrapper->getWindowProperty(display,
+	wrapper->getWindowProperty(display,
 								   window,
 								   wmClassAtom,
 								   0,
@@ -71,38 +70,40 @@ Client::Client(Display *display,
 								   &actualFormat,
 								   &nItems,
 								   &bytesAfter,
-								   &propData) != Success) {
-		Logger::GetInstance()->Log("Failed to get WM_CLASS property.", L_ERROR);
-	}
-//	Atom XA_STRING = XInternAtom(display, "STRING", False);
+								   &propData);
 	if (actualType == XA_STRING && actualFormat == 8 && nItems > 1) {
-		// The WM_CLASS property contains two null-terminated strings.
 		char* instanceName = reinterpret_cast<char*>(propData);
 		char* className = instanceName + strlen(instanceName) + 1;
 		this->class_ = className;
 		this->title_ = instanceName;
 	} else {
-		Logger::GetInstance()->Log("Unexpected format or size of WM_CLASS property.",L_ERROR);
+		Logger::GetInstance()->Log("Failed to get WM_CLASS property", L_ERROR);
+		this->class_ = "Unknown";
+		this->title_ = "Unknown";
 	}
 	wrapper->freeX(propData);
 }
 Client::~Client() {
-	if (this->framed) {
-		wrapper->destroyWindow(display_, frame_);
+	try {
+		if (this->framed) {
+			wrapper->destroyWindow(display_, frame_);
+		}
+	} catch (const X11Exception &e) {
+		Logger::GetInstance()->Log(e.what(), L_ERROR);
+		throw e;
 	}
 	Logger::GetInstance()->Log("Client destroyed :" + title_, L_INFO);
 }
-Client_Err Client::frame() {
+void Client::frame() {
 	const unsigned long BG_COLOR = 0x000000;
 	border_width = group_->getBorderSize();
 	border_color = group_->getInactiveColor();
 	if (this->framed)
-		return(YGG_CLI_LOG_ALREADY_FRAMED);
+		throw YggdrasilException("Client is already framed");
 	XWindowAttributes x_window_attrs;
-	if (wrapper->getWindowAttributes(display_, window_, &x_window_attrs) == 0)
-		return (YGG_CLI_ERR_RETRIEVE_ATTR);
+	wrapper->getWindowAttributes(display_, window_, &x_window_attrs);
 	if (x_window_attrs.override_redirect)
-		return(YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT);
+		throw YggdrasilException("ignoring window with override redirect attribute.");
 	this->frame_ = wrapper->createSimpleWindow(
 			display_,
 			root_,
@@ -145,51 +146,50 @@ Client_Err Client::frame() {
 	}
 	this->framed = true;
 	this->group_->addClient(window_, this);
-	return YGG_CLI_NO_ERROR;
 }
 void Client::restack() {
-	if (this->framed) {
-		wrapper->raiseWindow(display_, frame_);
+	try {
+		if (this->framed) {
+			wrapper->raiseWindow(display_, frame_);
+		}
+		wrapper->raiseWindow(display_, window_);
+	} catch (const X11Exception &e) {
+		Logger::GetInstance()->Log(e.what(), L_ERROR);
 	}
-	wrapper->raiseWindow(display_, window_);
 }
-Client_Err Client::unframe() {
+void Client::unframe() {
 	if (!this->framed)
-		return(YGG_CLI_LOG_IGNORE_NOT_FRAMED);
-	wrapper->destroyWindow(display_,frame_);
+		throw YggdrasilException("Client is not framed");
+	try {
+		wrapper->destroyWindow(display_,frame_);
+	} catch (const std::exception &e) {
+		Logger::GetInstance()->Log(e.what(), L_ERROR);
+	}
 	this->framed = false;
 	this->frame_ = 0;
-	return YGG_CLI_NO_ERROR;
 }
 Window Client::getWindow() const {
 	return this->window_;
 }
 void Client::move(int x, int y) {
-	if (this->framed) {
-		wrapper->moveWindow(display_, frame_, x, y);
-	}
-	else {
-		wrapper->moveWindow(display_, window_, x + (int)border_width / 2, y + (int)border_width / 2);
+	try {
+		if (this->framed) {
+			wrapper->moveWindow(display_, frame_, x, y);
+		} else {
+			wrapper->moveWindow(display_, window_, x + (int) border_width / 2, y + (int) border_width / 2);
+		}
+	} catch (const X11Exception &e) {
+		Logger::GetInstance()->Log(e.what(), L_ERROR);
 	}
 }
 void Client::resize(unsigned int width,unsigned int height) {
-	if (this->framed) {
-		wrapper->resizeWindow(display_, frame_, width, height);
-	}
-	wrapper->resizeWindow(display_, window_, width - border_width , height - border_width);
-}
-std::string Client::getError(Client_Err error) {
-	switch (error) {
-		case YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT:
-			return "Client::Frame ignoring window with override redirect attribute.";
-		case YGG_CLI_LOG_ALREADY_FRAMED :
-			return "Client::Frame Client has already been framed";
-		case YGG_CLI_ERR_RETRIEVE_ATTR:
-			return "Client could not retrieve Window Attributes";
-		case YGG_CLI_LOG_IGNORE_NOT_FRAMED:
-			return"Client::unFrame Client has no frame";
-		default:
-			return "Unknown error from Client Class";
+	try {
+		if (this->framed) {
+			wrapper->resizeWindow(display_, frame_, width, height);
+		}
+		wrapper->resizeWindow(display_, window_, width - border_width, height - border_width);
+	} catch (const X11Exception &e) {
+		Logger::GetInstance()->Log(e.what(), L_ERROR);
 	}
 }
 Window Client::getFrame() const {return frame_; }
