@@ -27,7 +27,6 @@
  */
 extern "C" {
 #include <X11/Xlib.h>
-#include <X11/Xatom.h>
 }
 #include "WindowManager.hpp"
 #include "EventHandler.hpp"
@@ -40,7 +39,7 @@ extern "C" {
 #include "Group.hpp"
 #include "Ewmh.hpp"
 #include "X11wrapper/baseX11Wrapper.hpp"
-
+#include "YggdrasilExceptions.hpp"
 bool WindowManager::wmDetected;
 WindowManager * WindowManager::instance_ = nullptr;
 void WindowManager::create(std::shared_ptr<BaseX11Wrapper> wrapper,const std::string &displayStr) {
@@ -128,24 +127,19 @@ void WindowManager::getTopLevelWindows() {
 	addGroupsFromConfig();
 	Logger::GetInstance()->Log("Found " + std::to_string(numTopLevelWindows) + " top level windows.\troot:" + std::to_string(root_), L_INFO);
 	for (unsigned int i = 0; i < numTopLevelWindows; ++i) {
-		auto *newClient = new Client(display_, root_, topLevelWindows[i], active_group_, active_group_->getInactiveColor(), active_group_->getBorderSize(), x11Wrapper);
-		Client_Err err = newClient->frame();
-		setFocus(newClient);
-		if (err == YGG_CLI_ERR_RETRIEVE_ATTR) {
-			delete newClient;
-			Logger::GetInstance()->Log("Failed to frame client: " + std::to_string(topLevelWindows[i]), L_ERROR);
-			continue;
-		} else if (err == YGG_CLI_LOG_IGNORED_OVERRIDE_REDIRECT)
-		{
-			delete newClient;
-			Logger::GetInstance()->Log("Ignoring override redirect window: " + std::to_string(topLevelWindows[i]), L_WARNING);
-			continue;
-		} else if (err == YGG_CLI_LOG_ALREADY_FRAMED) {
-			delete newClient;
-			Logger::GetInstance()->Log("Client already framed: " + std::to_string(topLevelWindows[i]), L_WARNING);
+		std::shared_ptr<Client> newClient = nullptr;
+		try {
+			newClient = std::make_shared<Client>(display_, root_, topLevelWindows[i], active_group_,
+										 active_group_->getInactiveColor(), active_group_->getBorderSize(), x11Wrapper);
+			newClient->frame();
+			setFocus(newClient.get());
+		} catch (const YggdrasilException &e) {
+			Logger::GetInstance()->Log(e.what(), L_ERROR);
 			continue;
 		}
-		clients_[newClient->getWindow()] = newClient;
+		if (newClient != nullptr) {
+			clients_[newClient->getWindow()] = std::move(newClient);
+		}
 	}
 	x11Wrapper->freeX(topLevelWindows);
 }
@@ -193,11 +187,17 @@ void WindowManager::testRun() {
 	x11Wrapper->sync(display_, false);
 }
 void WindowManager::insertClient(Window window) {
-	int borderSize = active_group_->getBorderSize();
-	unsigned long inactiveColor = active_group_->getInactiveColor();
-	auto *client = new Client(display_, root_, window, active_group_, inactiveColor, borderSize, x11Wrapper);
-	Logger::GetInstance()->Log("Inserting client in map: " + client->getTitle() + "\t[" + std::to_string(window) + "]", L_INFO);
-	clients_.insert({window, client});
+	try {
+		int borderSize = active_group_->getBorderSize();
+		unsigned long inactiveColor = active_group_->getInactiveColor();
+		std::shared_ptr<Client> client = std::make_shared<Client>(display_, root_, window, active_group_, inactiveColor,
+																  borderSize, x11Wrapper);
+		Logger::GetInstance()->Log(
+				"Inserting client in map: " + client->getTitle() + "\t[" + std::to_string(window) + "]", L_INFO);
+		clients_.insert({window, client});
+	} catch (const YggdrasilException &e) {
+		Logger::GetInstance()->Log(e.what(), L_ERROR);
+	}
 }
 void WindowManager::setFocus(Client *client) {
 	if (client != nullptr) {
