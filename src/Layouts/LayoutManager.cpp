@@ -74,6 +74,6 @@ void LayoutManager::Space::setRight(std::unique_ptr<Space> right) { this->right_
 const std::unique_ptr<LayoutManager::Space> &LayoutManager::Space::getLeft() const { return left_; }
 void LayoutManager::Space::setLeft( std::unique_ptr<Space> left) { this->left_ = std::move(left); }
 std::shared_ptr<Client>LayoutManager::Space::getClient() const { return client_; }
-void LayoutManager::Space::setClient(std::shared_ptr<Client> client) { Space::client_ = std::move(client); }
+void LayoutManager::Space::setClient(std::shared_ptr<Client> client) { Space::client_ = client; }
 int LayoutManager::Space::getSubspaceCount() const {return subspace_count_; }
 

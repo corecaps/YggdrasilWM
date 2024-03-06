@@ -152,7 +152,7 @@ void TreeLayoutManager::splitSpace(const std::shared_ptr<Client>& client, Space*
 	auto leftSpace = std::make_unique<Space>(space->getPos(), sizeLeft, space_count_++, space);
 	auto rightSpace = std::make_unique<Space>(posRight, sizeRight, space_count_++, space);
 	placeClientInSpace(space->getClient(), leftSpace.get());
-	placeClientInSpace(std::move(client), rightSpace.get());
+	placeClientInSpace(client, rightSpace.get());
 	space->setLeft(std::move(leftSpace));
 	space->setRight(std::move(rightSpace));
 	space->setClient(nullptr);

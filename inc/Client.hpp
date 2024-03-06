@@ -147,7 +147,7 @@ public:
  * @brief Client::restack() restack the client window to avoid the frame to get in front of the client
  */
 	void restack();
-
+	void setGroup(std::shared_ptr<Group> g);
 private:
 	Display *display_;
 	Window root_;
@@ -159,8 +159,10 @@ private:
 	bool mapped{};
 	std::string title_;
 	std::string class_;
-	std::shared_ptr<Group> group_;
+	std::weak_ptr<Group> group_;
 	std::shared_ptr<BaseX11Wrapper> wrapper;
+
+
 };
 
 #endif //YGGDRASILWM_CLIENT_HPP

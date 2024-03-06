@@ -204,7 +204,7 @@ private:
 	static bool								wmDetected;
 	const Window							root_;
 	std::vector<std::shared_ptr<Group>>		groups_;
-	std::shared_ptr<Group>					active_group_{};
+	std::weak_ptr<Group>					active_group_{};
 	const Atom								WM_PROTOCOLS;
 	const Atom								WM_DELETE_WINDOW;
 	unsigned int							geometryX{};

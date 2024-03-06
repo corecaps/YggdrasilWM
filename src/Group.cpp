@@ -49,7 +49,7 @@ Group::Group(const std::shared_ptr<ConfigDataGroup>& config,
 	} else {
 		layoutType = TREE;
 	}
-	wrapper = std::move(x11Wrapper);
+	wrapper = x11Wrapper;
 	borderSize_ = config->getGroupBorderWidth();
 	gap_ = config->getGroupGap();
 	inactiveColor_ = config->getGroupInactiveColor();
@@ -89,7 +89,7 @@ Group::Group(const std::shared_ptr<ConfigDataGroup>& config,
 }
 Group::~Group() { }
 void Group::addClient(Window window,std::shared_ptr<Client> client) {
-	clients_[window] = std::move(client);
+	clients_[window] = client;
 	layoutManager_->addClient(client);
 }
 void Group::removeClient(Window window) {
@@ -123,7 +123,7 @@ void Group::switchTo() {
 		}
 	}
 	this->active_= true;
-	WindowManager::getInstance()->setActiveGroup(this);
+	WindowManager::getInstance()->setActiveGroup(shared_from_this());
 }
 void Group::switchFrom() {
 	Logger::GetInstance()->Log("Group switched from [" + name_ + "]", L_INFO);

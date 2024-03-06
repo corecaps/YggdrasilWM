@@ -57,7 +57,7 @@ enum LayoutType {
  * a client can be in multiple groups.
  * @todo Rules on the WM_CLASS of the client can be defined in the config file.
  */
-class Group {
+class Group : public std::enable_shared_from_this<Group>{
 public:
 	/**
 	 * @fn Group(std::string name, LayoutManager* layout_manager)

@@ -62,7 +62,6 @@ WindowManager::WindowManager(Display *display, const std::shared_ptr<BaseX11Wrap
 		  root_(DefaultRootWindow(display)),
 		  WM_PROTOCOLS( wrapper->internAtom(display_, "WM_PROTOCOLS", false)),
 		  WM_DELETE_WINDOW(wrapper->internAtom(display_, "WM_DELETE_WINDOW", false)),
-		  active_group_(nullptr),
 		  running(true),
 		  tsData(nullptr),
 		  geometryX(0),
@@ -127,8 +126,9 @@ void WindowManager::getTopLevelWindows() {
 	for (unsigned int i = 0; i < numTopLevelWindows; ++i) {
 		std::shared_ptr<Client> newClient = nullptr;
 		try {
-			newClient = std::make_shared<Client>(display_, root_, topLevelWindows[i], active_group_,
-										 active_group_->getInactiveColor(), active_group_->getBorderSize(), x11Wrapper);
+			auto g = getActiveGroup();
+			newClient = std::make_shared<Client>(display_, root_, topLevelWindows[i], g,
+										 g->getInactiveColor(), g->getBorderSize(), x11Wrapper);
 			newClient->frame();
 			setFocus(newClient.get());
 		} catch (const YggdrasilException &e) {
@@ -136,7 +136,7 @@ void WindowManager::getTopLevelWindows() {
 			continue;
 		}
 		if (newClient != nullptr) {
-			clients_[newClient->getWindow()] = std::move(newClient);
+			clients_[newClient->getWindow()] = newClient;
 		}
 	}
 	x11Wrapper->freeX(topLevelWindows);
@@ -145,8 +145,9 @@ void WindowManager::createBars() {
 	Bars::createInstance();
 	Bars::getInstance().init(ConfigHandler::GetInstance().getConfigData<ConfigDataBars>(), tsData, display_, root_);
 	Bars::getInstance().start_thread();
-	unsigned int sizeX = geometryX- Bars::getInstance().getSpaceE() - Bars::getInstance().getSpaceW() - active_group_->getBorderSize() * 2;
-	unsigned int sizeY = geometryY - Bars::getInstance().getSpaceN() - Bars::getInstance().getSpaceS() - active_group_->getBorderSize() * 2;
+	auto g = getActiveGroup();
+	unsigned int sizeX = geometryX- Bars::getInstance().getSpaceE() - Bars::getInstance().getSpaceW() - g->getBorderSize() * 2;
+	unsigned int sizeY = geometryY - Bars::getInstance().getSpaceN() - Bars::getInstance().getSpaceS() - g->getBorderSize() * 2;
 	unsigned int posX = Bars::getInstance().getSpaceW();
 	unsigned int posY = Bars::getInstance().getSpaceN();
 	for (auto &g:groups_) {
@@ -161,7 +162,7 @@ void WindowManager::addGroupsFromConfig() {
 	}
 	groups_[0]->setActive(true);
 	active_group_ = groups_[0];
-	Logger::GetInstance()->Log("Active Group is [" + active_group_->getName() + "]", L_INFO);
+	Logger::GetInstance()->Log("Active Group is [" + getActiveGroup()->getName() + "]", L_INFO);
 }
 void WindowManager::Run() {
 	Logger::GetInstance()->Log("================ Yggdrasil WM Running ================\n\n", L_INFO);
@@ -186,9 +187,9 @@ void WindowManager::testRun() {
 }
 void WindowManager::insertClient(Window window) {
 	try {
-		int borderSize = active_group_->getBorderSize();
-		unsigned long inactiveColor = active_group_->getInactiveColor();
-		std::shared_ptr<Client> client = std::make_shared<Client>(display_, root_, window, active_group_, inactiveColor,
+		int borderSize = getActiveGroup()->getBorderSize();
+		unsigned long inactiveColor = getActiveGroup()->getInactiveColor();
+		std::shared_ptr<Client> client = std::make_shared<Client>(display_, root_, window, getActiveGroup(), inactiveColor,
 																  borderSize, x11Wrapper);
 		Logger::GetInstance()->Log(
 				"Inserting client in map: " + client->getTitle() + "\t[" + std::to_string(window) + "]", L_INFO);
@@ -255,8 +256,14 @@ std::unordered_map<Window, std::shared_ptr<Client>> & WindowManager::getClients(
 std::shared_ptr<Client> WindowManager::getClientRef(Window window) { return clients_.at(window); }
 Window WindowManager::getRoot() const { return root_; }
 unsigned long WindowManager::getClientCount() { return clients_.size(); }
-void WindowManager::setActiveGroup(std::shared_ptr<Group> activeGroup) { active_group_ = std::move(activeGroup); }
-std::shared_ptr <Group>WindowManager::getActiveGroup() const { return active_group_; }
+void WindowManager::setActiveGroup(std::shared_ptr<Group> activeGroup) { active_group_ = std::weak_ptr<Group> (activeGroup); }
+std::shared_ptr <Group>WindowManager::getActiveGroup() const {
+	auto g = active_group_.lock();
+	if (g)
+		return g;
+	else
+		throw YggdrasilException("invalid active group");
+}
 const std::vector<std::shared_ptr<Group>> & WindowManager::getGroups() const { return groups_; }
 bool WindowManager::getRunning() const { return running; }
 unsigned int WindowManager::getGeometryX() const { return geometryX; }

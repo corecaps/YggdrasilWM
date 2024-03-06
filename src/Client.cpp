@@ -39,20 +39,20 @@
 Client::Client(Display *display,
 			   Window root,
 			   Window window,
-			   std::shared_ptr<Group> group,
+			   std::shared_ptr<Group> g,
 			   unsigned long inActiveColor,
 			   int borderSize,
 			   std::shared_ptr<BaseX11Wrapper> x11Wrapper)
 		: display_(display),
 		  root_(root),
-		  group_(std::move(group)),
+		  group_(std::weak_ptr<Group>(g)),
 		  window_(window),
 		  frame_(0),
 		  border_width(borderSize),
 		  border_color(inActiveColor),
 		  framed(false),
 		  mapped(false),
-		  wrapper(std::move(x11Wrapper))
+		  wrapper(x11Wrapper)
 {
 	Atom wmClassAtom = wrapper->internAtom(display, "WM_CLASS", False);
 	Atom actualType;
@@ -95,8 +95,13 @@ Client::~Client() {
 }
 void Client::frame() {
 	const unsigned long BG_COLOR = 0x000000;
-	border_width = group_->getBorderSize();
-	border_color = group_->getInactiveColor();
+	auto g = group_.lock();
+	if (g) {
+		border_width = g->getBorderSize();
+		border_color = g->getInactiveColor();
+	} else {
+		throw YggdrasilException("Group no longer exists");
+	}
 	if (this->framed)
 		throw YggdrasilException("Client is already framed");
 	XWindowAttributes x_window_attrs;
@@ -197,4 +202,5 @@ bool Client::isMapped() const { return mapped; }
 void Client::setMapped(bool m) { Client::mapped = m; }
 const std::string &Client::getTitle() const { return title_; }
 const std::string &Client::getClass() const { return class_; }
-std::shared_ptr<Group>Client::getGroup() const { return group_; }
+std::shared_ptr<Group>Client::getGroup() const { return group_.lock(); }
+void Client::setGroup(std::shared_ptr<Group> g) { this->group_ = std::weak_ptr<Group>(g);}

@@ -36,7 +36,7 @@ void Bars::init(ConfigDataBars *configD,
 				Display *dspl,
 				Window r) {
 	this->configData = configD;
-	this->tsData =std::move(tsD);
+	this->tsData =tsD;
 	this->display = dspl;
 	this->root = r;
 	for (auto &bar : this->configData->getBars()) {
