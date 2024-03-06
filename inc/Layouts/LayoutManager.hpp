@@ -70,7 +70,7 @@ public:
 		Space*					parent_;
 		std::unique_ptr<Space>	right_;
 		std::unique_ptr<Space>	left_;
-		std::shared_ptr<Client>	client_{};
+		std::weak_ptr<Client>	client_;
 	public:
 /**
  * @fn Space(Point pos, Point size, int index, Space* parent = nullptr)
@@ -243,7 +243,7 @@ public:
  */
 	virtual void removeClient(Client* client) = 0;
 protected:
-	Space*							rootSpace_;
+	std::unique_ptr<Space>			rootSpace_;
 	int								screen_width_;
 	int								screen_height_;
 	int								gap_;

@@ -53,7 +53,7 @@ run_with_valgrind() {
     tool=$1
     case $tool in
         memcheck)
-            export valgrind_cmd="valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes"
+            export valgrind_cmd="valgrind --leak-check=full --track-origins=yes"
            ;;
         massif)
             export valgrind_cmd="valgrind --tool=massif --time-unit=ms "

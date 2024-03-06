@@ -137,9 +137,13 @@ TEST_F(WindowManagerTest, SwitchGroup) {
 	WindowManager::create(this->wrapper,":1");
 	WindowManager::getInstance()->init();
 	runXeyes();
-	WindowManager::getInstance()->testRun();
+	while (WindowManager::getInstance()->getClients().size() < 2) {
+		WindowManager::getInstance()->testRun();
+	}
 	runXeyes();
-	WindowManager::getInstance()->testRun();
+	while (WindowManager::getInstance()->getClients().size() < 3) {
+		WindowManager::getInstance()->testRun();
+	}
 	sleep(1);
 	ASSERT_EQ(WindowManager::getInstance()->getActiveGroup(), WindowManager::getInstance()->getGroups()[0]);
 	WindowManager::getInstance()->getActiveGroup()->switchFrom();

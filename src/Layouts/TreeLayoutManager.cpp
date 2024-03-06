@@ -38,7 +38,7 @@ TreeLayoutManager::TreeLayoutManager(Display *display,
 	LayoutManager(display, root, sizeX, sizeY, posX, posY, gap, borderSize) {
 	Point pos(posX, posY);
 	Point size(sizeX - borderSize, sizeY - borderSize);
-	this->rootSpace_ = new Space(pos, size, 0);
+	this->rootSpace_ = std::make_unique<Space>(pos, size, 0);
 }
 void deleteSpace(LayoutManager::Space *space) {
 	if (space->getLeft() != nullptr) {
@@ -49,9 +49,7 @@ void deleteSpace(LayoutManager::Space *space) {
 	}
 	delete space;
 }
-TreeLayoutManager::~TreeLayoutManager() {
-	deleteSpace(rootSpace_);
-}
+TreeLayoutManager::~TreeLayoutManager() {}
 void TreeLayoutManager::updateGeometry(unsigned int sizeX, unsigned int sizeY, unsigned int posX, unsigned int posY) {
 	reSize(Point(sizeX,sizeY),Point(posX,posY));
 }
@@ -74,19 +72,19 @@ LayoutManager::Space * TreeLayoutManager::findSpaceRecursive(Client *client, Lay
 	return nullptr;
 }
 LayoutManager::Space * TreeLayoutManager::findSpace(Client *client) {
-	Space* space = rootSpace_;
+	Space* space = rootSpace_.get();
 	return findSpaceRecursive(client, space);
 }
 LayoutManager::Space * TreeLayoutManager::findSpace(int index) {
 	return nullptr;
 }
 void TreeLayoutManager::removeClient(Client* client) {
-	removeClientRecursive(client, rootSpace_);
+	removeClientRecursive(client, rootSpace_.get());
 }
 void TreeLayoutManager::removeClientRecursive(Client* client, Space* space) {
 	if (space->getClient().get() == client) {
 		space->setClient(nullptr);
-		if (space != rootSpace_) {
+		if (space != rootSpace_.get()) {
 			bool isLeftChild = (space->getParent()->getLeft().get() == space);
 			Space* siblingSpace = isLeftChild ? space->getParent()->getRight().get() : space->getParent()->getLeft().get();
 			if (siblingSpace->getClient() != nullptr) {
@@ -109,7 +107,7 @@ void TreeLayoutManager::removeClientRecursive(Client* client, Space* space) {
 	}
 }
 void TreeLayoutManager::addClient(std::shared_ptr<Client> client) {
-	addClientRecursive(client, rootSpace_);
+	addClientRecursive(client, rootSpace_.get());
 }
 void TreeLayoutManager::addClientRecursive(std::shared_ptr<Client> client, Space* space) {
 	if (space->getClient() == nullptr && space->getLeft() == nullptr && space->getRight() == nullptr ) {
@@ -165,7 +163,7 @@ void TreeLayoutManager::splitSpace(const std::shared_ptr<Client>& client, Space*
 
 void TreeLayoutManager::growSpaceX(Client *client) {
 	Space* space = findSpace(client);
-	if (space == rootSpace_) {
+	if (space == rootSpace_.get()) {
 		return;
 	}
 	if (space->getParent()->getLeft().get() == space) {
@@ -211,7 +209,7 @@ void TreeLayoutManager::reSize(const LayoutManager::Point &size, const LayoutMan
 	if (rootSpace_->getSize().x == size.x && rootSpace_->getSize().y == size.y) {
 		return;
 	}
-	recursiveResize(size, pos,rootSpace_);
+	recursiveResize(size, pos,rootSpace_.get());
 }
 
 void TreeLayoutManager::recursiveResize(const LayoutManager::Point &size, const LayoutManager::Point &pos,LayoutManager::Space * space) {
