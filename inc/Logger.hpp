@@ -143,7 +143,7 @@ private:
  * @brief check if the stream is a file or a stream
  * @return true if the stream is a file
  */
-	bool streamIsFile_;
+	bool				streamIsFile_;
 	static Logger*		instance_;
 	std::ostream*		logStream_;
 	LogLevel			logLevel_;

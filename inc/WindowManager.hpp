@@ -212,7 +212,7 @@ private:
 	bool									running;
 	std::unordered_map<Window, std::shared_ptr<Client>>		clients_;
 	static WindowManager *					instance_;
-	std::shared_ptr<TSBarsData>					tsData;
+	std::shared_ptr<TSBarsData>				tsData;
 	Window									activeWindow;
 	std::shared_ptr<BaseX11Wrapper>			x11Wrapper;
 // Initialisation

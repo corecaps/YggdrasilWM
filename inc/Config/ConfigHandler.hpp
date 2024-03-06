@@ -100,12 +100,7 @@ public:
  * @brief Destroy the ConfigHandler object
  */
 	static void Destroy();
-/**
- * @fn Json::Value& ConfigHandler::getRoot()
- * @brief Get the root JSON object, the ConfigHandler::configInit() must be called first
- * @return the root JSON object in Json::Value
- */
-	Json::Value& getRoot();
+
 /**
  * @fn void ConfigHandler::configInit()
  * @brief Initialize the ConfigHandler

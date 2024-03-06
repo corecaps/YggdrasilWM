@@ -50,7 +50,7 @@ public:
  * @brief Construct a new ConfigFileHandler object with a path,
  * if the path is not valid try to find the file in the default paths
  */
-	ConfigFileHandler(const std::string& configPath);
+	explicit ConfigFileHandler(const std::string& configPath);
 	~ConfigFileHandler();
 /**
  * @fn void ConfigFileHandler::readConfig()
