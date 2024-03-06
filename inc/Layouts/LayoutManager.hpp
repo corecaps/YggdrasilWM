@@ -70,7 +70,7 @@ public:
 		Space*					parent_;
 		std::unique_ptr<Space>	right_;
 		std::unique_ptr<Space>	left_;
-		Client*					client_{};
+		std::shared_ptr<Client>	client_{};
 	public:
 /**
  * @fn Space(Point pos, Point size, int index, Space* parent = nullptr)
@@ -163,13 +163,13 @@ public:
  * @brief Get the client of the space
  * @return
  */
-		Client *getClient() const;
+		std::shared_ptr<Client> getClient() const;
 /**
  * @fn void LayoutManager::Space::setClient(Client *client)
  * @brief Set the client of the space
  * @param client
  */
-		void setClient(Client *client);
+		void setClient(std::shared_ptr<Client> client);
 /**
  * @fn void LayoutManager::Space::incSubSpaceCount()
  * @brief Increment the number of subspaces
@@ -234,7 +234,7 @@ public:
  * @brief add a client to the layout
  * @param client
  */
-	virtual void	addClient(Client* client) = 0;
+	virtual void	addClient(std::shared_ptr<Client> client) = 0;
 /**
  * @fn virtual void LayoutManager::removeClient(Client* client)
  * @brief remove a client from the layout

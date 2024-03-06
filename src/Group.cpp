@@ -32,9 +32,10 @@
 #include "Layouts/LayoutManager.hpp"
 #include "Config/ConfigDataBindings.hpp"
 
-Group::Group(ConfigDataGroup *config,
+Group::Group(const std::shared_ptr<ConfigDataGroup>& config,
 			 std::shared_ptr<BaseX11Wrapper> x11Wrapper,
-			 Display *display,Window root) {
+			 Display *display,
+			 Window root) {
 	name_ = config->getGroupName();
 	LayoutType layoutType;
 	if (config->getGroupLayout() == "Tree") {
@@ -48,7 +49,7 @@ Group::Group(ConfigDataGroup *config,
 	} else {
 		layoutType = TREE;
 	}
-	wrapper = x11Wrapper;
+	wrapper = std::move(x11Wrapper);
 	borderSize_ = config->getGroupBorderWidth();
 	gap_ = config->getGroupGap();
 	inactiveColor_ = config->getGroupInactiveColor();
@@ -60,7 +61,7 @@ Group::Group(ConfigDataGroup *config,
 	int size_y = wrapper->displayHeight(display, wrapper->defaultScreen(display));
 	switch (layoutType) {
 		case TREE:
-			layoutManager_ = new TreeLayoutManager(display,
+			layoutManager_ = std::make_shared<TreeLayoutManager>(display,
 												   root,
 												   size_x,
 												   size_y,
@@ -74,7 +75,7 @@ Group::Group(ConfigDataGroup *config,
 		case VERTICAL:
 		case HORIZONTAL:
 		default:
-			layoutManager_ = new TreeLayoutManager(display,
+			layoutManager_ = std::make_shared<TreeLayoutManager>(display,
 												   root,
 												   size_x,
 												   size_y,
@@ -86,18 +87,16 @@ Group::Group(ConfigDataGroup *config,
 			break;
 	}
 }
-Group::~Group() {
-	delete layoutManager_;
-}
-void Group::addClient(Window window, Client *client) {
-	clients_[window] = client;
+Group::~Group() { }
+void Group::addClient(Window window,std::shared_ptr<Client> client) {
+	clients_[window] = std::move(client);
 	layoutManager_->addClient(client);
 }
 void Group::removeClient(Window window) {
 	clients_.erase(window);
 	try {
 		auto c = WindowManager::getInstance()->getClient(window);
-		layoutManager_->removeClient(c);
+		layoutManager_->removeClient(c.get());
 	} catch (const std::exception &e) {
 		Logger::GetInstance()->Log(e.what(), L_ERROR);
 	}
@@ -119,7 +118,7 @@ void Group::moveClientToGroup(Window window, Group *group) {
 void Group::switchTo() {
 	Logger::GetInstance()->Log("Group switched to [" + name_ + "]", L_INFO);
 	for (auto &client: WindowManager::getInstance()->getClients()) {
-		if (client.second->getGroup() == this) {
+		if (client.second->getGroup().get() == this) {
 			wrapper->mapWindow(WindowManager::getInstance()->getDisplay(), client.second->getFrame());
 		}
 	}
@@ -129,7 +128,7 @@ void Group::switchTo() {
 void Group::switchFrom() {
 	Logger::GetInstance()->Log("Group switched from [" + name_ + "]", L_INFO);
 	for (auto &client: WindowManager::getInstance()->getClients()) {
-		if (client.second->getGroup() == this) {
+		if (client.second->getGroup().get() == this) {
 //			client.second->unframe();
 			wrapper->unmapWindow(WindowManager::getInstance()->getDisplay(), client.second->getFrame());
 		}
@@ -141,9 +140,9 @@ void Group::setName(std::string name) {
 }
 bool Group::isActive() const { return active_; }
 std::string Group::getName() { return name_; }
-Client *Group::getClient(Window window) { return clients_[window]; }
-std::unordered_map<Window, Client *> Group::getClients() { return clients_; }
-LayoutManager *Group::getLayoutManager() { return layoutManager_; }
+std::shared_ptr<Client> Group::getClient(Window window) { return clients_[window]; }
+std::unordered_map<Window, std::shared_ptr<Client>> Group::getClients() { return clients_; }
+std::shared_ptr <LayoutManager> Group::getLayoutManager() { return layoutManager_; }
 int Group::getBorderSize() const { return borderSize_; }
 int Group::getGap() const { return gap_; }
 unsigned long Group::getInactiveColor() const { return inactiveColor_; }

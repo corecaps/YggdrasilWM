@@ -49,8 +49,8 @@ protected:
 	Window clientWindow;
 	std::shared_ptr<mockX11Wrapper> x11WrapperMock;
 	std::unique_ptr<Client> client;
-	ConfigDataGroup * config;
-	Group * group;
+	std::shared_ptr<ConfigDataGroup> config;
+	std::shared_ptr<Group> group;
 	unsigned long inActiveColor = 0x000000; // Example color
 	int borderSize = 1; // Example border size
 	static void SetUpTestSuite() {
@@ -81,7 +81,7 @@ protected:
 		root["inactiveColor"] = "#000000";
 		root["activeColor"] = "#000000";
 		root["barHeight"] = 30;
-		config = new ConfigDataGroup();
+		config = std::make_shared<ConfigDataGroup>();
 		config->configInit(root);
 		EXPECT_CALL(*x11WrapperMock, defaultScreen(_))
 				.Times(2)
@@ -98,7 +98,7 @@ protected:
 				.WillByDefault(Return(Success));
 		ON_CALL(*x11WrapperMock,raiseWindow(_,_))
 				.WillByDefault(Return(Success));
-		group = new Group(config,x11WrapperMock,display,rootWindow);
+		group =  std::make_shared<Group>(config,x11WrapperMock,display,rootWindow);
 		EXPECT_CALL(*x11WrapperMock,internAtom(display,_,_))
 				.Times(AtLeast(1))
 				.WillRepeatedly(Return(mockAtom)); // Adjust as necessary
@@ -117,10 +117,7 @@ protected:
 										  x11WrapperMock);
 	}
 
-	void TearDown() override {
-		delete config;
-		delete group;
-	}
+	void TearDown() override {}
 };
 std::ostringstream ClientTest::oss = std::ostringstream ();
 

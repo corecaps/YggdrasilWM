@@ -105,12 +105,12 @@ public:
  * @param window
  * @return nullptr if not found
  */
-	Client *		getClient(Window window);
+	std::shared_ptr<Client>		getClient(Window window);
 /**
  * @fn Client &WindowManager::getClientRef(Window window)
  * @brief Get a ref to the Client by window ptr does not look for frames and throws if not found
  */
-	Client &		getClientRef(Window window);
+	std::shared_ptr<Client>		getClientRef(Window window);
 /**
  * @fn unsigned long WindowManager::getClientCount()
  * @brief Get the number of clients
@@ -153,7 +153,7 @@ public:
  * @brief get the current Active Group
  * @return
  */
-	Group					*getActiveGroup() const;
+	std::shared_ptr<Group>					getActiveGroup() const;
 
 /**
  * @fn bool WindowManager::getRunning() const
@@ -174,7 +174,8 @@ public:
  * @brief set the current active group
  * @param activeGroup
  */
-	void			setActiveGroup(Group *activeGroup);
+	void			setActiveGroup(std::shared_ptr<Group> activeGroup);
+	void			setActiveGroup(Group * activeGroup);
 /**
  * @fn static void WindowManager::Destroy()
  * @brief Destroy the WindowManager instance
@@ -203,7 +204,7 @@ private:
 	static bool								wmDetected;
 	const Window							root_;
 	std::vector<std::shared_ptr<Group>>		groups_;
-	Group *									active_group_{};
+	std::shared_ptr<Group>					active_group_{};
 	const Atom								WM_PROTOCOLS;
 	const Atom								WM_DELETE_WINDOW;
 	unsigned int							geometryX{};

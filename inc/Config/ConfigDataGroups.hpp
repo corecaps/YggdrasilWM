@@ -50,12 +50,12 @@ public:
  */
 	void				configInit(const Json::Value& root) override;
 	Json::Value			configSave() override;
-	void				addGroup(ConfigDataGroup * group);
+	void				addGroup(std::shared_ptr<ConfigDataGroup> group);
 	void				removeGroup(ConfigDataGroup * group);
-	ConfigDataGroup *										getGroup(int index);
-	[[nodiscard]] const std::vector<ConfigDataGroup *> &	getGroups() const;
+	std::shared_ptr<ConfigDataGroup>									getGroup(int index);
+	[[nodiscard]] const std::vector<std::shared_ptr<ConfigDataGroup>> &	getGroups() const;
 
 private:
-	std::vector<ConfigDataGroup *>	groups_;
+	std::vector<std::shared_ptr<ConfigDataGroup> >	groups_;
 };
 #endif //YGGDRASILWM_CONFIGDATAGROUPS_HPP

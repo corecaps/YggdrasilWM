@@ -59,7 +59,7 @@ public:
 	Client(Display *display,
 		   Window root,
 		   Window window,
-		   Group *group,
+		   std::shared_ptr<Group> group,
 		   unsigned long inActiveColor,
 		   int borderSize,
 		   std::shared_ptr<BaseX11Wrapper> wrapper);
@@ -91,7 +91,7 @@ public:
  * @brief return the group of the client
  * @return
  */
-	[[nodiscard]] Group *getGroup() const;
+	[[nodiscard]] std::shared_ptr<Group> getGroup() const;
 /**
  * @fn void Client::move(int x, int y)
  * @brief: Client::move move the client window to the given position
@@ -159,7 +159,7 @@ private:
 	bool mapped{};
 	std::string title_;
 	std::string class_;
-	Group *group_;
+	std::shared_ptr<Group> group_;
 	std::shared_ptr<BaseX11Wrapper> wrapper;
 };
 

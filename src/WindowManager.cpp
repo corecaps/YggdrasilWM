@@ -160,7 +160,7 @@ void WindowManager::addGroupsFromConfig() {
 		groups_.push_back(g);
 	}
 	groups_[0]->setActive(true);
-	active_group_ = groups_[0].get();
+	active_group_ = groups_[0];
 	Logger::GetInstance()->Log("Active Group is [" + active_group_->getName() + "]", L_INFO);
 }
 void WindowManager::Run() {
@@ -238,25 +238,25 @@ WindowManager * WindowManager::getInstance() {
 		throw std::runtime_error("WindowManager instance not created");
 	}
 }
-Client *WindowManager::getClient(Window window) {
+std::shared_ptr<Client> WindowManager::getClient(Window window) {
 	auto clientIter = clients_.find(window);
 	if (clientIter != clients_.end()) {
-		return clientIter->second.get();
+		return clientIter->second;
 	}
 	for (const auto &client: clients_) {
 		if (client.second->getFrame() == window) {
-			return client.second.get();
+			return client.second;
 		}
 	}
 	return nullptr;
 }
 Display *WindowManager::getDisplay() const { return display_; }
 std::unordered_map<Window, std::shared_ptr<Client>> & WindowManager::getClients() { return clients_; }
-Client &WindowManager::getClientRef(Window window) { return *clients_.at(window); }
+std::shared_ptr<Client> WindowManager::getClientRef(Window window) { return clients_.at(window); }
 Window WindowManager::getRoot() const { return root_; }
 unsigned long WindowManager::getClientCount() { return clients_.size(); }
-void WindowManager::setActiveGroup(Group *activeGroup) { active_group_ = activeGroup; }
-Group *WindowManager::getActiveGroup() const { return active_group_; }
+void WindowManager::setActiveGroup(std::shared_ptr<Group> activeGroup) { active_group_ = std::move(activeGroup); }
+std::shared_ptr <Group>WindowManager::getActiveGroup() const { return active_group_; }
 const std::vector<std::shared_ptr<Group>> & WindowManager::getGroups() const { return groups_; }
 bool WindowManager::getRunning() const { return running; }
 unsigned int WindowManager::getGeometryX() const { return geometryX; }
@@ -282,6 +282,10 @@ int WindowManager::onWmDetected([[maybe_unused]] Display *display, XErrorEvent *
 	if (static_cast<int>(e->error_code) == BadAccess)
 		wmDetected = true;
 	return 0;
+}
+
+void WindowManager::setActiveGroup(Group *activeGroup) {
+	WindowManager::active_group_ = std::shared_ptr<Group>(activeGroup);
 }
 
 

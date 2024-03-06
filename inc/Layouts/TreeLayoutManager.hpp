@@ -102,14 +102,14 @@ public:
  * @see addClientRecursive
  * @see placeClientInSpace
  */
-	void	addClient(Client* client) override;
+	void	addClient(std::shared_ptr<Client> client) override;
 /**
  * @fn void TreeLayoutManager::removeClientRecursive(Client* client, Space* space)
  * @brief recursive method to add a client to the layout
  * @param client
  * @param space
  */
-	void	addClientRecursive(Client *client, Space *space);
+	void	addClientRecursive(std::shared_ptr<Client> client, Space *space);
 /**
  * @fn void TreeLayoutManager::placeClientInSpace(Client* client, Space* space)
  * @brief place a client in a space
@@ -118,7 +118,7 @@ public:
  * @param client
  * @param space
  */
-	void	placeClientInSpace(Client *client, Space *space);
+	void	placeClientInSpace(const std::shared_ptr<Client>& client, Space *space);
 /**
  * @fn void TreeLayoutManager::splitSpace(Client* client, Space* space, bool splitAlongX)
  * @brief split a space in two
@@ -128,7 +128,7 @@ public:
  * @param space
  * @param splitAlongX
  */
-	void	splitSpace(Client *client, Space *space, bool splitAlongX);
+	void	splitSpace(const std::shared_ptr<Client>& client, Space *space, bool splitAlongX);
 /**
  * @fn void TreeLayoutManager::removeClient(Client* client)
  * @brief remove a client from the layout

@@ -69,7 +69,10 @@ public:
 	 * @param layoutType The layout type
 	 * @todo add the other layout types
 	 */
-	explicit Group(ConfigDataGroup *config, std::shared_ptr<BaseX11Wrapper> x11Wrapper, Display *display,Window root);
+	explicit Group(const std::shared_ptr<ConfigDataGroup > &config,
+				   std::shared_ptr<BaseX11Wrapper> x11Wrapper,
+				   Display *display,
+				   Window root);
 /**
  * @fn ~Group()
  * @brief Group destructor
@@ -81,7 +84,7 @@ public:
  * @param window
  * @param client
  */
-	void		addClient(Window window, Client *client);
+	void		addClient(Window window, std::shared_ptr<Client> client);
 /**
  * @fn void Group::removeClient(Window window)
  * @brief Definitely remove a client from the group
@@ -130,17 +133,17 @@ public:
  * @brief Get a client from the group
  * @param window
  */
-	Client *	getClient(Window window);
+	std::shared_ptr<Client>	getClient(Window window);
 /**
  * @fn std::unordered_map<Window, Client *> getClients()
  * @brief Get the list of clients of the group
  */
-	std::unordered_map<Window, Client *> getClients();
+	std::unordered_map<Window, std::shared_ptr<Client>> getClients();
 /**
  * @fn LayoutManager* Group::getLayoutManager()
  * @brief Get the layout manager of the group
  */
-	LayoutManager*	getLayoutManager();
+	std::shared_ptr<LayoutManager>	getLayoutManager();
 /**
  * @fn void Group::switchTo()
  * @brief Switch to this group
@@ -181,8 +184,8 @@ public:
 
 private:
 	std::string								name_;
-	std::unordered_map<Window, Client *>	clients_;
-	LayoutManager*							layoutManager_;
+	std::unordered_map<Window, std::shared_ptr<Client>>	clients_;
+	std::shared_ptr<LayoutManager>			layoutManager_;
 	int										borderSize_;
 	int										gap_;
 	unsigned long 							inactiveColor_;

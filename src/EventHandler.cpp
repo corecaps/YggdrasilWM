@@ -125,7 +125,7 @@ void EventHandler::dispatchEvent(const XEvent &event) {
 }
 void EventHandler::handleMapNotify(const XEvent &event) {
 	auto e = event.xmap;
-	Client * client = WindowManager::getInstance()->getClient(e.window);
+	Client * client = WindowManager::getInstance()->getClient(e.window).get();
 	if (client == nullptr) {
 		Logger::GetInstance()->Log("Ignoring map for unknown window: " + std::to_string(e.window), L_INFO);
 		return;
@@ -146,16 +146,15 @@ void EventHandler::handleUnmapNotify(const XEvent &event) {
 		return;
 	}
 	try {
-		Client &client = WindowManager::getInstance()->getClientRef(e.window);
-		Logger::GetInstance()->Log("Unmapping window: " + client.getTitle(), L_INFO);
-		if (client.getFrame() != e.window) {
-			client.setMapped(false);
+		auto client = WindowManager::getInstance()->getClientRef(e.window);
+		Logger::GetInstance()->Log("Unmapping window: " + client->getTitle(), L_INFO);
+		if (client->getFrame() != e.window) {
+			client->setMapped(false);
 		}
 		else {
-			client.unframe();
-			client.getGroup()->removeClient(&client);
+			client->unframe();
+			client->getGroup()->removeClient(client.get());
 			WindowManager::getInstance()->getClients().erase(e.window);
-			delete &client;
 		}
 	}
 	catch (std::out_of_range &err) {
@@ -235,7 +234,7 @@ void EventHandler::handleFocusIn(const XEvent &event) {
 	if (e.window == WindowManager::getInstance()->getRoot()) {
 		return;
 	}
-	Client * client = WindowManager::getInstance()->getClient(e.window);
+	Client * client = WindowManager::getInstance()->getClient(e.window).get();
 	if (client == nullptr) {
 		return;
 	}
@@ -255,7 +254,7 @@ void EventHandler::handleFocusOut(const XEvent &event) {
 	if (e.window == WindowManager::getInstance()->getRoot()) {
 		return;
 	}
-	Client * client = WindowManager::getInstance()->getClient(e.window);
+	Client * client = WindowManager::getInstance()->getClient(e.window).get();
 	if (client == nullptr) {
 		return;
 	}
@@ -283,15 +282,14 @@ void EventHandler::handleDestroyNotify(const XEvent &event) {
 		return;
 	}
 	try {
-		Client &client = WindowManager::getInstance()->getClientRef(e.window);
-		Logger::GetInstance()->Log("Destroying window: " + client.getTitle(), L_INFO);
-		client.unframe();
+		auto client = WindowManager::getInstance()->getClientRef(e.window);
+		Logger::GetInstance()->Log("Destroying window: " + client->getTitle(), L_INFO);
+		client->unframe();
 		WindowManager::getInstance()->getClients().erase(e.window);
-		client.getGroup()->removeClient(&client);
-		delete &client;
+		client->getGroup()->removeClient(client.get());
 		auto clients = WindowManager::getInstance()->getActiveGroup()->getClients();
 		if (!clients.empty()) {
-			Client *dclient = clients.begin()->second;
+			Client *dclient = clients.begin()->second.get();
 			if (dclient != nullptr) {
 				WindowManager::getInstance()->setFocus(dclient);
 				return;
@@ -312,20 +310,21 @@ void EventHandler::handleMapRequest(const XEvent &event) {
 		return;
 	}
 	try {
-		if (WindowManager::getInstance()->getClientRef(e.window).isMapped()) {
+		if (WindowManager::getInstance()->getClientRef(e.window)->isMapped()) {
 			Logger::GetInstance()->Log("Window already mapped: " + std::to_string(e.window), L_INFO);
 			return;
 		}
-		Client &client = WindowManager::getInstance()->getClientRef(e.window);
-		if (client.isFramed()) {
+		auto client = WindowManager::getInstance()->getClientRef(e.window);
+		if (client->isFramed()) {
 			Logger::GetInstance()->Log("Window already framed: " + std::to_string(e.window), L_INFO);
 			return;
 		}
 		else {
-			Logger::GetInstance()->Log("Framing window: " + client.getTitle(), L_INFO);
+			Logger::GetInstance()->Log("Framing window: " + client->getTitle(), L_INFO);
 			try {
-				client.frame();
-				WindowManager::getInstance()->setFocus(&client);
+				client->frame();
+				client->getGroup()->addClient(client->getWindow(),client);
+				WindowManager::getInstance()->setFocus(client.get());
 			} catch (const std::exception &ex) {
 				Logger::GetInstance()->Log(ex.what(), L_ERROR);
 			}
@@ -337,7 +336,9 @@ void EventHandler::handleMapRequest(const XEvent &event) {
 		Logger::GetInstance()->Log("Creating new client for window: " + std::to_string(e.window), L_INFO);
 		WindowManager::getInstance()->insertClient(e.window);
 		try {
-			WindowManager::getInstance()->getClientRef(e.window).frame();
+			auto c = WindowManager::getInstance()->getClientRef(e.window);
+			c->frame();
+			c->getGroup()->addClient(e.window,c);
 		} catch (const std::exception &ex) {
 			Logger::GetInstance()->Log(ex.what(), L_ERROR);
 		}
@@ -346,7 +347,7 @@ void EventHandler::handleMapRequest(const XEvent &event) {
 }
 void EventHandler::handleMotionNotify(const XEvent &event) {
 	auto e = event.xmotion;
-	const Window frame = WindowManager::getInstance()->getClientRef(event.xmotion.window).getFrame();
+	const Window frame = WindowManager::getInstance()->getClientRef(event.xmotion.window)->getFrame();
 //	const Position<int> drag_pos(e.x_root, e.y_root);
 //	const Vector2D<int> delta = drag_pos - drag_start_pos_;
 //

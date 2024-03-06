@@ -56,7 +56,7 @@ void TreeLayoutManager::updateGeometry(unsigned int sizeX, unsigned int sizeY, u
 	reSize(Point(sizeX,sizeY),Point(posX,posY));
 }
 LayoutManager::Space * TreeLayoutManager::findSpaceRecursive(Client *client, LayoutManager::Space * space) {
-	if (space->getClient() == client) {
+	if (space->getClient().get() == client) {
 		return space;
 	}
 	if (space->getLeft() != nullptr) {
@@ -84,7 +84,7 @@ void TreeLayoutManager::removeClient(Client* client) {
 	removeClientRecursive(client, rootSpace_);
 }
 void TreeLayoutManager::removeClientRecursive(Client* client, Space* space) {
-	if (space->getClient() == client) {
+	if (space->getClient().get() == client) {
 		space->setClient(nullptr);
 		if (space != rootSpace_) {
 			bool isLeftChild = (space->getParent()->getLeft().get() == space);
@@ -108,10 +108,10 @@ void TreeLayoutManager::removeClientRecursive(Client* client, Space* space) {
 		removeClientRecursive(client, space->getRight().get());
 	}
 }
-void TreeLayoutManager::addClient(Client* client) {
+void TreeLayoutManager::addClient(std::shared_ptr<Client> client) {
 	addClientRecursive(client, rootSpace_);
 }
-void TreeLayoutManager::addClientRecursive(Client* client, Space* space) {
+void TreeLayoutManager::addClientRecursive(std::shared_ptr<Client> client, Space* space) {
 	if (space->getClient() == nullptr && space->getLeft() == nullptr && space->getRight() == nullptr ) {
 		placeClientInSpace(client, space);
 		return;
@@ -130,14 +130,14 @@ void TreeLayoutManager::addClientRecursive(Client* client, Space* space) {
 		splitSpace(client, space, false);
 	}
 }
-void TreeLayoutManager::placeClientInSpace(Client* client, Space* space) {
+void TreeLayoutManager::placeClientInSpace(const std::shared_ptr<Client>& client, Space* space) {
 	client->move(static_cast<int>(space->getPos().x) + border_size_ + gap_ / 2,static_cast<int>(space->getPos().y) + border_size_ + gap_ / 2);
 	client->resize(space->getSize().x - (border_size_ * 2)- gap_, space->getSize().y - (border_size_ * 2) - gap_);
 	client->restack();
-	if (space->getClient() != client)
+	if (space->getClient().get() != client.get())
 		space->setClient(client);
 }
-void TreeLayoutManager::splitSpace(Client* client, Space* space, bool splitAlongX) {
+void TreeLayoutManager::splitSpace(const std::shared_ptr<Client>& client, Space* space, bool splitAlongX) {
 	Point sizeLeft, sizeRight;
 	Point posRight;
 	if (splitAlongX) {
@@ -152,7 +152,7 @@ void TreeLayoutManager::splitSpace(Client* client, Space* space, bool splitAlong
 	auto leftSpace = std::make_unique<Space>(space->getPos(), sizeLeft, space_count_++, space);
 	auto rightSpace = std::make_unique<Space>(posRight, sizeRight, space_count_++, space);
 	placeClientInSpace(space->getClient(), leftSpace.get());
-	placeClientInSpace(client, rightSpace.get());
+	placeClientInSpace(std::move(client), rightSpace.get());
 	space->setLeft(std::move(leftSpace));
 	space->setRight(std::move(rightSpace));
 	space->setClient(nullptr);

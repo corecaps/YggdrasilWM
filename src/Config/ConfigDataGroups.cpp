@@ -35,7 +35,7 @@ void ConfigDataGroups::configInit(const Json::Value &root) {
 		throw std::runtime_error("Invalid configuration file");
 	}
 	for (auto &group : root) {
-		auto group_ = new ConfigDataGroup();
+		auto group_ = std::make_shared<ConfigDataGroup>();
 		group_->configInit(group);
 		groups_.push_back(group_);
 		Logger::GetInstance()->Log("=============================\t\tGroup [" + group_->getGroupName() + "] Configuration loaded ✓",L_INFO);
@@ -45,20 +45,17 @@ void ConfigDataGroups::configInit(const Json::Value &root) {
 Json::Value ConfigDataGroups::configSave() {
 	return Json::Value();
 }
-ConfigDataGroup *ConfigDataGroups::getGroup(int index) { return groups_[index]; }
-void ConfigDataGroups::addGroup(ConfigDataGroup *group) { groups_.push_back(group); }
+std::shared_ptr<ConfigDataGroup> ConfigDataGroups::getGroup(int index) { return groups_[index]; }
+void ConfigDataGroups::addGroup(std::shared_ptr<ConfigDataGroup> group) { groups_.push_back(group); }
 void ConfigDataGroups::removeGroup(ConfigDataGroup *group) {
 	for (auto it = groups_.begin(); it != groups_.end(); ++it) {
-		if (*it == group) {
+		if (it->get() == group) {
 			groups_.erase(it);
 			break;
 		}
 	}
 }
-const std::vector<ConfigDataGroup *> &ConfigDataGroups::getGroups() const { return groups_;}
+const std::vector<std::shared_ptr<ConfigDataGroup>> &ConfigDataGroups::getGroups() const { return groups_;}
 ConfigDataGroups::~ConfigDataGroups() {
-	for (auto &group : groups_) {
-		delete group;
-	}
 	groups_.clear();
 }

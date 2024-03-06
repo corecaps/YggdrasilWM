@@ -46,7 +46,7 @@ void FocusGroup::execute(const std::string &args) {
 		index = 0;
 	if (index > wm->getGroups().size())
 		index = wm->getGroups().size();
-	if (wm->getActiveGroup() != wm->getGroups()[index].get()) {
+	if (wm->getActiveGroup() != wm->getGroups()[index]) {
 		wm->getActiveGroup()->switchFrom();
 		wm->getGroups()[index]->switchTo();
 	}

@@ -141,19 +141,19 @@ TEST_F(WindowManagerTest, SwitchGroup) {
 	runXeyes();
 	WindowManager::getInstance()->testRun();
 	sleep(1);
-	ASSERT_EQ(WindowManager::getInstance()->getActiveGroup(), WindowManager::getInstance()->getGroups()[0].get());
+	ASSERT_EQ(WindowManager::getInstance()->getActiveGroup(), WindowManager::getInstance()->getGroups()[0]);
 	WindowManager::getInstance()->getActiveGroup()->switchFrom();
 	WindowManager::getInstance()->testRun();
 	WindowManager::getInstance()->getGroups()[1]->switchTo();
 	WindowManager::getInstance()->testRun();
-	ASSERT_EQ(WindowManager::getInstance()->getActiveGroup(), WindowManager::getInstance()->getGroups()[1].get());
+	ASSERT_EQ(WindowManager::getInstance()->getActiveGroup(), WindowManager::getInstance()->getGroups()[1]);
 	sleep(1);
 	WindowManager::getInstance()->testRun();
 	WindowManager::getInstance()->getActiveGroup()->switchFrom();
 	WindowManager::getInstance()->testRun();
 	WindowManager::getInstance()->getGroups()[0]->switchTo();
 	WindowManager::getInstance()->testRun();
-	ASSERT_EQ(WindowManager::getInstance()->getActiveGroup(), WindowManager::getInstance()->getGroups()[0].get());
+	ASSERT_EQ(WindowManager::getInstance()->getActiveGroup(), WindowManager::getInstance()->getGroups()[0]);
 	sleep(1);
 	WindowManager::Destroy();
 }

@@ -39,13 +39,13 @@
 Client::Client(Display *display,
 			   Window root,
 			   Window window,
-			   Group *group,
+			   std::shared_ptr<Group> group,
 			   unsigned long inActiveColor,
 			   int borderSize,
 			   std::shared_ptr<BaseX11Wrapper> x11Wrapper)
 		: display_(display),
 		  root_(root),
-		  group_(group),
+		  group_(std::move(group)),
 		  window_(window),
 		  frame_(0),
 		  border_width(borderSize),
@@ -90,7 +90,6 @@ Client::~Client() {
 		}
 	} catch (const X11Exception &e) {
 		Logger::GetInstance()->Log(e.what(), L_ERROR);
-		throw e;
 	}
 	Logger::GetInstance()->Log("Client destroyed :" + title_, L_INFO);
 }
@@ -145,7 +144,7 @@ void Client::frame() {
 		Logger::GetInstance()->Log(e.what(), L_ERROR);
 	}
 	this->framed = true;
-	this->group_->addClient(window_, this);
+//	this->group_->addClient(window_, this);
 }
 void Client::restack() {
 	try {
@@ -198,4 +197,4 @@ bool Client::isMapped() const { return mapped; }
 void Client::setMapped(bool m) { Client::mapped = m; }
 const std::string &Client::getTitle() const { return title_; }
 const std::string &Client::getClass() const { return class_; }
-Group *Client::getGroup() const { return group_; }
+std::shared_ptr<Group>Client::getGroup() const { return group_; }
