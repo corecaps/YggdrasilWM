@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0 # Fetch all history for .GitInfo and .NoJekyll support
 
-    - name: Set up Doxygen
-      uses: marketplace/actions/install-doxygen
+    - name: Install Doxygen
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y doxygen
 
     - name: Generate Doxygen Documentation
       run: |
@@ -28,6 +28,3 @@ jobs:
         clean: true # Automatically remove all files from the deployment branch that are not present in the deployed folder.
         single-commit: true # Keep the deployment branch history clean with a single commit.
         commit-message: "Deploy Doxygen Documentation"
-
-    # Optional: Add a step to copy the index.html at the root of the repo into the doc/html folder before deployment if needed.
-
