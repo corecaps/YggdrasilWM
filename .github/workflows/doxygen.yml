@@ -28,3 +28,4 @@ jobs:
         clean: true # Automatically remove all files from the deployment branch that are not present in the deployed folder.
         single-commit: true # Keep the deployment branch history clean with a single commit.
         commit-message: "Deploy Doxygen Documentation"
+        token: ${{ secrets.ACTION_PAT_V1 }}
