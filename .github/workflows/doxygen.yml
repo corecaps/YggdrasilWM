@@ -19,7 +19,11 @@ jobs:
     - name: Generate Doxygen Documentation
       run: |
         doxygen doxygen.cfg
-
+        
+    - name: Create .nojekyll File
+      run: |
+        touch doc/html/.nojekyll
+        
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
