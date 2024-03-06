@@ -379,3 +379,10 @@ void EventHandler::handleMotionNotify(const XEvent &event) {
 }
 void EventHandler::handleCreateNotify(const XEvent &event) {}
 void EventHandler::handleUnknown(const XEvent &event) {}
+
+void EventHandler::destroy() {
+	if (instance_ != nullptr) {
+		delete instance_;
+		instance_ = nullptr;
+	}
+}

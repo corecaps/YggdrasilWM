@@ -130,6 +130,7 @@ void WindowManager::getTopLevelWindows() {
 			newClient = std::make_shared<Client>(display_, root_, topLevelWindows[i], g,
 										 g->getInactiveColor(), g->getBorderSize(), x11Wrapper);
 			newClient->frame();
+			g->addClient(newClient->getWindow(),newClient);
 			setFocus(newClient.get());
 		} catch (const YggdrasilException &e) {
 			Logger::GetInstance()->Log(e.what(), L_ERROR);
@@ -172,6 +173,7 @@ void WindowManager::Run() {
 		EventHandler::getInstance()->dispatchEvent(e);
 		x11Wrapper->sync(display_, false);
 	}
+	Logger::GetInstance()->Log("WindowManager stopped", L_INFO);
 }
 void WindowManager::testRun() {
 	try {

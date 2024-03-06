@@ -81,6 +81,7 @@ public:
  * @param parent
  */
 		Space(Point pos, Point size, int index, Space* parent = nullptr);
+		~Space() = default;
 /**
  * @fn const Point LayoutManager::Space::getPos()
  * @brief Get the position of the space

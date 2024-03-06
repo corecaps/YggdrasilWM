@@ -30,7 +30,6 @@
 void Quit::execute(const std::string &args) {
 	(void)args;
 	WindowManager::getInstance()->Stop();
-	exit(0);
 }
 
 Quit::Quit() = default;

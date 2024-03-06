@@ -64,6 +64,7 @@ public:
  * @brief Get the Event handler:: Event handler object
  */
 	static EventHandler * getInstance();
+	static void destroy();
 /**
  * @fn ~EventHandler()
  * @brief Destroy the Event handler:: Event handler object

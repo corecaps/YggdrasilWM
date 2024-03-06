@@ -34,6 +34,7 @@
 #include "Config/ConfigHandler.hpp"
 #include "X11wrapper/baseX11Wrapper.hpp"
 #include "X11wrapper/X11Wrapper.hpp"
+#include "EventHandler.hpp"
 /**
  * @fn int main(int argc, char** argv)
  * @brief YggdrasilWM
@@ -125,6 +126,8 @@ int main(int argc, char** argv) {
 	}
 	WindowManager::getInstance()->Run();
 	WindowManager::Destroy();
+	EventHandler::destroy();
+	Logger::GetInstance()->Log("Exiting " + std::string(PROGRAM_NAME) + " " + std::string(PROGRAM_VERSION), L_INFO);
 	Logger::Destroy();
 	ConfigHandler::Destroy();
 	return (EXIT_SUCCESS);
