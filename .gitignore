@@ -33,4 +33,4 @@ temp.sh
 xtmemory.kcg.*
 #Ignore the generated documentation
 doc/*
-
+cmake-build-default-coverage

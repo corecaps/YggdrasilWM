@@ -176,10 +176,12 @@ target_link_libraries(${PROGRAM_NAME}_tests
         gmock
         jsoncpp_lib
         gtest_main
+        --coverage
 )
 
 # Set C++ standard for tests
 set_property(TARGET ${PROGRAM_NAME}_tests PROPERTY CXX_STANDARD 17)
+target_compile_options(${PROGRAM_NAME}_tests PRIVATE --coverage)
 
 # Add the test as a target for running with 'make test'
 add_test(NAME ${PROGRAM_NAME}_tests COMMAND ${PROGRAM_NAME}_tests)

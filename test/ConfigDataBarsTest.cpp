@@ -24,9 +24,7 @@
  * @brief ConfigDataBarsTest class
  * @date 2024-02-07
  *
- */
-
-#include <gtest/gtest.h>
+ */#include <gtest/gtest.h>
 #include "Config/ConfigDataBars.hpp"
 #include "Config/ConfigDataBar.hpp"
 #include "Logger.hpp"

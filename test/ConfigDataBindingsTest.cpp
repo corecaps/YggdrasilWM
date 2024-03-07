@@ -27,3 +27,49 @@
  */
 
 #include <gtest/gtest.h>
+#include "Config/ConfigDataBindings.hpp"
+#include <gmock/gmock.h>
+#include "Logger.hpp"
+#include <sstream>
+#include "json/json.h"
+#include "X11wrapper/mockX11Wrapper.hpp"
+using ::testing::TestWithParam;
+using ::testing::Values;
+
+class ConfigDataBindingsTest : public TestWithParam<Json::Value> {
+
+protected:
+	static std::ostringstream oss;
+	ConfigDataBindings *cdb;
+	ConfigDataBindingsTest() {}
+	~ConfigDataBindingsTest() override = default;
+	static void SetUpTestSuite() {
+		std::cout << " =================================================================================== " << std::endl;
+		std::cout << " ========================== ConfigDataBindings SetUpTestSuite ========================== " << std::endl;
+		std::cout << " =================================================================================== " << std::endl;
+		Logger::Create(ConfigDataBindingsTest::oss,L_INFO);
+	}
+
+	void SetUp() override {
+//		BaseX11Wrapper * wrapper = new mockX11Wrapper();
+		cdb = new ConfigDataBindings();
+	}
+	void TearDown() override {
+		delete cdb;
+		cdb = nullptr;
+	}
+	static void TearDownTestSuite() {
+		Logger::Destroy();
+	}
+};
+
+std::ostringstream ConfigDataBindingsTest::oss = std::ostringstream ();
+std::string configPath = "ConfigDataBindingTest.json";
+TEST_F(ConfigDataBindingsTest, CreateConfigDataBindings) {
+	ASSERT_NE(cdb, nullptr);
+}
+//
+//TEST_P (ConfigDataBindingsTest, LoadConfigDataBindings) {
+//	Json::Value json = GetParam();
+//
+//}
