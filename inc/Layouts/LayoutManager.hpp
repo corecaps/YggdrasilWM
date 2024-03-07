@@ -54,129 +54,8 @@ public:
 		Point(unsigned int x, unsigned int y) : x(x), y(y) {}
 		Point() : x(0), y(0) {}
 	};
-/**
- * @class Space
- * @brief Space class
- * This class represents a space in the layout.
- * it's designed like a binary tree, with a parent, a right and a left child.
- * Only leaf spaces have clients.
- */
-	class Space {
-	private:
-		Point					pos_;
-		Point					size_;
-		int						index_;
-		int						subspace_count_;
-		Space*					parent_;
-		std::unique_ptr<Space>	right_;
-		std::unique_ptr<Space>	left_;
-		std::weak_ptr<Client>	client_;
-	public:
-/**
- * @fn Space(Point pos, Point size, int index, Space* parent = nullptr)
- * @brief Construct a new Space object
- * @param pos
- * @param size
- * @param index
- * @param parent
- */
-		Space(Point pos, Point size, int index, Space* parent = nullptr);
-		~Space() = default;
-/**
- * @fn const Point LayoutManager::Space::getPos()
- * @brief Get the position of the space
- */
-		const Point &getPos() const;
-/**
- * @fn void LayoutManager::Space::setPos(const Point &pos)
- * @brief Set the position of the space
- * @param pos
- */
-		void setPos(const Point &pos);
-/**
- * @fn const Point LayoutManager::Space::getSize()
- * @brief Get the size of the space
- * @return
- */
-		const Point &getSize() const;
-/**
- * @fn void LayoutManager::Space::setSize(const Point &size)
- * @brief Set the size of the space
- * @param size
- */
 
-		void setSize(const Point &size);
-/**
- * @fn int LayoutManager::Space::getSubspaceCount()
- * @brief Get the number of subspaces
- */
-		int getSubspaceCount() const;
-/**
- * @fn int LayoutManager::Space::getIndex()
- * @brief Get the index of the space
- * @return
- */
-		int getIndex() const;
-/**
- * @fn void LayoutManager::Space::setIndex(int index)
- * @brief Set the index of the space
- * @param index
- */
-		void setIndex(int index);
-/**
- * @fn Space * LayoutManager::Space::getParent()
- * @brief Get the parent of the space
- * @return
- */
-		Space *getParent() const;
-/**
- * @fn void LayoutManager::Space::setParent(Space *parent)
- * @brief Set the parent of the space
- * @param parent
- */
-		void setParent(Space *parent);
-/**
- * @fn const std::unique_ptr<Space> & LayoutManager::Space::getRight()
- * @brief Get the right child of the space
- * @return
- */
-		const std::unique_ptr<Space> &getRight() const;
-/**
- * @fn void LayoutManager::Space::setRight(std::unique_ptr<Space> right)
- * @brief Set the right child of the space
- * @param right
- */
-		void setRight(std::unique_ptr<Space> right);
-/**
- * @fn const std::unique_ptr<Space> & LayoutManager::Space::getLeft()
- * @brief Get the left child of the space
- * @return
- */
-		const std::unique_ptr<Space> &getLeft() const;
-/**
- * @fn void LayoutManager::Space::setLeft(std::unique_ptr<Space> left)
- * @brief Set the left child of the space
- * @param left
- */
-		void setLeft(std::unique_ptr<Space> left);
-/**
- * @fn Client * LayoutManager::Space::getClient()
- * @brief Get the client of the space
- * @return
- */
-		std::shared_ptr<Client> getClient() const;
-/**
- * @fn void LayoutManager::Space::setClient(Client *client)
- * @brief Set the client of the space
- * @param client
- */
-		void setClient(std::shared_ptr<Client> client);
-/**
- * @fn void LayoutManager::Space::incSubSpaceCount()
- * @brief Increment the number of subspaces
- */
-		void incSubSpaceCount();
-	};
+
 /**
  * @brief SpaceNotFoundException class
  * This exception is thrown when a space is not found.
@@ -215,21 +94,6 @@ public:
  */
 	virtual void	updateGeometry(unsigned int sizeX, unsigned int sizeY, unsigned int posX, unsigned int posY) = 0;
 	virtual void reSize(const Point &size, const Point &pos) = 0;
-	virtual void recursiveResize(const Point &size, const Point &pos, Space *space) = 0;
-/**
- * @fn virtual Space * LayoutManager::findSpace(Client *client)
- * @brief find the space that contains the client
- * @param client
- * @return
- */
-	virtual Space	*findSpace(Client *client) = 0;
-/**
- * @fn virtual Space * LayoutManager::findSpace(int index)
- * @brief find the space with the given index
- * @param index
- * @return
- */
-	virtual Space	*findSpace(int index) = 0;
 /**
  * @fn virtual void LayoutManager::addClient(Client* client)
  * @brief add a client to the layout
@@ -243,7 +107,6 @@ public:
  */
 	virtual void removeClient(Client* client) = 0;
 protected:
-	std::unique_ptr<Space>			rootSpace_;
 	int								screen_width_;
 	int								screen_height_;
 	int								gap_;
