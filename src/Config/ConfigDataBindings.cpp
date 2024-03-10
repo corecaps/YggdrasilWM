@@ -85,3 +85,7 @@ void ConfigDataBindings::initKeycodes(Display *display, BaseX11Wrapper *x11Wrapp
 		binding->init_keycode(display,x11Wrapper);
 	}
 }
+
+const std::vector<Binding *> &ConfigDataBindings::getBindings() const {
+	return bindings_;
+}

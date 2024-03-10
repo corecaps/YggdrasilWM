@@ -73,8 +73,10 @@ public:
  * @param event must be converted to const XKeyEvent *event
  */
 	void handleKeypressEvent(const XKeyEvent *event);
-
+	[[nodiscard]] const std::vector<Binding *> &getBindings() const;
 private:
 	std::vector<Binding *> bindings_;
+
+
 };
 #endif //YGGDRASILWM_CONFIGDATABINDINGS_HPP

@@ -36,8 +36,7 @@
 using ::testing::TestWithParam;
 using ::testing::Values;
 
-class ConfigDataBindingsTest : public TestWithParam<Json::Value> {
-
+class ConfigDataBindingsTest :  public ::testing::Test {
 protected:
 	static std::ostringstream oss;
 	ConfigDataBindings *cdb;
@@ -51,7 +50,6 @@ protected:
 	}
 
 	void SetUp() override {
-//		BaseX11Wrapper * wrapper = new mockX11Wrapper();
 		cdb = new ConfigDataBindings();
 	}
 	void TearDown() override {
@@ -68,8 +66,65 @@ std::string configPath = "ConfigDataBindingTest.json";
 TEST_F(ConfigDataBindingsTest, CreateConfigDataBindings) {
 	ASSERT_NE(cdb, nullptr);
 }
-//
-//TEST_P (ConfigDataBindingsTest, LoadConfigDataBindings) {
-//	Json::Value json = GetParam();
-//
-//}
+class ConfigDataBindingsParamTest : public ::testing::TestWithParam<Json::Value> {
+protected:
+	static std::ostringstream oss;
+	ConfigDataBindings* cdb;
+	static void SetUpTestSuite() {
+		Logger::Create(ConfigDataBindingsParamTest::oss,L_INFO);
+	}
+	void SetUp() override {
+		cdb = new ConfigDataBindings();
+	}
+	void TearDown() override {
+		delete cdb;
+		cdb = nullptr;
+	}
+	static void TearDownTestSuite() {
+		Logger::Destroy();
+	}
+};
+std::ostringstream ConfigDataBindingsParamTest::oss = std::ostringstream ();
+Json::Value makeBindingJson(std::string configJson) {
+	Json::Value root;
+	Json::Reader reader;
+	reader.parse(configJson, root);
+	return root;
+}
+INSTANTIATE_TEST_SUITE_P(
+		ConfigDataBindingsTests,
+		ConfigDataBindingsParamTest,
+		::testing::Values(
+				makeBindingJson("{\"Mod1\":[{\"Key\":\"1\",\"Action\":\"FocusGroup\",\"Argument\":\"1\"}, {\"Key\":\"2\",\"Action\":\"FocusGroup\",\"Argument\":\"2\"}, {\"Key\":\"3\",\"Action\":\"FocusGroup\",\"Argument\":\"3\"}, {\"Key\":\"Return\",\"Action\":\"Spawn\",\"Argument\":\"kitty\"}, {\"Key\":\"Q\",\"Action\":\"Quit\",\"Argument\":\"\"}]}"),
+				makeBindingJson("{\"Mod1\":[{\"Key\":\"1\",\"Action\":\"FocusGroup\",\"Argument\":\"1\"}, {\"Key\":\"2\",\"Action\":\"FocusGroup\",\"Argument\":\"2\"}],\"Mod4\": [{\"Key\":\"3\",\"Action\":\"FocusGroup\",\"Argument\":\"3\"}, {\"Key\":\"Return\",\"Action\":\"Spawn\",\"Argument\":\"kitty\"}, {\"Key\":\"Q\",\"Action\":\"Quit\",\"Argument\":\"\"}]}"),
+				makeBindingJson("")
+				));
+TEST_P (ConfigDataBindingsParamTest, LoadConfigDataBindings) {
+	Json::Value json = GetParam();
+	int correctBindings = 0;
+	if (json.empty()) {
+		ASSERT_NO_THROW(cdb->configInit(json));
+		ASSERT_EQ(cdb->getBindings().size(), 0);
+	} else {
+		ASSERT_NO_THROW(cdb->configInit(json));
+		ASSERT_NE(cdb->getBindings().size(), 0);
+		for (auto modKey : json.getMemberNames()) {
+			for (auto binding: json[modKey]) {
+				std::string key = binding["Key"].asString();
+				std::string command = binding["Action"].asString();
+				std::string arg = binding["Argument"].asString();
+				bool found = false;
+				for (auto &b: cdb->getBindings()) {
+					if (b->getMod() == modKey && b->getKey() == key && b->getCommandName() == command &&
+						b->getArgs() == arg) {
+						found = true;
+						correctBindings++;
+						break;
+					}
+				}
+				ASSERT_TRUE(found);
+			}
+		}
+		std::cout << "Correct bindings: " << correctBindings << std::endl;
+	}
+}
