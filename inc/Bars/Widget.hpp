@@ -23,13 +23,24 @@
  */
 #ifndef WIDGET_HPP
 #define WIDGET_HPP
+extern "C" {
+#include <X11/Xlib.h>
+};
+#include <string>
+
 class Widget
 {
 public:
 	Widget() = default;
 	virtual ~Widget() = 0;
+	virtual void initialize(Display* display, Window parentWindow, int x, int y, int width, int height) = 0;
 	virtual void draw() = 0;
-	virtual void init() = 0;
+	virtual void handleEvent(XEvent& event) = 0;
+	virtual void shutdown() = 0;
+	virtual void setPosition(int x, int y) = 0;
+	virtual void setSize(int width, int height) = 0;
+	virtual void registerDataKey(const std::string& key) = 0;
+	virtual void unregisterDataKey(const std::string& key) = 0;
+	virtual void updateData(const std::string& key, const std::string& value) = 0;
 };
-
 #endif // WIDGET_HPP
