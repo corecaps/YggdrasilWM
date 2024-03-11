@@ -41,7 +41,7 @@ public:
 					Bar();
 					~Bar();
 	void			init(ConfigDataBar *configData, std::shared_ptr<TSBarsData> tsData);
-	void draw(std::string msg);
+	void			draw(std::string msg);
 	Window			getWindow() const;
 	unsigned int	getSizeX() const;
 	unsigned int	getSizeY() const;

@@ -87,8 +87,7 @@ private:
 /**
  * @fn EventHandler(WindowManager &wm, const Logger &logger)
  * @brief Construct a new Event handler:: Event handler object
- * @param wm Constant reference to the WindowManager object.
- * @param logger Constant reference to the Logger object.
+ * @todo make wrapper a dependency injection instead of getting it from WindowManager
  * @return EventHandler object.
  */
 	EventHandler();

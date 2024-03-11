@@ -55,6 +55,7 @@ public:
  * You must call configInit() in each ConfigDataBase Child class
  * to load the data.
  * @param root_ Json::Value& object containing the Bar configuration data
+ * @todo use of a smart pointer to store the ConfigDataBar objects
  */
 	void configInit(const Json::Value& root_) override;
 /**

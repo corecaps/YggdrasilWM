@@ -60,6 +60,7 @@ public:
  * @brief Get the ConfigData object of type T
  * @tparam T Type of the ConfigData object
  * @return a pointer to an object form a subclass of ConfigData
+ * @todo modify to use smart pointers
  */
 	template <typename T>
 	T* getConfigData() {
@@ -73,6 +74,7 @@ public:
  * @fn template <typename T> void ConfigHandler::addConfigData(T* configData)
  * @tparam T Type of the ConfigData object you want to add to the ConfigHandler
  * @param configData the ConfigData object you want to add
+ *  * @todo modify to use smart pointers
  */
 	template <typename T>
 	void addConfigData(T* configData) {

@@ -36,9 +36,7 @@ class BaseX11Wrapper;
 /**
  * @class LayoutManager
  * @brief LayoutManager class
- * This a base class for the different layout managers.
- * You should not use this class directly, but use one of the derived classes.
- * @todo A factory should be used to create the layout managers.
+ * Interface for the layout managers
  */
 class LayoutManager {
 public:
@@ -53,17 +51,6 @@ public:
 
 		Point(unsigned int x, unsigned int y) : x(x), y(y) {}
 		Point() : x(0), y(0) {}
-	};
-
-
-/**
- * @brief SpaceNotFoundException class
- * This exception is thrown when a space is not found.
- */
-	class SpaceNotFoundException : public std::runtime_error {
-	public:
-		explicit SpaceNotFoundException(const std::string& message);
-		const char * what() const noexcept override;
 	};
 /**
  * @fn LayoutManager(Display* display, Window root)
@@ -89,8 +76,7 @@ public:
 	virtual ~LayoutManager() = default;
 /**
  * @fn virtual void LayoutManager::updateGeometry()
- * @brief updateGeometry this method is a residual from the old implementation.
- * it should be removed in the future.
+ * @brief update the geometry of the layout used to resize the layout
  */
 	virtual void	updateGeometry(unsigned int sizeX, unsigned int sizeY, unsigned int posX, unsigned int posY) = 0;
 	virtual void reSize(const Point &size, const Point &pos) = 0;

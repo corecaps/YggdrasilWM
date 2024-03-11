@@ -48,6 +48,8 @@ public:
  * This class represents a space in the layout.
  * it's designed like a binary tree, with a parent, a right and a left child.
  * Only leaf spaces have clients.
+ * @todo create an interface for Spaces and implement it in BinarySpace
+ * @todo redefine BinarySpace not as a nested class but as a separate class
  */
 	class BinarySpace {
 	private:
@@ -195,7 +197,7 @@ public:
 	~TreeLayoutManager() override;
 /**
  * @fn void TreeLayoutManager::updateGeometry()
- * @brief this method is an old implementation and should be removed
+ * @brief update the geometry of the layout (resize)
 */
 	void	updateGeometry(unsigned int sizeX, unsigned int sizeY, unsigned int posX, unsigned int posY) override;
 	void	reSize(const Point &size, const Point &pos) override;

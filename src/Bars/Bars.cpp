@@ -68,9 +68,7 @@ void Bars::init(ConfigDataBars *configD,
 	}
 }
 void Bars::start_thread() {
-//	std::thread([this] { this->run(); }).detach();
 	barThread = std::thread(&Bars::run, this);
-
 }
 void Bars::run() {
 	while (WindowManager::getInstance()->getRunning()){
@@ -90,9 +88,6 @@ void Bars::run() {
 			Logger::GetInstance()->Log("Bars thread exception: " + std::string(e.what()),L_ERROR);
 		}
 	}
-}
-void Bars::selectEvents() {
-
 }
 void Bars::redraw(std::string msg) {
 	for (auto &bar : this->bars) {
@@ -131,16 +126,10 @@ unsigned int Bars::getSpaceS() const { return this->spaceS; }
 unsigned int Bars::getSpaceE() const { return this->spaceE; }
 unsigned int Bars::getSpaceW() const { return this->spaceW; }
 const std::unordered_map<std::string, std::string> &Bars::getData() const { return data; }
-
-const std::vector<Window> &Bars::getWindows() const {
-	return windows;
-}
-
 bool Bars::isBarWindow(Window window) {
 	auto it = std::find(windows.begin(), windows.end(), window);
 	return it != windows.end();
 }
-
 void Bars::stop_thread() {
 	barThread.join();
 }

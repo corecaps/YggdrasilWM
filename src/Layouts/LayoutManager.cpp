@@ -42,10 +42,3 @@ LayoutManager::LayoutManager(Display *display,
 	screen_height_(0),
 	screen_width_(0) {}
 
-
-LayoutManager::SpaceNotFoundException::SpaceNotFoundException(const std::string &message) : runtime_error(message) {}
-const char *LayoutManager::SpaceNotFoundException::what() const noexcept {
-	return runtime_error::what();
-}
-
-

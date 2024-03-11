@@ -192,13 +192,33 @@ public:
   it is not used in the normal operation of the window manager
  */
 	void									testRun();
+/**
+ * @fn void WindowManager::getGeometryX()
+ * @brief Get the Geometry X
+ * this function returns the width of the screen
+ */
 	unsigned int							getGeometryX() const;
+/**
+ * @fn void WindowManager::getGeometryY()
+ * @brief Get the Geometry Y
+ */
 	unsigned int							getGeometryY() const;
+/**
+ * @fn void WindowManager::getActiveWindow()
+ * @brief Get the Active Window
+ */
 	Window									getActiveWindow() const;
+/**
+ * @fn void WindowManager::setActiveWindow(Window activeWindow)
+ * @brief set the Active Window
+ * @param activeWindow
+ */
 	void									setActiveWindow(Window activeWindow);
+/**
+ * @fn std::shared_ptr<BaseX11Wrapper> WindowManager::getX11Wrapper()
+ * @brief get the X11 Wrapper object
+ */
 	const std::shared_ptr<BaseX11Wrapper> &	getX11Wrapper() const;
-
-
 private:
 	Display									*display_;
 	static bool								wmDetected;
@@ -250,6 +270,12 @@ private:
  * @brief add groups configured in the ConfigDataGroups to the groups vector
  */
 	void		addGroupsFromConfig();
+/**
+ * @fn void WindowManager::createBars()
+ * @brief create the bars
+ * Bars are created from the config file and handled in a separate thread
+ * @note communication between main thread and Bars thread is handled in Thread Safe way by the TSBarsData class
+ */
 	void		createBars();
 };
 

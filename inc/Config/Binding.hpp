@@ -45,8 +45,8 @@ public:
  * @brief Initialize a binding
  * all the parameters are read from the Json::Value from the configuration file
  * Mod is parsed to store the proper modMask
- * Key is parsed to store the proper keyCode using XStringToKeysym
  * Command is parsed to link the proper command object
+ * @note you need to call init_keycode after the display is opened
  */
 	void	init(std::string Mod, std::string Key, std::string Command, std::string Args);
 /**

@@ -53,6 +53,14 @@ public:
  * @param root_ the Json::Value object containing the bindings
  */
 	void configInit(const Json::Value& root_) override;
+/**
+ * @fn void ConfigDataBindings::initKeycodes(Display *display, BaseX11Wrapper *x11Wrapper)
+ * @brief Initialize the keycodes
+ * This method is called by the WindowManager to initialize the keycodes after the
+ * display and the x11Wrapper are initialized
+ * @param display
+ * @param x11Wrapper
+ */
 	void initKeycodes(Display *display,BaseX11Wrapper *x11Wrapper);
 	[[nodiscard]] Json::Value configSave() override;
 /**
@@ -76,7 +84,5 @@ public:
 	[[nodiscard]] const std::vector<Binding *> &getBindings() const;
 private:
 	std::vector<Binding *> bindings_;
-
-
 };
 #endif //YGGDRASILWM_CONFIGDATABINDINGS_HPP

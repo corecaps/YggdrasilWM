@@ -43,6 +43,7 @@ namespace ewmh {
  * @brief register the supported EWMH atoms.
  * @param display must be opened before call to this function.
  * @param root root window the wm is managing (usually the default root window)
+ * @todo add x11wrapper to the parameters
  */
 	void	initEwmh(Display *display, Window root);
 	void	handleMessage(XClientMessageEvent *event, Display *display, Window root);

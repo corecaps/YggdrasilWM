@@ -55,6 +55,7 @@ public:
  * @param layout_manager Reference to the layout manager
  * @param inActiveColor color of the border
  * @param borderSize size of the border
+ * @param wrapper X11 wrapper
  */
 	Client(Display *display,
 		   Window root,
@@ -69,15 +70,14 @@ public:
  */
 	~Client();
 /**
- * @fn Client_Err Client::frame()
+ * @fn void Client::frame()
  * @brief Client::frame create a frame around the client window, Map the frame,
  * Add the window to the save set Reparent it, grab the buttons
  */
 	void frame();
 /**
- * @fn Client_Err Client::unframe()
+ * @fn void Client::unframe()
  * @brief Client::unframe unframe the client window by removing the frame and reparenting the window to the root window
- * @return Client_Err error code from the Client_Err enum
  */
 	void unframe();
 /**
@@ -161,8 +161,5 @@ private:
 	std::string class_;
 	std::weak_ptr<Group> group_;
 	std::shared_ptr<BaseX11Wrapper> wrapper;
-
-
 };
-
 #endif //YGGDRASILWM_CLIENT_HPP

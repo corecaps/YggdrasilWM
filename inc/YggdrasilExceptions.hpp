@@ -31,11 +31,11 @@
 
 class YggdrasilException : public std::runtime_error {
 public:
-	YggdrasilException(const std::string& message) : std::runtime_error(message) {}
+	explicit YggdrasilException(const std::string& message) : std::runtime_error(message) {}
 };
 class X11Exception : public YggdrasilException{
 public:
-	X11Exception(const std::string& message) : YggdrasilException(message) {}
+	explicit X11Exception(const std::string& message) : YggdrasilException(message) {}
 };
 
 #endif //YGGDRASILWM_YGGDRASILEXCEPTIONS_HPP

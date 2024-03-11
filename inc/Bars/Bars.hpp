@@ -82,6 +82,7 @@ public:
  * @param tsData thread safe data to pass data between threads
  * @param display to limit calls to WindowManager::getDisplay
  * @param root to limit calls to WindowManager::getRoot
+ * @todo use of x11wrapper
  */
 	void init(ConfigDataBars *configData,
 			  std::shared_ptr<TSBarsData> tsData,
@@ -118,13 +119,24 @@ public:
  * used to calculate the space left for the Layout Manager.
  */
 	[[nodiscard]] unsigned int getSpaceW() const;
-	const std::vector<Window> &getWindows() const;
 	const std::unordered_map<std::string, std::string> &getData() const;
+/**
+ * @fn bool Bars::isBarWindow(Window window)
+ * @brief Check if the window is a bar window
+ * used to filter events in EventHandler
+ * @param window
+ * @return true if the window is a bar window
+ */
 	bool isBarWindow(Window window);
+/**
+ * @fn void Bars::stop_thread()
+ * @brief Stop the thread (join)
+ */
 	void stop_thread();
 /**
- * @fn void Bars::redraw()
+ * @fn void Bars::redraw(std::string msg)
  * @brief Redraw the bars by calling the draw method of each bar
+ * @param msg message to pass to the draw method (temporary arg for debug purpose)
  */
 	void redraw(std::string msg);
 private:
@@ -140,12 +152,7 @@ private:
 	unsigned int									spaceS;
 	unsigned int									spaceE;
 	unsigned int									spaceW;
-	std::thread								barThread;
+	std::thread										barThread;
 	Bars();
-/**
- * @fn void Bars::selectEvents()
- * @brief Select the events for the bars
- */
-	void selectEvents();
 };
 #endif // BARS_HPP

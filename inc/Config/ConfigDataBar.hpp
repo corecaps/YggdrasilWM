@@ -94,7 +94,7 @@ public:
  * @brief Get the Bar Border Color
  */
 	[[nodiscard]] unsigned int getBarBorderColor() const;
-	const std::string &getBarPosition() const;
+	[[nodiscard]] const std::string &getBarPosition() const;
 
 private:
 	int				barSize_;
