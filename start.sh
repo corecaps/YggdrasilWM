@@ -58,6 +58,9 @@ run_with_valgrind() {
         massif)
             export valgrind_cmd="valgrind --tool=massif --time-unit=ms "
             ;;
+        helgrind)
+            export valgrind_cmd="valgrind --tool=helgrind -s"
+            ;;
         massiftree)
             export valgrind_cmd="valgrind --tool=massif --time-unit=ms --xtree-memory=full"
             ;;
@@ -84,6 +87,9 @@ else
             ;;
         --valgrind-massif)
             run_with_valgrind massif
+            ;;
+        --valgrind-helgrind)
+            run_with_valgrind helgrind
             ;;
         --massif-tree)
             run_with_valgrind massiftree
