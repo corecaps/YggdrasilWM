@@ -115,7 +115,6 @@ set(SOURCES
         ${INCLUDE_DIR}/Config/ConfigFileHandler.hpp
         ${SOURCE_DIR}/Config/Binding.cpp
         ${INCLUDE_DIR}/Config/Binding.hpp
-        ${SOURCE_DIR}/Commands/CommandBase.cpp
         ${INCLUDE_DIR}/Commands/CommandBase.hpp
         ${SOURCE_DIR}/Commands/FocusGroup.cpp
         ${INCLUDE_DIR}/Commands/FocusGroup.hpp
@@ -127,8 +126,6 @@ set(SOURCES
         ${INCLUDE_DIR}/Bars/Bars.hpp
         ${SOURCE_DIR}/Bars/Bar.cpp
         ${INCLUDE_DIR}/Bars/Bar.hpp
-        ${SOURCE_DIR}/Bars/GroupWidget.cpp
-        ${INCLUDE_DIR}/Bars/GroupWidget.hpp
         ${SOURCE_DIR}/Bars/TSBarsData.cpp
         ${INCLUDE_DIR}/Bars/TSBarsData.hpp
         ${INCLUDE_DIR}/Bars/Widget.hpp
@@ -185,3 +182,11 @@ target_compile_options(${PROGRAM_NAME}_tests PRIVATE --coverage)
 
 # Add the test as a target for running with 'make test'
 add_test(NAME ${PROGRAM_NAME}_tests COMMAND ${PROGRAM_NAME}_tests)
+
+add_library(clockWidget SHARED plugins/clockWidget/clock.cpp)
+target_include_directories(clockWidget PRIVATE ${INCLUDE_DIR})
+target_include_directories(clockWidget PRIVATE ${X11_INCLUDE_DIR})
+target_link_libraries(clockWidget ${X11_LIBRARIES})
+set_target_properties(clockWidget PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+)

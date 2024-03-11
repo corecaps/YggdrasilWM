@@ -32,15 +32,19 @@ extern "C" {
 };
 class ClockWidget : public Widget
 {
+public:
+	ClockWidget();
+	~ClockWidget() override;
 	void initialize(Display* display, Window parentWindow, int x, int y, int width, int height) override;
 	void draw() override;
 	void handleEvent(XEvent& event) override;
 	void shutdown() override;
-	void setPosition(int x, int y) override;
-	void setSize(int width, int height) override;
+	void setPosition(int x_, int y_) override;
+	void setSize(int width_, int height_) override;
 	void registerDataKey(const std::string& key) override;
 	void unregisterDataKey(const std::string& key) override;
 	void updateData(const std::string& key, const std::string& value) override;
+
 private:
 	Display* display;
 	Window parentWindow;

@@ -26,6 +26,9 @@
 #include "Config/ConfigDataBar.hpp"
 #include "WindowManager.hpp"
 #include <thread>
+#include <dlfcn.h>
+#include "Bars/Widget.hpp"
+
 Bar::Bar() {
 
 }
@@ -77,6 +80,34 @@ void Bar::init(ConfigDataBar *config, std::shared_ptr<TSBarsData> ts) {
 								 | PointerMotionMask);
 	XMapWindow(display, window);
 	this->draw("init");
+	// Testing importing widget plugin :
+	void* handle = dlopen("./build/bin/libclockWidget.so", RTLD_LAZY);
+	if (!handle) {
+		std::cerr << "Cannot open library: " << dlerror() << '\n';
+		return;
+	}
+	typedef Widget* create_t();
+	typedef void destroy_t(Widget*);
+	create_t* createPlugin = (create_t*)dlsym(handle, "createPlugin");
+	if (!createPlugin) {
+		std::cerr << "Cannot load symbol createPlugin: " << dlerror() << '\n';
+		dlclose(handle);
+		return;
+	}
+	Widget * widget = createPlugin();
+	widget->initialize(display,
+					   window,
+					   0, 0,
+					   100, 100);
+	widget->draw();
+	destroy_t *destroyPlugin = (destroy_t*)dlsym(handle, "destroyPlugin");
+	if (!destroyPlugin) {
+		std::cerr << "Cannot load symbol destroyPlugin: " << dlerror() << '\n';
+		dlclose(handle);
+		return;
+	}
+//	destroyPlugin(widget);
+	dlclose(handle);
 }
 
 void Bar::draw(std::string msg) {
