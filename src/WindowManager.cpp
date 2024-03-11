@@ -232,6 +232,8 @@ void WindowManager::Stop() {
 	} catch (const YggdrasilException &e) {
 		std::cerr << e.what();
 	}
+	Bars::getInstance().stop_thread();
+	Bars::destroy();
 	std::cout << "Stopping WindowManager" << std::endl;
 }
 WindowManager * WindowManager::getInstance() {
