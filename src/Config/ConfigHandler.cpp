@@ -91,9 +91,9 @@ void ConfigHandler::configInit() {
 	Logger::GetInstance()->Log("===================Succefully Loaded Config===================\n\n",L_INFO);
 }
 ConfigHandler::~ConfigHandler() {
-	for (auto it = configMap_.begin(); it != configMap_.end(); ++it) {
-		delete it->second;
-	}
+//	for (auto it = configMap_.begin(); it != configMap_.end(); ++it) {
+//		delete it->second;
+//	}
 };
 unsigned long ConfigHandler::colorCodeToULong(const std::string& colorCode) {
 	if (colorCode.size() != 7 || colorCode[0] != '#' || !isxdigit(colorCode[1])) {
