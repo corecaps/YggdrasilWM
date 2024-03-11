@@ -140,7 +140,11 @@ void EventHandler::handleMapNotify(const XEvent &event) {
 }
 void EventHandler::handleUnmapNotify(const XEvent &event) {
 	auto e = event.xunmap;
-	if (e.event == WindowManager::getInstance()->getRoot()) {
+	if (Bars::getInstance().isBarWindow(e.window)) {
+		Logger::GetInstance()->Log("Ignoring unmap for bar window", L_INFO);
+		return;
+	}
+	if (e.window == WindowManager::getInstance()->getRoot()) {
 		ConfigHandler::GetInstance().getConfigData<ConfigDataBindings>()->grabKeys(WindowManager::getInstance()->getDisplay(),WindowManager::getInstance()->getRoot());
 		Logger::GetInstance()->Log("Ignoring unmap for root window", L_INFO);
 		return;
@@ -177,6 +181,10 @@ void EventHandler::handleConfigureNotify(const XEvent &event) {
 }
 void EventHandler::handleButtonPress(const XEvent &event) {
 	auto e = event.xbutton;
+	if (Bars::getInstance().isBarWindow(e.window)) {
+		Logger::GetInstance()->Log("Ignoring unmap for bar window", L_INFO);
+		return;
+	}
 	const Window frame = WindowManager::getInstance()->getClient(event.xbutton.window)->getFrame();
 	// give focus to the window
 	wrapper->setInputFocus(WindowManager::getInstance()->getDisplay(), frame, RevertToParent, CurrentTime);
@@ -208,23 +216,17 @@ void EventHandler::handleKeyPress(const XEvent &event) {
 void EventHandler::handleKeyRelease(const XEvent &event) {}
 void EventHandler::handleEnterNotify(const XEvent &event) {
 	auto e = event.xcrossing;
-	const std::vector<Window> &windows = Bars::getInstance().getWindows();
-	for (auto window : windows) {
-		if (window == e.window) {
-			Bars::getInstance().redraw();
-			return;
-		}
+	if (Bars::getInstance().isBarWindow(e.window)) {
+		Bars::getInstance().redraw(std::string());
+		return;
 	}
 }
 void EventHandler::handleLeaveNotify(const XEvent &event) {}
 void EventHandler::handleExpose(const XEvent &event) {
 	auto e = event.xexpose;
-	const std::vector<Window> &windows = Bars::getInstance().getWindows();
-	for (auto window : windows) {
-		if (window == e.window) {
-			Bars::getInstance().redraw();
-			return;
-		}
+	if (Bars::getInstance().isBarWindow(e.window)) {
+		Bars::getInstance().redraw("Event Expose ");
+		return;
 	}
 }
 void EventHandler::handleFocusIn(const XEvent &event) {
@@ -279,6 +281,10 @@ void EventHandler::handleDestroyNotify(const XEvent &event) {
 	auto e = event.xdestroywindow;
 	if (e.window == WindowManager::getInstance()->getRoot()) {
 		Logger::GetInstance()->Log("Ignoring destroy for root window", L_INFO);
+		return;
+	}
+	if (Bars::getInstance().isBarWindow(e.window)) {
+		Logger::GetInstance()->Log("Ignoring unmap for bar window", L_INFO);
 		return;
 	}
 	try {
@@ -347,6 +353,9 @@ void EventHandler::handleMapRequest(const XEvent &event) {
 }
 void EventHandler::handleMotionNotify(const XEvent &event) {
 	auto e = event.xmotion;
+	if (Bars::getInstance().isBarWindow(e.window)) {
+		return;
+	}
 	const Window frame = WindowManager::getInstance()->getClientRef(event.xmotion.window)->getFrame();
 //	const Position<int> drag_pos(e.x_root, e.y_root);
 //	const Vector2D<int> delta = drag_pos - drag_start_pos_;
