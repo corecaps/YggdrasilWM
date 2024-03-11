@@ -95,7 +95,7 @@ void WindowManager::init() {
 	x11Wrapper->ungrabServer(display_);
 	ewmh::updateWmProperties(display_, root_);
 	x11Wrapper->flush(display_);
-	tsData->addData("test", "test");
+	tsData->addData("EvCount", "0");
 	signal(SIGINT, handleSIGHUP);
 }
 void WindowManager::selectEventOnRoot() const {
@@ -169,9 +169,11 @@ void WindowManager::Run() {
 	Logger::GetInstance()->Log("================ Yggdrasil WM Running ================\n\n", L_INFO);
 	EventHandler::create();
 	XEvent e;
+	int evcount = 0;
 	while (running && !x11Wrapper->nextEvent(display_, &e)) {
 		EventHandler::getInstance()->dispatchEvent(e);
 		x11Wrapper->sync(display_, false);
+		tsData->modifyData("EvCount", std::to_string(evcount++));
 	}
 	Logger::GetInstance()->Log("WindowManager stopped", L_INFO);
 }
