@@ -68,22 +68,27 @@ void Bar::init(ConfigDataBar *config, std::shared_ptr<TSBarsData> ts) {
 	unsigned int border = configData->getBarBorderColor();
 	unsigned int borderSize = configData->getBarBorderSize();
 	window = XCreateSimpleWindow(display, root, posX, posY,sizeX, sizeY, borderSize, 0, bg);
-	XSelectInput(display, window, ExposureMask | KeyPressMask);
+	XSelectInput(display, window,SubstructureRedirectMask
+								 | SubstructureNotifyMask
+								 | FocusChangeMask
+								 | KeyPressMask
+								 | ExposureMask
+								 | ButtonPressMask
+								 | PointerMotionMask);
 	XMapWindow(display, window);
-	this->draw();
+	this->draw("init");
 }
 
-void Bar::draw() {
+void Bar::draw(std::string msg) {
 	int screen = DefaultScreen(display);
 	std::stringstream message;
 	auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 	std::tm localTime{};
 	localtime_r(&now, &localTime);
-	message << PROGRAM_NAME << " " << PROGRAM_VERSION << " " << WindowManager::getInstance()->getClientCount() << " clients" << " " << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S") ;
+	message <<msg <<" - "<< PROGRAM_NAME << " " << PROGRAM_VERSION << " " << WindowManager::getInstance()->getClientCount() << " clients" << " " << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S") ;
 	XClearWindow(display, window);
 	XDrawString(display, window, DefaultGC(display, screen), 300, 15, message.str().c_str(), message.str().size());
 	XFlush(display);
-	Logger::GetInstance()->Log("Bar [" + std::to_string(window) + "] redrawn", L_INFO);
 }
 
 Window Bar::getWindow() const {

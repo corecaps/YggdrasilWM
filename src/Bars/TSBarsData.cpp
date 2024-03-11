@@ -32,12 +32,12 @@ void TSBarsData::addData(std::string key, std::string value) {
 	std::lock_guard<std::mutex> lock(mutex);
 	data[key] = value;
 	modifiedKeys.insert(key);
+	dataChanged = true;
 	cv.notify_one();
 }
 std::unordered_map<std::string,std::string> TSBarsData::getData() {
 	std::unique_lock<std::mutex> lock(mutex);
 	std::unordered_map<std::string, std::string> modifiedData;
-
 	for (const auto& key : modifiedKeys) {
 		modifiedData[key] = data[key]; // Assumes key still exists. Adjust if you track removals differently.
 	}
@@ -62,7 +62,10 @@ void TSBarsData::modifyData(std::string key, std::string value) {
 }
 bool TSBarsData::wait() {
 	std::unique_lock<std::mutex> lock(mutex);
-	cv.wait(lock, [this] { return dataChanged; });
-	dataChanged = false;
-	return true;
+	if (!cv.wait_for(lock, std::chrono::milliseconds(1000),[this] { return dataChanged; }))
+		return false;
+	else {
+		dataChanged = false;
+		return true;
+	}
 }

@@ -30,6 +30,8 @@
 #include "WindowManager.hpp"
 #include <string>
 #include <thread>
+#include <mutex>
+#include <condition_variable>
 Bars * Bars::instance = nullptr;
 void Bars::init(ConfigDataBars *configD,
 				std::shared_ptr<TSBarsData> tsD,
@@ -61,30 +63,40 @@ void Bars::init(ConfigDataBars *configD,
 									+ std::to_string(newBar->getSizeX())
 									+ " x "
 									+ std::to_string(newBar->getSizeY()),L_INFO);
+		this->windows.push_back(newBar->getWindow());
 		this->bars.push_back(std::move(newBar));
 	}
 }
 void Bars::start_thread() {
-	std::thread([this] { this->run(); }).detach();
+//	std::thread([this] { this->run(); }).detach();
+	barThread = std::thread(&Bars::run, this);
+
 }
 void Bars::run() {
 	while (WindowManager::getInstance()->getRunning()){
-		if (tsData->wait()) {
-			std::unordered_map<std::string,std::string>updated = tsData->getData();
-			for (const auto &pair: updated) {
-				Logger::GetInstance()->Log("Updating data [" + pair.first + "] with value [" + pair.second + "]",L_INFO);
-				this->data[pair.first] = pair.second;
+		try {
+			if (tsData->wait()) {
+				std::unordered_map<std::string,std::string>updated = tsData->getData();
+				std::string last;
+				for (const auto &pair: updated) {
+					this->data[pair.first] = pair.second;
+					last = pair.second;
+				}
+				this->redraw(last);
+			} else {
+				this->redraw("TimneOut Redraw");
 			}
-			this->redraw();
+		} catch (const std::exception &e) {
+			Logger::GetInstance()->Log("Bars thread exception: " + std::string(e.what()),L_ERROR);
 		}
 	}
 }
 void Bars::selectEvents() {
 
 }
-void Bars::redraw() {
+void Bars::redraw(std::string msg) {
 	for (auto &bar : this->bars) {
-		bar->draw();
+		bar->draw(msg);
 	}
 }
 Bars::Bars() : spaceN(0),
@@ -122,4 +134,13 @@ const std::unordered_map<std::string, std::string> &Bars::getData() const { retu
 
 const std::vector<Window> &Bars::getWindows() const {
 	return windows;
+}
+
+bool Bars::isBarWindow(Window window) {
+	auto it = std::find(windows.begin(), windows.end(), window);
+	return it != windows.end();
+}
+
+void Bars::stop_thread() {
+	barThread.join();
 }

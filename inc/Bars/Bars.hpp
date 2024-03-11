@@ -29,6 +29,8 @@
 #include <memory>
 #include <unordered_map>
 #include <string>
+#include <thread>
+
 extern "C" {
 #include <X11/Xlib.h>
 }
@@ -118,11 +120,13 @@ public:
 	[[nodiscard]] unsigned int getSpaceW() const;
 	const std::vector<Window> &getWindows() const;
 	const std::unordered_map<std::string, std::string> &getData() const;
+	bool isBarWindow(Window window);
+	void stop_thread();
 /**
  * @fn void Bars::redraw()
  * @brief Redraw the bars by calling the draw method of each bar
  */
-	void redraw();
+	void redraw(std::string msg);
 private:
 	static Bars*									instance;
 	std::vector<std::unique_ptr<Bar>>				bars;
@@ -136,7 +140,7 @@ private:
 	unsigned int									spaceS;
 	unsigned int									spaceE;
 	unsigned int									spaceW;
-
+	std::thread								barThread;
 	Bars();
 /**
  * @fn void Bars::selectEvents()
