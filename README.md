@@ -5,9 +5,21 @@
 **Version 0.1.1**
 ![screenshot](screenshot.png)
 ## What is YggdrasilWM?
-YggdrasilWM is an automatic tiling window manager for X11. It is written in C++ and uses the Xlib library. It is inspired by dwm and xmonad.
-EWMH compliance is currently in development, so it is not yet fully implemented.
-YggdrasilWM is a **learning project** for me, so it is **not intended to be used as a daily driver**.
+- YggdrasilWM is a lightweight, automatic tiling window manager for the X11 system, drawing inspiration from established projects like qtile and xmonad. Our goal is to combine efficiency and configurability, offering users a seamless experience that maximizes productivity while keeping resource usage minimal.
+
+- Developed in C++11, YggdrasilWM emphasizes minimalism not just in its design but also in its dependency requirements, ensuring a clean and straightforward setup process.
+
+- Originally conceived as a personal project to deepen my understanding of window management systems, YggdrasilWM has evolved with the aim of becoming a practical choice for users looking for an alternative window manager that balances flexibility with simplicity.
+
+### Roadmap
+Our vision for YggdrasilWM's future is clear and focused on enhancing its functionality and user experience:
+
+- EWMH Support: Achieve full compliance with Extended Window Manager Hints (EWMH) to ensure broad compatibility and integration with a variety of applications.
+- Layout and Widget Diversity: Expand the range of available tiling layouts and widgets, allowing for a more personalized and efficient workspace.
+- Multimonitor Support: Implement comprehensive support for multimonitor setups, accommodating users with extensive display configurations.
+- Dynamic Configuration: Introduce the ability to reload configurations on-the-fly, making customization and adjustments seamless and immediate.
+
+YggdrasilWM is steadily growing, and while it remains a project born out of a desire to learn and explore, it aspires to cater to a broader audience by providing a stable, efficient, and customizable window management experience.
 
 ## License
 YggdrasilWM is licensed under the GNU General Public License v3. The full GPL license is available in the LICENSE file.
@@ -110,9 +122,6 @@ As there is no .xinitrc file, you will have to start a terminal manually using
 DISPLAY=:1 ; xterm & 
 ```
 ---
-## TODO:
-### Tiling Layouts
-For the moments only one layout is implemented, the biggest space occupied is split along his longest side. The layout is split recursively.
 
 ## Documentation
 The documentation is generated using Doxygen. Run 
