@@ -104,7 +104,7 @@ void Bar::init(ConfigDataBar *config, std::shared_ptr<TSBarsData> ts) {
 	Window wwindow = widget->initialize(display,
 										window,
 										0, 0,
-										200, 30,
+										150, 30,
 										"DejaVu Sans",
 										0xFFFFFF,
 										0, 10);
@@ -114,10 +114,8 @@ void Bar::init(ConfigDataBar *config, std::shared_ptr<TSBarsData> ts) {
 
 void Bar::draw(std::string msg) {
 	int screen = DefaultScreen(display);
-	std::stringstream message;
-	message <<msg <<" - "<< PROGRAM_NAME << " " << PROGRAM_VERSION << " " << WindowManager::getInstance()->getClientCount() << " clients";
 	XClearWindow(display, window);
-	XDrawString(display, window, DefaultGC(display, screen), 300, 15, message.str().c_str(), message.str().size());
+	XDrawString(display, window, DefaultGC(display, screen), 300, 15, msg.c_str(), msg.size());
 	XFlush(display);
 	if (widget)
 		widget->draw();

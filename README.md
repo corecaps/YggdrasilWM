@@ -3,7 +3,7 @@
 ---
 # YggdrasilWM 
 **Version 0.1.1**
-
+![screenshot](screenshot.png)
 ## What is YggdrasilWM?
 YggdrasilWM is an automatic tiling window manager for X11. It is written in C++ and uses the Xlib library. It is inspired by dwm and xmonad.
 EWMH compliance is currently in development, so it is not yet fully implemented.

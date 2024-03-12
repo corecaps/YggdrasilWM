@@ -51,6 +51,8 @@ Window ClockWidget::initialize(Display *d, Window pW, int x_, int y_, int width_
 	fgColor = fgColor_;
 	int screen = DefaultScreen(display);
 	window = XCreateSimpleWindow(display, parentWindow, x, y, width, height, 0, 0, bgColor);
+	XSetWindowBorder(display, window, 0x000000);
+	XSetWindowBorderWidth(display, window, 1);
 	XMapWindow(display, window);
 	ftdraw = XftDrawCreate(display,
 						   window,
@@ -86,7 +88,7 @@ void ClockWidget::draw() {
 	auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 	std::tm localTime{};
 	localtime_r(&now, &localTime);
-	message <<"| "<< std::put_time(&localTime, "%Y-%m-%d %H:%M:%S") << " | ";
+	message << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S");
 	XClearWindow(display, window);
 	XftDrawStringUtf8(ftdraw,
 					  &ftcolor,
