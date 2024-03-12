@@ -61,5 +61,7 @@ private:
 	unsigned long borderColor;
 	unsigned int borderSize;
 	std::string font;
+	Widget * widget;
+	void * handle;
 };
 #endif // BAR_HPP

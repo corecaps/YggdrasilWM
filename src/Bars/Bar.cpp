@@ -34,7 +34,15 @@ Bar::Bar() {
 }
 
 Bar::~Bar() {
-
+	typedef void destroy_t(Widget*);
+	destroy_t *destroyPlugin = (destroy_t*)dlsym(handle, "destroyPlugin");
+	if (!destroyPlugin) {
+		std::cerr << "Cannot load symbol destroyPlugin: " << dlerror() << '\n';
+		dlclose(handle);
+		return;
+	}
+	destroyPlugin(widget);
+	dlclose(handle);
 }
 
 void Bar::init(ConfigDataBar *config, std::shared_ptr<TSBarsData> ts) {
@@ -81,45 +89,36 @@ void Bar::init(ConfigDataBar *config, std::shared_ptr<TSBarsData> ts) {
 	XMapWindow(display, window);
 	this->draw("init");
 	// Testing importing widget plugin :
-	void* handle = dlopen("./build/bin/libclockWidget.so", RTLD_LAZY);
+	handle = dlopen("./build/bin/libclockWidget.so", RTLD_LAZY);
 	if (!handle) {
 		std::cerr << "Cannot open library: " << dlerror() << '\n';
 		return;
 	}
 	typedef Widget* create_t();
-	typedef void destroy_t(Widget*);
 	create_t* createPlugin = (create_t*)dlsym(handle, "createPlugin");
 	if (!createPlugin) {
 		std::cerr << "Cannot load symbol createPlugin: " << dlerror() << '\n';
 		dlclose(handle);
 		return;
 	}
-	Widget * widget = createPlugin();
-	widget->initialize(display,
+	widget = createPlugin();
+	Window wwindow = widget->initialize(display,
 					   window,
 					   0, 0,
-					   100, 100);
+					   200, 30);
+	Logger::GetInstance()->Log("Clock Widget initialized [" + std::to_string(wwindow) + "]",L_INFO);
 	widget->draw();
-	destroy_t *destroyPlugin = (destroy_t*)dlsym(handle, "destroyPlugin");
-	if (!destroyPlugin) {
-		std::cerr << "Cannot load symbol destroyPlugin: " << dlerror() << '\n';
-		dlclose(handle);
-		return;
-	}
-//	destroyPlugin(widget);
-	dlclose(handle);
 }
 
 void Bar::draw(std::string msg) {
 	int screen = DefaultScreen(display);
 	std::stringstream message;
-	auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-	std::tm localTime{};
-	localtime_r(&now, &localTime);
-	message <<msg <<" - "<< PROGRAM_NAME << " " << PROGRAM_VERSION << " " << WindowManager::getInstance()->getClientCount() << " clients" << " " << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S") ;
+	message <<msg <<" - "<< PROGRAM_NAME << " " << PROGRAM_VERSION << " " << WindowManager::getInstance()->getClientCount() << " clients";
 	XClearWindow(display, window);
 	XDrawString(display, window, DefaultGC(display, screen), 300, 15, message.str().c_str(), message.str().size());
 	XFlush(display);
+	if (widget)
+		widget->draw();
 }
 
 Window Bar::getWindow() const {

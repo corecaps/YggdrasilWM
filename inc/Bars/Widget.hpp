@@ -33,7 +33,7 @@ class Widget
 public:
 	Widget() = default;
 	virtual ~Widget() = 0;
-	virtual void initialize(Display* display, Window parentWindow, int x, int y, int width, int height) = 0;
+	virtual Window initialize(Display* display, Window parentWindow, int x, int y, int width, int height) = 0;
 	virtual void draw() = 0;
 	virtual void handleEvent(XEvent& event) = 0;
 	virtual void shutdown() = 0;
@@ -43,4 +43,5 @@ public:
 	virtual void unregisterDataKey(const std::string& key) = 0;
 	virtual void updateData(const std::string& key, const std::string& value) = 0;
 };
+Widget::~Widget() {}
 #endif // WIDGET_HPP

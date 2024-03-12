@@ -35,7 +35,7 @@ class ClockWidget : public Widget
 public:
 	ClockWidget();
 	~ClockWidget() override;
-	void initialize(Display* display, Window parentWindow, int x, int y, int width, int height) override;
+	Window initialize(Display* d, Window pW, int x_, int y_, int width_, int height_) override;
 	void draw() override;
 	void handleEvent(XEvent& event) override;
 	void shutdown() override;
