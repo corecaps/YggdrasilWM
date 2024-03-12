@@ -71,7 +71,21 @@ The program will look for a file named config.json in this order :
 - The current directory
 - $HOME/.config/yggdrasilwm/config.json
 - /etc/yggdrasilwm/config.json
-
+## Bars
+- Bars are configured using the configuration file.
+- Position can be : 
+  - top
+  - bottom
+  - left
+  - right
+- The size of the bars are substracted to the layout space.
+- Bars are common to all groups but specific to each screen.
+- Bars are constituted of **Widgets**:
+  - each widget is compiled into a shared library.
+  - The shared libraries are loaded at runtime.
+- To write a widget you need to inherit the Widget class ( inc/Bars/Widget.hpp ) and implement the virtual methods.
+- The defaults widgets are compiled with the CMake when running the default build. Their source are placed in the plugins subdirectory. if you want to add a widget you need to build them manually or add them to the CMakeLists.txt file.
+- If your widget needs Data from the Window Manager they need to register the keys they need in the Window Manager. The Window Manager will then send the data to the widget when it is updated.
 ## Testing using Xephyr
 YggdrasilWM is not yet ready to be used as a daily driver, but you can test it using Xephyr.
 Xephyr is a nested X server that runs inside your current X server. It is used to test window managers and other X11 programs.
