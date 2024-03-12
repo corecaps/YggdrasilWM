@@ -25,7 +25,6 @@
 #include "Bars/Bar.hpp"
 #include "Config/ConfigDataBar.hpp"
 #include "WindowManager.hpp"
-#include <thread>
 #include <dlfcn.h>
 #include "Bars/Widget.hpp"
 
@@ -103,9 +102,12 @@ void Bar::init(ConfigDataBar *config, std::shared_ptr<TSBarsData> ts) {
 	}
 	widget = createPlugin();
 	Window wwindow = widget->initialize(display,
-					   window,
-					   0, 0,
-					   200, 30);
+										window,
+										0, 0,
+										200, 30,
+										"DejaVu Sans",
+										0xFFFFFF,
+										0, 10);
 	Logger::GetInstance()->Log("Clock Widget initialized [" + std::to_string(wwindow) + "]",L_INFO);
 	widget->draw();
 }

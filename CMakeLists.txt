@@ -68,7 +68,10 @@ if (NOT jsoncpp_POPULATED)
 endif()
 
 # Find required packages
+include(FindPkgConfig)
 find_package(X11 REQUIRED)
+pkg_check_modules(XFT REQUIRED xft)
+
 
 # Set source and include directories
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
@@ -184,9 +187,12 @@ target_compile_options(${PROGRAM_NAME}_tests PRIVATE --coverage)
 add_test(NAME ${PROGRAM_NAME}_tests COMMAND ${PROGRAM_NAME}_tests)
 
 add_library(clockWidget SHARED plugins/clockWidget/clock.cpp)
-target_include_directories(clockWidget PRIVATE ${INCLUDE_DIR})
+target_include_directories(clockWidget PRIVATE ${INCLUDE_DIR} ${XFT_INCLUDE_DIRS})
 target_include_directories(clockWidget PRIVATE ${X11_INCLUDE_DIR})
-target_link_libraries(clockWidget ${X11_LIBRARIES})
+link_directories(${XFT_LIBRARY_DIRS})
+target_link_libraries(clockWidget ${X11_LIBRARIES} ${XFT_LIBRARIES})
+add_definitions(${XFT_CFLAGS_OTHER})
+
 set_target_properties(clockWidget PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )

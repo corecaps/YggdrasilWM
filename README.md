@@ -17,6 +17,7 @@ YggdrasilWM is licensed under the GNU General Public License v3. The full GPL li
 - C++11 
 - cmake https://cmake.org/ 
 - Xlib https://www.x.org/releases/current/doc/libX11/libX11/libX11.html 
+- Xft https://www.freedesktop.org/wiki/Software/fontconfig/
 - cxxopts https://github.com/jarro2783/cxxopts
 - jsoncpp https://github.com/open-source-parsers/jsoncpp 
 

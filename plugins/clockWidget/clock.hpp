@@ -29,19 +29,21 @@
 #include <chrono>
 extern "C" {
 #include <X11/Xlib.h>
+#include <X11/Xft/Xft.h>
 };
 class ClockWidget : public Widget
 {
 public:
 	ClockWidget();
 	~ClockWidget() override;
-	Window initialize(Display* d, Window pW, int x_, int y_, int width_, int height_) override;
+	Window initialize(Display *d, Window pW, int x_, int y_, int width_, int height_, std::string font_,
+					  unsigned long bgColor_, unsigned long fgColor_, int fontSize) override;
 	void draw() override;
 	void handleEvent(XEvent& event) override;
 	void shutdown() override;
 	void setPosition(int x_, int y_) override;
 	void setSize(int width_, int height_) override;
-	void registerDataKey(const std::string& key) override;
+	std::vector<std::string> registerDataKey() override;
 	void unregisterDataKey(const std::string& key) override;
 	void updateData(const std::string& key, const std::string& value) override;
 
@@ -53,8 +55,13 @@ private:
 	int y;
 	int width;
 	int height;
+	unsigned long bgColor;
+	unsigned long fgColor;
+	XftDraw* ftdraw;
+	XftFont* fontStruct;
+	XftColor ftcolor;
 	std::string timeFormat;
-	std::string font;
+	std::string fontName;
 	std::string color;
 	std::string backgroundColor;
 	std::string borderColor;
