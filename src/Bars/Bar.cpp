@@ -28,9 +28,13 @@
 #include <dlfcn.h>
 #include "Bars/Widget.hpp"
 
-Bar::Bar() {
-
-}
+Bar::Bar() : window(0),
+			 sizeX(0),
+			 sizeY(0),
+			 display(nullptr),
+			 root(0),
+			 handle(nullptr),
+			 widget(nullptr){}
 
 Bar::~Bar() {
 	typedef void destroy_t(Widget*);

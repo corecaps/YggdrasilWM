@@ -74,7 +74,7 @@ WindowManager::~WindowManager() {
 	try {
 		x11Wrapper->closeDisplay(display_);
 	} catch (const YggdrasilException &e) {
-		Logger::GetInstance()->Log(e.what(), L_ERROR);
+		std::cerr << "Error Closing Display" << e.what();
 	}
 	Logger::GetInstance()->Log("WindowManager destroyed", L_INFO);
 }

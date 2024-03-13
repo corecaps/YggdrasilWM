@@ -125,10 +125,10 @@ int main(int argc, char** argv) {
 		return EXIT_FAILURE;
 	}
 	WindowManager::getInstance()->Run();
-	WindowManager::Destroy();
 	EventHandler::destroy();
 	Logger::GetInstance()->Log("Exiting " + std::string(PROGRAM_NAME) + " " + std::string(PROGRAM_VERSION), L_INFO);
-	Logger::Destroy();
 	ConfigHandler::Destroy();
+	WindowManager::Destroy();
+	Logger::Destroy();
 	return (EXIT_SUCCESS);
 }
