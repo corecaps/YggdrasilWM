@@ -40,7 +40,7 @@ TreeLayoutManager::TreeLayoutManager(Display *display,
 	Point size(sizeX - borderSize, sizeY - borderSize);
 	this->rootSpace_ = std::make_unique<BinarySpace>(pos, size, 0);
 }
-void deleteSpace(TreeLayoutManager::BinarySpace *space) {
+void TreeLayoutManager::deleteSpace(BinarySpace *space) {
 	if (space->getLeft() != nullptr) {
 		deleteSpace(space->getLeft().get());
 	}
@@ -53,30 +53,30 @@ TreeLayoutManager::~TreeLayoutManager() {}
 void TreeLayoutManager::updateGeometry(unsigned int sizeX, unsigned int sizeY, unsigned int posX, unsigned int posY) {
 	reSize(Point(sizeX,sizeY),Point(posX,posY));
 }
-TreeLayoutManager::BinarySpace * TreeLayoutManager::findSpaceRecursive(Client *client,
-																	   TreeLayoutManager::BinarySpace * space) {
+BinarySpace * TreeLayoutManager::findSpaceRecursive(Client *client,
+													BinarySpace * space) {
 	if (space->getClient().get() == client) {
 		return space;
 	}
 	if (space->getLeft() != nullptr) {
-		TreeLayoutManager::BinarySpace * leftSpace = findSpaceRecursive(client, space->getLeft().get());
+		BinarySpace * leftSpace = findSpaceRecursive(client, space->getLeft().get());
 		if (leftSpace != nullptr) {
 			return leftSpace;
 		}
 	}
 	if (space->getRight() != nullptr) {
-		TreeLayoutManager::BinarySpace * rightSpace = findSpaceRecursive(client, space->getRight().get());
+		BinarySpace * rightSpace = findSpaceRecursive(client, space->getRight().get());
 		if (rightSpace != nullptr) {
 			return rightSpace;
 		}
 	}
 	return nullptr;
 }
-TreeLayoutManager::BinarySpace * TreeLayoutManager::findSpace(Client *client) {
+BinarySpace * TreeLayoutManager::findSpace(Client *client) {
 	BinarySpace* space = rootSpace_.get();
 	return findSpaceRecursive(client, space);
 }
-TreeLayoutManager::BinarySpace * TreeLayoutManager::findSpace(int index) {
+BinarySpace * TreeLayoutManager::findSpace(int index) {
 	return nullptr;
 }
 void TreeLayoutManager::removeClient(Client* client) {
@@ -206,19 +206,19 @@ void TreeLayoutManager::growSpaceX(Client *client) {
 	}
 }
 
-void TreeLayoutManager::reSize(const LayoutManager::Point &size,
-							   const LayoutManager::Point &pos) {
+void TreeLayoutManager::reSize(const Point &size,
+							   const Point &pos) {
 	if (rootSpace_->getSize().x == size.x && rootSpace_->getSize().y == size.y) {
 		return;
 	}
 	recursiveResize(size, pos,rootSpace_.get());
 }
 
-void TreeLayoutManager::recursiveResize(const LayoutManager::Point &size,
-										const LayoutManager::Point &pos,
-										TreeLayoutManager::BinarySpace * space) {
-	LayoutManager::Point oldSize = space->getSize();
-	LayoutManager::Point oldPos = space->getPos();
+void TreeLayoutManager::recursiveResize(const Point &size,
+										const Point &pos,
+										BinarySpace * space) {
+	Point oldSize = space->getSize();
+	Point oldPos = space->getPos();
 	space->setSize(size);
 	space->setPos(pos);
 	if (space->getClient() != nullptr) {
@@ -243,37 +243,4 @@ void TreeLayoutManager::recursiveResize(const LayoutManager::Point &size,
 	}
 }
 
-TreeLayoutManager::BinarySpace::BinarySpace(LayoutManager::Point pos,
-											LayoutManager::Point size,
-											int index,
-											TreeLayoutManager::BinarySpace *parent) :
-		pos_(pos),
-		size_(size),
-		index_(index),
-		subspace_count_(1),
-		parent_(parent),
-		left_(nullptr),
-		right_(nullptr){}
 
-const TreeLayoutManager::Point &TreeLayoutManager::BinarySpace::getPos() const { return pos_; }
-void TreeLayoutManager::BinarySpace::incSubSpaceCount() { subspace_count_ ++; }
-void TreeLayoutManager::BinarySpace::setPos(const LayoutManager::Point &pos) { BinarySpace::pos_ = pos; }
-const TreeLayoutManager::Point &TreeLayoutManager::BinarySpace::getSize() const { return size_; }
-void TreeLayoutManager::BinarySpace::setSize(const LayoutManager::Point &size) { BinarySpace::size_ = size; }
-int TreeLayoutManager::BinarySpace::getIndex() const { return index_; }
-void TreeLayoutManager::BinarySpace::setIndex(int index) { BinarySpace::index_ = index; }
-TreeLayoutManager::BinarySpace *TreeLayoutManager::BinarySpace::getParent() const { return parent_; }
-void TreeLayoutManager::BinarySpace::setParent(TreeLayoutManager::BinarySpace *parent) { BinarySpace::parent_ = parent;}
-const std::unique_ptr<TreeLayoutManager::BinarySpace> &TreeLayoutManager::BinarySpace::getRight() const { return right_; }
-void TreeLayoutManager::BinarySpace::setRight(std::unique_ptr<BinarySpace> right) { this->right_ = std::move(right); }
-const std::unique_ptr<TreeLayoutManager::BinarySpace> &TreeLayoutManager::BinarySpace::getLeft() const { return left_; }
-void TreeLayoutManager::BinarySpace::setLeft(std::unique_ptr<BinarySpace> left) { this->left_ = std::move(left); }
-std::shared_ptr<Client>TreeLayoutManager::BinarySpace::getClient() const {
-	auto c = client_.lock();
-	if (c)
-		return c;
-	else
-		return nullptr;
-}
-void TreeLayoutManager::BinarySpace::setClient(std::shared_ptr<Client> client) { BinarySpace::client_ = std::weak_ptr<Client>(client); }
-int TreeLayoutManager::BinarySpace::getSubspaceCount() const {return subspace_count_; }
