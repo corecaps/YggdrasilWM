@@ -8,7 +8,7 @@ logs/
 .idea/
 
 doc/latex/
-
+old/
 # Ignore compiled binaries
 *.exe
 *.out
