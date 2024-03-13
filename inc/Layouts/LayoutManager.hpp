@@ -32,6 +32,7 @@
 #include <memory>
 #include <stdexcept>
 #include "Client.hpp"
+#include "Layouts/Point.hpp"
 class BaseX11Wrapper;
 /**
  * @class LayoutManager
@@ -40,18 +41,6 @@ class BaseX11Wrapper;
  */
 class LayoutManager {
 public:
-/**
- * @struct Point
- * @brief Point struct
- * This struct represents a 2D point
- */
-	struct Point {
-		unsigned int	x;
-		unsigned int	y;
-
-		Point(unsigned int x, unsigned int y) : x(x), y(y) {}
-		Point() : x(0), y(0) {}
-	};
 /**
  * @fn LayoutManager(Display* display, Window root)
  * @brief Construct a new LayoutManager object

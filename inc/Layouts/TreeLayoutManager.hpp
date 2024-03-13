@@ -30,6 +30,7 @@
 #define YGGDRASILWM_TREELAYOUTMANAGER_HPP
 #include "LayoutManager.hpp"
 #include <iostream>
+#include "Layouts/BinarySpace.hpp"
 /**
  * @class TreeLayoutManager
  * @brief TreeLayoutManager class
@@ -42,131 +43,6 @@
  */
 class TreeLayoutManager :public LayoutManager {
 public:
-/**
- * @class BinarySpace
- * @brief BinarySpace class
- * This class represents a space in the layout.
- * it's designed like a binary tree, with a parent, a right and a left child.
- * Only leaf spaces have clients.
- * @todo create an interface for Spaces and implement it in BinarySpace
- * @todo redefine BinarySpace not as a nested class but as a separate class
- */
-	class BinarySpace {
-	private:
-		Point					pos_;
-		Point					size_;
-		int						index_;
-		int						subspace_count_;
-		BinarySpace*					parent_;
-		std::unique_ptr<BinarySpace>	right_;
-		std::unique_ptr<BinarySpace>	left_;
-		std::weak_ptr<Client>	client_;
-	public:
-/**
- * @fn BinarySpace(Point pos, Point size, int index, BinarySpace* parent = nullptr)
- * @brief Construct a new BinarySpace object
- * @param pos
- * @param size
- * @param index
- * @param parent
- */
-		BinarySpace(Point pos, Point size, int index, BinarySpace* parent = nullptr);
-		~BinarySpace() = default;
-/**
- * @fn const Point LayoutManager::BinarySpace::getPos()
- * @brief Get the position of the space
- */
-		const Point &getPos() const;
-/**
- * @fn void LayoutManager::BinarySpace::setPos(const Point &pos)
- * @brief Set the position of the space
- * @param pos
- */
-		void setPos(const Point &pos);
-/**
- * @fn const Point LayoutManager::BinarySpace::getSize()
- * @brief Get the size of the space
- * @return
- */
-		const Point &getSize() const;
-/**
- * @fn void LayoutManager::BinarySpace::setSize(const Point &size)
- * @brief Set the size of the space
- * @param size
- */
-
-		void setSize(const Point &size);
-/**
- * @fn int LayoutManager::BinarySpace::getSubspaceCount()
- * @brief Get the number of subspaces
- */
-		int getSubspaceCount() const;
-/**
- * @fn int LayoutManager::BinarySpace::getIndex()
- * @brief Get the index of the space
- * @return
- */
-		int getIndex() const;
-/**
- * @fn void LayoutManager::BinarySpace::setIndex(int index)
- * @brief Set the index of the space
- * @param index
- */
-		void setIndex(int index);
-/**
- * @fn BinarySpace * LayoutManager::BinarySpace::getParent()
- * @brief Get the parent of the space
- * @return
- */
-		BinarySpace *getParent() const;
-/**
- * @fn void LayoutManager::BinarySpace::setParent(BinarySpace *parent)
- * @brief Set the parent of the space
- * @param parent
- */
-		void setParent(BinarySpace *parent);
-/**
- * @fn const std::unique_ptr<BinarySpace> & LayoutManager::BinarySpace::getRight()
- * @brief Get the right child of the space
- * @return
- */
-		const std::unique_ptr<BinarySpace> &getRight() const;
-/**
- * @fn void LayoutManager::BinarySpace::setRight(std::unique_ptr<BinarySpace> right)
- * @brief Set the right child of the space
- * @param right
- */
-		void setRight(std::unique_ptr<BinarySpace> right);
-/**
- * @fn const std::unique_ptr<BinarySpace> & LayoutManager::BinarySpace::getLeft()
- * @brief Get the left child of the space
- * @return
- */
-		const std::unique_ptr<BinarySpace> &getLeft() const;
-/**
- * @fn void LayoutManager::BinarySpace::setLeft(std::unique_ptr<BinarySpace> left)
- * @brief Set the left child of the space
- * @param left
- */
-		void setLeft(std::unique_ptr<BinarySpace> left);
-/**
- * @fn Client * LayoutManager::BinarySpace::getClient()
- * @brief Get the client of the space
- * @return
- */
-		std::shared_ptr<Client> getClient() const;
-/**
- * @fn void LayoutManager::BinarySpace::setClient(Client *client)
- * @brief Set the client of the space
- * @param client
- */
-		void setClient(std::shared_ptr<Client> client);
-/**
- * @fn void LayoutManager::BinarySpace::incSubSpaceCount()
- * @brief Increment the number of subspaces
- */
-		void incSubSpaceCount();
-	};
 /**
  * @fn TreeLayoutManager(Display* display, Window root,int sizeX,int sizeY,int posX,int posY)
  * @brief Construct a new Tree Layout Manager object
@@ -217,7 +93,7 @@ public:
  * @param space
  * @return
  */
-	BinarySpace * findSpaceRecursive(Client *client, TreeLayoutManager::BinarySpace * space);
+	BinarySpace * findSpaceRecursive(Client *client, BinarySpace * space);
 	BinarySpace	*findSpace(int index);
 /**
  * @fn void TreeLayoutManager::addClient(Client* client)
@@ -285,5 +161,7 @@ public:
 private:
 
 	std::unique_ptr<BinarySpace>			rootSpace_;
+
+	void deleteSpace(BinarySpace *space);
 };
 #endif //YGGDRASILWM_TREELAYOUTMANAGER_HPP
