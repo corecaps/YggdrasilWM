@@ -89,48 +89,30 @@ set(SOURCES
         ${SOURCE_DIR}/WindowManager.cpp
         ${SOURCE_DIR}/Logger.cpp
         ${SOURCE_DIR}/Client.cpp
-        ${INCLUDE_DIR}/Client.hpp
         ${SOURCE_DIR}/EventHandler.cpp
-        ${INCLUDE_DIR}/EventHandler.hpp
         ${SOURCE_DIR}/Group.cpp
-        ${INCLUDE_DIR}/Group.hpp
         ${SOURCE_DIR}/Ewmh.cpp
-        ${INCLUDE_DIR}/Ewmh.hpp
         ${SOURCE_DIR}/Layouts/LayoutManager.cpp
         ${INCLUDE_DIR}/Layouts/LayoutManager.hpp
         ${SOURCE_DIR}/Layouts/TreeLayoutManager.cpp
-        ${INCLUDE_DIR}/Layouts/TreeLayoutManager.hpp
+        ${SOURCE_DIR}/Layouts/BinarySpace.cpp
         ${SOURCE_DIR}/Config/ConfigHandler.cpp
-        ${INCLUDE_DIR}/Config/ConfigHandler.hpp
-        ${SOURCE_DIR}/Config/ConfigDataBase.cpp
         ${INCLUDE_DIR}/Config/ConfigDataBase.hpp
         ${SOURCE_DIR}/Config/ConfigDataGroups.cpp
-        ${INCLUDE_DIR}/Config/ConfigDataGroups.hpp
         ${SOURCE_DIR}/Config/ConfigDataGroup.cpp
-        ${INCLUDE_DIR}/Config/ConfigDataGroup.hpp
         ${SOURCE_DIR}/Config/ConfigDataBars.cpp
-        ${INCLUDE_DIR}/Config/ConfigDataBars.hpp
         ${SOURCE_DIR}/Config/ConfigDataBar.cpp
-        ${INCLUDE_DIR}/Config/ConfigDataBar.hpp
         ${SOURCE_DIR}/Config/ConfigDataBindings.cpp
-        ${INCLUDE_DIR}/Config/ConfigDataBindings.hpp
         ${SOURCE_DIR}/Config/ConfigFileHandler.cpp
-        ${INCLUDE_DIR}/Config/ConfigFileHandler.hpp
         ${SOURCE_DIR}/Config/Binding.cpp
         ${INCLUDE_DIR}/Config/Binding.hpp
         ${INCLUDE_DIR}/Commands/CommandBase.hpp
         ${SOURCE_DIR}/Commands/FocusGroup.cpp
-        ${INCLUDE_DIR}/Commands/FocusGroup.hpp
         ${SOURCE_DIR}/Commands/Spawn.cpp
-        ${INCLUDE_DIR}/Commands/Spawn.hpp
         ${SOURCE_DIR}/Commands/Quit.cpp
-        ${INCLUDE_DIR}/Commands/Quit.hpp
         ${SOURCE_DIR}/Bars/Bars.cpp
-        ${INCLUDE_DIR}/Bars/Bars.hpp
         ${SOURCE_DIR}/Bars/Bar.cpp
-        ${INCLUDE_DIR}/Bars/Bar.hpp
         ${SOURCE_DIR}/Bars/TSBarsData.cpp
-        ${INCLUDE_DIR}/Bars/TSBarsData.hpp
         ${INCLUDE_DIR}/Bars/Widget.hpp
         ${INCLUDE_DIR}/X11wrapper/baseX11Wrapper.hpp
         ${SOURCE_DIR}/X11wrapper/X11Wrapper.cpp
