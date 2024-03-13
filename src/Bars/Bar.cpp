@@ -48,9 +48,9 @@ Bar::~Bar() {
 	dlclose(handle);
 }
 
-void Bar::init(ConfigDataBar *config, std::shared_ptr<TSBarsData> ts) {
-	configData = config;
-	tsData = ts;
+void Bar::init(std::shared_ptr<ConfigDataBar> configData, std::shared_ptr<TSBarsData> tsData) {
+	configData = configData;
+	tsData = tsData;
 	display = WindowManager::getInstance()->getDisplay();
 	int screen = DefaultScreen(display);
 	root = RootWindow(display, screen);

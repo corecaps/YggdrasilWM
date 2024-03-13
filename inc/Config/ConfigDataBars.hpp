@@ -68,12 +68,12 @@ public:
  * @brief Get the Bar object at index
  * @param index
  */
-	ConfigDataBar * getBar(int index);
+	std::shared_ptr<ConfigDataBar> getBar(int index);
 /**
  * @fn void ConfigDataBars::addBar(const std::string& barName, ConfigDataBar * bar)
  * @brief Add a new Bar object to the ConfigDataBars object
  */
-	void addBar(const std::string& barName, ConfigDataBar * bar);
+	void addBar(const std::string& barName, std::shared_ptr<ConfigDataBar> bar);
 /**
  * @fn void ConfigDataBars::removeBar(int index)
  * @brief Remove the Bar object at index
@@ -84,9 +84,9 @@ public:
  * @fn const std::vector<ConfigDataBar *> &ConfigDataBars::getBars() const
  * @brief Get the Bars object
  */
-	[[nodiscard]] const std::vector<ConfigDataBar *> &getBars() const;
+	[[nodiscard]] const std::vector<std::shared_ptr<ConfigDataBar>> & getBars() const;
 private:
-	std::vector<ConfigDataBar *>	bars_;
+	std::vector<std::shared_ptr<ConfigDataBar>>	bars_;
 };
 
 #endif //YGGDRASILWM_CONFIGDATABARS_HPP

@@ -33,14 +33,14 @@
 #include <mutex>
 #include <condition_variable>
 Bars * Bars::instance = nullptr;
-void Bars::init(ConfigDataBars *configD,
-				std::shared_ptr<TSBarsData> tsD,
-				Display *dspl,
-				Window r) {
-	this->configData = configD;
-	this->tsData =tsD;
-	this->display = dspl;
-	this->root = r;
+void Bars::init(std::shared_ptr<ConfigDataBars> configData,
+				std::shared_ptr<TSBarsData> tsData,
+				Display *display,
+				Window root) {
+	this->configData = configData;
+	this->tsData =tsData;
+	this->display = display;
+	this->root = root;
 	for (auto &bar : this->configData->getBars()) {
 		std::unique_ptr<Bar> newBar = std::make_unique<Bar>();
 		newBar->init(bar, this->tsData);
@@ -104,10 +104,7 @@ Bars::Bars() : spaceN(0),
 			   display(nullptr),
 			   root(0)
 				{}
-Bars::~Bars() {
-	if (this->configData != nullptr)
-		delete this->configData;
-}
+Bars::~Bars() = default;
 void Bars::createInstance() {
 	if (Bars::instance == nullptr)
 		Bars::instance = new Bars();

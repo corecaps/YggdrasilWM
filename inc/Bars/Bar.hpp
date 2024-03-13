@@ -40,14 +40,14 @@ class Bar
 public:
 					Bar();
 					~Bar();
-	void			init(ConfigDataBar *configData, std::shared_ptr<TSBarsData> tsData);
+	void			init(std::shared_ptr<ConfigDataBar> configData, std::shared_ptr<TSBarsData> tsData);
 	void			draw(std::string msg);
 	Window			getWindow() const;
 	unsigned int	getSizeX() const;
 	unsigned int	getSizeY() const;
 
 private:
-	ConfigDataBar *configData;
+	std::shared_ptr<ConfigDataBar> configData;
 	std::vector<Widget*> widgets;
 	std::shared_ptr<TSBarsData> tsData;
 	Display *display;

@@ -82,19 +82,15 @@ void ConfigHandler::configInit() {
 	if (Groups.empty() || !Groups.isArray() || Bars.empty() || !Bars.isArray() || Bindings.empty() || !Bindings.isObject()){
 		throw std::runtime_error("Config file is missing Groups, Bars or Bindings See Documentation for more information");
 	}
-	addConfigData(new ConfigDataGroups());
-	addConfigData(new ConfigDataBars());
-	addConfigData(new ConfigDataBindings());
+	addConfigData(std::make_shared<ConfigDataGroups>());
+	addConfigData(std::make_shared<ConfigDataBars>());
+	addConfigData(std::make_shared<ConfigDataBindings>());
 	getConfigData<ConfigDataGroups>()->configInit(Groups);
 	getConfigData<ConfigDataBars>()->configInit(Bars);
 	getConfigData<ConfigDataBindings>()->configInit(Bindings);
 	Logger::GetInstance()->Log("===================Succefully Loaded Config===================\n\n",L_INFO);
 }
-ConfigHandler::~ConfigHandler() {
-//	for (auto it = configMap_.begin(); it != configMap_.end(); ++it) {
-//		delete it->second;
-//	}
-};
+ConfigHandler::~ConfigHandler() = default;
 unsigned long ConfigHandler::colorCodeToULong(const std::string& colorCode) {
 	if (colorCode.size() != 7 || colorCode[0] != '#' || !isxdigit(colorCode[1])) {
 		throw std::runtime_error("Invalid color code");

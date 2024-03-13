@@ -63,12 +63,12 @@ public:
  * @todo modify to use smart pointers
  */
 	template <typename T>
-	T* getConfigData() {
+	std::shared_ptr<T> getConfigData() {
 		auto it = configMap_.find(std::type_index(typeid(T)));
 		if (it == configMap_.end()) {
 			throw std::runtime_error("ConfigData not found");
 		}
-		return static_cast<T*>(it->second);
+		return std::static_pointer_cast<T>(it->second);
 	}
 /**
  * @fn template <typename T> void ConfigHandler::addConfigData(T* configData)
@@ -77,7 +77,7 @@ public:
  *  * @todo modify to use smart pointers
  */
 	template <typename T>
-	void addConfigData(T* configData) {
+	void addConfigData(std::shared_ptr<T> configData) {
 		static_assert(std::is_base_of<ConfigDataBase, T>::value, "T must be a subclass of ConfigData");
 		configMap_[std::type_index(typeid(T))] = configData;
 	}
@@ -122,7 +122,7 @@ public:
 private:
 	std::string configPath_;
 	static ConfigHandler* instance_;
-	std::unordered_map<std::type_index, ConfigDataBase * > configMap_;
+	std::unordered_map<std::type_index, std::shared_ptr<ConfigDataBase>> configMap_;
 /**
  * @fn ConfigHandler()
  * @brief Construct a new ConfigHandler object without a path

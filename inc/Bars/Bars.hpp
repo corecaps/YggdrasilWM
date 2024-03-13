@@ -84,7 +84,7 @@ public:
  * @param root to limit calls to WindowManager::getRoot
  * @todo use of x11wrapper
  */
-	void init(ConfigDataBars *configData,
+	void init(std::shared_ptr<ConfigDataBars> configData,
 			  std::shared_ptr<TSBarsData> tsData,
 			  Display *display,
 			  Window root);
@@ -143,7 +143,7 @@ private:
 	static Bars*									instance;
 	std::vector<std::unique_ptr<Bar>>				bars;
 	std::vector<Window>								windows;
-	ConfigDataBars *								configData;
+	std::shared_ptr<ConfigDataBars>					configData;
 	std::shared_ptr<TSBarsData>						tsData;
 	std::unordered_map<std::string, std::string>	data;
 	Display*										display;

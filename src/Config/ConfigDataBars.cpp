@@ -35,7 +35,7 @@ void ConfigDataBars::configInit(const Json::Value &root) {
 		throw std::runtime_error("Invalid configuration file");
 	}
 	for (auto &bar : root) {
-		auto *barData = new ConfigDataBar();
+		auto barData = std::make_shared<ConfigDataBar>();
 		barData->configInit(bar);
 		size_t newIndex = bars_.size();
 		bars_.emplace_back(barData);
@@ -46,14 +46,11 @@ void ConfigDataBars::configInit(const Json::Value &root) {
 Json::Value ConfigDataBars::configSave() {
 	return Json::Value();
 }
-ConfigDataBar *ConfigDataBars::getBar(int index) { return bars_[index]; }
-void ConfigDataBars::addBar(const std::string &barName, ConfigDataBar *bar) { bars_.emplace_back(bar); }
+std::shared_ptr<ConfigDataBar> ConfigDataBars::getBar(int index) { return bars_[index]; }
+void ConfigDataBars::addBar(const std::string &barName, std::shared_ptr<ConfigDataBar> bar) { bars_.emplace_back(bar); }
 void ConfigDataBars::removeBar(int index) { bars_.erase(bars_.begin() + index);}
-const std::vector<ConfigDataBar *> &ConfigDataBars::getBars() const { return bars_; }
+const std::vector<std::shared_ptr<ConfigDataBar>> & ConfigDataBars::getBars() const { return bars_; }
 
 ConfigDataBars::~ConfigDataBars() {
-	for (auto &bar : bars_) {
-		delete bar;
-	}
 	bars_.clear();
 }
