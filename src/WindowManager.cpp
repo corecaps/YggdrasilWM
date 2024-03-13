@@ -71,11 +71,6 @@ WindowManager::WindowManager(Display *display, const std::shared_ptr<BaseX11Wrap
 WindowManager::~WindowManager() {
 	clients_.clear();
 	groups_.clear();
-	try {
-		x11Wrapper->closeDisplay(display_);
-	} catch (const YggdrasilException &e) {
-		std::cerr << "Error Closing Display" << e.what();
-	}
 	Logger::GetInstance()->Log("WindowManager destroyed", L_INFO);
 }
 void WindowManager::init() {
@@ -176,6 +171,7 @@ void WindowManager::Run() {
 		tsData->modifyData("EvCount", std::to_string(evcount++));
 	}
 	Logger::GetInstance()->Log("WindowManager stopped", L_INFO);
+//	XCloseDisplay(display_);
 }
 void WindowManager::testRun() {
 	try {
