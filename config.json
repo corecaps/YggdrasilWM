@@ -37,17 +37,39 @@
       "Position": "top",
       "Widgets": [
         {
-          "Type": "Group",
+          "Type": "Clock",
+          "Plugin": "build/bin/libclockWidget.so",
+          "Font": "DejaVu Sans",
+          "Font_Size": 10,
+          "Border_Size": 1,
+          "Border_Color": "#000000",
           "Position": 10,
-          "Size": 80,
-          "Color": "#FF0000",
+          "Size": 150,
+          "Color": "#000000",
           "Background_Color": "#FFFFFF",
           "Arguments": ""
-        },
+        }
+      ]
+    },
+    {
+      "Bar_Size": 30,
+      "Font": "Arial",
+      "Font_Size": 12,
+      "Font_Color": "#000000",
+      "Background_Color": "#FFFFFF",
+      "Border_Size": 2,
+      "Border_Color": "#000000",
+      "Position": "bottom",
+      "Widgets": [
         {
           "Type": "Clock",
-          "Position": 90,
-          "Size": 10,
+          "Plugin": "build/bin/libclockWidget.so",
+          "Font": "DejaVu Sans",
+          "Font_Size": 10,
+          "Border_Size": 1,
+          "Border_Color": "#000000",
+          "Position": 10,
+          "Size": 150,
           "Color": "#000000",
           "Background_Color": "#FFFFFF",
           "Arguments": ""

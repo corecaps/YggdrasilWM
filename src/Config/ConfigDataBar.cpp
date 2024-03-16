@@ -28,6 +28,9 @@
 #include "Config/ConfigDataBar.hpp"
 #include "Config/ConfigHandler.hpp"
 #include "Logger.hpp"
+#include "Config/ConfigDataWidget.hpp"
+#include <memory>
+#include <vector>
 #include <sstream>
 
 ConfigDataBar::ConfigDataBar() :
@@ -87,6 +90,11 @@ void ConfigDataBar::configInit(const Json::Value &root) {
 	} else {
 		barPosition_ = root["Position"].asString();
 	}
+	for (auto &widget : root["Widgets"]) {
+		std::shared_ptr<ConfigDataWidget> widgetData = std::make_shared<ConfigDataWidget>();
+		widgetData->configInit(widget);
+		widgets.push_back(widgetData);
+	}
 	std::stringstream msg;
 	msg << "Bar :\t Height [" << barSize_ << "] Font [" << barFont_ << "] FontSize [" << barFontSize_ << "] BorderSize [" << barBorderSize_ << "]";
 	Logger::GetInstance()->Log(msg.str(),L_INFO);
@@ -102,3 +110,7 @@ unsigned int ConfigDataBar::getBarBackgroundColor() const { return barBackground
 int ConfigDataBar::getBarBorderSize() const { return barBorderSize_; }
 unsigned int ConfigDataBar::getBarBorderColor() const { return barBorderColor_; }
 const std::string &ConfigDataBar::getBarPosition() const { return barPosition_; }
+
+const std::vector<std::shared_ptr<ConfigDataWidget>> &ConfigDataBar::getWidgets() const {
+	return widgets;
+}

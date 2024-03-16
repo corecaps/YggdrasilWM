@@ -29,7 +29,8 @@
 #include "Config/ConfigDataBase.hpp"
 #include "json/json.h"
 #include <string>
-
+#include <vector>
+class ConfigDataWidget;
 /**
  * @class ConfigDataBar
  * @brief ConfigDataBar class
@@ -95,6 +96,7 @@ public:
  */
 	[[nodiscard]] unsigned int getBarBorderColor() const;
 	[[nodiscard]] const std::string &getBarPosition() const;
+	const std::vector<std::shared_ptr<ConfigDataWidget>> &getWidgets() const;
 
 private:
 	int				barSize_;
@@ -105,6 +107,8 @@ private:
 	unsigned int	barBackgroundColor_;
 	int				barBorderSize_;
 	unsigned int	barBorderColor_;
+	std::vector<std::shared_ptr<ConfigDataWidget>> widgets;
+
 };
 
 #endif //YGGDRASILWM_CONFIGDATAGROUP_HPP

@@ -30,6 +30,7 @@
 #include <unordered_map>
 #include <string>
 #include <thread>
+#include <set>
 
 extern "C" {
 #include <X11/Xlib.h>
@@ -139,6 +140,11 @@ public:
  * @param msg message to pass to the draw method (temporary arg for debug purpose)
  */
 	void redraw(std::string msg);
+	void addPluginLocation(const std::string& location);
+	[[nodiscard]] const std::set<std::string>& getPluginsLocations() const;
+	[[nodiscard]] void * getWidgetTypeHandle(const std::string& widgetType);
+	void setWidgetTypeHandle(const std::string& widgetType, void * handle);
+
 private:
 	static Bars*									instance;
 	std::vector<std::unique_ptr<Bar>>				bars;
@@ -153,6 +159,8 @@ private:
 	unsigned int									spaceE;
 	unsigned int									spaceW;
 	std::thread										barThread;
+	std::set<std::string>pluginsLocations;
+	std::unordered_map<std::string, void *> widgetTypeHandle;
 	Bars();
 };
 #endif // BARS_HPP

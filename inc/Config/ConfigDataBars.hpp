@@ -31,6 +31,8 @@
 #include "json/json.h"
 #include <string>
 #include <vector>
+#include <set>
+#include <unordered_map>
 
 class ConfigDataBar;
 /**
@@ -87,6 +89,7 @@ public:
 	[[nodiscard]] const std::vector<std::shared_ptr<ConfigDataBar>> & getBars() const;
 private:
 	std::vector<std::shared_ptr<ConfigDataBar>>	bars_;
+
 };
 
 #endif //YGGDRASILWM_CONFIGDATABARS_HPP

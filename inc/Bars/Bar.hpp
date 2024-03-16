@@ -27,6 +27,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <unordered_map>
 extern "C" {
 #include <X11/Xlib.h>
 }
@@ -41,14 +42,15 @@ public:
 					Bar();
 					~Bar();
 	void			init(std::shared_ptr<ConfigDataBar> configData, std::shared_ptr<TSBarsData> tsData);
-	void			draw(std::string msg);
+	void draw();
 	Window			getWindow() const;
 	unsigned int	getSizeX() const;
 	unsigned int	getSizeY() const;
+	void			addWidget(void *handle);
 
 private:
 	std::shared_ptr<ConfigDataBar> configData;
-	std::vector<Widget*> widgets;
+	std::unordered_map<Window, Widget *> widgets;
 	std::shared_ptr<TSBarsData> tsData;
 	Display *display;
 	Window window;
@@ -58,10 +60,12 @@ private:
 	int pos;
 	unsigned long BGColor;
 	unsigned long FGColor;
+public:
+	const std::unordered_map<Window, Widget *> &getWidgets() const;
+
+private:
 	unsigned long borderColor;
 	unsigned int borderSize;
 	std::string font;
-	Widget * widget;
-	void * handle;
 };
 #endif // BAR_HPP

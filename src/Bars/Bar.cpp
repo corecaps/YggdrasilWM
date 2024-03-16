@@ -32,20 +32,17 @@ Bar::Bar() : window(0),
 			 sizeX(0),
 			 sizeY(0),
 			 display(nullptr),
-			 root(0),
-			 handle(nullptr),
-			 widget(nullptr){}
+			 root(0) {}
 
 Bar::~Bar() {
-	typedef void destroy_t(Widget*);
-	destroy_t *destroyPlugin = (destroy_t*)dlsym(handle, "destroyPlugin");
-	if (!destroyPlugin) {
-		std::cerr << "Cannot load symbol destroyPlugin: " << dlerror() << '\n';
-		dlclose(handle);
-		return;
-	}
-	destroyPlugin(widget);
-	dlclose(handle);
+//	typedef void destroy_t(Widget*);
+//	destroy_t *destroyPlugin = (destroy_t*)dlsym(handle, "destroyPlugin");
+//	if (!destroyPlugin) {
+//		std::cerr << "Cannot load symbol destroyPlugin: " << dlerror() << '\n';
+//		dlclose(handle);
+//		return;
+//	}
+//	destroyPlugin(widget);
 }
 
 void Bar::init(std::shared_ptr<ConfigDataBar> configData, std::shared_ptr<TSBarsData> tsData) {
@@ -90,39 +87,23 @@ void Bar::init(std::shared_ptr<ConfigDataBar> configData, std::shared_ptr<TSBars
 								 | ButtonPressMask
 								 | PointerMotionMask);
 	XMapWindow(display, window);
-	this->draw("init");
+	this->draw();
 	// Testing importing widget plugin :
-	handle = dlopen("./build/bin/libclockWidget.so", RTLD_LAZY);
-	if (!handle) {
-		std::cerr << "Cannot open library: " << dlerror() << '\n';
-		return;
-	}
-	typedef Widget* create_t();
-	create_t* createPlugin = (create_t*)dlsym(handle, "createPlugin");
-	if (!createPlugin) {
-		std::cerr << "Cannot load symbol createPlugin: " << dlerror() << '\n';
-		dlclose(handle);
-		return;
-	}
-	widget = createPlugin();
-	Window wwindow = widget->initialize(display,
-										window,
-										0, 0,
-										150, 30,
-										"DejaVu Sans",
-										0xFFFFFF,
-										0, 10);
-	Logger::GetInstance()->Log("Clock Widget initialized [" + std::to_string(wwindow) + "]",L_INFO);
-	widget->draw();
+//	handle = dlopen("./build/bin/libclockWidget.so", RTLD_LAZY);
+//	if (!handle) {
+//		std::cerr << "Cannot open library: " << dlerror() << '\n';
+//		return;
+//	}
+
+//	Logger::GetInstance()->Log("Clock Widget initialized [" + std::to_string(wwindow) + "]",L_INFO);
+//	widget->draw();
 }
 
-void Bar::draw(std::string msg) {
-	int screen = DefaultScreen(display);
-	XClearWindow(display, window);
-	XDrawString(display, window, DefaultGC(display, screen), 300, 15, msg.c_str(), msg.size());
+void Bar::draw() {
+	for (auto &w : widgets) {
+		w.second->draw();
+	}
 	XFlush(display);
-	if (widget)
-		widget->draw();
 }
 
 Window Bar::getWindow() const {
@@ -135,4 +116,30 @@ unsigned int Bar::getSizeX() const {
 
 unsigned int Bar::getSizeY() const {
 	return sizeY;
+}
+
+void Bar::addWidget(void *handle) {
+	typedef Widget* create_t();
+	create_t* createPlugin = (create_t*)dlsym(handle, "createPlugin");
+	if (!createPlugin) {
+		std::cerr << "Cannot load symbol createPlugin: " << dlerror() << '\n';
+		return;
+	}
+	Widget * newWidget = createPlugin();
+	if (!newWidget) {
+		Logger::GetInstance()->Log("Cannot create plugin: " + std::string(dlerror()), L_ERROR);
+		return;
+	}
+	Window newWidgetWindow = newWidget->initialize(display,
+										window,
+										0, 0,
+										150, 30,
+										"DejaVu Sans",
+										0xFFFFFF,
+										0, 10);
+	widgets[newWidgetWindow] = newWidget;
+}
+
+const std::unordered_map<Window, Widget *> &Bar::getWidgets() const {
+	return widgets;
 }

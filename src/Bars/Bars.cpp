@@ -26,12 +26,15 @@
 #include "Bars/Bar.hpp"
 #include "Config/ConfigDataBars.hpp"
 #include "Config/ConfigDataBar.hpp"
+#include "Config/ConfigDataWidget.hpp"
 #include "Bars/TSBarsData.hpp"
 #include "WindowManager.hpp"
 #include <string>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
+#include <dlfcn.h>
+
 Bars * Bars::instance = nullptr;
 void Bars::init(std::shared_ptr<ConfigDataBars> configData,
 				std::shared_ptr<TSBarsData> tsData,
@@ -52,6 +55,19 @@ void Bars::init(std::shared_ptr<ConfigDataBars> configData,
 			this->spaceW += bar->getBarSize();
 		} else if (bar->getBarPosition() == "right") {
 			this->spaceE += bar->getBarSize();
+		}
+		for (auto &w : bar->getWidgets()) {
+			if (pluginsLocations.find(w->getPluginLocation()) == pluginsLocations.end()) {
+				addPluginLocation(w->getPluginLocation());
+				void *handle = dlopen(w->getPluginLocation().c_str(), RTLD_LAZY);
+				if (!handle) {
+					Logger::GetInstance()->Log("Cannot open library: " + std::string(dlerror()),L_ERROR);
+					continue;
+				}
+				setWidgetTypeHandle(w->getType(), handle);
+				Logger::GetInstance()->Log("Library " + w->getPluginLocation() + " opened",L_INFO);
+			}
+			newBar->addWidget(getWidgetTypeHandle(w->getType()));
 		}
 		Logger::GetInstance()->Log("Bar ["
 									+ std::to_string(this->bars.size())
@@ -91,7 +107,7 @@ void Bars::run() {
 }
 void Bars::redraw(std::string msg) {
 	for (auto &bar : this->bars) {
-		bar->draw(msg);
+		bar->draw();
 	}
 }
 Bars::Bars() : spaceN(0),
@@ -104,7 +120,44 @@ Bars::Bars() : spaceN(0),
 			   display(nullptr),
 			   root(0)
 				{}
-Bars::~Bars() = default;
+
+void Bars::addPluginLocation(const std::string &location) {
+	pluginsLocations.emplace(location);
+}
+
+const std::set<std::string> &Bars::getPluginsLocations() const {
+	return pluginsLocations;
+}
+
+void *Bars::getWidgetTypeHandle(const std::string &widgetType) {
+	try {
+		void * handle = widgetTypeHandle[widgetType];
+		return handle;
+	} catch (std::out_of_range &e) {
+		Logger::GetInstance()->Log("Widget Type " + widgetType + " not found",L_ERROR);
+		return nullptr;
+	}
+}
+
+void Bars::setWidgetTypeHandle(const std::string &widgetType, void *handle) {
+	widgetTypeHandle[widgetType] = handle;
+}
+Bars::~Bars() {
+	for (auto &bar : bars) {
+		for (auto &w : bar->getWidgets()) {
+			typedef void (*destroy_t)(Widget *);
+			destroy_t destroy = (destroy_t)dlsym(w.second, "destroy");
+			if (!destroy) {
+				Logger::GetInstance()->Log("Cannot load symbol destroy: " + std::string(dlerror()),L_ERROR);
+				continue;
+			}
+			destroy(w.second);
+		}
+	}
+	for (auto handle : widgetTypeHandle) {
+		dlclose(handle.second);
+	}
+}
 void Bars::createInstance() {
 	if (Bars::instance == nullptr)
 		Bars::instance = new Bars();

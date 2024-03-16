@@ -20,6 +20,16 @@ class group {
 class widget {
   // Type can be "Group", "Clock", "WindowTitle"
   Type: String
+  // Plugin location
+  Plugin: String
+  // Font
+  Font: String
+  // Font_Size is the size of the text
+  Font_Size: Int
+  // Border_Size is the size of the border of the widget
+  Border_Size: Int
+  // Border_Color is the color of the border of the widget
+  Border_Color: String
   // Position is relative to the top left corner of the bar
   Position: Int
   // size is the width of the widget
@@ -87,8 +97,13 @@ local w1 : widget = new {
 }
 local w2 : widget = new {
   Type = "Clock"
-  Position = 90
-  Size = 10
+  Plugin = "build/bin/libclockWidget.so"
+  Font = "DejaVu Sans"
+  Font_Size = 10
+  Border_Size = 1
+  Border_Color = "#000000"
+  Position = 10
+  Size = 150
   Color = "#000000"
   Background_Color = "#FFFFFF"
   Arguments = ""
@@ -103,7 +118,7 @@ local b1 : bar = new {
   Border_Color = "#000000"
   Position = "top"
   Widgets = new Listing<widget> {
-    w1
+//     w1
     w2
   }
 }
@@ -117,7 +132,7 @@ local b2 : bar = new {
   Border_Color = "#000000"
   Position = "bottom"
   Widgets = new Listing<widget> {
-    w1
+//     w1
     w2
   }
 }

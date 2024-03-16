@@ -54,3 +54,4 @@ const std::vector<std::shared_ptr<ConfigDataBar>> & ConfigDataBars::getBars() co
 ConfigDataBars::~ConfigDataBars() {
 	bars_.clear();
 }
+

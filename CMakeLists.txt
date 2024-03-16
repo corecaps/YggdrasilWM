@@ -102,6 +102,7 @@ set(SOURCES
         ${SOURCE_DIR}/Config/ConfigDataGroup.cpp
         ${SOURCE_DIR}/Config/ConfigDataBars.cpp
         ${SOURCE_DIR}/Config/ConfigDataBar.cpp
+        ${SOURCE_DIR}/Config/ConfigDataWidget.cpp
         ${SOURCE_DIR}/Config/ConfigDataBindings.cpp
         ${SOURCE_DIR}/Config/ConfigFileHandler.cpp
         ${SOURCE_DIR}/Config/Binding.cpp
