@@ -40,7 +40,7 @@
           "Type": "Group",
           "Plugin": "build/bin/libgroupWidget.so",
           "Font": "DejaVu Sans",
-          "Font_Size": 10,
+          "Font_Size": 14,
           "Border_Size": 1,
           "Border_Color": "#000000",
           "Position": 10,

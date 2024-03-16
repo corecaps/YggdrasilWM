@@ -82,27 +82,50 @@ std::vector<std::string> splitString(const std::string& input, char delimiter) {
 
 void GroupWidget::draw() {
 	XClearWindow(display, window);
+	int screen = DefaultScreen(display);
 	std::vector<std::string> groups = splitString(data["Groups"], ',');
+	int groupWidth = width / groups.size();
+	XGCValues values;
+	values.foreground = XBlackPixel(display, screen);
+	values.line_width = 2; // Adjust line width as needed
+	unsigned long valuemask = GCForeground | GCLineWidth;
+
+	GC gc = XCreateGC(display, window, valuemask, &values);
 	std::string result;
 	for (size_t i = 0; i < groups.size(); ++i) {
-		if (!result.empty()) {
-			result += " | ";
-		}
+//		if (!result.empty()) {
+//			result += " | ";
+//		}
+		result = "";
 		if (groups[i] == data["ActiveGroup"]) {
 			result += "[" + groups[i] + "]";
 		} else {
 			result += " " + groups[i] + " ";
 		}
+		int StartX = i * groupWidth;
+		XftDrawString8(ftdraw,
+					   &ftcolor,
+					   fontStruct,
+					   StartX + 10,
+					   height / 2,
+					   (const FcChar8 *) result.c_str(),
+					   result.size());
+		XDrawLine(display,
+				  window,
+				  gc,
+				  StartX,
+				  0,
+				  StartX,
+				  height);
+
 	}
-//	std::stringstream message;
-//	message << data["Groups"] << "[" << data["ActiveGroup"] << "]";
-	XftDrawString8(ftdraw,
-				   &ftcolor,
-				   fontStruct,
-				   10,
-				   height / 2,
-				   (const FcChar8 *) result.c_str(),
-				   result.size());
+//	XftDrawString8(ftdraw,
+//				   &ftcolor,
+//				   fontStruct,
+//				   10,
+//				   height / 2,
+//				   (const FcChar8 *) result.c_str(),
+//				   result.size());
 	XFlush(display);
 }
 
