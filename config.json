@@ -44,7 +44,7 @@
           "Border_Size": 1,
           "Border_Color": "#000000",
           "Position": 10,
-          "Size": 300,
+          "Size": 200,
           "Color": "#FF0000",
           "Background_Color": "#FFFFFF",
           "Arguments": ""
@@ -56,7 +56,7 @@
           "Font_Size": 10,
           "Border_Size": 1,
           "Border_Color": "#000000",
-          "Position": 10,
+          "Position": 210,
           "Size": 150,
           "Color": "#000000",
           "Background_Color": "#FFFFFF",

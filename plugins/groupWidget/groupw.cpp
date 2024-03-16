@@ -70,18 +70,39 @@ Window GroupWidget::initialize(Display *d,
 	data["ActiveGroup"] = "";
 	return window;
 }
+std::vector<std::string> splitString(const std::string& input, char delimiter) {
+	std::vector<std::string> elements;
+	std::stringstream ss(input);
+	std::string item;
+	while (std::getline(ss, item, delimiter)) {
+		elements.push_back(item);
+	}
+	return elements;
+}
 
 void GroupWidget::draw() {
-	std::stringstream message;
-	message << data["Groups"] << "[" << data["ActiveGroup"] << "]";
-	std::cout << message.str() << std::endl;
+	XClearWindow(display, window);
+	std::vector<std::string> groups = splitString(data["Groups"], ',');
+	std::string result;
+	for (size_t i = 0; i < groups.size(); ++i) {
+		if (!result.empty()) {
+			result += " | ";
+		}
+		if (groups[i] == data["ActiveGroup"]) {
+			result += "[" + groups[i] + "]";
+		} else {
+			result += " " + groups[i] + " ";
+		}
+	}
+//	std::stringstream message;
+//	message << data["Groups"] << "[" << data["ActiveGroup"] << "]";
 	XftDrawString8(ftdraw,
 				   &ftcolor,
 				   fontStruct,
 				   10,
 				   height / 2,
-				   (const FcChar8 *) message.str().c_str(),
-				   message.str().size());
+				   (const FcChar8 *) result.c_str(),
+				   result.size());
 	XFlush(display);
 }
 
@@ -113,6 +134,5 @@ void GroupWidget::unregisterDataKey(const std::string &key) {
 }
 
 void GroupWidget::updateData(const std::string &key, const std::string &value) {
-	std::cout << "-----------\t Adding Data: " << key << " : " << value << std::endl;
 	data[key] = value;
 }

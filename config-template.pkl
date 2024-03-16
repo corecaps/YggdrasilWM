@@ -95,12 +95,25 @@ local w1 : widget = new {
   Border_Size = 1
   Border_Color = "#000000"
   Position = 10
-  Size = 300
+  Size = 200
   Color = "#FF0000"
   Background_Color = "#FFFFFF"
   Arguments = ""
 }
 local w2 : widget = new {
+  Type = "Clock"
+  Plugin = "build/bin/libclockWidget.so"
+  Font = "DejaVu Sans"
+  Font_Size = 10
+  Border_Size = 1
+  Border_Color = "#000000"
+  Position = 210
+  Size = 150
+  Color = "#000000"
+  Background_Color = "#FFFFFF"
+  Arguments = ""
+}
+local w3 : widget = new {
   Type = "Clock"
   Plugin = "build/bin/libclockWidget.so"
   Font = "DejaVu Sans"
@@ -137,8 +150,7 @@ local b2 : bar = new {
   Border_Color = "#000000"
   Position = "bottom"
   Widgets = new Listing<widget> {
-//     w1
-    w2
+    w3
   }
 }
 // here Bars is not local because we want to use it in the final json

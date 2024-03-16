@@ -100,15 +100,12 @@ void Bars::run() {
 				for (const auto &pair: updated) {
 					this->data[pair.first] = pair.second;
 					if (subscriptions.find(pair.first) != subscriptions.end()) {
-						Logger::GetInstance()->Log("Looking subscriber for " + pair.first ,L_INFO);
 						for (Widget* widget : subscriptions[pair.first]) {
-							Logger::GetInstance()->Log("Found Subscriber : " + std::to_string((unsigned long int)widget),L_INFO);
 							widget->updateData(pair.first, pair.second);
 							widget->draw();
 						}
 					}
 					XFlush(display);
-					Logger::GetInstance()->Log("Updated Data: " + pair.first + " : " + pair.second,L_INFO);
 				}
 				this->redraw();
 			} else {
@@ -204,7 +201,6 @@ void Bars::subscribeWidget(Widget *w) {
 	for (const auto &key: keys) {
 		if (key.empty())
 			continue;
-		Logger::GetInstance()->Log("Subscribing widget"+ std::to_string((unsigned long int)w)+" to key: " + key,L_INFO);
 		subscriptions[key].push_back(w);
 	}
 }
