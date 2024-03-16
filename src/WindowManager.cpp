@@ -152,11 +152,18 @@ void WindowManager::createBars() {
 }
 void WindowManager::addGroupsFromConfig() {
 	auto configGroups = ConfigHandler::GetInstance().getConfigData<ConfigDataGroups>()->getGroups();
+	std::string groupsNames = "";
 	for (auto group: configGroups) {
 		std::shared_ptr<Group> g = std::make_shared<Group>(group, x11Wrapper,display_,root_);
+		groupsNames += g->getName() + ",";
 		groups_.push_back(g);
 	}
+	if (groupsNames.back() == ',') {
+		groupsNames.pop_back();
+	}
+	tsData->addData("Groups", groupsNames);
 	groups_[0]->setActive(true);
+	tsData->addData("ActiveGroup", groups_[0]->getName());
 	active_group_ = groups_[0];
 	Logger::GetInstance()->Log("Active Group is [" + getActiveGroup()->getName() + "]", L_INFO);
 }
@@ -164,11 +171,11 @@ void WindowManager::Run() {
 	Logger::GetInstance()->Log("================ Yggdrasil WM Running ================\n\n", L_INFO);
 	EventHandler::create();
 	XEvent e;
-	int evcount = 0;
+//	int evcount = 0;
 	while (running && !x11Wrapper->nextEvent(display_, &e)) {
 		EventHandler::getInstance()->dispatchEvent(e);
 		x11Wrapper->sync(display_, false);
-		tsData->modifyData("EvCount", std::to_string(evcount++));
+//		tsData->modifyData("EvCount", std::to_string(evcount++));
 	}
 	Logger::GetInstance()->Log("WindowManager stopped", L_INFO);
 //	XCloseDisplay(display_);
@@ -258,7 +265,10 @@ std::unordered_map<Window, std::shared_ptr<Client>> & WindowManager::getClients(
 std::shared_ptr<Client> WindowManager::getClientRef(Window window) { return clients_.at(window); }
 Window WindowManager::getRoot() const { return root_; }
 unsigned long WindowManager::getClientCount() { return clients_.size(); }
-void WindowManager::setActiveGroup(std::shared_ptr<Group> activeGroup) { active_group_ = std::weak_ptr<Group> (activeGroup); }
+void WindowManager::setActiveGroup(std::shared_ptr<Group> activeGroup) {
+	tsData->modifyData("ActiveGroup", activeGroup->getName());
+	active_group_ = std::weak_ptr<Group> (activeGroup);
+}
 std::shared_ptr <Group>WindowManager::getActiveGroup() const {
 	auto g = active_group_.lock();
 	if (g)

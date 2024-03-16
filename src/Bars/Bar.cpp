@@ -24,6 +24,7 @@
 
 #include "Bars/Bar.hpp"
 #include "Config/ConfigDataBar.hpp"
+#include "Config/ConfigDataWidget.hpp"
 #include "WindowManager.hpp"
 #include <dlfcn.h>
 #include "Bars/Widget.hpp"
@@ -88,18 +89,12 @@ void Bar::init(std::shared_ptr<ConfigDataBar> configData, std::shared_ptr<TSBars
 								 | PointerMotionMask);
 	XMapWindow(display, window);
 	this->draw();
-	// Testing importing widget plugin :
-//	handle = dlopen("./build/bin/libclockWidget.so", RTLD_LAZY);
-//	if (!handle) {
-//		std::cerr << "Cannot open library: " << dlerror() << '\n';
-//		return;
-//	}
-
-//	Logger::GetInstance()->Log("Clock Widget initialized [" + std::to_string(wwindow) + "]",L_INFO);
-//	widget->draw();
 }
 
 void Bar::draw() {
+	if (widgets.empty()) {
+		return;
+	}
 	for (auto &w : widgets) {
 		w.second->draw();
 	}
@@ -118,7 +113,7 @@ unsigned int Bar::getSizeY() const {
 	return sizeY;
 }
 
-void Bar::addWidget(void *handle) {
+void Bar::addWidget(void *handle, std::shared_ptr<ConfigDataWidget> widgetConfig) {
 	typedef Widget* create_t();
 	create_t* createPlugin = (create_t*)dlsym(handle, "createPlugin");
 	if (!createPlugin) {
@@ -130,13 +125,22 @@ void Bar::addWidget(void *handle) {
 		Logger::GetInstance()->Log("Cannot create plugin: " + std::string(dlerror()), L_ERROR);
 		return;
 	}
+	// TODO : change position/size for left/right bar
 	Window newWidgetWindow = newWidget->initialize(display,
 										window,
-										0, 0,
-										150, 30,
-										"DejaVu Sans",
-										0xFFFFFF,
-										0, 10);
+										widgetConfig->getPosition(),0,
+										widgetConfig->getSize(),(int)sizeY,
+										widgetConfig->getFontName(),
+										widgetConfig->getBgColor(),
+										widgetConfig->getFgColor(),
+										widgetConfig->getFontSize());
+	Logger::GetInstance()->Log("New Widget added ["
+							   + widgetConfig->getType()
+							   + "] widgetWindow: ["
+							   + std::to_string(newWidgetWindow)
+							   + "] Bar ["
+							   + std::to_string(window)
+							   + "]", L_INFO);
 	widgets[newWidgetWindow] = newWidget;
 }
 

@@ -39,8 +39,16 @@ ClockWidget::~ClockWidget() {
 
 }
 
-Window ClockWidget::initialize(Display *d, Window pW, int x_, int y_, int width_, int height_, std::string font_,
-							   unsigned long bgColor_, unsigned long fgColor_, int fontSize) {
+Window ClockWidget::initialize(Display *d,
+							   Window pW,
+							   int x_,
+							   int y_,
+							   int width_,
+							   int height_,
+							   std::string font_,
+							   unsigned long bgColor_,
+							   unsigned long fgColor_,
+							   int fontSize) {
 	display = d;
 	parentWindow = pW;
 	x = x_;

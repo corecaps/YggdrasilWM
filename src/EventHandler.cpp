@@ -217,7 +217,7 @@ void EventHandler::handleKeyRelease(const XEvent &event) {}
 void EventHandler::handleEnterNotify(const XEvent &event) {
 	auto e = event.xcrossing;
 	if (Bars::getInstance().isBarWindow(e.window)) {
-		Bars::getInstance().redraw(std::string());
+		Bars::getInstance().redraw();
 		return;
 	}
 }
@@ -225,7 +225,7 @@ void EventHandler::handleLeaveNotify(const XEvent &event) {}
 void EventHandler::handleExpose(const XEvent &event) {
 	auto e = event.xexpose;
 	if (Bars::getInstance().isBarWindow(e.window)) {
-		Bars::getInstance().redraw("Event Expose ");
+		Bars::getInstance().redraw();
 		return;
 	}
 }

@@ -37,6 +37,19 @@
       "Position": "top",
       "Widgets": [
         {
+          "Type": "Group",
+          "Plugin": "build/bin/libgroupWidget.so",
+          "Font": "DejaVu Sans",
+          "Font_Size": 10,
+          "Border_Size": 1,
+          "Border_Color": "#000000",
+          "Position": 10,
+          "Size": 300,
+          "Color": "#FF0000",
+          "Background_Color": "#FFFFFF",
+          "Arguments": ""
+        },
+        {
           "Type": "Clock",
           "Plugin": "build/bin/libclockWidget.so",
           "Font": "DejaVu Sans",

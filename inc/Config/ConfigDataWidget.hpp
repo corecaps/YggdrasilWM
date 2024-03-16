@@ -36,32 +36,20 @@ public:
 	~ConfigDataWidget() override = default;
 	void configInit(const Json::Value& root) override;
 	Json::Value configSave() override;
-private:
-	std::string type;
-public:
 	const std::string &getType() const;
-
 	const std::string &getPluginLocation() const;
-
 	const std::string &getFontName() const;
-
 	int getFontSize() const;
-
 	int getBorderSize() const;
-
 	unsigned long getBorderColor() const;
-
 	int getPosition() const;
-
 	int getSize() const;
-
 	unsigned long getFgColor() const;
-
 	unsigned long getBgColor() const;
-
 	const std::string &getArgs() const;
 
 private:
+	std::string type;
 	std::string pluginLocation;
 	std::string fontName;
 	int		fontSize;

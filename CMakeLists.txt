@@ -175,7 +175,15 @@ target_include_directories(clockWidget PRIVATE ${X11_INCLUDE_DIR})
 link_directories(${XFT_LIBRARY_DIRS})
 target_link_libraries(clockWidget ${X11_LIBRARIES} ${XFT_LIBRARIES})
 add_definitions(${XFT_CFLAGS_OTHER})
-
 set_target_properties(clockWidget PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+)
+add_library(groupWidget SHARED plugins/groupWidget/groupw.cpp)
+target_include_directories(groupWidget PRIVATE ${INCLUDE_DIR} ${XFT_INCLUDE_DIRS})
+target_include_directories(groupWidget PRIVATE ${X11_INCLUDE_DIR})
+link_directories(${XFT_LIBRARY_DIRS})
+target_link_libraries(groupWidget ${X11_LIBRARIES} ${XFT_LIBRARIES})
+add_definitions(${XFT_CFLAGS_OTHER})
+set_target_properties(groupWidget PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )

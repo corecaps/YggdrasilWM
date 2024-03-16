@@ -31,8 +31,8 @@ figlet YggdrasilWM
 figlet :Unit Tests:
 # Launch YggdrasilWM_tests
 cd ..
-#valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./build/bin/YggdrasilWM_tests
-./build/bin/YggdrasilWM_tests
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./build/bin/YggdrasilWM_tests
+#./build/bin/YggdrasilWM_tests
 
 TESTS_RESULT=$?
 

@@ -28,6 +28,7 @@
 #include "Config/ConfigDataBar.hpp"
 #include "Config/ConfigDataWidget.hpp"
 #include "Bars/TSBarsData.hpp"
+#include "Bars/Widget.hpp"
 #include "WindowManager.hpp"
 #include <string>
 #include <thread>
@@ -67,7 +68,7 @@ void Bars::init(std::shared_ptr<ConfigDataBars> configData,
 				setWidgetTypeHandle(w->getType(), handle);
 				Logger::GetInstance()->Log("Library " + w->getPluginLocation() + " opened",L_INFO);
 			}
-			newBar->addWidget(getWidgetTypeHandle(w->getType()));
+			newBar->addWidget(getWidgetTypeHandle(w->getType()), w);
 		}
 		Logger::GetInstance()->Log("Bar ["
 									+ std::to_string(this->bars.size())
@@ -79,6 +80,9 @@ void Bars::init(std::shared_ptr<ConfigDataBars> configData,
 									+ std::to_string(newBar->getSizeX())
 									+ " x "
 									+ std::to_string(newBar->getSizeY()),L_INFO);
+		for (auto w:newBar->getWidgets()) {
+			subscribeWidget(w.second);
+		}
 		this->windows.push_back(newBar->getWindow());
 		this->bars.push_back(std::move(newBar));
 	}
@@ -90,22 +94,33 @@ void Bars::run() {
 	while (WindowManager::getInstance()->getRunning()){
 		try {
 			if (tsData->wait()) {
+				// Updated Data redraw
+				// Todo check for registerd keys to redraw only concerned widgets
 				std::unordered_map<std::string,std::string>updated = tsData->getData();
-				std::string last;
 				for (const auto &pair: updated) {
 					this->data[pair.first] = pair.second;
-					last = pair.second;
+					if (subscriptions.find(pair.first) != subscriptions.end()) {
+						Logger::GetInstance()->Log("Looking subscriber for " + pair.first ,L_INFO);
+						for (Widget* widget : subscriptions[pair.first]) {
+							Logger::GetInstance()->Log("Found Subscriber : " + std::to_string((unsigned long int)widget),L_INFO);
+							widget->updateData(pair.first, pair.second);
+							widget->draw();
+						}
+					}
+					XFlush(display);
+					Logger::GetInstance()->Log("Updated Data: " + pair.first + " : " + pair.second,L_INFO);
 				}
-				this->redraw(last);
+				this->redraw();
 			} else {
-				this->redraw("TimneOut Redraw");
+				// Periodic redraw
+				this->redraw();
 			}
 		} catch (const std::exception &e) {
 			Logger::GetInstance()->Log("Bars thread exception: " + std::string(e.what()),L_ERROR);
 		}
 	}
 }
-void Bars::redraw(std::string msg) {
+void Bars::redraw() {
 	for (auto &bar : this->bars) {
 		bar->draw();
 	}
@@ -146,7 +161,7 @@ Bars::~Bars() {
 	for (auto &bar : bars) {
 		for (auto &w : bar->getWidgets()) {
 			typedef void (*destroy_t)(Widget *);
-			destroy_t destroy = (destroy_t)dlsym(w.second, "destroy");
+			destroy_t destroy = (destroy_t)dlsym(w.second, "destroyPlugin");
 			if (!destroy) {
 				Logger::GetInstance()->Log("Cannot load symbol destroy: " + std::string(dlerror()),L_ERROR);
 				continue;
@@ -182,4 +197,14 @@ bool Bars::isBarWindow(Window window) {
 }
 void Bars::stop_thread() {
 	barThread.join();
+}
+
+void Bars::subscribeWidget(Widget *w) {
+	std::vector<std::string> keys = w->registerDataKey();
+	for (const auto &key: keys) {
+		if (key.empty())
+			continue;
+		Logger::GetInstance()->Log("Subscribing widget"+ std::to_string((unsigned long int)w)+" to key: " + key,L_INFO);
+		subscriptions[key].push_back(w);
+	}
 }

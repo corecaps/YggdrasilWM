@@ -39,6 +39,7 @@ extern "C" {
 class Bar;
 class ConfigDataBars;
 class TSBarsData;
+class Widget;
 
 /**
  * @class Bars
@@ -139,12 +140,12 @@ public:
  * @brief Redraw the bars by calling the draw method of each bar
  * @param msg message to pass to the draw method (temporary arg for debug purpose)
  */
-	void redraw(std::string msg);
+	void redraw();
 	void addPluginLocation(const std::string& location);
 	[[nodiscard]] const std::set<std::string>& getPluginsLocations() const;
 	[[nodiscard]] void * getWidgetTypeHandle(const std::string& widgetType);
 	void setWidgetTypeHandle(const std::string& widgetType, void * handle);
-
+	void subscribeWidget(Widget *w);
 private:
 	static Bars*									instance;
 	std::vector<std::unique_ptr<Bar>>				bars;
@@ -161,6 +162,7 @@ private:
 	std::thread										barThread;
 	std::set<std::string>pluginsLocations;
 	std::unordered_map<std::string, void *> widgetTypeHandle;
+	std::unordered_map<std::string,std::vector<Widget *>> subscriptions;
 	Bars();
 };
 #endif // BARS_HPP

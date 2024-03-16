@@ -89,8 +89,13 @@ Groups = new Listing<group> {
 // you must define objects local to avoid polluting the final json
 local w1 : widget = new {
   Type = "Group"
+  Plugin = "build/bin/libgroupWidget.so"
+  Font = "DejaVu Sans"
+  Font_Size = 10
+  Border_Size = 1
+  Border_Color = "#000000"
   Position = 10
-  Size = 80
+  Size = 300
   Color = "#FF0000"
   Background_Color = "#FFFFFF"
   Arguments = ""
@@ -118,7 +123,7 @@ local b1 : bar = new {
   Border_Color = "#000000"
   Position = "top"
   Widgets = new Listing<widget> {
-//     w1
+    w1
     w2
   }
 }

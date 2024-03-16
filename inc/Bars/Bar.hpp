@@ -33,6 +33,7 @@ extern "C" {
 }
 
 class ConfigDataBar;
+class ConfigDataWidget;
 class Widget;
 class TSBarsData;
 
@@ -46,7 +47,8 @@ public:
 	Window			getWindow() const;
 	unsigned int	getSizeX() const;
 	unsigned int	getSizeY() const;
-	void			addWidget(void *handle);
+	void addWidget(void *handle, std::shared_ptr<ConfigDataWidget>);
+	const std::unordered_map<Window, Widget *> &getWidgets() const;
 
 private:
 	std::shared_ptr<ConfigDataBar> configData;
@@ -60,10 +62,6 @@ private:
 	int pos;
 	unsigned long BGColor;
 	unsigned long FGColor;
-public:
-	const std::unordered_map<Window, Widget *> &getWidgets() const;
-
-private:
 	unsigned long borderColor;
 	unsigned int borderSize;
 	std::string font;

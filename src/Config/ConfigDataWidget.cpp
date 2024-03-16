@@ -55,7 +55,7 @@ void ConfigDataWidget::configInit(const Json::Value &root) {
 	} else {
 		pluginLocation = root["Plugin"].asString();
 	}
-	if (root["Font"].empty() || !root["Font_Name"].isString()) {
+	if (root["Font"].empty() || !root["Font"].isString()) {
 		Logger::GetInstance()->Log("ConfigDataWidget::Font_Name is empty or not a string",L_ERROR);
 	} else {
 		fontName = root["Font"].asString();
@@ -95,10 +95,10 @@ void ConfigDataWidget::configInit(const Json::Value &root) {
 	} else {
 		bgColor = ConfigHandler::colorCodeToULong(root["Background_Color"].asString());
 	}
-	if (!root["Args"].isString()) {
+	if (!root["Arguments"].isString()) {
 		Logger::GetInstance()->Log("ConfigDataWidget::Args is empty or not a string",L_ERROR);
 	} else {
-		args = root["Args"].asString();
+		args = root["Arguments"].asString();
 	}
 }
 
