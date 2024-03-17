@@ -61,7 +61,7 @@ public:
  * @brief Execute the command linked to the binding
  * The arguments passed to the command are the one stored in the binding
  */
-	void execute();
+	void execute(const XKeyEvent *);
 	[[nodiscard]] const std::string &	getMod() const;
 	[[nodiscard]] const std::string &	getKey() const;
 	[[nodiscard]] const std::string &	getCommandName() const;

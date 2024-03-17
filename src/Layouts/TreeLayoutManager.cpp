@@ -162,50 +162,55 @@ void TreeLayoutManager::splitSpace(const std::shared_ptr<Client>& client, Binary
 	}
 }
 
-void TreeLayoutManager::growSpaceX(Client *client) {
-	BinarySpace* space = findSpace(client);
-	if (space == rootSpace_.get()) {
+void TreeLayoutManager::growSpace(Client *client, int inc) {
+	BinarySpace *space = findSpace(client);
+	if (space == nullptr || space == rootSpace_.get()) {
 		return;
 	}
-	if (space->getParent()->getLeft().get() == space) {
-		space->setSize(Point(space->getSize().x + 2, space->getSize().y));
-		if (space->getClient() != nullptr) {
-			placeClientInSpace(space->getClient(), space);
-		}
-		else {
-			BinarySpace *leftChild = space->getLeft().get();
-			BinarySpace *rightChild = space->getRight().get();
-			while (leftChild != nullptr) {
-				leftChild->setSize(Point(leftChild->getSize().x + 1, leftChild->getSize().y));
-				leftChild = leftChild->getLeft().get();
-			}
-			while (rightChild != nullptr) {
-				rightChild->setSize(Point(rightChild->getSize().x + 1, rightChild->getSize().y));
-				rightChild = rightChild->getRight().get();
-			}
-		}
-		if (space->getParent()->getRight() != nullptr) {
-			space->getParent()->getRight()->setSize(
-						Point(space->getParent()->getRight()->getSize().x - 2,
-							  space->getParent()->getRight()->getSize().y));
-			if (space->getParent()->getRight()->getClient() != nullptr) {
-				placeClientInSpace(space->getParent()->getRight()->getClient(), space->getParent()->getRight().get());
-			} else {
-				BinarySpace *leftChild = space->getParent()->getRight()->getLeft().get();
-				BinarySpace *rightChild = space->getParent()->getRight()->getRight().get();
-				while (leftChild != nullptr) {
-					leftChild->setSize(Point(leftChild->getSize().x - 1, leftChild->getSize().y));
-					leftChild = leftChild->getLeft().get();
-				}
-				while (rightChild != nullptr) {
-					rightChild->setSize(Point(rightChild->getSize().x - 1, rightChild->getSize().y));
-					rightChild = rightChild->getRight().get();
-				}
-			}
-		}
+	bool isLeftChild = (space->getParent()->getLeft().get() == space);
+	int dx = std::abs((int)space->getSize().x - (int)space->getParent()->getSize().x);
+	int dy = std::abs((int)space->getSize().y - (int)space->getParent()->getSize().y);
+	bool vertical;
+	if (std::max(dx, dy) == dx) {
+		vertical = false;
+	} else {
+		vertical = true;
+	}
+	BinarySpace *siblingSpace = isLeftChild ? space->getParent()->getRight().get()
+											: space->getParent()->getLeft().get();
+	space->setSize(vertical ? Point(space->getSize().x, space->getSize().y + inc) : Point(space->getSize().x + inc,
+																						  space->getSize().y));
+	if (!isLeftChild) {
+		space->setPos(vertical ? Point(space->getPos().x, space->getPos().y - inc) : Point(space->getPos().x - inc,
+																						  space->getPos().y));
+	} else {
+		siblingSpace->setPos(vertical ? Point(siblingSpace->getPos().x, siblingSpace->getPos().y + inc) : Point(
+				siblingSpace->getPos().x + inc, siblingSpace->getPos().y));
+	}
+	if (space->getClient() != nullptr) {
+		placeClientInSpace(space->getClient(), space);
+	}
+	siblingSpace->setSize(vertical ? Point(siblingSpace->getSize().x, siblingSpace->getSize().y - inc) : Point(
+			siblingSpace->getSize().x - inc, siblingSpace->getSize().y));
+	if (siblingSpace->getClient() != nullptr) {
+		placeClientInSpace(siblingSpace->getClient(), siblingSpace);
+	} else {
+		recursiveShrinkSiblingSpace(siblingSpace, inc, vertical);
 	}
 }
-
+void TreeLayoutManager::recursiveShrinkSiblingSpace(BinarySpace *space, int inc, bool vertical) {
+	if (space->getLeft() != nullptr) {
+		recursiveShrinkSiblingSpace(space->getLeft().get(), inc, vertical);
+	}
+	if (space->getRight() != nullptr) {
+		recursiveShrinkSiblingSpace(space->getRight().get(), inc, vertical);
+	}
+	space->setSize(vertical ? Point(space->getSize().x, space->getSize().y - inc) : Point(space->getSize().x - inc,
+																						  space->getSize().y));
+	if (space->getClient() != nullptr) {
+		placeClientInSpace(space->getClient(), space);
+	}
+}
 void TreeLayoutManager::reSize(const Point &size,
 							   const Point &pos) {
 	if (rootSpace_->getSize().x == size.x && rootSpace_->getSize().y == size.y) {
@@ -240,7 +245,7 @@ void TreeLayoutManager::recursiveResize(const Point &size,
 		}
 		recursiveResize(leftSize, leftPos, space->getLeft().get());
 		recursiveResize(rightSize, rightPos, space->getRight().get());
-	}
+	} 
 }
 
 

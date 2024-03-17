@@ -145,12 +145,13 @@ public:
  */
 	void	removeClientRecursive(Client *client, BinarySpace* space);
 /**
- * @fn void TreeLayoutManager::growSpaceX(Client* client)
+ * @fn void TreeLayoutManager::growSpace(Client* client)
  * @brief grow the space of the client in the x axis
  * @todo this method is not implemented yet
  * @param client
  */
-	void	growSpaceX(Client *client);
+	void growSpace(Client *client, int inc);
+	void recursiveShrinkSiblingSpace(BinarySpace *space, int inc, bool vertical);
 /**
  * @fn void TreeLayoutManager::shrinkSpaceX(Client* client)
  * @brief shrink the space of the client in the y axis

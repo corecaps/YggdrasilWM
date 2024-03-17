@@ -116,6 +116,11 @@
         "Key": "Q",
         "Action": "Quit",
         "Argument": ""
+      },
+      {
+        "Key": "J",
+        "Action": "Grow",
+        "Argument": "Vertical"
       }
     ]
   }

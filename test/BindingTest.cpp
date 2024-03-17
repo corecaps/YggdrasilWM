@@ -110,5 +110,10 @@ TEST_F(BindingTest, wrongInit) {
 	command = "InvalidCommand";
 	EXPECT_THROW(binding2.init(mod, key, command, args), std::runtime_error);
 	Binding binding3;
-	EXPECT_THROW(binding3.execute(), std::runtime_error);
+	EXPECT_THROW(binding3.execute(nullptr), std::runtime_error);
+}
+
+TEST_F(BindingTest, execBeforeInit) {
+	Binding binding;
+	EXPECT_THROW(binding.execute(nullptr), std::runtime_error);
 }

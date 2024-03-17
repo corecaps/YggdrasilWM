@@ -30,6 +30,7 @@
 #include "Commands/FocusGroup.hpp"
 #include "Commands/Spawn.hpp"
 #include "Commands/Quit.hpp"
+#include "Commands/Grow.hpp"
 #include "WindowManager.hpp"
 #include "X11wrapper/baseX11Wrapper.hpp"
 extern "C" {
@@ -48,6 +49,8 @@ void Binding::init(std::string Mod, std::string Key, std::string Command, std::s
 		command_ = new Spawn();
 	} else if (commandName_== "Quit") {
 		command_ = new Quit();
+	} else if (commandName_ == "Grow") {
+		 command_ = new Grow();
 	} else {
 		throw std::runtime_error("Unknown command: " + commandName_);
 	}
@@ -59,9 +62,16 @@ void Binding::init(std::string Mod, std::string Key, std::string Command, std::s
 		throw std::runtime_error("Unknown mod : " + mod_);
 	}
 }
-void Binding::execute() {
-	if (command_ != nullptr)
-		command_->execute(args_);
+void Binding::execute(const XKeyEvent *event = nullptr) {
+	if (command_ != nullptr) {
+		if (event == nullptr) {
+			command_->execute(args_);
+		} else {
+			std::stringstream ss;
+			ss << args_ << "," <<event->subwindow << "," << event->window << "," << event->state << "," << event->keycode;
+			command_->execute(ss.str());
+		}
+	}
 	else
 		throw std::runtime_error("Command not initialized.");
 }

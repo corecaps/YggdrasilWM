@@ -68,7 +68,7 @@ public:
  * @brief update the geometry of the layout used to resize the layout
  */
 	virtual void	updateGeometry(unsigned int sizeX, unsigned int sizeY, unsigned int posX, unsigned int posY) = 0;
-	virtual void reSize(const Point &size, const Point &pos) = 0;
+	virtual void	reSize(const Point &size, const Point &pos) = 0;
 /**
  * @fn virtual void LayoutManager::addClient(Client* client)
  * @brief add a client to the layout

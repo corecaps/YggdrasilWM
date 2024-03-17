@@ -55,10 +55,10 @@ Client::Client(Display *display,
 		  wrapper(x11Wrapper)
 {
 	Atom wmClassAtom = wrapper->internAtom(display, "WM_CLASS", False);
-	Atom actualType;
-	int actualFormat;
-	unsigned long nItems, bytesAfter;
-	unsigned char* propData;
+	Atom actualType = 0;
+	int actualFormat = 0;
+	unsigned long nItems = 0, bytesAfter = 0;
+	unsigned char* propData = 0;
 	wrapper->getWindowProperty(display,
 								   window,
 								   wmClassAtom,

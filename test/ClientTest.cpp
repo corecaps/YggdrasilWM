@@ -170,3 +170,71 @@ TEST_F(ClientTest, FrameOverideRedirect) {
 	EXPECT_THROW(client->frame(),YggdrasilException);
 	EXPECT_EQ(client->getFrame(), 0);
 }
+
+TEST_F(ClientTest, restack) {
+	EXPECT_CALL(*x11WrapperMock, raiseWindow(_, clientWindow))
+			.Times(1)
+			.WillOnce(Return(Success));
+	client->restack();
+	EXPECT_CALL(*x11WrapperMock, getWindowAttributes(_, _, _))
+			.WillOnce(Invoke([](Display* display, Window w, XWindowAttributes* attrs) -> int {
+				SetMockWindowAttributes(attrs,0);
+				return 1;
+			}));
+	EXPECT_CALL(*x11WrapperMock, createSimpleWindow(_, _, _, _, _, _, _, _, _))
+			.Times(1)
+			.WillOnce(Return(clientWindow));
+	EXPECT_CALL(*x11WrapperMock, selectInput(_,_,SubstructureNotifyMask | SubstructureRedirectMask | FocusChangeMask | ClientMessage))
+			.Times(1)
+			.WillOnce(Return(Success));
+	EXPECT_CALL(*x11WrapperMock, addToSaveSet(_, _))
+			.Times(1)
+			.WillOnce(Return(Success));
+	EXPECT_CALL(*x11WrapperMock, reparentWindow(_,_,_,_,_))
+			.Times(1)
+			.WillOnce(Return(Success));
+	EXPECT_CALL(*x11WrapperMock, mapWindow(_, _))
+			.Times(1)
+			.WillOnce(Return(Success));
+	EXPECT_CALL(*x11WrapperMock, grabButton(_,_,_,_,_,_,_,_,_,_))
+			.Times(1)
+			.WillOnce(Return(Success));
+	client->frame();
+	EXPECT_CALL(*x11WrapperMock, raiseWindow(_, clientWindow))
+			.Times(2)
+			.WillRepeatedly(Return(Success));
+	client->restack();
+}
+TEST_F(ClientTest, unframe) {
+	EXPECT_CALL(*x11WrapperMock, getWindowAttributes(_, _, _))
+			.WillOnce(Invoke([](Display* display, Window w, XWindowAttributes* attrs) -> int {
+				SetMockWindowAttributes(attrs,0);
+				return 1;
+			}));
+	EXPECT_CALL(*x11WrapperMock, createSimpleWindow(_, _, _, _, _, _, _, _, _))
+			.Times(1)
+			.WillOnce(Return(clientWindow));
+	EXPECT_CALL(*x11WrapperMock, selectInput(_,_,SubstructureNotifyMask | SubstructureRedirectMask | FocusChangeMask | ClientMessage))
+			.Times(1)
+			.WillOnce(Return(Success));
+	EXPECT_CALL(*x11WrapperMock, addToSaveSet(_, _))
+			.Times(1)
+			.WillOnce(Return(Success));
+	EXPECT_CALL(*x11WrapperMock, reparentWindow(_,_,_,_,_))
+			.Times(1)
+			.WillOnce(Return(Success));
+	EXPECT_CALL(*x11WrapperMock, mapWindow(_, _))
+			.Times(1)
+			.WillOnce(Return(Success));
+	EXPECT_CALL(*x11WrapperMock, grabButton(_,_,_,_,_,_,_,_,_,_))
+			.Times(1)
+			.WillOnce(Return(Success));
+	client->frame();
+	EXPECT_CALL(*x11WrapperMock, destroyWindow(_, clientWindow))
+			.Times(1)
+			.WillOnce(Return(Success));
+	client->unframe();
+	EXPECT_EQ(client->getFrame(), 0);
+	EXPECT_FALSE(client->isFramed());
+	EXPECT_THROW(client->unframe(), YggdrasilException);
+}

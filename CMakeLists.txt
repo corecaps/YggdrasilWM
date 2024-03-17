@@ -111,6 +111,7 @@ set(SOURCES
         ${SOURCE_DIR}/Commands/FocusGroup.cpp
         ${SOURCE_DIR}/Commands/Spawn.cpp
         ${SOURCE_DIR}/Commands/Quit.cpp
+        ${SOURCE_DIR}/Commands/Grow.cpp
         ${SOURCE_DIR}/Bars/Bars.cpp
         ${SOURCE_DIR}/Bars/Bar.cpp
         ${SOURCE_DIR}/Bars/TSBarsData.cpp

@@ -157,9 +157,10 @@ void Bars::setWidgetTypeHandle(const std::string &widgetType, void *handle) {
 Bars::~Bars() {
 	for (auto &bar : bars) {
 		for (auto &w : bar->getWidgets()) {
-			typedef void (*destroy_t)(Widget *);
-			destroy_t destroy = (destroy_t)dlsym(w.second, "destroyPlugin");
-			if (!destroy) {
+			typedef void (destroy_t)(Widget *);
+			destroy_t* destroy = (destroy_t*) dlsym(w.second , "destroyPlugin");
+			const char* dlsym_error = dlerror();
+			if (dlsym_error) {
 				Logger::GetInstance()->Log("Cannot load symbol destroy: " + std::string(dlerror()),L_ERROR);
 				continue;
 			}

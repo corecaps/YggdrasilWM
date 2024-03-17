@@ -66,7 +66,11 @@ void ConfigDataBindings::handleKeypressEvent(const XKeyEvent *event) {
 	for (auto &binding : bindings_) {
 		modOk = event->state & binding->getModMask();
 		if (binding->getKeyCode() == keyCode && modOk) {
-			binding->execute();
+			if (binding->getCommandName() == "Grow") {
+				binding->execute(event);
+			} else {
+				binding->execute(nullptr);
+			}
 			Logger::GetInstance()->Log("[" +
 										binding->getMod()
 										+ "+"

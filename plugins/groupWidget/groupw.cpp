@@ -119,6 +119,7 @@ void GroupWidget::draw() {
 				  height);
 
 	}
+	XFree(gc);
 //	XftDrawString8(ftdraw,
 //				   &ftcolor,
 //				   fontStruct,
