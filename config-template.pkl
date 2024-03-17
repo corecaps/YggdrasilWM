@@ -186,7 +186,12 @@ local kQ : binding = new {
 local kJ : binding = new {
   Key = "J"
   Action = "Grow"
-  Argument = "Vertical"
+  Argument = "-4"
+}
+local kK : binding = new {
+  Key = "K"
+  Action = "Grow"
+  Argument = "4"
 }
 // Bindings are grouped by modKey
 // you can create as many modKeys as you need
@@ -198,5 +203,6 @@ Bindings  {
     kEnter
     kQ
     kJ
+    kK
   }
 }

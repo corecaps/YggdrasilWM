@@ -42,7 +42,7 @@ void Grow::execute(const std::string &args) {
 		LayoutManager * lm = wm->getActiveGroup()->getLayoutManager().get();
 		TreeLayoutManager * tlm = dynamic_cast<TreeLayoutManager *>(lm);
 		if (tlm) {
-			tlm->growSpace(client.get(), 4);
+			tlm->growSpace(client.get(), event.inc);
 		}
 	}
 }
@@ -54,7 +54,7 @@ DeserializedXKeyEvent Grow::deserializeXKeyEvent(const std::string &serializedEv
 
 	// Extract args_
 	std::getline(ss, item, ',');
-	event.args = item;
+	event.inc = std::stoi(item);
 
 	// Extract subwindow
 	std::getline(ss, item, ',');

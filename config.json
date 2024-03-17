@@ -120,7 +120,12 @@
       {
         "Key": "J",
         "Action": "Grow",
-        "Argument": "Vertical"
+        "Argument": "-4"
+      },
+      {
+        "Key": "K",
+        "Action": "Grow",
+        "Argument": "4"
       }
     ]
   }

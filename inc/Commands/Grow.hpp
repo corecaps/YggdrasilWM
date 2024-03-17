@@ -35,7 +35,7 @@ extern "C" {
  * @brief Grow a window
  */
 struct DeserializedXKeyEvent {
-	std::string args;
+	int inc;
 	Window subwindow;
 	Window window;
 	unsigned int state;
