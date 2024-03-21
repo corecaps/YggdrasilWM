@@ -1,0 +1,6 @@
+<map id="WindowManager::addGroupsFromConfig" name="WindowManager::addGroupsFromConfig">
+<area shape="rect" id="node1" title="add groups configured in the ConfigDataGroups to the groups vector" alt="" coords="581,5,791,47"/>
+<area shape="rect" id="node2" href="$d9/d6e/classWindowManager.html#a753c324133eac3a7028f4e6e7096823a" title="look for existing top level windows and create clients for them" alt="" coords="316,5,533,47"/>
+<area shape="rect" id="node3" href="$d9/d6e/classWindowManager.html#a08b0d07eb54207b0dea055c399e2eb28" title="Initialize the WindowManager set the event select mask on the root window creates clients for the exi..." alt="" coords="108,13,268,39"/>
+<area shape="rect" id="node4" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,13,60,39"/>
+</map>

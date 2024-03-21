@@ -1,0 +1,4 @@
+<map id="Group::removeClient" name="Group::removeClient">
+<area shape="rect" id="node1" title="Definitely remove a client from the group." alt="" coords="5,5,163,32"/>
+<area shape="rect" id="node2" href="$d1/d37/classClient.html#a3a8287ddf4cdbba7e6452d1e65346338" title="Client::getWindow return the window attribute of the client." alt="" coords="211,5,352,32"/>
+</map>

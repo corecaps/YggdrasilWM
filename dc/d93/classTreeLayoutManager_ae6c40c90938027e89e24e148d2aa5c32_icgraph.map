@@ -1,0 +1,5 @@
+<map id="TreeLayoutManager::splitSpace" name="TreeLayoutManager::splitSpace">
+<area shape="rect" id="node1" title="split a space in two Move the client to the left space and the old client to the right space increase..." alt="" coords="419,5,577,47"/>
+<area shape="rect" id="node2" href="$dc/d93/classTreeLayoutManager.html#a19fc883e7e3315b23421bfd74df91cb3" title=" " alt="" coords="212,5,371,47"/>
+<area shape="rect" id="node3" href="$dc/d93/classTreeLayoutManager.html#a098af0a8f00f5d8024c6b46547bb1667" title="add a client to the layout it looks for the biggest space and splits it in two" alt="" coords="5,5,164,47"/>
+</map>

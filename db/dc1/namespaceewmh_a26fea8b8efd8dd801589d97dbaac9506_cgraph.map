@@ -1,0 +1,13 @@
+<map id="ewmh::updateWmProperties" name="ewmh::updateWmProperties">
+<area shape="rect" id="node1" title=" " alt="" coords="5,183,212,209"/>
+<area shape="rect" id="node2" href="$db/dc1/namespaceewmh.html#a8bb456032c1adc56c469cd0d7e481b44" title=" " alt="" coords="264,132,499,159"/>
+<area shape="rect" id="node10" href="$db/dc1/namespaceewmh.html#abf509530344762479637a9bab4fd3ae1" title=" " alt="" coords="260,208,503,235"/>
+<area shape="rect" id="node3" href="$d9/d6e/classWindowManager.html#adba25ee2562163836f6012cdacedb437" title="Get the Geometry X this function returns the width of the screen." alt="" coords="551,5,785,32"/>
+<area shape="rect" id="node4" href="$d9/d6e/classWindowManager.html#a11136231a3e388613ef0f39c493772f0" title="Get the Geometry Y." alt="" coords="551,56,785,83"/>
+<area shape="rect" id="node5" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="592,107,744,133"/>
+<area shape="rect" id="node6" href="$d9/d6e/classWindowManager.html#a788e5991ead0a077b39dcd25f3116192" title="Get the WindowManager instance this is a singleton class this function returns the instance of the Wi..." alt="" coords="561,208,775,235"/>
+<area shape="rect" id="node7" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="619,157,717,184"/>
+<area shape="rect" id="node8" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="833,132,988,159"/>
+<area shape="rect" id="node9" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="845,183,976,209"/>
+<area shape="rect" id="node11" href="$d9/d6e/classWindowManager.html#afbcf3c4895a96875b1bc582390d28590" title="Get the Groups vector this function returns the groups vector the groups vector contains all the grou..." alt="" coords="565,259,771,285"/>
+</map>

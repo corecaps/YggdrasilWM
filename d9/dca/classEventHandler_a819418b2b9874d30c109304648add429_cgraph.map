@@ -1,0 +1,6 @@
+<map id="EventHandler::handleKeyPress" name="EventHandler::handleKeyPress">
+<area shape="rect" id="node1" title="Handles the KeyPress event. the handling of KeyPress event is delegated to the ConfigDataBindings obj..." alt="" coords="5,56,227,83"/>
+<area shape="rect" id="node2" href="$d4/d46/classConfigHandler.html#ab25da87850e8a76855f1cb5db7fe65be" title="Get the ConfigData object of type T." alt="" coords="275,5,489,32"/>
+<area shape="rect" id="node3" href="$d4/d46/classConfigHandler.html#a4b0d961793967d6a8ab8db80b577aae8" title="Get the ConfigHandler object Throws an exception if the object is not created." alt="" coords="282,56,482,83"/>
+<area shape="rect" id="node4" href="$d9/d6e/classWindowManager.html#a788e5991ead0a077b39dcd25f3116192" title="Get the WindowManager instance this is a singleton class this function returns the instance of the Wi..." alt="" coords="275,107,489,133"/>
+</map>

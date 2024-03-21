@@ -1,0 +1,5 @@
+<map id="Bars::getInstance" name="Bars::getInstance">
+<area shape="rect" id="node1" title="Get the singleton instance if the instance is not created, it will create it." alt="" coords="5,5,140,32"/>
+<area shape="rect" id="node2" href="$d3/dcc/classBars.html#ac44e61e192981e6f034637cbcfa1bb5b" title="Create the singleton instance if the instance is already created, it will do nothing." alt="" coords="188,5,343,32"/>
+<area shape="rect" id="node3" href="$d3/dcc/classBars.html#a5b3cec30761f52bc76b5d9f069f18c0f" title=" " alt="" coords="391,5,479,32"/>
+</map>

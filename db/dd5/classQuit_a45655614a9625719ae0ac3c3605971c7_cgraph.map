@@ -1,0 +1,10 @@
+<map id="Quit::execute" name="Quit::execute">
+<area shape="rect" id="node1" title="Each child class must implement this interface." alt="" coords="5,31,113,57"/>
+<area shape="rect" id="node2" href="$d9/d6e/classWindowManager.html#a788e5991ead0a077b39dcd25f3116192" title="Get the WindowManager instance this is a singleton class this function returns the instance of the Wi..." alt="" coords="161,5,376,32"/>
+<area shape="rect" id="node3" href="$d9/d6e/classWindowManager.html#acd4961e330d8c138052a206867029e12" title="Stop the window manager." alt="" coords="185,56,353,83"/>
+<area shape="rect" id="node4" href="$d3/dcc/classBars.html#ac949e471505e80e16a2c0c52117f088e" title="Destroy the singleton instance if the instance is not created, it will do nothing." alt="" coords="438,5,546,32"/>
+<area shape="rect" id="node5" href="$d3/dcc/classBars.html#ac495cb54b8b57b5ec013e4904de53633" title="Get the singleton instance if the instance is not created, it will create it." alt="" coords="425,56,559,83"/>
+<area shape="rect" id="node8" href="$d3/dcc/classBars.html#a5b9030fad533debf773c341838e995fb" title="Stop the thread (join)" alt="" coords="424,107,560,133"/>
+<area shape="rect" id="node6" href="$d3/dcc/classBars.html#ac44e61e192981e6f034637cbcfa1bb5b" title="Create the singleton instance if the instance is already created, it will do nothing." alt="" coords="608,56,763,83"/>
+<area shape="rect" id="node7" href="$d3/dcc/classBars.html#a5b3cec30761f52bc76b5d9f069f18c0f" title=" " alt="" coords="811,56,899,83"/>
+</map>

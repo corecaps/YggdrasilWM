@@ -1,0 +1,52 @@
+<map id="Logger::GetLogLevel" name="Logger::GetLogLevel">
+<area shape="rect" id="node1" title="Get the log level as a string." alt="" coords="827,1270,981,1297"/>
+<area shape="rect" id="node2" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="681,1270,779,1297"/>
+<area shape="rect" id="node3" href="$d9/d6e/classWindowManager.html#af0aa4fecd8ba25a177ef9dd01da50a91" title="add groups configured in the ConfigDataGroups to the groups vector" alt="" coords="411,5,621,47"/>
+<area shape="rect" id="node4" href="$d9/d6e/classWindowManager.html#a753c324133eac3a7028f4e6e7096823a" title="look for existing top level windows and create clients for them" alt="" coords="121,35,338,76"/>
+<area shape="rect" id="node5" href="$d7/d9a/classBar.html#a105b12ddfebf4b96dfaa2aa03e230073" title=" " alt="" coords="455,122,577,149"/>
+<area shape="rect" id="node6" href="$d1/d37/classClient.html#a4e06ae9eb6a17eec3873010e805ba472" title="Client constructor.get window class and title." alt="" coords="463,173,569,199"/>
+<area shape="rect" id="node7" href="$d9/d40/classConfigFileHandler.html#a9bba38969c2aacf4f2977ad565029389" title="Construct a new ConfigFileHandler object without a path." alt="" coords="443,224,589,265"/>
+<area shape="rect" id="node8" href="$d4/d46/classConfigHandler.html#af2d31e1bed0e5dd7e2308a9df8548db3" title="Initialize the ConfigHandler Read the configuration file and store the JSon root object in Json::Valu..." alt="" coords="138,290,321,317"/>
+<area shape="rect" id="node9" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,446,60,473"/>
+<area shape="rect" id="node10" href="$dd/dfe/classConfigDataBar.html#abe1209c2b150b38df677f06ed64cf1aa" title="Initializes the configuration data for the bar You must call configInit() in each ConfigDataBase Chil..." alt="" coords="424,391,608,418"/>
+<area shape="rect" id="node11" href="$dd/d6b/classConfigDataGroup.html#a290a8a2ac3f42090d86dc7e995510ebe" title="Initialize the configuration for a group from the config file. must be called after instanciating the..." alt="" coords="415,442,617,469"/>
+<area shape="rect" id="node12" href="$d5/d0a/classConfigDataGroups.html#add5a09138b57191af99b3b45536cc03f" title="Must be called after instanciation to load the config file. Parses the json root and creates ConfigDa..." alt="" coords="412,493,620,519"/>
+<area shape="rect" id="node13" href="$dd/dc2/classConfigDataWidget.html#a0d3a7e0ae16da3eabe2630392b45a1c9" title="Initialize the configuration." alt="" coords="412,543,620,570"/>
+<area shape="rect" id="node14" href="$d3/d76/classConfigDataBars.html#ad4a138d8c9a276f87718daa10ba5c35d" title="Initialize the ConfigDataBars object You must call configInit() in each ConfigDataBase Child class to..." alt="" coords="421,594,611,621"/>
+<area shape="rect" id="node15" href="$d7/d83/classConfigDataBindings.html#a38063336b12a341fe630796b7168fd84" title="Parse the Json::Value object to initialize the bindings Instanciate the bindings in a vector." alt="" coords="441,645,591,687"/>
+<area shape="rect" id="node16" href="$d9/d6e/classWindowManager.html#a06c75db610282e13d6d52972374e56a6" title="create a WindowManager object" alt="" coords="139,551,319,578"/>
+<area shape="rect" id="node17" href="$d9/dca/classEventHandler.html#ab52574da9049d0314f742d8d12068a51" title="Dispatches the event to the appropriate handler function. the eventHandlerArray is an array of pointe..." alt="" coords="411,762,621,789"/>
+<area shape="rect" id="node18" href="$d9/d6e/classWindowManager.html#a3823b9b86904084abf35758e27a55354" title="Run the window manager." alt="" coords="147,762,311,789"/>
+<area shape="rect" id="node19" href="$d7/d6c/classFocusGroup.html#a47ea1205e3735685eede2a3e9f1f97eb" title="switch from the current active group to the group index passed as argument" alt="" coords="437,863,595,890"/>
+<area shape="rect" id="node20" href="$d5/d6b/classSpawn.html#ac20649c995bae5a118e7f097eadbf16b" title="Spawn a program using the command arguments Double fork to avoid zombie processes Parse the command a..." alt="" coords="454,914,578,941"/>
+<area shape="rect" id="node21" href="$d1/d37/classClient.html#a57d5c8d462c6a11f5bd305ad23ff4014" title="Client::frame create a frame around the client window, Map the frame, Add the window to the save set ..." alt="" coords="463,965,569,991"/>
+<area shape="rect" id="node22" href="$d3/dcc/classBars.html#a7feba6b61e3ae7812eae8dd80ed088de" title=" " alt="" coords="415,1015,617,1042"/>
+<area shape="rect" id="node23" href="$d3/dcc/classBars.html#a84f9f17296a80d59b58abda8f90da8db" title="Initialize the Bars class." alt="" coords="189,1041,269,1067"/>
+<area shape="rect" id="node24" href="$d0/db7/classGroup.html#a41a0c615701367cf4da30217eeed8a57" title="Group constructor." alt="" coords="462,1117,570,1143"/>
+<area shape="rect" id="node25" href="$d9/dca/classEventHandler.html#a4dd2ab5df79921f0cf9dec715fe31933" title="Handles the ButtonPress event. The ButtonPress event is sent to a client when a mouse button is press..." alt="" coords="413,1168,619,1209"/>
+<area shape="rect" id="node26" href="$d9/dca/classEventHandler.html#a8b456da5adaa409c6c8e2ea9b608876b" title="Handles the DestroyNotify event." alt="" coords="409,1233,623,1275"/>
+<area shape="rect" id="node27" href="$d9/dca/classEventHandler.html#aead87b928e6928327b275882ca5ea678" title="Handles the FocusIn event. Changes the border color of the client." alt="" coords="411,1299,621,1326"/>
+<area shape="rect" id="node28" href="$d9/dca/classEventHandler.html#a86a04de876f37015e33592192a4d408c" title="Handles the FocusOut event. Changes the border color of the client." alt="" coords="405,1350,627,1377"/>
+<area shape="rect" id="node29" href="$d7/d83/classConfigDataBindings.html#a6384c1ce6a887f41c5d323cc3c9bb2cb" title="Handle the keypress event This method is called by the EventManager to avoid handling bindings and th..." alt="" coords="431,1401,601,1443"/>
+<area shape="rect" id="node30" href="$d9/dca/classEventHandler.html#a29a9353de9b6d810a5122d11c2475607" title="Handles the MapNotify event. The MapNotify event is sent to a client when it is mapped...." alt="" coords="115,2038,344,2065"/>
+<area shape="rect" id="node31" href="$d9/dca/classEventHandler.html#ab77bf3ab50542e3a2bd568a3ef684b8d" title="Handles the MapRequest event. The MapRequest event is sent to a client when it is mapped...." alt="" coords="108,1493,351,1519"/>
+<area shape="rect" id="node32" href="$db/dc1/namespaceewmh.html#adaba0db441bbae1b11b9c99a218c1343" title=" " alt="" coords="430,1569,602,1595"/>
+<area shape="rect" id="node33" href="$d9/dca/classEventHandler.html#a94d6a647ab1563ef05252cdfeb59d8ae" title="Handles the PropertyNotify event." alt="" coords="407,1620,625,1661"/>
+<area shape="rect" id="node34" href="$d9/dca/classEventHandler.html#a66c072b3d1a731df49726c660a329563" title="Handles the UnmapNotify event. The UnmapNotify event is sent to a client when it is unmapped...." alt="" coords="411,1685,621,1727"/>
+<area shape="rect" id="node35" href="$dc/dda/classBinding.html#a0a479e989071d6bb3550198b373b787f" title="Initialize the keycode of the binding had to be initialized after the display is opened." alt="" coords="435,1751,597,1778"/>
+<area shape="rect" id="node36" href="$db/dc1/namespaceewmh.html#a3c71d2f96518776526ed041ebe9a6a90" title="register the supported EWMH atoms." alt="" coords="451,1802,581,1829"/>
+<area shape="rect" id="node37" href="$d9/d6e/classWindowManager.html#ab8b30dd79ad425cb52649c52ff1d3e93" title="Insert a client in the clients map." alt="" coords="409,1518,623,1545"/>
+<area shape="rect" id="node38" href="$d1/d37/classClient.html#a7787490fde404953f58eb1d002b08def" title=": Client::move move the client window to the given position" alt="" coords="463,1903,569,1930"/>
+<area shape="rect" id="node39" href="$d0/db7/classGroup.html#a28618286b36322caaccd549ca78a8b67" title="Move a client to another group." alt="" coords="417,1954,615,1981"/>
+<area shape="rect" id="node40" href="$d9/d6e/classWindowManager.html#addd68a462f5a21ee2406757eb01e2595" title="X11 Error handler." alt="" coords="417,2005,615,2031"/>
+<area shape="rect" id="node41" href="$d9/d40/classConfigFileHandler.html#a44e464ff7f0af194b54969991fbc0f27" title="Read the configuration file Store the JSon root object in Json::Value root_ Throws exceptions in case..." alt="" coords="443,2056,589,2097"/>
+<area shape="rect" id="node42" href="$d0/db7/classGroup.html#ac2e933bb2c5dda36db7437a8a35a2472" title="Definitely remove a client from the group." alt="" coords="437,2122,595,2149"/>
+<area shape="rect" id="node43" href="$d1/d37/classClient.html#af944800911fc9d3ee74cc9e0c98a69a2" title="Client::resize resize the client window to the given size." alt="" coords="463,2173,569,2199"/>
+<area shape="rect" id="node44" href="$d1/d37/classClient.html#a9b7919729625c8637ca982a9f4af725f" title="Client::restack() restack the client window to avoid the frame to get in front of the client." alt="" coords="458,1853,574,1879"/>
+<area shape="rect" id="node45" href="$d3/dcc/classBars.html#a3169dd52bb8f13d7f34648e4732d3fe3" title="Run the Bars class in a separate thread." alt="" coords="476,2274,556,2301"/>
+<area shape="rect" id="node46" href="$d0/db7/classGroup.html#ac028fe6f7ee46394a5dd6f0393aad04e" title="Switch from this group Set this group as inactive, switch the layout manager and unmap the clients." alt="" coords="444,2325,588,2351"/>
+<area shape="rect" id="node47" href="$d0/db7/classGroup.html#a2f500e6e85ef9b563027a57d213c43c2" title="Switch to this group Set this group as active, switch the layout manager and map the clients." alt="" coords="453,2375,579,2402"/>
+<area shape="rect" id="node48" href="$d1/d37/classClient.html#add10ec425dd16ef461185873d707164c" title="Client::unframe unframe the client window by removing the frame and reparenting the window to the roo..." alt="" coords="455,2426,577,2453"/>
+<area shape="rect" id="node49" href="$db/dc1/namespaceewmh.html#a8bb456032c1adc56c469cd0d7e481b44" title=" " alt="" coords="399,2477,633,2503"/>
+<area shape="rect" id="node50" href="$d9/d40/classConfigFileHandler.html#aad053ee6c380fd959c76ad2c77021ff6" title="Write the configuration file Store the JSon root object in the configPath file Throws exceptions in c..." alt="" coords="443,2528,589,2569"/>
+</map>

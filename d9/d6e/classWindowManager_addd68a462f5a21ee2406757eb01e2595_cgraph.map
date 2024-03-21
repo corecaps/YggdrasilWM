@@ -1,0 +1,9 @@
+<map id="WindowManager::OnXError" name="WindowManager::OnXError">
+<area shape="rect" id="node1" title="X11 Error handler." alt="" coords="5,81,203,108"/>
+<area shape="rect" id="node2" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="295,5,447,32"/>
+<area shape="rect" id="node3" href="$d9/d6e/classWindowManager.html#a788e5991ead0a077b39dcd25f3116192" title="Get the WindowManager instance this is a singleton class this function returns the instance of the Wi..." alt="" coords="263,56,478,83"/>
+<area shape="rect" id="node4" href="$d9/d6e/classWindowManager.html#acbaeddfa85a6fb2af1724f4a6336a371" title="get the X11 Wrapper object" alt="" coords="251,107,491,133"/>
+<area shape="rect" id="node5" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="322,157,419,184"/>
+<area shape="rect" id="node6" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="539,132,693,159"/>
+<area shape="rect" id="node7" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="551,183,681,209"/>
+</map>

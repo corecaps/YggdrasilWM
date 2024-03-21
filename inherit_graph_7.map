@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$db/d80/classConfigDataBase.html" title="ConfigDataBase class This class is an interface for the ConfigData classes This is a pure virtual cla..." alt="" coords="5,132,132,159"/>
+<area shape="rect" id="node2" href="$dd/dfe/classConfigDataBar.html" title="ConfigDataBar class Contains the configuration data for one bar in the window manager Inherits from C..." alt="" coords="197,5,313,32"/>
+<area shape="rect" id="node3" href="$d3/d76/classConfigDataBars.html" title="ConfigDataBars class." alt="" coords="194,56,317,83"/>
+<area shape="rect" id="node4" href="$d7/d83/classConfigDataBindings.html" title="ConfigDataBindings class. This class is used to handle the bindings configuration it instanciates the..." alt="" coords="180,107,331,133"/>
+<area shape="rect" id="node5" href="$dd/d6b/classConfigDataGroup.html" title="ConfigDataGroup class Store the configuration for a group from the config file. the logic of groups i..." alt="" coords="189,157,322,184"/>
+<area shape="rect" id="node6" href="$d5/d0a/classConfigDataGroups.html" title="ConfigDataGroups class. stores an array of ConfigDataGroup created from the config file." alt="" coords="185,208,325,235"/>
+<area shape="rect" id="node7" href="$dd/dc2/classConfigDataWidget.html" title=" " alt="" coords="185,259,325,285"/>
+</map>

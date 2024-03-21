@@ -1,0 +1,7 @@
+<map id="Group::Group" name="Group::Group">
+<area shape="rect" id="node1" title="Group constructor." alt="" coords="5,31,113,57"/>
+<area shape="rect" id="node2" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="161,5,313,32"/>
+<area shape="rect" id="node3" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="189,56,286,83"/>
+<area shape="rect" id="node4" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="361,31,516,57"/>
+<area shape="rect" id="node5" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="373,81,504,108"/>
+</map>

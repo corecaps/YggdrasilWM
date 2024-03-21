@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$dd/d36/classCommandBase.html" title=" " alt="" coords="5,81,127,108"/>
+<area shape="rect" id="node2" href="$d7/d6c/classFocusGroup.html" title="FocusGroup implement the mecanism to switch between group." alt="" coords="175,5,273,32"/>
+<area shape="rect" id="node3" href="$d4/d6f/classGrow.html" title="Grow a window." alt="" coords="196,56,252,83"/>
+<area shape="rect" id="node4" href="$db/dd5/classQuit.html" title="Quit implement the mecanism to quit the window manager." alt="" coords="199,107,249,133"/>
+<area shape="rect" id="node5" href="$d5/d6b/classSpawn.html" title="Implement the mecanism to spawn a program." alt="" coords="191,157,257,184"/>
+</map>

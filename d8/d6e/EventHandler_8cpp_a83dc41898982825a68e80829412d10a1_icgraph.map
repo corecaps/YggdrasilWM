@@ -1,0 +1,7 @@
+<map id="GetEventTypeName" name="GetEventTypeName">
+<area shape="rect" id="node1" title=" " alt="" coords="604,31,755,57"/>
+<area shape="rect" id="node2" href="$d9/dca/classEventHandler.html#ab52574da9049d0314f742d8d12068a51" title="Dispatches the event to the appropriate handler function. the eventHandlerArray is an array of pointe..." alt="" coords="345,31,556,57"/>
+<area shape="rect" id="node3" href="$d9/d6e/classWindowManager.html#a3823b9b86904084abf35758e27a55354" title="Run the window manager." alt="" coords="121,5,285,32"/>
+<area shape="rect" id="node5" href="$d9/d6e/classWindowManager.html#aaacff41a9f37835a3968d7616fee65df" title="test function this function is used for testing purposes it is not used in the normal operation of th..." alt="" coords="108,56,297,83"/>
+<area shape="rect" id="node4" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,5,60,32"/>
+</map>

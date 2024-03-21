@@ -1,0 +1,6 @@
+<map id="ConfigDataGroups" name="ConfigDataGroups">
+<area shape="rect" id="node1" title="ConfigDataGroups class. stores an array of ConfigDataGroup created from the config file." alt="" coords="61,344,237,524"/>
+<area shape="rect" id="node2" href="$db/d80/classConfigDataBase.html" title="ConfigDataBase class This class is an interface for the ConfigData classes This is a pure virtual cla..." alt="" coords="5,160,168,281"/>
+<area shape="rect" id="node3" title=" " alt="" coords="192,175,395,267"/>
+<area shape="rect" id="node4" title=" " alt="" coords="190,5,397,97"/>
+</map>

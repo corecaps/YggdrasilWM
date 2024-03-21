@@ -1,0 +1,4 @@
+<map id="WindowManager::Destroy" name="WindowManager::Destroy">
+<area shape="rect" id="node1" title="Destroy the WindowManager instance this function destroys the WindowManager instance and sets the ins..." alt="" coords="108,5,299,32"/>
+<area shape="rect" id="node2" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,5,60,32"/>
+</map>

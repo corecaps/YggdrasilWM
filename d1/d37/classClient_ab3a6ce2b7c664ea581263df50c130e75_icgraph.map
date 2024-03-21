@@ -1,0 +1,11 @@
+<map id="Client::getFrame" name="Client::getFrame">
+<area shape="rect" id="node1" title="Client::getFrame() return the frame Window of the client." alt="" coords="1084,56,1215,83"/>
+<area shape="rect" id="node2" href="$d9/dca/classEventHandler.html#aead87b928e6928327b275882ca5ea678" title="Handles the FocusIn event. Changes the border color of the client." alt="" coords="816,5,1027,32"/>
+<area shape="rect" id="node8" href="$d9/dca/classEventHandler.html#a86a04de876f37015e33592192a4d408c" title="Handles the FocusOut event. Changes the border color of the client." alt="" coords="810,56,1033,83"/>
+<area shape="rect" id="node9" href="$d9/dca/classEventHandler.html#a29a9353de9b6d810a5122d11c2475607" title="Handles the MapNotify event. The MapNotify event is sent to a client when it is mapped...." alt="" coords="807,107,1036,133"/>
+<area shape="rect" id="node3" href="$d9/dca/classEventHandler.html#a8fe27b69582cce5c6a89a0b134bc8158" title=" " alt="" coords="552,56,759,83"/>
+<area shape="rect" id="node4" href="$d9/dca/classEventHandler.html#aa67d6322865a6c0e85f0dff364c4cd4d" title="create the Event handler:: Event handler object" alt="" coords="345,56,504,83"/>
+<area shape="rect" id="node5" href="$d9/d6e/classWindowManager.html#a3823b9b86904084abf35758e27a55354" title="Run the window manager." alt="" coords="121,31,285,57"/>
+<area shape="rect" id="node7" href="$d9/d6e/classWindowManager.html#aaacff41a9f37835a3968d7616fee65df" title="test function this function is used for testing purposes it is not used in the normal operation of th..." alt="" coords="108,81,297,108"/>
+<area shape="rect" id="node6" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,31,60,57"/>
+</map>

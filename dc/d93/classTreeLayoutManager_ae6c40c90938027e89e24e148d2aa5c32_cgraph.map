@@ -1,0 +1,12 @@
+<map id="TreeLayoutManager::splitSpace" name="TreeLayoutManager::splitSpace">
+<area shape="rect" id="node1" title="split a space in two Move the client to the left space and the old client to the right space increase..." alt="" coords="5,202,164,243"/>
+<area shape="rect" id="node2" href="$d7/ddc/classBinarySpace.html#a141649e8af3524af60f357b1a0dea170" title=" " alt="" coords="453,5,624,32"/>
+<area shape="rect" id="node3" href="$d7/ddc/classBinarySpace.html#a27eef59b1c9ad906bfb606e85b27456c" title=" " alt="" coords="222,260,395,287"/>
+<area shape="rect" id="node4" href="$d7/ddc/classBinarySpace.html#a695f9348cc340e2b73ec1f01d16be4d0" title=" " alt="" coords="461,85,616,112"/>
+<area shape="rect" id="node5" href="$d7/ddc/classBinarySpace.html#a382c755ed4adbba96ededed64ab21f2d" title=" " alt="" coords="459,137,618,164"/>
+<area shape="rect" id="node6" href="$d7/ddc/classBinarySpace.html#a4705ac1b07d0d12e52d4aa9b8b64057b" title=" " alt="" coords="212,311,405,353"/>
+<area shape="rect" id="node7" href="$dc/d93/classTreeLayoutManager.html#ae9258446b3d585ac04a665dd8cfccfeb" title="place a client in a space moves and resizes the client window to fit the space restack the client win..." alt="" coords="229,93,388,134"/>
+<area shape="rect" id="node8" href="$d7/ddc/classBinarySpace.html#a7b0df92f8483a7ec6366f0a4bdcd566a" title=" " alt="" coords="454,192,623,219"/>
+<area shape="rect" id="node9" href="$d7/ddc/classBinarySpace.html#a34015a8f119305795c7e561bc1856835" title=" " alt="" coords="231,377,386,404"/>
+<area shape="rect" id="node10" href="$d7/ddc/classBinarySpace.html#a8cf24da2a7845198af03bdc41ddf0bf8" title=" " alt="" coords="226,428,391,455"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="WindowManager::Stop" name="WindowManager::Stop">
+<area shape="rect" id="node1" title="Stop the window manager." alt="" coords="5,56,173,83"/>
+<area shape="rect" id="node2" href="$d3/dcc/classBars.html#ac949e471505e80e16a2c0c52117f088e" title="Destroy the singleton instance if the instance is not created, it will do nothing." alt="" coords="235,5,343,32"/>
+<area shape="rect" id="node3" href="$d3/dcc/classBars.html#ac495cb54b8b57b5ec013e4904de53633" title="Get the singleton instance if the instance is not created, it will create it." alt="" coords="222,56,357,83"/>
+<area shape="rect" id="node6" href="$d3/dcc/classBars.html#a5b9030fad533debf773c341838e995fb" title="Stop the thread (join)" alt="" coords="221,107,357,133"/>
+<area shape="rect" id="node4" href="$d3/dcc/classBars.html#ac44e61e192981e6f034637cbcfa1bb5b" title="Create the singleton instance if the instance is already created, it will do nothing." alt="" coords="405,56,560,83"/>
+<area shape="rect" id="node5" href="$d3/dcc/classBars.html#a5b3cec30761f52bc76b5d9f069f18c0f" title=" " alt="" coords="608,56,696,83"/>
+</map>

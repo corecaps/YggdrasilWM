@@ -1,0 +1,12 @@
+<map id="EventHandler::handleButtonPress" name="EventHandler::handleButtonPress">
+<area shape="rect" id="node1" title="Handles the ButtonPress event. The ButtonPress event is sent to a client when a mouse button is press..." alt="" coords="5,99,211,141"/>
+<area shape="rect" id="node2" href="$d9/d6e/classWindowManager.html#a5627a14686c7d6db3ff8f1d50d22a30e" title="Get the Client by window ptr or frame ptr." alt="" coords="267,5,465,32"/>
+<area shape="rect" id="node3" href="$d3/dcc/classBars.html#ac495cb54b8b57b5ec013e4904de53633" title="Get the singleton instance if the instance is not created, it will create it." alt="" coords="299,56,433,83"/>
+<area shape="rect" id="node6" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="290,107,442,133"/>
+<area shape="rect" id="node7" href="$d9/d6e/classWindowManager.html#a788e5991ead0a077b39dcd25f3116192" title="Get the WindowManager instance this is a singleton class this function returns the instance of the Wi..." alt="" coords="259,157,473,184"/>
+<area shape="rect" id="node8" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="317,208,415,235"/>
+<area shape="rect" id="node4" href="$d3/dcc/classBars.html#ac44e61e192981e6f034637cbcfa1bb5b" title="Create the singleton instance if the instance is already created, it will do nothing." alt="" coords="521,56,676,83"/>
+<area shape="rect" id="node5" href="$d3/dcc/classBars.html#a5b3cec30761f52bc76b5d9f069f18c0f" title=" " alt="" coords="724,56,812,83"/>
+<area shape="rect" id="node9" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="521,183,676,209"/>
+<area shape="rect" id="node10" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="533,233,664,260"/>
+</map>

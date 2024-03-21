@@ -1,0 +1,15 @@
+<map id="EventHandler::handleFocusOut" name="EventHandler::handleFocusOut">
+<area shape="rect" id="node1" title="Handles the FocusOut event. Changes the border color of the client." alt="" coords="5,233,228,260"/>
+<area shape="rect" id="node2" href="$d9/d6e/classWindowManager.html#a5627a14686c7d6db3ff8f1d50d22a30e" title="Get the Client by window ptr or frame ptr." alt="" coords="284,5,483,32"/>
+<area shape="rect" id="node3" href="$d1/d37/classClient.html#ab3a6ce2b7c664ea581263df50c130e75" title="Client::getFrame() return the frame Window of the client." alt="" coords="318,56,449,83"/>
+<area shape="rect" id="node4" href="$d1/d37/classClient.html#af215e39c1e363b9393d551bdaacca27b" title="return the group of the client" alt="" coords="319,107,447,133"/>
+<area shape="rect" id="node5" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="307,157,459,184"/>
+<area shape="rect" id="node6" href="$d9/d6e/classWindowManager.html#a788e5991ead0a077b39dcd25f3116192" title="Get the WindowManager instance this is a singleton class this function returns the instance of the Wi..." alt="" coords="276,208,491,235"/>
+<area shape="rect" id="node7" href="$d9/d6e/classWindowManager.html#a5dfe6cb19c8a99b5564522beb17527a9" title="Get the Root Window pointer." alt="" coords="288,259,479,285"/>
+<area shape="rect" id="node8" href="$d1/d37/classClient.html#a1b0d58c212ba4aeccdd7b11fa3e6bed2" title="Client::getTitle() return the title of the client, the title is get during the construction of the cl..." alt="" coords="324,309,443,336"/>
+<area shape="rect" id="node9" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="335,360,432,387"/>
+<area shape="rect" id="node12" href="$d9/d6e/classWindowManager.html#a6a202a2a9cbd4a7e54cd4e76c92748cf" title="set the Active Window" alt="" coords="283,411,483,453"/>
+<area shape="rect" id="node13" href="$db/dc1/namespaceewmh.html#adbfb372b5b09910933941409002707a2" title=" " alt="" coords="279,477,487,504"/>
+<area shape="rect" id="node10" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="539,335,693,361"/>
+<area shape="rect" id="node11" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="551,385,681,412"/>
+</map>

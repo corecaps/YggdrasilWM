@@ -1,0 +1,7 @@
+<map id="Client::unframe" name="Client::unframe">
+<area shape="rect" id="node1" title="Client::unframe unframe the client window by removing the frame and reparenting the window to the roo..." alt="" coords="5,31,128,57"/>
+<area shape="rect" id="node2" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="176,5,328,32"/>
+<area shape="rect" id="node3" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="203,56,301,83"/>
+<area shape="rect" id="node4" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="376,31,531,57"/>
+<area shape="rect" id="node5" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="388,81,519,108"/>
+</map>

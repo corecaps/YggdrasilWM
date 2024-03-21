@@ -1,0 +1,10 @@
+<map id="ConfigFileHandler::ConfigFileHandler" name="ConfigFileHandler::ConfigFileHandler">
+<area shape="rect" id="node1" title=" " alt="" coords="5,93,151,135"/>
+<area shape="rect" id="node2" href="$d9/d40/classConfigFileHandler.html#afd660d3834eb069e97bb512f1ea8c20b" title="Check if a file exists by trying to open it." alt="" coords="433,5,578,47"/>
+<area shape="rect" id="node3" href="$d9/d40/classConfigFileHandler.html#ae19a560fe25bab6db952552dd12b9d10" title="Find the configuration file in the default paths." alt="" coords="202,64,347,105"/>
+<area shape="rect" id="node5" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="199,130,351,157"/>
+<area shape="rect" id="node6" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="226,181,323,207"/>
+<area shape="rect" id="node4" href="$d9/d40/classConfigFileHandler.html#ab6c572e43536349bc80ab9cb7b68f3a2" title="Expand environment variables in a path." alt="" coords="399,71,612,112"/>
+<area shape="rect" id="node7" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="428,158,583,185"/>
+<area shape="rect" id="node8" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="440,209,571,235"/>
+</map>

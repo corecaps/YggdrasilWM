@@ -1,0 +1,9 @@
+<map id="Group::switchFrom" name="Group::switchFrom">
+<area shape="rect" id="node1" title="Switch from this group Set this group as inactive, switch the layout manager and unmap the clients." alt="" coords="5,81,149,108"/>
+<area shape="rect" id="node2" href="$d0/db7/classGroup.html#a94d256522889517fbb29c121aa610d2d" title="Get the list of clients of the group." alt="" coords="237,5,372,32"/>
+<area shape="rect" id="node3" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="229,56,381,83"/>
+<area shape="rect" id="node4" href="$d9/d6e/classWindowManager.html#a788e5991ead0a077b39dcd25f3116192" title="Get the WindowManager instance this is a singleton class this function returns the instance of the Wi..." alt="" coords="197,107,412,133"/>
+<area shape="rect" id="node5" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="256,157,353,184"/>
+<area shape="rect" id="node6" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="460,132,615,159"/>
+<area shape="rect" id="node7" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="472,183,603,209"/>
+</map>

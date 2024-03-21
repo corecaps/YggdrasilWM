@@ -1,0 +1,6 @@
+<map id="inc/EventHandler.hpp" name="inc/EventHandler.hpp">
+<area shape="rect" id="node1" title="EventHandler class header. this class dispatches the XEvents to the appropriate handler function...." alt="" coords="161,5,321,32"/>
+<area shape="rect" id="node2" href="$d8/d6e/EventHandler_8cpp.html" title="EventHandler class implementation." alt="" coords="5,80,164,107"/>
+<area shape="rect" id="node3" href="$df/d0a/main_8cpp.html" title="Main file." alt="" coords="188,80,293,107"/>
+<area shape="rect" id="node4" href="$d2/dc7/WindowManager_8cpp.html" title=" " alt="" coords="317,80,497,107"/>
+</map>

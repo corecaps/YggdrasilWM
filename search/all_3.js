@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['data_106',['data',['../d3/dcc/classBars.html#afc6561d9ebb6bdd8e99cc8738aa305bd',1,'Bars::data()'],['../de/d94/classTSBarsData.html#a08faf65a6ea35c6e2c9d0f3d38e16df4',1,'TSBarsData::data()']]],
+  ['datachanged_107',['dataChanged',['../de/d94/classTSBarsData.html#aa1065ada26ac208a3031958db25c06a3',1,'TSBarsData']]],
+  ['defaultpaths_108',['defaultPaths',['../d9/d40/classConfigFileHandler.html#ad9f06fc45d1e3f919cf2364362e241f9',1,'ConfigFileHandler']]],
+  ['defaultscreen_109',['defaultScreen',['../d9/dd8/classBaseX11Wrapper.html#a746998a9e004ece08e3235f2dcf160ad',1,'BaseX11Wrapper::defaultScreen()'],['../d6/dcd/classX11Wrapper.html#a204359f266ad44cc1b4eb0cfc71eb0ed',1,'X11Wrapper::defaultScreen()']]],
+  ['deletespace_110',['deleteSpace',['../dc/d93/classTreeLayoutManager.html#a36fe2aeddbce9911ea07cb87cd337ee0',1,'TreeLayoutManager']]],
+  ['deserializedxkeyevent_111',['DeserializedXKeyEvent',['../da/dd9/structDeserializedXKeyEvent.html',1,'']]],
+  ['deserializexkeyevent_112',['deserializeXKeyEvent',['../d4/d6f/classGrow.html#a5e32918757dd0dc9ccc52858be5eb6f3',1,'Grow']]],
+  ['destroy_113',['Destroy',['../d4/d46/classConfigHandler.html#a8b6fea52e685322d1b67bfd7e3bad668',1,'ConfigHandler::Destroy()'],['../db/d67/classLogger.html#ad09edae57f6418557b0da592c912eb1d',1,'Logger::Destroy()'],['../d9/d6e/classWindowManager.html#ad9998a72e8c5ae7ed6abf8b831ee4d91',1,'WindowManager::Destroy()']]],
+  ['destroy_114',['destroy',['../d3/dcc/classBars.html#ac949e471505e80e16a2c0c52117f088e',1,'Bars::destroy()'],['../d9/dca/classEventHandler.html#a5701b8e8f7f0a0b12bb3b80e1b1457af',1,'EventHandler::destroy()']]],
+  ['destroywindow_115',['destroyWindow',['../d6/dcd/classX11Wrapper.html#ae8eae2d7ce7a50a0bb77a44543788108',1,'X11Wrapper::destroyWindow()'],['../d9/dd8/classBaseX11Wrapper.html#a734bbdb21a3fa06b9ffba27e900ca593',1,'BaseX11Wrapper::destroyWindow()']]],
+  ['dispatchevent_116',['dispatchEvent',['../d9/dca/classEventHandler.html#ab52574da9049d0314f742d8d12068a51',1,'EventHandler']]],
+  ['display_117',['display',['../d7/d9a/classBar.html#ae9c6458e894c1e3bd7a6f829d3bbff9e',1,'Bar::display()'],['../d3/dcc/classBars.html#a3e391286e7fa9a4b2bb1825f3768832b',1,'Bars::display()']]],
+  ['display_5f_118',['display_',['../d1/d37/classClient.html#a7a15ad515a550cdaa4ae320dd685a339',1,'Client::display_()'],['../df/d92/classLayoutManager.html#a5aa40a17e5a8e28a8b83455c40cb0903',1,'LayoutManager::display_()'],['../d9/d6e/classWindowManager.html#addf37883b0b478375cebf9d7f75fa6f4',1,'WindowManager::display_()']]],
+  ['displayheight_119',['displayHeight',['../d9/dd8/classBaseX11Wrapper.html#a9563ea6294e3bab59c9ddca418d5bdb5',1,'BaseX11Wrapper::displayHeight()'],['../d6/dcd/classX11Wrapper.html#a39026d55d9df1fa9c5e5d8bc6d8fc8e9',1,'X11Wrapper::displayHeight()']]],
+  ['displaywidth_120',['displayWidth',['../d9/dd8/classBaseX11Wrapper.html#a61e43f7d9f1d335da671d12b71112715',1,'BaseX11Wrapper::displayWidth()'],['../d6/dcd/classX11Wrapper.html#a6804310ce38aac95a6f63981177590ff',1,'X11Wrapper::displayWidth()']]],
+  ['draw_121',['draw',['../d7/d9a/classBar.html#aeb2be7aa59cc5475899800d2ce7bfbf7',1,'Bar::draw()'],['../dd/ddb/classWidget.html#ae48262adfd76a5df4fcc892485d942a6',1,'Widget::draw()']]],
+  ['drawstring_122',['drawString',['../d9/dd8/classBaseX11Wrapper.html#a2e49098939dd219a6bc03fc917d24016',1,'BaseX11Wrapper::drawString()'],['../d6/dcd/classX11Wrapper.html#a88d545525aad444fa202872d7dbf44ef',1,'X11Wrapper::drawString()']]]
+];

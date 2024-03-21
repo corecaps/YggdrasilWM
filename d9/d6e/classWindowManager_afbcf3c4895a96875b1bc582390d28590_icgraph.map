@@ -1,0 +1,10 @@
+<map id="WindowManager::getGroups" name="WindowManager::getGroups">
+<area shape="rect" id="node1" title="Get the Groups vector this function returns the groups vector the groups vector contains all the grou..." alt="" coords="872,71,1079,98"/>
+<area shape="rect" id="node2" href="$d9/d6e/classWindowManager.html#af0aa4fecd8ba25a177ef9dd01da50a91" title="add groups configured in the ConfigDataGroups to the groups vector" alt="" coords="598,5,807,47"/>
+<area shape="rect" id="node6" href="$d7/d6c/classFocusGroup.html#a47ea1205e3735685eede2a3e9f1f97eb" title="switch from the current active group to the group index passed as argument" alt="" coords="624,71,781,98"/>
+<area shape="rect" id="node7" href="$db/dc1/namespaceewmh.html#abf509530344762479637a9bab4fd3ae1" title=" " alt="" coords="581,122,824,149"/>
+<area shape="rect" id="node3" href="$d9/d6e/classWindowManager.html#a753c324133eac3a7028f4e6e7096823a" title="look for existing top level windows and create clients for them" alt="" coords="316,19,533,60"/>
+<area shape="rect" id="node4" href="$d9/d6e/classWindowManager.html#a08b0d07eb54207b0dea055c399e2eb28" title="Initialize the WindowManager set the event select mask on the root window creates clients for the exi..." alt="" coords="108,67,268,94"/>
+<area shape="rect" id="node5" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,67,60,94"/>
+<area shape="rect" id="node8" href="$db/dc1/namespaceewmh.html#a26fea8b8efd8dd801589d97dbaac9506" title=" " alt="" coords="321,97,528,123"/>
+</map>

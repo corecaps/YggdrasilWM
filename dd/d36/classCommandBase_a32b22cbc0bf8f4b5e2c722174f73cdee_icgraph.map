@@ -1,0 +1,4 @@
+<map id="CommandBase::execute" name="CommandBase::execute">
+<area shape="rect" id="node1" title="Each child class must implement this interface." alt="" coords="184,5,364,32"/>
+<area shape="rect" id="node2" href="$dc/dda/classBinding.html#a347d0783c799199402fcf1d6cca6846a" title="Execute the command linked to the binding The arguments passed to the command are the one stored in t..." alt="" coords="5,5,136,32"/>
+</map>

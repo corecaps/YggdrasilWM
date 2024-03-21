@@ -1,0 +1,52 @@
+<map id="EventHandler::create" name="EventHandler::create">
+<area shape="rect" id="node1" title="create the Event handler:: Event handler object" alt="" coords="5,1072,164,1099"/>
+<area shape="rect" id="node2" href="$d9/dca/classEventHandler.html#a8fe27b69582cce5c6a89a0b134bc8158" title=" " alt="" coords="212,1072,419,1099"/>
+<area shape="rect" id="node3" href="$d9/d6e/classWindowManager.html#a788e5991ead0a077b39dcd25f3116192" title="Get the WindowManager instance this is a singleton class this function returns the instance of the Wi..." alt="" coords="760,917,975,944"/>
+<area shape="rect" id="node4" href="$d9/d6e/classWindowManager.html#acbaeddfa85a6fb2af1724f4a6336a371" title="get the X11 Wrapper object" alt="" coords="468,1440,708,1467"/>
+<area shape="rect" id="node5" href="$d9/dca/classEventHandler.html#a4dd2ab5df79921f0cf9dec715fe31933" title="Handles the ButtonPress event. The ButtonPress event is sent to a client when a mouse button is press..." alt="" coords="485,1034,691,1075"/>
+<area shape="rect" id="node13" href="$d9/dca/classEventHandler.html#aff32662d5d87d912b60822da90a9d4ae" title="Handles the ButtonRelease event." alt="" coords="485,1491,691,1533"/>
+<area shape="rect" id="node14" href="$d9/dca/classEventHandler.html#af9474eac1b2821e010777868b328b5b8" title="Handles the ClientMessage event." alt="" coords="488,851,688,893"/>
+<area shape="rect" id="node18" href="$d9/dca/classEventHandler.html#aa087c428cec403ed904d229f11199252" title="Handles the ConfigureNotify event." alt="" coords="476,1557,700,1598"/>
+<area shape="rect" id="node19" href="$d9/dca/classEventHandler.html#a9ee16ed66b9d6d46aa324f19b6e57fff" title="Handles the ConfigureRequest event. The ConfigureRequest event is sent to a client when it requests a..." alt="" coords="476,969,700,1010"/>
+<area shape="rect" id="node20" href="$d9/dca/classEventHandler.html#a8b456da5adaa409c6c8e2ea9b608876b" title="Handles the DestroyNotify event." alt="" coords="481,487,695,529"/>
+<area shape="rect" id="node26" href="$d9/dca/classEventHandler.html#ab9abc781ad0d8bcede9acb77bdfa76f3" title="Handles the EnterNotify event." alt="" coords="490,159,686,201"/>
+<area shape="rect" id="node28" href="$d9/dca/classEventHandler.html#a3678a163929cc5caea4d3adfebaa24b3" title="This where the bar is drawn, other windows are ignored." alt="" coords="483,108,693,135"/>
+<area shape="rect" id="node29" href="$d9/dca/classEventHandler.html#aead87b928e6928327b275882ca5ea678" title="Handles the FocusIn event. Changes the border color of the client." alt="" coords="483,1389,693,1416"/>
+<area shape="rect" id="node35" href="$d9/dca/classEventHandler.html#a86a04de876f37015e33592192a4d408c" title="Handles the FocusOut event. Changes the border color of the client." alt="" coords="477,1339,699,1365"/>
+<area shape="rect" id="node36" href="$d9/dca/classEventHandler.html#a819418b2b9874d30c109304648add429" title="Handles the KeyPress event. the handling of KeyPress event is delegated to the ConfigDataBindings obj..." alt="" coords="477,233,699,260"/>
+<area shape="rect" id="node39" href="$d9/dca/classEventHandler.html#aabb727113b34ea6b2aa2de4151f56a7c" title="Handles the KeyRelease event." alt="" coords="469,1623,707,1649"/>
+<area shape="rect" id="node40" href="$d9/dca/classEventHandler.html#a43d912ae8d4adb51d2efb8c70847469b" title="Handles the LeaveNotify event." alt="" coords="487,1674,689,1715"/>
+<area shape="rect" id="node41" href="$d9/dca/classEventHandler.html#a29a9353de9b6d810a5122d11c2475607" title="Handles the MapNotify event. The MapNotify event is sent to a client when it is mapped...." alt="" coords="473,1237,703,1264"/>
+<area shape="rect" id="node44" href="$d9/dca/classEventHandler.html#ab77bf3ab50542e3a2bd568a3ef684b8d" title="Handles the MapRequest event. The MapRequest event is sent to a client when it is mapped...." alt="" coords="467,740,709,767"/>
+<area shape="rect" id="node46" href="$d9/dca/classEventHandler.html#a9fc1125bf2060f2b3bffe00f87cc16c9" title="Handles the MotionNotify event. this was previously used for dragging windows.r." alt="" coords="485,403,691,445"/>
+<area shape="rect" id="node47" href="$d9/dca/classEventHandler.html#a94d6a647ab1563ef05252cdfeb59d8ae" title="Handles the PropertyNotify event." alt="" coords="759,1121,976,1162"/>
+<area shape="rect" id="node48" href="$d9/dca/classEventHandler.html#ad8a60d688daa8d9fe73355ea0b217e65" title="Handles the ReparentNotify event." alt="" coords="477,1739,699,1781"/>
+<area shape="rect" id="node49" href="$d9/dca/classEventHandler.html#a1fc5645364720c301f14c94e9dec245d" title="Handles the Unknown event." alt="" coords="477,1805,699,1832"/>
+<area shape="rect" id="node50" href="$d9/dca/classEventHandler.html#a66c072b3d1a731df49726c660a329563" title="Handles the UnmapNotify event. The UnmapNotify event is sent to a client when it is unmapped...." alt="" coords="483,302,693,343"/>
+<area shape="rect" id="node6" href="$d9/d6e/classWindowManager.html#a5627a14686c7d6db3ff8f1d50d22a30e" title="Get the Client by window ptr or frame ptr." alt="" coords="768,1339,967,1365"/>
+<area shape="rect" id="node7" href="$d3/dcc/classBars.html#ac495cb54b8b57b5ec013e4904de53633" title="Get the singleton instance if the instance is not created, it will create it." alt="" coords="800,157,935,184"/>
+<area shape="rect" id="node9" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="1050,1019,1202,1045"/>
+<area shape="rect" id="node10" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="1077,968,1175,995"/>
+<area shape="rect" id="node8" href="$d3/dcc/classBars.html#ac44e61e192981e6f034637cbcfa1bb5b" title="Create the singleton instance if the instance is already created, it will do nothing." alt="" coords="1049,157,1203,184"/>
+<area shape="rect" id="node11" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="1275,943,1429,969"/>
+<area shape="rect" id="node12" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="1287,993,1417,1020"/>
+<area shape="rect" id="node15" href="$d9/d6e/classWindowManager.html#a0dac20db062e34f396388a3feaf7f5e3" title="Get the Display object." alt="" coords="763,664,972,691"/>
+<area shape="rect" id="node16" href="$d9/d6e/classWindowManager.html#a5dfe6cb19c8a99b5564522beb17527a9" title="Get the Root Window pointer." alt="" coords="772,816,963,843"/>
+<area shape="rect" id="node17" href="$db/dc1/namespaceewmh.html#adaba0db441bbae1b11b9c99a218c1343" title=" " alt="" coords="781,867,953,893"/>
+<area shape="rect" id="node21" href="$d9/d6e/classWindowManager.html#a71e4f85d3d8f64a15b42821187599839" title="get the current Active Group" alt="" coords="1025,425,1227,466"/>
+<area shape="rect" id="node22" href="$d9/d6e/classWindowManager.html#a50facc69dc7eddcaf8e480b235790a6a" title="Get a ref to the Client by window ptr does not look for frames and throws if not found." alt="" coords="757,360,977,387"/>
+<area shape="rect" id="node23" href="$d9/d6e/classWindowManager.html#a4ef740d26dd36561685b94d4f79c4052" title="Get the Clients map." alt="" coords="765,309,970,336"/>
+<area shape="rect" id="node24" href="$d9/d6e/classWindowManager.html#a66e9a5869281e4d956058c46963dc2a1" title="Set the focus to a client." alt="" coords="769,512,965,539"/>
+<area shape="rect" id="node25" href="$d1/d37/classClient.html#a3a8287ddf4cdbba7e6452d1e65346338" title="Client::getWindow return the window attribute of the client." alt="" coords="1055,512,1197,539"/>
+<area shape="rect" id="node27" href="$d3/dcc/classBars.html#a61746e55a81be4152f79e95c3038830c" title="Redraw the bars by calling the draw method of each bar." alt="" coords="815,5,919,32"/>
+<area shape="rect" id="node30" href="$d1/d37/classClient.html#ab3a6ce2b7c664ea581263df50c130e75" title="Client::getFrame() return the frame Window of the client." alt="" coords="802,1541,933,1568"/>
+<area shape="rect" id="node31" href="$d1/d37/classClient.html#af215e39c1e363b9393d551bdaacca27b" title="return the group of the client" alt="" coords="803,1709,931,1736"/>
+<area shape="rect" id="node32" href="$d1/d37/classClient.html#a1b0d58c212ba4aeccdd7b11fa3e6bed2" title="Client::getTitle() return the title of the client, the title is get during the construction of the cl..." alt="" coords="808,1491,927,1517"/>
+<area shape="rect" id="node33" href="$d9/d6e/classWindowManager.html#a6a202a2a9cbd4a7e54cd4e76c92748cf" title="set the Active Window" alt="" coords="767,1593,967,1634"/>
+<area shape="rect" id="node34" href="$db/dc1/namespaceewmh.html#adbfb372b5b09910933941409002707a2" title=" " alt="" coords="763,1659,971,1685"/>
+<area shape="rect" id="node37" href="$d4/d46/classConfigHandler.html#ab25da87850e8a76855f1cb5db7fe65be" title="Get the ConfigData object of type T." alt="" coords="760,107,975,133"/>
+<area shape="rect" id="node38" href="$d4/d46/classConfigHandler.html#a4b0d961793967d6a8ab8db80b577aae8" title="Get the ConfigHandler object Throws an exception if the object is not created." alt="" coords="767,56,967,83"/>
+<area shape="rect" id="node42" href="$d1/d37/classClient.html#a9b7919729625c8637ca982a9f4af725f" title="Client::restack() restack the client window to avoid the frame to get in front of the client." alt="" coords="809,1187,925,1213"/>
+<area shape="rect" id="node43" href="$d1/d37/classClient.html#a9b683356e12c2feac574f751ddbec0d2" title="Client::setMapped() set the mapped status of the client." alt="" coords="797,1288,937,1315"/>
+<area shape="rect" id="node45" href="$d9/d6e/classWindowManager.html#ab8b30dd79ad425cb52649c52ff1d3e93" title="Insert a client in the clients map." alt="" coords="760,563,975,589"/>
+</map>

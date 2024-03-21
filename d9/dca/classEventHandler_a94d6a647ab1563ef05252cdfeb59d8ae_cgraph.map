@@ -1,0 +1,7 @@
+<map id="EventHandler::handlePropertyNotify" name="EventHandler::handlePropertyNotify">
+<area shape="rect" id="node1" title="Handles the PropertyNotify event." alt="" coords="5,23,223,65"/>
+<area shape="rect" id="node2" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="271,5,423,32"/>
+<area shape="rect" id="node3" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="298,56,395,83"/>
+<area shape="rect" id="node4" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="471,31,625,57"/>
+<area shape="rect" id="node5" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="483,81,613,108"/>
+</map>

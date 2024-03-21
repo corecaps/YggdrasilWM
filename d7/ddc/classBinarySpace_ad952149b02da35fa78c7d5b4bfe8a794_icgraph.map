@@ -1,0 +1,9 @@
+<map id="BinarySpace::setSize" name="BinarySpace::setSize">
+<area shape="rect" id="node1" title=" " alt="" coords="673,42,832,69"/>
+<area shape="rect" id="node2" href="$dc/d93/classTreeLayoutManager.html#ae41e434c7dc5c48ce9d98507d8004c64" title="grow the space of the client in the x axis" alt="" coords="212,5,371,47"/>
+<area shape="rect" id="node4" href="$dc/d93/classTreeLayoutManager.html#a36c087c2bea43e9a896bbde379ec490a" title=" " alt="" coords="443,100,601,141"/>
+<area shape="rect" id="node7" href="$dc/d93/classTreeLayoutManager.html#a27e7cf12c611ebd79b42be63171e9c75" title=" " alt="" coords="419,35,625,76"/>
+<area shape="rect" id="node3" href="$d4/d6f/classGrow.html#a29b7285368306e872acf2e6d9352503e" title="Each child class must implement this interface." alt="" coords="27,13,142,39"/>
+<area shape="rect" id="node5" href="$dc/d93/classTreeLayoutManager.html#ada9df137830ea97ea283fed51f330e15" title=" " alt="" coords="212,100,371,141"/>
+<area shape="rect" id="node6" href="$dc/d93/classTreeLayoutManager.html#a6dd1c0d9d67939988cf6ad9562750b48" title="update the geometry of the layout (resize)" alt="" coords="5,100,164,141"/>
+</map>

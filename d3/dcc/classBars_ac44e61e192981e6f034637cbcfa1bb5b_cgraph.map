@@ -1,0 +1,4 @@
+<map id="Bars::createInstance" name="Bars::createInstance">
+<area shape="rect" id="node1" title="Create the singleton instance if the instance is already created, it will do nothing." alt="" coords="5,5,160,32"/>
+<area shape="rect" id="node2" href="$d3/dcc/classBars.html#a5b3cec30761f52bc76b5d9f069f18c0f" title=" " alt="" coords="208,5,296,32"/>
+</map>

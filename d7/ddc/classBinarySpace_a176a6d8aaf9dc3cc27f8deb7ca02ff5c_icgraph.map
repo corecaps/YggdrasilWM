@@ -1,0 +1,16 @@
+<map id="BinarySpace::getRight" name="BinarySpace::getRight">
+<area shape="rect" id="node1" title=" " alt="" coords="852,202,1019,229"/>
+<area shape="rect" id="node2" href="$dc/d93/classTreeLayoutManager.html#a19fc883e7e3315b23421bfd74df91cb3" title=" " alt="" coords="637,5,796,47"/>
+<area shape="rect" id="node4" href="$dc/d93/classTreeLayoutManager.html#a36fe2aeddbce9911ea07cb87cd337ee0" title=" " alt="" coords="637,71,796,112"/>
+<area shape="rect" id="node5" href="$dc/d93/classTreeLayoutManager.html#a5a897ba8119dc5d123f00bf643129034" title="recursive method to find the space containing the client" alt="" coords="637,136,796,177"/>
+<area shape="rect" id="node7" href="$dc/d93/classTreeLayoutManager.html#ae41e434c7dc5c48ce9d98507d8004c64" title="grow the space of the client in the x axis" alt="" coords="168,195,327,236"/>
+<area shape="rect" id="node9" href="$dc/d93/classTreeLayoutManager.html#a36c087c2bea43e9a896bbde379ec490a" title=" " alt="" coords="637,316,796,357"/>
+<area shape="rect" id="node12" href="$dc/d93/classTreeLayoutManager.html#a27e7cf12c611ebd79b42be63171e9c75" title=" " alt="" coords="375,253,581,295"/>
+<area shape="rect" id="node13" href="$dc/d93/classTreeLayoutManager.html#a1fd0b642971e92e3352aeb7a6feb60c2" title="recursive method to add a client to the layout" alt="" coords="629,381,804,423"/>
+<area shape="rect" id="node3" href="$dc/d93/classTreeLayoutManager.html#a098af0a8f00f5d8024c6b46547bb1667" title="add a client to the layout it looks for the biggest space and splits it in two" alt="" coords="399,5,557,47"/>
+<area shape="rect" id="node6" href="$dc/d93/classTreeLayoutManager.html#a09319455840dca34dd4f93bc803f57ad" title="find the space containing the client it looks recursively for the space containing the client" alt="" coords="399,136,557,177"/>
+<area shape="rect" id="node8" href="$d4/d6f/classGrow.html#a29b7285368306e872acf2e6d9352503e" title="Each child class must implement this interface." alt="" coords="5,202,120,229"/>
+<area shape="rect" id="node10" href="$dc/d93/classTreeLayoutManager.html#ada9df137830ea97ea283fed51f330e15" title=" " alt="" coords="399,319,557,360"/>
+<area shape="rect" id="node11" href="$dc/d93/classTreeLayoutManager.html#a6dd1c0d9d67939988cf6ad9562750b48" title="update the geometry of the layout (resize)" alt="" coords="168,319,327,360"/>
+<area shape="rect" id="node14" href="$dc/d93/classTreeLayoutManager.html#aa1d0e323f27fed9c31741abc7908857e" title="remove a client from the layout use the recursive method to remove the client" alt="" coords="399,384,557,425"/>
+</map>

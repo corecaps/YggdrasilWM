@@ -1,0 +1,26 @@
+<map id="WindowManager::createBars" name="WindowManager::createBars">
+<area shape="rect" id="node1" title="create the bars Bars are created from the config file and handled in a separate thread" alt="" coords="5,243,215,269"/>
+<area shape="rect" id="node2" href="$d3/dcc/classBars.html#ac44e61e192981e6f034637cbcfa1bb5b" title="Create the singleton instance if the instance is already created, it will do nothing." alt="" coords="536,24,691,51"/>
+<area shape="rect" id="node4" href="$d9/d6e/classWindowManager.html#a71e4f85d3d8f64a15b42821187599839" title="get the current Active Group" alt="" coords="263,101,464,142"/>
+<area shape="rect" id="node5" href="$d3/dcc/classBars.html#ac495cb54b8b57b5ec013e4904de53633" title="Get the singleton instance if the instance is not created, it will create it." alt="" coords="296,49,431,76"/>
+<area shape="rect" id="node6" href="$d4/d46/classConfigHandler.html#a4b0d961793967d6a8ab8db80b577aae8" title="Get the ConfigHandler object Throws an exception if the object is not created." alt="" coords="263,167,463,193"/>
+<area shape="rect" id="node7" href="$d3/dcc/classBars.html#a5a49ba35893e8da534861409a6b012fc" title="Get the spaceE value used to calculate the space left for the Layout Manager." alt="" coords="300,217,427,244"/>
+<area shape="rect" id="node8" href="$d3/dcc/classBars.html#a7da168b36a48cdab495e2f5e0fedd507" title="Get the spaceN value used to calculate the space left for the Layout Manager." alt="" coords="299,268,428,295"/>
+<area shape="rect" id="node9" href="$d3/dcc/classBars.html#a6fd8befbf5644bd4feb43cb54886ec6f" title="Get the spaceS value used to calculate the space left for the Layout Manager." alt="" coords="300,319,427,345"/>
+<area shape="rect" id="node10" href="$d3/dcc/classBars.html#a879a8663024cf851c9510690d09c9f70" title="Get the spaceW value used to calculate the space left for the Layout Manager." alt="" coords="297,369,429,396"/>
+<area shape="rect" id="node11" href="$d3/dcc/classBars.html#a84f9f17296a80d59b58abda8f90da8db" title="Initialize the Bars class." alt="" coords="323,420,403,447"/>
+<area shape="rect" id="node21" href="$d3/dcc/classBars.html#a792a5277aebef924c8ac1fc27ed84f1a" title=" " alt="" coords="294,521,433,548"/>
+<area shape="rect" id="node3" href="$d3/dcc/classBars.html#a5b3cec30761f52bc76b5d9f069f18c0f" title=" " alt="" coords="826,24,914,51"/>
+<area shape="rect" id="node12" href="$d3/dcc/classBars.html#a891421dc590c3f2127a5db9eff0ab6b8" title=" " alt="" coords="524,369,703,396"/>
+<area shape="rect" id="node13" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="794,471,946,497"/>
+<area shape="rect" id="node14" href="$d3/dcc/classBars.html#a7feba6b61e3ae7812eae8dd80ed088de" title=" " alt="" coords="512,471,715,497"/>
+<area shape="rect" id="node15" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="821,521,919,548"/>
+<area shape="rect" id="node18" href="$d3/dcc/classBars.html#a2959402534d22d030b1ac38ae373a126" title=" " alt="" coords="513,268,714,295"/>
+<area shape="rect" id="node19" href="$d3/dcc/classBars.html#ae3e3719858cf2bd5dd61990a27f108a3" title=" " alt="" coords="530,319,697,345"/>
+<area shape="rect" id="node16" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="1025,496,1180,523"/>
+<area shape="rect" id="node17" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="1037,547,1168,573"/>
+<area shape="rect" id="node20" href="$dd/ddb/classWidget.html#aa5d8a034e4ba2e33cf165bf57fff0f85" title=" " alt="" coords="779,319,961,345"/>
+<area shape="rect" id="node22" href="$d3/dcc/classBars.html#a3169dd52bb8f13d7f34648e4732d3fe3" title="Run the Bars class in a separate thread." alt="" coords="573,572,653,599"/>
+<area shape="rect" id="node23" href="$d9/d6e/classWindowManager.html#a788e5991ead0a077b39dcd25f3116192" title="Get the WindowManager instance this is a singleton class this function returns the instance of the Wi..." alt="" coords="763,623,977,649"/>
+<area shape="rect" id="node24" href="$d3/dcc/classBars.html#a61746e55a81be4152f79e95c3038830c" title="Redraw the bars by calling the draw method of each bar." alt="" coords="818,572,922,599"/>
+</map>

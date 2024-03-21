@@ -1,0 +1,10 @@
+<map id="Group::moveClientToGroup" name="Group::moveClientToGroup">
+<area shape="rect" id="node1" title="Move a client to another group." alt="" coords="5,107,203,133"/>
+<area shape="rect" id="node2" href="$d0/db7/classGroup.html#a6e524154dbd247a028ed51f542c5452e" title="Add a client to the group." alt="" coords="293,5,423,32"/>
+<area shape="rect" id="node3" href="$d9/d6e/classWindowManager.html#a5627a14686c7d6db3ff8f1d50d22a30e" title="Get the Client by window ptr or frame ptr." alt="" coords="259,56,457,83"/>
+<area shape="rect" id="node4" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="282,107,434,133"/>
+<area shape="rect" id="node5" href="$d9/d6e/classWindowManager.html#a788e5991ead0a077b39dcd25f3116192" title="Get the WindowManager instance this is a singleton class this function returns the instance of the Wi..." alt="" coords="251,157,465,184"/>
+<area shape="rect" id="node6" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="309,208,407,235"/>
+<area shape="rect" id="node7" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="513,183,668,209"/>
+<area shape="rect" id="node8" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="525,233,656,260"/>
+</map>

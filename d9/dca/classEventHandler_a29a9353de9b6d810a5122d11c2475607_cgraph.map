@@ -1,0 +1,13 @@
+<map id="EventHandler::handleMapNotify" name="EventHandler::handleMapNotify">
+<area shape="rect" id="node1" title="Handles the MapNotify event. The MapNotify event is sent to a client when it is mapped...." alt="" coords="5,183,235,209"/>
+<area shape="rect" id="node2" href="$d9/d6e/classWindowManager.html#a5627a14686c7d6db3ff8f1d50d22a30e" title="Get the Client by window ptr or frame ptr." alt="" coords="291,5,489,32"/>
+<area shape="rect" id="node3" href="$d1/d37/classClient.html#ab3a6ce2b7c664ea581263df50c130e75" title="Client::getFrame() return the frame Window of the client." alt="" coords="325,56,455,83"/>
+<area shape="rect" id="node4" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="545,233,697,260"/>
+<area shape="rect" id="node5" href="$d9/d6e/classWindowManager.html#a788e5991ead0a077b39dcd25f3116192" title="Get the WindowManager instance this is a singleton class this function returns the instance of the Wi..." alt="" coords="283,157,497,184"/>
+<area shape="rect" id="node6" href="$d1/d37/classClient.html#a1b0d58c212ba4aeccdd7b11fa3e6bed2" title="Client::getTitle() return the title of the client, the title is get during the construction of the cl..." alt="" coords="331,208,449,235"/>
+<area shape="rect" id="node7" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="573,284,670,311"/>
+<area shape="rect" id="node10" href="$d1/d37/classClient.html#a9b7919729625c8637ca982a9f4af725f" title="Client::restack() restack the client window to avoid the frame to get in front of the client." alt="" coords="332,259,448,285"/>
+<area shape="rect" id="node11" href="$d1/d37/classClient.html#a9b683356e12c2feac574f751ddbec0d2" title="Client::setMapped() set the mapped status of the client." alt="" coords="320,360,460,387"/>
+<area shape="rect" id="node8" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="745,259,900,285"/>
+<area shape="rect" id="node9" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="757,309,888,336"/>
+</map>

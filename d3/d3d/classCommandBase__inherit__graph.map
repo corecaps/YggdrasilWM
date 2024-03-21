@@ -1,0 +1,7 @@
+<map id="CommandBase" name="CommandBase">
+<area shape="rect" id="node1" title=" " alt="" coords="263,5,421,112"/>
+<area shape="rect" id="node2" href="$d7/d6c/classFocusGroup.html" title="FocusGroup implement the mecanism to switch between group." alt="" coords="5,167,140,274"/>
+<area shape="rect" id="node3" href="$d4/d6f/classGrow.html" title="Grow a window." alt="" coords="164,160,352,281"/>
+<area shape="rect" id="node4" href="$db/dd5/classQuit.html" title="Quit implement the mecanism to quit the window manager." alt="" coords="377,167,475,274"/>
+<area shape="rect" id="node5" href="$d5/d6b/classSpawn.html" title="Implement the mecanism to spawn a program." alt="" coords="499,167,601,274"/>
+</map>

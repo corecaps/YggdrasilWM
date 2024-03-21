@@ -1,0 +1,9 @@
+<map id="Bars::destroy" name="Bars::destroy">
+<area shape="rect" id="node1" title="Destroy the singleton instance if the instance is not created, it will do nothing." alt="" coords="696,56,804,83"/>
+<area shape="rect" id="node2" href="$d9/d6e/classWindowManager.html#acd4961e330d8c138052a206867029e12" title="Stop the window manager." alt="" coords="480,31,648,57"/>
+<area shape="rect" id="node7" href="$d3/dcc/classBars.html#aa4d2e8c80cd30717aae608e630f20f3b" title=" " alt="" coords="515,81,613,108"/>
+<area shape="rect" id="node3" href="$db/dd5/classQuit.html#a45655614a9625719ae0ac3c3605971c7" title="Each child class must implement this interface." alt="" coords="320,5,428,32"/>
+<area shape="rect" id="node4" href="$d2/dc7/WindowManager_8cpp.html#a7d71577ccb806afca3967b5405e66650" title=" " alt="" coords="316,56,432,83"/>
+<area shape="rect" id="node5" href="$d9/d6e/classWindowManager.html#a08b0d07eb54207b0dea055c399e2eb28" title="Initialize the WindowManager set the event select mask on the root window creates clients for the exi..." alt="" coords="108,56,268,83"/>
+<area shape="rect" id="node6" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,56,60,83"/>
+</map>

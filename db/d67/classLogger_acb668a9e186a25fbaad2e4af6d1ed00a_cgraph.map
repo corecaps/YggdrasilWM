@@ -1,0 +1,4 @@
+<map id="Logger::~Logger" name="Logger::~Logger">
+<area shape="rect" id="node1" title="Destroy the Logger:: Logger object closes the log file if it was opened. The destructor is virtual to..." alt="" coords="5,5,135,32"/>
+<area shape="rect" id="node2" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="183,5,313,32"/>
+</map>

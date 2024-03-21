@@ -1,0 +1,5 @@
+<map id="LayoutManager" name="LayoutManager">
+<area shape="rect" id="node1" title="LayoutManager class Interface for the layout managers." alt="" coords="133,5,292,244"/>
+<area shape="rect" id="node2" href="$d0/dbd/classMasterLayoutManager.html" title=" " alt="" coords="5,336,204,487"/>
+<area shape="rect" id="node3" href="$dc/d93/classTreeLayoutManager.html" title="TreeLayoutManager class this class is a subclass of LayoutManager it handles the tree style layout Wh..." alt="" coords="229,292,415,531"/>
+</map>

@@ -1,0 +1,14 @@
+<map id="Bars::redraw" name="Bars::redraw">
+<area shape="rect" id="node1" title="Redraw the bars by calling the draw method of each bar." alt="" coords="1115,71,1219,98"/>
+<area shape="rect" id="node2" href="$d9/dca/classEventHandler.html#ab9abc781ad0d8bcede9acb77bdfa76f3" title="Handles the EnterNotify event." alt="" coords="864,5,1060,47"/>
+<area shape="rect" id="node8" href="$d9/dca/classEventHandler.html#a3678a163929cc5caea4d3adfebaa24b3" title="This where the bar is drawn, other windows are ignored." alt="" coords="857,71,1067,98"/>
+<area shape="rect" id="node9" href="$d3/dcc/classBars.html#a3169dd52bb8f13d7f34648e4732d3fe3" title="Run the Bars class in a separate thread." alt="" coords="922,122,1002,149"/>
+<area shape="rect" id="node3" href="$d9/dca/classEventHandler.html#a8fe27b69582cce5c6a89a0b134bc8158" title=" " alt="" coords="603,46,809,73"/>
+<area shape="rect" id="node4" href="$d9/dca/classEventHandler.html#aa67d6322865a6c0e85f0dff364c4cd4d" title="create the Event handler:: Event handler object" alt="" coords="371,46,529,73"/>
+<area shape="rect" id="node5" href="$d9/d6e/classWindowManager.html#a3823b9b86904084abf35758e27a55354" title="Run the window manager." alt="" coords="121,21,285,47"/>
+<area shape="rect" id="node7" href="$d9/d6e/classWindowManager.html#aaacff41a9f37835a3968d7616fee65df" title="test function this function is used for testing purposes it is not used in the normal operation of th..." alt="" coords="108,71,297,98"/>
+<area shape="rect" id="node6" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,71,60,98"/>
+<area shape="rect" id="node10" href="$d3/dcc/classBars.html#a792a5277aebef924c8ac1fc27ed84f1a" title=" " alt="" coords="637,122,775,149"/>
+<area shape="rect" id="node11" href="$d9/d6e/classWindowManager.html#a324bd048e51e6e1829a0c620038cb956" title="create the bars Bars are created from the config file and handled in a separate thread" alt="" coords="345,122,555,149"/>
+<area shape="rect" id="node12" href="$d9/d6e/classWindowManager.html#a08b0d07eb54207b0dea055c399e2eb28" title="Initialize the WindowManager set the event select mask on the root window creates clients for the exi..." alt="" coords="123,122,283,149"/>
+</map>

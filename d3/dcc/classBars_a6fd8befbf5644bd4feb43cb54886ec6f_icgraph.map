@@ -1,0 +1,6 @@
+<map id="Bars::getSpaceS" name="Bars::getSpaceS">
+<area shape="rect" id="node1" title="Get the spaceS value used to calculate the space left for the Layout Manager." alt="" coords="573,5,700,32"/>
+<area shape="rect" id="node2" href="$d9/d6e/classWindowManager.html#a324bd048e51e6e1829a0c620038cb956" title="create the bars Bars are created from the config file and handled in a separate thread" alt="" coords="316,5,525,32"/>
+<area shape="rect" id="node3" href="$d9/d6e/classWindowManager.html#a08b0d07eb54207b0dea055c399e2eb28" title="Initialize the WindowManager set the event select mask on the root window creates clients for the exi..." alt="" coords="108,5,268,32"/>
+<area shape="rect" id="node4" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,5,60,32"/>
+</map>

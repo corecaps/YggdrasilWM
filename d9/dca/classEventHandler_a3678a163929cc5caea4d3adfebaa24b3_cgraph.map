@@ -1,0 +1,7 @@
+<map id="EventHandler::handleExpose" name="EventHandler::handleExpose">
+<area shape="rect" id="node1" title="This where the bar is drawn, other windows are ignored." alt="" coords="5,31,215,57"/>
+<area shape="rect" id="node2" href="$d3/dcc/classBars.html#ac495cb54b8b57b5ec013e4904de53633" title="Get the singleton instance if the instance is not created, it will create it." alt="" coords="263,5,397,32"/>
+<area shape="rect" id="node5" href="$d3/dcc/classBars.html#a61746e55a81be4152f79e95c3038830c" title="Redraw the bars by calling the draw method of each bar." alt="" coords="278,56,382,83"/>
+<area shape="rect" id="node3" href="$d3/dcc/classBars.html#ac44e61e192981e6f034637cbcfa1bb5b" title="Create the singleton instance if the instance is already created, it will do nothing." alt="" coords="445,5,600,32"/>
+<area shape="rect" id="node4" href="$d3/dcc/classBars.html#a5b3cec30761f52bc76b5d9f069f18c0f" title=" " alt="" coords="648,5,736,32"/>
+</map>

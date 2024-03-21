@@ -1,0 +1,14 @@
+<map id="TreeLayoutManager::removeClient" name="TreeLayoutManager::removeClient">
+<area shape="rect" id="node1" title="remove a client from the layout use the recursive method to remove the client" alt="" coords="5,160,164,201"/>
+<area shape="rect" id="node2" href="$dc/d93/classTreeLayoutManager.html#a1fd0b642971e92e3352aeb7a6feb60c2" title="recursive method to add a client to the layout" alt="" coords="212,160,387,201"/>
+<area shape="rect" id="node3" href="$d7/ddc/classBinarySpace.html#a141649e8af3524af60f357b1a0dea170" title=" " alt="" coords="656,42,827,69"/>
+<area shape="rect" id="node4" href="$d7/ddc/classBinarySpace.html#a852d09e25c88ab5458a1e41c8d36b58d" title=" " alt="" coords="443,37,599,63"/>
+<area shape="rect" id="node5" href="$d7/ddc/classBinarySpace.html#a27eef59b1c9ad906bfb606e85b27456c" title=" " alt="" coords="435,87,608,114"/>
+<area shape="rect" id="node6" href="$d7/ddc/classBinarySpace.html#a176a6d8aaf9dc3cc27f8deb7ca02ff5c" title=" " alt="" coords="438,138,605,165"/>
+<area shape="rect" id="node7" href="$dc/d93/classTreeLayoutManager.html#ae9258446b3d585ac04a665dd8cfccfeb" title="place a client in a space moves and resizes the client window to fit the space restack the client win..." alt="" coords="442,189,601,231"/>
+<area shape="rect" id="node10" href="$d7/ddc/classBinarySpace.html#a7b0df92f8483a7ec6366f0a4bdcd566a" title=" " alt="" coords="657,251,826,278"/>
+<area shape="rect" id="node11" href="$d7/ddc/classBinarySpace.html#a34015a8f119305795c7e561bc1856835" title=" " alt="" coords="444,306,599,333"/>
+<area shape="rect" id="node12" href="$d7/ddc/classBinarySpace.html#a8cf24da2a7845198af03bdc41ddf0bf8" title=" " alt="" coords="439,357,604,383"/>
+<area shape="rect" id="node8" href="$d7/ddc/classBinarySpace.html#a695f9348cc340e2b73ec1f01d16be4d0" title=" " alt="" coords="664,149,819,175"/>
+<area shape="rect" id="node9" href="$d7/ddc/classBinarySpace.html#a382c755ed4adbba96ededed64ab21f2d" title=" " alt="" coords="662,199,821,226"/>
+</map>

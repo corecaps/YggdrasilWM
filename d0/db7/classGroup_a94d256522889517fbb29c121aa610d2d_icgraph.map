@@ -1,0 +1,5 @@
+<map id="Group::getClients" name="Group::getClients">
+<area shape="rect" id="node1" title="Get the list of clients of the group." alt="" coords="197,31,332,57"/>
+<area shape="rect" id="node2" href="$d0/db7/classGroup.html#ac028fe6f7ee46394a5dd6f0393aad04e" title="Switch from this group Set this group as inactive, switch the layout manager and unmap the clients." alt="" coords="5,5,149,32"/>
+<area shape="rect" id="node3" href="$d0/db7/classGroup.html#a2f500e6e85ef9b563027a57d213c43c2" title="Switch to this group Set this group as active, switch the layout manager and map the clients." alt="" coords="15,56,140,83"/>
+</map>

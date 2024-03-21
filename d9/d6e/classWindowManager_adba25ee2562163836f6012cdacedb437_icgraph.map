@@ -1,0 +1,7 @@
+<map id="WindowManager::getGeometryX" name="WindowManager::getGeometryX">
+<area shape="rect" id="node1" title="Get the Geometry X this function returns the width of the screen." alt="" coords="853,5,1088,32"/>
+<area shape="rect" id="node2" href="$db/dc1/namespaceewmh.html#a8bb456032c1adc56c469cd0d7e481b44" title=" " alt="" coords="571,5,805,32"/>
+<area shape="rect" id="node3" href="$db/dc1/namespaceewmh.html#a26fea8b8efd8dd801589d97dbaac9506" title=" " alt="" coords="316,5,523,32"/>
+<area shape="rect" id="node4" href="$d9/d6e/classWindowManager.html#a08b0d07eb54207b0dea055c399e2eb28" title="Initialize the WindowManager set the event select mask on the root window creates clients for the exi..." alt="" coords="108,5,268,32"/>
+<area shape="rect" id="node5" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,5,60,32"/>
+</map>

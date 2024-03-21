@@ -1,0 +1,10 @@
+<map id="WindowManager::getClients" name="WindowManager::getClients">
+<area shape="rect" id="node1" title="Get the Clients map." alt="" coords="1068,46,1273,73"/>
+<area shape="rect" id="node2" href="$d9/dca/classEventHandler.html#a8b456da5adaa409c6c8e2ea9b608876b" title="Handles the DestroyNotify event." alt="" coords="807,5,1020,47"/>
+<area shape="rect" id="node8" href="$d9/dca/classEventHandler.html#a66c072b3d1a731df49726c660a329563" title="Handles the UnmapNotify event. The UnmapNotify event is sent to a client when it is unmapped...." alt="" coords="809,71,1018,112"/>
+<area shape="rect" id="node3" href="$d9/dca/classEventHandler.html#a8fe27b69582cce5c6a89a0b134bc8158" title=" " alt="" coords="552,46,759,73"/>
+<area shape="rect" id="node4" href="$d9/dca/classEventHandler.html#aa67d6322865a6c0e85f0dff364c4cd4d" title="create the Event handler:: Event handler object" alt="" coords="345,46,504,73"/>
+<area shape="rect" id="node5" href="$d9/d6e/classWindowManager.html#a3823b9b86904084abf35758e27a55354" title="Run the window manager." alt="" coords="121,21,285,47"/>
+<area shape="rect" id="node7" href="$d9/d6e/classWindowManager.html#aaacff41a9f37835a3968d7616fee65df" title="test function this function is used for testing purposes it is not used in the normal operation of th..." alt="" coords="108,71,297,98"/>
+<area shape="rect" id="node6" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,21,60,47"/>
+</map>

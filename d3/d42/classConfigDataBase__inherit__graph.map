@@ -1,0 +1,9 @@
+<map id="ConfigDataBase" name="ConfigDataBase">
+<area shape="rect" id="node1" title="ConfigDataBase class This class is an interface for the ConfigData classes This is a pure virtual cla..." alt="" coords="533,5,695,127"/>
+<area shape="rect" id="node2" href="$dd/dfe/classConfigDataBar.html" title="ConfigDataBar class Contains the configuration data for one bar in the window manager Inherits from C..." alt="" coords="5,204,207,575"/>
+<area shape="rect" id="node3" href="$d3/d76/classConfigDataBars.html" title="ConfigDataBars class." alt="" coords="231,299,389,479"/>
+<area shape="rect" id="node4" href="$d7/d83/classConfigDataBindings.html" title="ConfigDataBindings class. This class is used to handle the bindings configuration it instanciates the..." alt="" coords="414,299,601,479"/>
+<area shape="rect" id="node5" href="$dd/d6b/classConfigDataGroup.html" title="ConfigDataGroup class Store the configuration for a group from the config file. the logic of groups i..." alt="" coords="625,248,819,531"/>
+<area shape="rect" id="node6" href="$d5/d0a/classConfigDataGroups.html" title="ConfigDataGroups class. stores an array of ConfigDataGroup created from the config file." alt="" coords="843,299,1019,479"/>
+<area shape="rect" id="node7" href="$dd/dc2/classConfigDataWidget.html" title=" " alt="" coords="1043,175,1219,604"/>
+</map>

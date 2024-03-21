@@ -1,0 +1,6 @@
+<map id="ConfigHandler::colorCodeToULong" name="ConfigHandler::colorCodeToULong">
+<area shape="rect" id="node1" title="Convert a string containing a color code to unsigned long." alt="" coords="261,49,448,90"/>
+<area shape="rect" id="node2" href="$dd/dfe/classConfigDataBar.html#abe1209c2b150b38df677f06ed64cf1aa" title="Initializes the configuration data for the bar You must call configInit() in each ConfigDataBase Chil..." alt="" coords="17,5,201,32"/>
+<area shape="rect" id="node3" href="$dd/d6b/classConfigDataGroup.html#a290a8a2ac3f42090d86dc7e995510ebe" title="Initialize the configuration for a group from the config file. must be called after instanciating the..." alt="" coords="9,56,210,83"/>
+<area shape="rect" id="node4" href="$dd/dc2/classConfigDataWidget.html#a0d3a7e0ae16da3eabe2630392b45a1c9" title="Initialize the configuration." alt="" coords="5,107,213,133"/>
+</map>

@@ -1,0 +1,10 @@
+<map id="WindowManager" name="WindowManager">
+<area shape="rect" id="node1" title="WindowManager class This class is responsible for managing the windows.in an X11 session...." alt="" coords="425,315,611,803"/>
+<area shape="rect" id="node2" title=" " alt="" coords="10,153,189,245"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,193,83"/>
+<area shape="rect" id="node4" title=" " alt="" coords="213,153,404,245"/>
+<area shape="rect" id="node5" title=" " alt="" coords="429,160,607,237"/>
+<area shape="rect" id="node6" title=" " alt="" coords="632,160,857,237"/>
+<area shape="rect" id="node7" title=" " alt="" coords="881,145,1051,252"/>
+<area shape="rect" id="node8" title=" " alt="" coords="873,5,1059,83"/>
+</map>

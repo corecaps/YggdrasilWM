@@ -1,0 +1,5 @@
+<map id="WindowManager::selectEventOnRoot" name="WindowManager::selectEventOnRoot">
+<area shape="rect" id="node1" title="set the event mask on the root window and register as the window manager for the X session" alt="" coords="316,5,531,47"/>
+<area shape="rect" id="node2" href="$d9/d6e/classWindowManager.html#a08b0d07eb54207b0dea055c399e2eb28" title="Initialize the WindowManager set the event select mask on the root window creates clients for the exi..." alt="" coords="108,13,268,39"/>
+<area shape="rect" id="node3" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,13,60,39"/>
+</map>

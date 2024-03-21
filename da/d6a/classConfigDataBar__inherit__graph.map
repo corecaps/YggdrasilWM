@@ -1,0 +1,4 @@
+<map id="ConfigDataBar" name="ConfigDataBar">
+<area shape="rect" id="node1" title="ConfigDataBar class Contains the configuration data for one bar in the window manager Inherits from C..." alt="" coords="5,175,207,545"/>
+<area shape="rect" id="node2" href="$db/d80/classConfigDataBase.html" title="ConfigDataBase class This class is an interface for the ConfigData classes This is a pure virtual cla..." alt="" coords="25,5,187,127"/>
+</map>

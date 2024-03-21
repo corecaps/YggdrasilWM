@@ -1,0 +1,11 @@
+<map id="WindowManager::selectEventOnRoot" name="WindowManager::selectEventOnRoot">
+<area shape="rect" id="node1" title="set the event mask on the root window and register as the window manager for the X session" alt="" coords="5,49,220,90"/>
+<area shape="rect" id="node2" href="$d9/d6e/classWindowManager.html#a877871ce86a8123e20212cd4f3e02e4c" title="When selecting events on the root window, we may get a BadAccess error if another window manager is r..." alt="" coords="268,31,508,57"/>
+<area shape="rect" id="node3" href="$d9/d6e/classWindowManager.html#addd68a462f5a21ee2406757eb01e2595" title="X11 Error handler." alt="" coords="289,81,487,108"/>
+<area shape="rect" id="node4" href="$db/d67/classLogger.html#ad9b933b308b1550ab439583f20cc1b15" title="Get the Logger object." alt="" coords="600,5,752,32"/>
+<area shape="rect" id="node5" href="$d9/d6e/classWindowManager.html#a788e5991ead0a077b39dcd25f3116192" title="Get the WindowManager instance this is a singleton class this function returns the instance of the Wi..." alt="" coords="569,56,783,83"/>
+<area shape="rect" id="node6" href="$d9/d6e/classWindowManager.html#acbaeddfa85a6fb2af1724f4a6336a371" title="get the X11 Wrapper object" alt="" coords="556,107,796,133"/>
+<area shape="rect" id="node7" href="$db/d67/classLogger.html#a3f8e5a24652586d84db82b24428886ae" title="Log a message This method logs a message to the log file or stream. The message is only logged if the..." alt="" coords="627,157,725,184"/>
+<area shape="rect" id="node8" href="$db/d67/classLogger.html#a9f4b65c5601363086940fc5094b294d3" title="Get the log level as a string." alt="" coords="844,132,999,159"/>
+<area shape="rect" id="node9" href="$db/d67/classLogger.html#a06a52da2f5edfbc4789902257dee2d69" title="Get the current time." alt="" coords="856,183,987,209"/>
+</map>

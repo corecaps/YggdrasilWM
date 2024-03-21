@@ -1,0 +1,28 @@
+var classTreeLayoutManager =
+[
+    [ "TreeLayoutManager", "dc/d93/classTreeLayoutManager.html#a163f06798b378e9ff937d6a49762eb22", null ],
+    [ "~TreeLayoutManager", "dc/d93/classTreeLayoutManager.html#a4f6c8845c031206a96e37cf2a5e48170", null ],
+    [ "addClient", "dc/d93/classTreeLayoutManager.html#a098af0a8f00f5d8024c6b46547bb1667", null ],
+    [ "addClientRecursive", "dc/d93/classTreeLayoutManager.html#a19fc883e7e3315b23421bfd74df91cb3", null ],
+    [ "deleteSpace", "dc/d93/classTreeLayoutManager.html#a36fe2aeddbce9911ea07cb87cd337ee0", null ],
+    [ "findSpace", "dc/d93/classTreeLayoutManager.html#a09319455840dca34dd4f93bc803f57ad", null ],
+    [ "findSpace", "dc/d93/classTreeLayoutManager.html#ade858fc2f5cf8ba8836ae59a63820c40", null ],
+    [ "findSpaceRecursive", "dc/d93/classTreeLayoutManager.html#a5a897ba8119dc5d123f00bf643129034", null ],
+    [ "growSpace", "dc/d93/classTreeLayoutManager.html#ae41e434c7dc5c48ce9d98507d8004c64", null ],
+    [ "placeClientInSpace", "dc/d93/classTreeLayoutManager.html#ae9258446b3d585ac04a665dd8cfccfeb", null ],
+    [ "recursiveResize", "dc/d93/classTreeLayoutManager.html#a36c087c2bea43e9a896bbde379ec490a", null ],
+    [ "recursiveShrinkSiblingSpace", "dc/d93/classTreeLayoutManager.html#a27e7cf12c611ebd79b42be63171e9c75", null ],
+    [ "removeClient", "dc/d93/classTreeLayoutManager.html#aa1d0e323f27fed9c31741abc7908857e", null ],
+    [ "removeClientRecursive", "dc/d93/classTreeLayoutManager.html#a1fd0b642971e92e3352aeb7a6feb60c2", null ],
+    [ "reSize", "dc/d93/classTreeLayoutManager.html#ada9df137830ea97ea283fed51f330e15", null ],
+    [ "splitSpace", "dc/d93/classTreeLayoutManager.html#ae6c40c90938027e89e24e148d2aa5c32", null ],
+    [ "updateGeometry", "dc/d93/classTreeLayoutManager.html#a6dd1c0d9d67939988cf6ad9562750b48", null ],
+    [ "border_size_", "dc/d93/classTreeLayoutManager.html#a27b0a3ff8a838b9385b8c65b40d289c6", null ],
+    [ "display_", "dc/d93/classTreeLayoutManager.html#a5aa40a17e5a8e28a8b83455c40cb0903", null ],
+    [ "gap_", "dc/d93/classTreeLayoutManager.html#a22aedfaf0bed3e53c6f7f3c2ed46e610", null ],
+    [ "rootSpace_", "dc/d93/classTreeLayoutManager.html#aa232bfcd0880b125ed4962d8a2e73ed4", null ],
+    [ "rootWindow_", "dc/d93/classTreeLayoutManager.html#adda630e43e9e689062f1cc2f384881ec", null ],
+    [ "screen_height_", "dc/d93/classTreeLayoutManager.html#a5093d6f9363b2a780027dbce38da401d", null ],
+    [ "screen_width_", "dc/d93/classTreeLayoutManager.html#acd8c24341e42db4d487d17ab0fddf5f6", null ],
+    [ "space_count_", "dc/d93/classTreeLayoutManager.html#a1d876b87a993b5d848e6c10d65ccef99", null ]
+];

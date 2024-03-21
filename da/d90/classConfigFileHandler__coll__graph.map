@@ -1,0 +1,6 @@
+<map id="ConfigFileHandler" name="ConfigFileHandler">
+<area shape="rect" id="node1" title="Handle file I/O and JSON parsing for the configuration file. If no path is provided,..." alt="" coords="5,427,237,636"/>
+<area shape="rect" id="node2" title=" " alt="" coords="78,147,165,224"/>
+<area shape="rect" id="node4" title=" " alt="" coords="208,287,395,364"/>
+<area shape="rect" id="node3" title=" " alt="" coords="52,5,191,97"/>
+</map>

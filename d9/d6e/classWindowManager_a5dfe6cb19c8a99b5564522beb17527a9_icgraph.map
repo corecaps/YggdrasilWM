@@ -1,0 +1,14 @@
+<map id="WindowManager::getRoot" name="WindowManager::getRoot">
+<area shape="rect" id="node1" title="Get the Root Window pointer." alt="" coords="1097,162,1288,189"/>
+<area shape="rect" id="node2" href="$d9/dca/classEventHandler.html#af9474eac1b2821e010777868b328b5b8" title="Handles the ClientMessage event." alt="" coords="828,5,1028,47"/>
+<area shape="rect" id="node8" href="$d9/dca/classEventHandler.html#a8b456da5adaa409c6c8e2ea9b608876b" title="Handles the DestroyNotify event." alt="" coords="821,71,1035,112"/>
+<area shape="rect" id="node9" href="$d9/dca/classEventHandler.html#aead87b928e6928327b275882ca5ea678" title="Handles the FocusIn event. Changes the border color of the client." alt="" coords="823,137,1033,163"/>
+<area shape="rect" id="node10" href="$d9/dca/classEventHandler.html#a86a04de876f37015e33592192a4d408c" title="Handles the FocusOut event. Changes the border color of the client." alt="" coords="817,187,1039,214"/>
+<area shape="rect" id="node11" href="$d9/dca/classEventHandler.html#ab77bf3ab50542e3a2bd568a3ef684b8d" title="Handles the MapRequest event. The MapRequest event is sent to a client when it is mapped...." alt="" coords="807,238,1049,265"/>
+<area shape="rect" id="node12" href="$d9/dca/classEventHandler.html#a66c072b3d1a731df49726c660a329563" title="Handles the UnmapNotify event. The UnmapNotify event is sent to a client when it is unmapped...." alt="" coords="823,289,1033,331"/>
+<area shape="rect" id="node3" href="$d9/dca/classEventHandler.html#a8fe27b69582cce5c6a89a0b134bc8158" title=" " alt="" coords="552,162,759,189"/>
+<area shape="rect" id="node4" href="$d9/dca/classEventHandler.html#aa67d6322865a6c0e85f0dff364c4cd4d" title="create the Event handler:: Event handler object" alt="" coords="345,162,504,189"/>
+<area shape="rect" id="node5" href="$d9/d6e/classWindowManager.html#a3823b9b86904084abf35758e27a55354" title="Run the window manager." alt="" coords="121,137,285,163"/>
+<area shape="rect" id="node7" href="$d9/d6e/classWindowManager.html#aaacff41a9f37835a3968d7616fee65df" title="test function this function is used for testing purposes it is not used in the normal operation of th..." alt="" coords="108,187,297,214"/>
+<area shape="rect" id="node6" href="$df/d0a/main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="YggdrasilWM Uses cxxopts to parse command line arguments and starts the WindowManager...." alt="" coords="5,137,60,163"/>
+</map>
