@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Group.hpp
  * @brief  Group class header.
- * @date 2024-02-12
+ * @date 2024-03-21
  *
  */
 
@@ -46,8 +46,8 @@ class BaseX11Wrapper;
 enum LayoutType {
 	TREE,
 	MAX,
-	VERTICAL,
-	HORIZONTAL,
+	MASTER_VERTICAL,
+	MASTER_HORIZONTAL,
 	FLOAT
 };
 /**

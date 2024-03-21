@@ -95,6 +95,8 @@ set(SOURCES
         ${SOURCE_DIR}/Layouts/LayoutManager.cpp
         ${INCLUDE_DIR}/Layouts/LayoutManager.hpp
         ${SOURCE_DIR}/Layouts/TreeLayoutManager.cpp
+        ${SOURCE_DIR}/Layouts/MasterLayoutManager.cpp
+        ${SOURCE_DIR}/Layouts/MasterSpace.cpp
         ${SOURCE_DIR}/Layouts/BinarySpace.cpp
         ${SOURCE_DIR}/Config/ConfigHandler.cpp
         ${INCLUDE_DIR}/Config/ConfigDataBase.hpp

@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file TreeLayoutManager
  * @brief handle Tree Style Layout.
- * @date 2024-02-05
+ * @date 2024-03-21
  */
 
 
@@ -152,17 +152,8 @@ public:
  */
 	void growSpace(Client *client, int inc);
 	void recursiveShrinkSiblingSpace(BinarySpace *space, int inc, bool vertical);
-/**
- * @fn void TreeLayoutManager::shrinkSpaceX(Client* client)
- * @brief shrink the space of the client in the y axis
- * @todo this method is not implemented yet
- * @param client
- */
-	void	shrinkSpace(Client *client);
 private:
-
 	std::unique_ptr<BinarySpace>			rootSpace_;
-
 	void deleteSpace(BinarySpace *space);
 };
 #endif //YGGDRASILWM_TREELAYOUTMANAGER_HPP

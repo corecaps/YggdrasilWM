@@ -95,7 +95,6 @@ void Bars::run() {
 		try {
 			if (tsData->wait()) {
 				// Updated Data redraw
-				// Todo check for registerd keys to redraw only concerned widgets
 				std::unordered_map<std::string,std::string>updated = tsData->getData();
 				for (const auto &pair: updated) {
 					this->data[pair.first] = pair.second;

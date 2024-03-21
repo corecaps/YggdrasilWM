@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file TreeLayoutManager
  * @brief handle Tree Style Layout.
- * @date 2024-02-07
+ * @date 2024-03-21
  */
 #include "Layouts/TreeLayoutManager.hpp"
 
@@ -35,7 +35,7 @@ TreeLayoutManager::TreeLayoutManager(Display *display,
 									 int borderSize,
 									 int gap,
 									 int barHeight) :
-	LayoutManager(display, root, sizeX, sizeY, posX, posY, gap, borderSize) {
+	LayoutManager(display, root, sizeX, sizeY, posX, posY, gap, barHeight) {
 	Point pos(posX, posY);
 	Point size(sizeX - borderSize, sizeY - borderSize);
 	this->rootSpace_ = std::make_unique<BinarySpace>(pos, size, 0);
@@ -223,7 +223,6 @@ void TreeLayoutManager::recursiveResize(const Point &size,
 										const Point &pos,
 										BinarySpace * space) {
 	Point oldSize = space->getSize();
-	Point oldPos = space->getPos();
 	space->setSize(size);
 	space->setPos(pos);
 	if (space->getClient() != nullptr) {

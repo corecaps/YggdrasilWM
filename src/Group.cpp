@@ -22,7 +22,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  * @file Group.cpp
  * @brief Group class implementation.
- * @date 2024-02-12
+ * @date 2024-03-21
  */
 #include "WindowManager.hpp"
 #include "Group.hpp"
@@ -42,10 +42,10 @@ Group::Group(const std::shared_ptr<ConfigDataGroup>& config,
 		layoutType = TREE;
 	} else if (config->getGroupLayout() == "Max") {
 		layoutType = MAX;
-	} else if (config->getGroupLayout() == "Vertical") {
-		layoutType = VERTICAL;
-	} else if (config->getGroupLayout() == "Horizontal") {
-		layoutType = HORIZONTAL;
+	} else if (config->getGroupLayout() == "MasterVertical") {
+		layoutType = MASTER_VERTICAL;
+	} else if (config->getGroupLayout() == "MasterHorizontal") {
+		layoutType = MASTER_HORIZONTAL;
 	} else {
 		layoutType = TREE;
 	}
@@ -72,8 +72,29 @@ Group::Group(const std::shared_ptr<ConfigDataGroup>& config,
 												   barHeight_);
 			break;
 		case MAX:
-		case VERTICAL:
-		case HORIZONTAL:
+			break;
+		case MASTER_VERTICAL:
+			layoutManager_ = std::make_shared<TreeLayoutManager>(display,
+												   root,
+												   size_x,
+												   size_y,
+												   0,
+												   0,
+												   borderSize_,
+												   gap_,
+												   barHeight_);
+			break;
+		case MASTER_HORIZONTAL:
+			layoutManager_ = std::make_shared<TreeLayoutManager>(display,
+												   root,
+												   size_x,
+												   size_y,
+												   0,
+												   0,
+												   borderSize_,
+												   gap_,
+												   barHeight_);
+			break;
 		default:
 			layoutManager_ = std::make_shared<TreeLayoutManager>(display,
 												   root,
